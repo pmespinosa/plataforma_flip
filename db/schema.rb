@@ -11,66 +11,73 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160701170952) do
+ActiveRecord::Schema.define(version: 20160707190528) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "answers", force: :cascade do |t|
-    t.integer  "user_id",     limit: 4
-    t.integer  "question_id", limit: 4
-    t.text     "content",     limit: 65535
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.integer  "user_id"
+    t.integer  "question_id"
+    t.text     "content"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   add_index "answers", ["user_id", "question_id"], name: "index_answers_on_user_id_and_question_id", using: :btree
 
   create_table "homeworks", force: :cascade do |t|
-    t.string   "name",         limit: 255
-    t.integer  "actual_phase", limit: 4
+    t.string   "name"
+    t.integer  "actual_phase"
     t.boolean  "upload"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "homeworks_questions", id: false, force: :cascade do |t|
-    t.integer "homework_id", limit: 4
-    t.integer "question_id", limit: 4
+    t.integer "homework_id"
+    t.integer "question_id"
   end
 
   add_index "homeworks_questions", ["homework_id", "question_id"], name: "index_homeworks_questions_on_homework_id_and_question_id", using: :btree
 
   create_table "homeworks_users", id: false, force: :cascade do |t|
-    t.integer "homework_id", limit: 4
-    t.integer "user_id",     limit: 4
+    t.integer "homework_id"
+    t.integer "user_id"
   end
 
   add_index "homeworks_users", ["homework_id", "user_id"], name: "index_homeworks_users_on_homework_id_and_user_id", using: :btree
 
   create_table "questions", force: :cascade do |t|
-    t.integer  "phase",      limit: 4
-    t.string   "content",    limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.integer  "anterior",   limit: 4
+    t.integer  "phase"
+    t.string   "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "anterior"
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "first_name",             limit: 255
-    t.string   "last_name",              limit: 255
-    t.integer  "role",                   limit: 4
+    t.string   "first_name"
+    t.string   "last_name"
+    t.integer  "role"
     t.boolean  "asistencia"
-    t.integer  "partner_id",             limit: 4
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
-    t.string   "email",                  limit: 255, default: "", null: false
-    t.string   "encrypted_password",     limit: 255, default: "", null: false
-    t.string   "reset_password_token",   limit: 255
+    t.integer  "partner_id"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",     limit: 255
-    t.string   "last_sign_in_ip",        limit: 255
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
