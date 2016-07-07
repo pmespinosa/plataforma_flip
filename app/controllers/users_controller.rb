@@ -25,8 +25,6 @@ class UsersController < ApplicationController
 
 
   def asistencia
-    r = Random.new
-    asignados = []
     libres = []
     if params["asistentes"] != nil
       params["asistentes"].each do |p|
@@ -37,30 +35,49 @@ class UsersController < ApplicationController
         end
         asistente.save
       end
-      aux = libres
-      if libres.length % 2 == 0
-        for i in 0..libres.length
-          p = libres[i]
-          if aux.include?(p)
-            partner = aux[r.rand(aux.length)]
-            while partner == p do
-              partner = aux[r.rand(aux.length)]
-            end
-            p.partner_id = partner.id
-            p.save
-            aux.delete(partner)
-            asignados.append(partner)
-            puts p.partner_id
-            puts "esto es"
+
+      if libres.length % 2 != 0
+        while true do
+          i1 = rand(libres.length)
+          i2 = rand(libres.length)
+          i3 = rand(libres.length)
+          if i1 != i2 && i1 != i3 && i2 != i3
+            orden = [i1, i2, i3].sort   
+            break
           end
         end
-      else
-        puts false
+        p1 = libres[i1]
+        p2 = libres[i2]
+        p3 = libres[i3]
+        p1.partner_id = p2.id
+        p2.partner_id = p3.id
+        p3.partner_id = p1.id
+        p1.save
+        p2.save
+        p3.save
+        libres.delete_at(orden.pop)
+        libres.delete_at(orden.pop)
+        libres.delete_at(orden.pop)
       end
-      params["asistentes"].each do |p|
-        asistente = User.find_by_id(p[0])
-        puts asistente.id
-        puts asistente.partner_id
+      for i in 1..(libres.length/2)
+        i1 = rand(libres.length)
+        p1 = libres[i1]
+        i2 = rand(libres.length)
+        while i2 == i1 do
+          i2 = rand(libres.length)
+        end
+        p2 = libres[i2]  
+        p1.partner_id = p2.id
+        p2.partner_id = p1.id
+        p1.save
+        p2.save
+        if i1 > i2
+          libres.delete_at(i1)
+          libres.delete_at(i2)
+        else
+          libres.delete_at(i2)
+          libres.delete_at(i1)
+        end
       end
     end
   end  
@@ -93,5 +110,5 @@ class UsersController < ApplicationController
 
   def user_params
       params.require(:user).permit(:asistencia, :partner_id)
-    end
+  end
 end

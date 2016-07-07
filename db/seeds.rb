@@ -13,6 +13,3 @@ User.create(first_name: 'Miguel', last_name: 'Nussbaum', email: 'mn@uc.cl', role
 User.create(first_name: 'Catalina', last_name: 'Martin', email: 'cata_martin@gmail.com', role: 0, password: '123456', asistencia: false)
 User.create(first_name: 'Camila', last_name: 'Martin', email: 'cami_martin@gmail.com', role: 0, password: '123456', asistencia: false)
 User.create(first_name: 'Patricia', last_name: 'Garcia', email: 'pgh@gmail.com', role: 0, password: '123456', asistencia: false)
-
-Question.create([{phase: 2, content: "En base a la respuesta de su compañero, discuta sobre esta y argumente:"}, {phase: 3, content: "Rehaga su respuesta en base a los argumentos dados por su compañero."}])
-

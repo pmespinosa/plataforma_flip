@@ -9,6 +9,9 @@
   <strong>Respuesta</strong>
   <%= @answer.content %>
 </p>
+<p>
+  <%= image_tag @answer.image.url(:large) %>
+</p>
 
 <%= link_to 'Editar', edit_homework_question_answer_path(@homework, @question, @answer) %> |
 <%= link_to 'Atrás', homework_questions_path(@homework) %>

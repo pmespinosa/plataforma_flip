@@ -1,6 +1,6 @@
 
 <div style="text-align: center">
-    <%= form_for([@homework, @question, @answer]) do |f| %>
+    <%= form_for([@homework, @question, @answer], html: { multipart: true }) do |f| %>
       <% if @answer.errors.any? %>
         <div id="error_explanation">
           <h2><%= pluralize(@answer.errors.count, "error") %> prohibited this answer from being saved:</h2>
@@ -19,6 +19,7 @@
             <div class="col-sm-offset-4">
               <div class="col-xs-6">
                 <%= f.text_area :content, cols: 40, rows: 5, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
+                <%= f.file_field :image, id:"i_answer" %>
               </div>
             </div>
           </div>
@@ -36,6 +37,3 @@
       </form>
       <% end %>
 </div>
-
-
-

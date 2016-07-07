@@ -3,7 +3,7 @@
 <p id="notice"><%= notice %></p>
 
 
-<h1><%= @homework.name %></h1> 
+<h1><%= @homework.name %></h1>
 
 <table class="table table-striped">
   <thead>
@@ -13,52 +13,55 @@
           <th></th>
       <% else %>
           <th>Respuesta</th>
+          <th>Imagen</th>
       <% end -%>
       <th colspan="3"></th>
     </tr>
   </thead>
   <tbody>
     <% @questions.each do |question| %>
-    <% if question.phase == @homework.actual_phase %>
-      <tr>
-        <td><%= question.content[0,100] %></td>
-        <% if not current_user.role? %>
-            <% if current_user.answers.find_by_question_id([question.id])%>
-                  <% @ans = current_user.answers.find_by_question_id([question.id]) %>
-                  <td><%= @ans.content[0,50] %></td>
+      <% if question.phase == @homework.actual_phase %>
+        <tr>
+          <td><%= question.content[0,100] %></td>
+          <% if not current_user.role? %>
+              <% if current_user.answers.find_by_question_id([question.id])%>
+                    <% @ans = current_user.answers.find_by_question_id([question.id]) %>
+                    <td><%= @ans.content[0,50] %></td>
+                    <% if @ans.image? %>
+                      <td>  Si </td>
+                    <% else %>
+                      <td> No </td>
+                    <% end %>
+              <% else %>
                   <td><%=  %></td>
-            <% else %>
-                <td></td>
-            <% end -%>
-        <% else %>
-            <td></td>
-        <% end -%>
-        <%- if current_user.role?%>
-          <td><%= link_to 'Ver', homework_question_path(@homework, question) %></td>
-          <td><%= link_to 'Editar', edit_homework_question_path(@homework, question) %></td>
-          <td><%= link_to 'Eliminar', homework_question_path(@homework, question), method: :delete, data: { confirm: '¿Estas Seguro?' } %></td>
-        <% else %>       
-          <% if current_user.answers.find_by_question_id([question.id])%>
-              <td><%= link_to 'Responder', edit_homework_question_answer_path(@homework, question, current_user.answers.find_by_question_id(question.id)) %></td>
-              <td><%= link_to 'Eliminar', homework_question_answer_path(@homework, question, current_user.answers.find_by_question_id(question.id)), method: :delete, data: { confirm: '¿Estas Seguro?' } %></td>
+              <% end -%>
           <% else %>
-              <td><%= link_to 'Responder', new_homework_question_answer_path(@homework, question) %></td>
               <td></td>
+          <% end -%>
+          <%- if current_user.role?%>
+            <td><%= link_to 'Ver', homework_question_path(@homework, question) %></td>
+            <td><%= link_to 'Editar', edit_homework_question_path(@homework, question) %></td>
+            <td><%= link_to 'Eliminar', homework_question_path(@homework, question), method: :delete, data: { confirm: '¿Estas Seguro?' } %></td>
+          <% else %>
+            <% if current_user.answers.find_by_question_id([question.id])%>
+                <td><%= link_to 'Responder', edit_homework_question_answer_path(@homework, question, current_user.answers.find_by_question_id(question.id)) %></td>
+                <td><%= link_to 'Eliminar', homework_question_answer_path(@homework, question, current_user.answers.find_by_question_id(question.id)), method: :delete, data: { confirm: '¿Estas Seguro?' } %></td>
+            <% else %>
+                <td><%= link_to 'Responder', new_homework_question_answer_path(@homework, question) %></td>
+                <td><%=%></td>
+            <% end %>
           <% end %>
-        <% end %>
-      </tr>
-    <% end %>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>
 
 <br>
-<%- if current_user.role?%>
+<%- if current_user.role? && @homework.actual_phase == 1%>
 <%= link_to 'Nueva Pregunta', new_homework_question_path(@homework.id) %>
 <% end -%>
 
 <br>
 <br>
 <%= link_to 'Volver', homeworks_path %>
-
-

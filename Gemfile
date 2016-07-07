@@ -35,6 +35,8 @@ gem 'annotate'
 gem 'hirb'
 # Bootstrap
 gem 'bootstrap-sass', '~> 3.3.6'
+# Use Paperclip
+gem "paperclip", "~> 5.0.0"
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
