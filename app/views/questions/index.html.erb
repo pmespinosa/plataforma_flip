@@ -21,8 +21,6 @@
     <% @questions.each do |question| %>
     <% if question.phase == @homework.actual_phase %>
       <tr>
-        <td><%= question.phase %></td>
-
         <td><%= question.content[0,100] %></td>
         <% if not current_user.role? %>
             <% if current_user.answers.find_by_question_id([question.id])%>

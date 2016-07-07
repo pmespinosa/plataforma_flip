@@ -1,14 +1,12 @@
-<div style="text-align: center">
+<%- if current_user.role? %>
+<div style="text-align: left">
 	<h1><%= "Asistencia" %></h1>
-	<%- if current_user.role? %>
 		<%= render 'form' %>
-	<%- end %>
 	<div class="row">
 		<div class="span4">
 	    	<div class="spacer10"></div>
 		</div> 
 	</div>
-	<div style="text-align: center">
-		<%= link_to 'Volver', users_path %>
-	</div>
+
 </div>
+<%- end %>

@@ -1,10 +1,6 @@
 <h2>Usuario</h2>
 <p>Nombre: <%= current_user.first_name %> <%= current_user.last_name %></p>
 <p>Correo: <%= current_user.email %></p>
-<%= current_user.asistencia %>
-<%- if current_user.asistencia?%>
-<p>Presente></p>
-<% end -%>
 
 <br>
 <br>

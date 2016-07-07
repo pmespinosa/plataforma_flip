@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20160701170952) do
     t.string   "content",    limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.integer  "anterior",   limit: 4
   end
 
   create_table "users", force: :cascade do |t|

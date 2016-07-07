@@ -29,13 +29,17 @@ class QuestionsController < ApplicationController
   # POST /questions.json
   def create
     @question = Question.new(question_params)
-    @question2 = Question.new(phase:2, content:@question.content + "\nEn base a la respuesta de su compañero, discuta y a argumente")
-    @question3 = Question.new(phase:3, content:@question.content + "\nEn base a la argumentación de su compañero, rehaga su respuesta")
+    @question2 = Question.new(phase:2, content:@question.content)
+    @question3 = Question.new(phase:3, content:@question.content)
     @homework.questions << @question
     @homework.questions << @question2
     @homework.questions << @question3
-    if @question.save && @question2.save && @question3
+    if @question.save && @question2.save && @question3.save
       redirect_to homework_questions_path(@homework), notice: 'La pregunta fue creada.'
+      @question2.anterior = @question.id
+      @question3.anterior = @question2.id
+      @question2.save
+      @question3.save
     else
       render :new
     end
@@ -79,7 +83,7 @@ class QuestionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
-      params.require(:question).permit(:phase, :content)
+      params.require(:question).permit(:phase, :content, :anterior)
     end
 
 

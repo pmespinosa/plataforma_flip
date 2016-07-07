@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   #   resources :homeworks
   #end
   get 'users/asistencia'
+  post 'users/asistencia'
+
   resources :home
   devise_for :users
   resources :users

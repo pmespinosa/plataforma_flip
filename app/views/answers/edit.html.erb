@@ -1,5 +1,24 @@
 <div style="text-align: center">
-	<h1><%= @homework.name %></h1>
+	<h3><%= @question.content %></h3>
+	<br>
+	<% if @question.phase == 2%>
+		<% partner = User.find_by_id(current_user.partner_id) %>
+		<% p_answers = partner.answers %>
+		<% answer = p_answers.find_by_question_id(@question.anterior) %>
+		<h4><%= "En base a la respuesta de su compañero, discuta y argumente su contenido:" %></h4>
+		<p><%= "Respuesta compañero: " + answer.content %></p>
+	<% end%>
+	<% if @question.phase == 3%>
+		<% my_answers = current_user.answers %>
+		<% ant = Question.find_by_id(@question.anterior) %>
+		<% my_ans = my_answers.find_by_question_id(ant.anterior) %>
+ 		<% partner = User.find_by_id(current_user.partner_id) %>
+		<% p_answers = partner.answers %>
+		<% answer = p_answers.find_by_question_id(@question.anterior) %>
+		<h4><%= "En base a los comentarios de su compañero, reestructure nuevamente su respuesta:" %></h4>
+		<p><%= "Respuesta original: " + my_ans.content %></p>
+		<p><%= "Comentarios compañero: " + answer.content %></¡>
+	<% end%>
 
 	<%= render 'form' %>
 	<div class="row">

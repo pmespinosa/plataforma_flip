@@ -35,7 +35,7 @@
           <% end -%>
         </ul>
 
-        <% if user_signed_in? %>
+        <% if current_user.role? %>
           <ul class="nav navbar-nav">
             <li><%= link_to "Asistencia",  users_asistencia_path%></li>
           </ul>

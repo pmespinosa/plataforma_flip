@@ -25,7 +25,44 @@ class UsersController < ApplicationController
 
 
   def asistencia
-
+    r = Random.new
+    asignados = []
+    libres = []
+    if params["asistentes"] != nil
+      params["asistentes"].each do |p|
+        asistente = User.find_by_id(p[0])
+        asistente.asistencia = p[1]['asistencia']
+        if asistente.asistencia
+          libres.append(asistente)
+        end
+        asistente.save
+      end
+      aux = libres
+      if libres.length % 2 == 0
+        for i in 0..libres.length
+          p = libres[i]
+          if aux.include?(p)
+            partner = aux[r.rand(aux.length)]
+            while partner == p do
+              partner = aux[r.rand(aux.length)]
+            end
+            p.partner_id = partner.id
+            p.save
+            aux.delete(partner)
+            asignados.append(partner)
+            puts p.partner_id
+            puts "esto es"
+          end
+        end
+      else
+        puts false
+      end
+      params["asistentes"].each do |p|
+        asistente = User.find_by_id(p[0])
+        puts asistente.id
+        puts asistente.partner_id
+      end
+    end
   end  
 
   def destroy
@@ -46,8 +83,12 @@ class UsersController < ApplicationController
     params.require(:user).permit(:role)
   end
 
+  def set_asistente
+    @asistente = User.find(params[:id])
+  end
+
   def set_users
-      @users = User.all
+    @users = User.all
   end
 
   def user_params
