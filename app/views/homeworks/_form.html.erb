@@ -1,0 +1,73 @@
+<%= form_for(@homework) do |f| %>
+
+  <% if @homework.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@homework.errors.count, "error") %> prohibited this homework from being saved:</h2>
+
+      <ul>
+      <% @homework.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <form class="form-horizontal">
+
+      <div class="form-group">
+        <label for="ac_name" class="col-sm-9 control-label">Nombre</label>
+        <div class="col-sm-offset-4">
+          <div class="col-xs-6">
+            <%= f.text_field :name, id:"ac_name", class:"form-control", placeholder: 'Ingrese nombre de la actividad' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="ac_phase" class="col-sm-9 control-label">Fase</label>
+        <div class="col-sm-offset-4">
+          <div class="col-xs-6">
+          
+           
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-8">
+            <div class="col-xs-6">
+              <div class="radio-inline">
+                  <%= f.radio_button :actual_phase, "1", :checked =>true %> Responder
+              </div>
+              <div class="radio-inline">
+                  <%= f.radio_button :actual_phase, "2" %> Argumentar
+              </div>
+              <div class="radio-inline">
+                  <%= f.radio_button :actual_phase, "3" %> Rehacer
+              </div>
+            </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-8">
+            <div class="checkbox">
+              <label>
+                <%= f.check_box :upload %> Disponible
+              </label>
+            </div>
+          </div>
+        </div>
+
+      <span class="help-block"></span>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-8">
+          <div class="actions">
+            <%= f.submit :'Aceptar' %>
+          </div>
+        </div>
+      </div>
+    </form>
+  <% end %>
+</div>
+

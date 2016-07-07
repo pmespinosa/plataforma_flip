@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  phase: 1
+  upload: false
+  content: MyString
+
+two:
+  phase: 1
+  upload: false
+  content: MyString

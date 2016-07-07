@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @homework.name %></h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Contenido</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% if !@answer.nil? %>
+        <tr>
+          <td><%= @answer.content %></td>
+            <td><%= link_to 'Ver', homework_question_answer_path(@homework, @question, @answer) %></td>
+            <td><%= link_to 'Editar', edit_homework_question_answer_path(@homework, @question, @answer) %></td>
+            <td><%= link_to 'Eliminar', homework_question_answer_path(@homework, @question, @answer), method: :delete, data: { confirm: '¿Estas Seguro?' } %></td>
+          </tr>
+      <% end %>
+  </tbody>
+</table>
+
+<br>

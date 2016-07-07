@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+<h3>Actividad</h3>
+<p>
+  <strong>Nombre:</strong>
+  <%= @homework.name %>
+</p>
+
+<p>
+  <strong>Fase:</strong>
+  <%= @homework.actual_phase %>
+</p>
+<p>
+  <strong>Disponible:</strong>
+  <%- if @homework.upload?%>
+	  <td><%= 'Si' %></td>
+	  <% else %>
+	  <td><%= 'No' %></td>
+	<% end -%>
+</p>
+
+
+<%= link_to 'Editar', edit_homework_path(@homework) %> |
+<%= link_to 'Volver', homeworks_path %>

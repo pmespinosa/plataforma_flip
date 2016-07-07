@@ -1,0 +1,35 @@
+<div style="text-align: center">
+  <h2>¿Olvidó su contraseña?</h2>
+
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+    <%= devise_error_messages! %>
+    <form class="form-horizontal">
+
+      <div class="form-group">
+        <label for="emailInput" class="col-sm-9 control-label">Correo</label>
+        <div class="col-sm-offset-4">
+          <div class="col-xs-6">
+            <%= f.email_field :email, autofocus: true, id:"emailInput", class:"form-control", placeholder: 'Ingrese su correo' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span4">
+          <div class="spacer10"></div>
+        </div> 
+      </div>
+      <span class="help-block"></span>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-8">
+          <div class="actions">
+            <%= f.submit "Enviar correo para recuperar contraseña" %>
+          </div>
+        </div>
+      </div>
+    </form>
+          
+  <% end %>
+
+  <%= render "users/shared/links" %>
+</div>
