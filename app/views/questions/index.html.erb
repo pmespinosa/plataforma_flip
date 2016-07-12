@@ -4,7 +4,13 @@
 
 
 <h1><%= @homework.name %></h1>
-
+<% if @homework.actual_phase == 0 %>
+  <h4>Responder</h4>
+<% elsif @homework.actual_phase == 1 %>
+  <h4>Argumentar</h4>
+<% else %>
+  <h4>Rehacer</h4>
+<% end %>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -66,5 +72,3 @@
 <% end -%>
 <br>
 <br>
-<%= link_to 'Editar Actividad', edit_homework_path(@homework) %>
-

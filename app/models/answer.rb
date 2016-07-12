@@ -15,6 +15,6 @@
 class Answer < ActiveRecord::Base
   belongs_to :user
   belongs_to :question
-  has_attached_file :image, styles: {large: "800x800", medium: "300x300>", thumb: "150x150#" }
+  has_attached_file :image, styles: {medium: "300x300>"}
   validates_attachment_content_type :image, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
 end
