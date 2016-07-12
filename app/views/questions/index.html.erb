@@ -4,7 +4,13 @@
 
 
 <h1><%= @homework.name %></h1>
-<h4><%= @homework.actual_phase %></h4>
+<% if @homework.actual_phase == 1 %>
+  <h4>ETAPA: Responder</h4>
+<% elsif @homework.actual_phase == 2 %>
+  <h4>ETAPA: Argumentar</h4>
+<% else %>
+  <h4>ETAPA: Rehacer</h4>
+<% end %>
 <table class="table table-striped">
   <thead>
     <tr>
