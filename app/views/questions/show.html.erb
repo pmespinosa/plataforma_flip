@@ -9,11 +9,7 @@
 
 <p>
   <strong>Disponible:</strong>
-  <%- if @question.upload?%>
-    <%= 'Si' %>
-  <% else %>
-    <%= 'No' %>
-  <% end -%>
+
 </p>
 <%- if current_user.role?%>
 <%= link_to 'Editar', edit_homework_question_path(@homework, @question) %>

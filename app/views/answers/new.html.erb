@@ -1,50 +1,41 @@
 <div style="text-align: center">
 	<h3><%= @question.content %></h3>
-	<br>
+	
 
 	<% partner = User.find_by_id(current_user.partner_id) %>
-	<% p_answers = partner.answers %>
-	<% answer = p_answers.find_by_question_id(@question.anterior) %>
+	<% if partner != nil %>
+		<% p_answers = partner.answers %>
+		<% answer = p_answers.find_by_question_id(@question.anterior) %>
 
-	<% if (@question.phase == 1 || answer != nil) && @question.phase == @homework.actual_phase%>
-		<% if @question.phase == 2 && answer != nil%>
-			<h4><%= "En base a la respuesta de su compañero, discuta y argumente su contenido:" %></h4>
-			<p><%= "Respuesta compañero: " + answer.content %></p>
-			<% if answer.image? %>
-				<p><%= image_tag answer.image.url(:large) %></p>
-			<% end %>
-		<% elsif @question.phase == 3 && answer != nil%>
-			<% my_answers = current_user.answers %>
-			<% ant = Question.find_by_id(@question.anterior) %>
-			<% my_ans = my_answers.find_by_question_id(ant.anterior) %>
-
-			<h4><%= "En base a los comentarios de su compañero, reestructure nuevamente su respuesta:" %></h4>
-			<p><%= "Respuesta original: " + my_ans.content %></p>
-			<% if my_ans.image? %>
-				<p><%= image_tag answer.image.url(:large) %></p>
-			<% end %>
-			<p><%= "Comentarios: " + answer.content %></p>
-			<% if answer.image? %>
-				<p><%= image_tag answer.image.url(:large) %></p>
-			<% end %>
-		<% end%>
-		<%= render 'form' %>
-	<% else %>
-		<h4><%= "FORMULARIO NO DISPONIBLE" %></h4>
-	<% end%>
-
-	<div class="row">
-			<div class="span5">
-	    		<div class="spacer10"></div>
-			</div>
-		</div>
-
-	<div style="text-align: center">
-		<%= link_to 'Volver', homework_questions_path(@homework) %>
-		<div class="row">
-			<div class="span5">
-	    		<div class="spacer10"></div>
-			</div>
-		</div>
-	</div>
+		<% if (@question.phase == 1 || answer != nil) && @question.phase == @homework.actual_phase%>
+			<% if @question.phase == 2 && answer != nil%>
+				<h4><%= "En base a la respuesta de %s %s, discuta y argumente su contenido:" % [partner.first_name, partner.last_name] %></h4>
+					<em><h4><%= "\"" + answer.content + "\"" %></h4></em>
+				<% if answer.image? %>
+					<p><%= image_tag answer.image.url(:large) %></p>
+				<% end %>
+			<% elsif @question.phase == 3 && answer != nil%>
+				<% my_answers = current_user.answers %>
+				<% ant = Question.find_by_id(@question.anterior) %>
+				<% my_ans = my_answers.find_by_question_id(ant.anterior) %>
+				<br>
+				<h4><%= "Su primera respuesta: \n"  %></h4>
+				<em><h4><%="\"" + my_ans.content + "\""%></h4></em>
+				<% if my_ans.image? %>
+					<p><%= image_tag my_ans.image.url(:large) %></p>
+				<% end %>
+				<br>
+				<h4><%= "Feedback y argumentación de %s %s: \n" % [partner.first_name, partner.last_name] %></h4>
+				<em><h4><%=answer.content %></h4></em>
+				<% if answer.image? %>
+					<p><%= image_tag answer.image.url(:large) %></p>
+				<% end %>
+				<br>
+				<h3><%= "En base al feedback y argumentación de su compañero, reestructure nuevamente su respuesta:" %></h3>
+			<% end%>
+			<%= render 'form' %>
+		<% else %>
+			<h4><%= "FORMULARIO NO DISPONIBLE" %></h4>
+		<%end%>
+	<% end -%>
 </div>

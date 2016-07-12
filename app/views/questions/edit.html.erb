@@ -1,13 +1,13 @@
-<div style="text-align: center">
-	<h1><%= @homework.name %></h1>
-
-	<%= render 'form' %>
-	<div class="row">
-		<div class="span4">
-	    	<div class="spacer10"></div>
-		</div> 
-	</div>
+<% if current_user.role? %>
 	<div style="text-align: center">
-		<%= link_to 'Volver', homework_questions_path(@homework) %>
+		<h1><%= @homework.name %></h1>
+
+		<%= render 'form' %>
+		<div class="row">
+			<div class="span4">
+		    	<div class="spacer10"></div>
+			</div> 
+		</div>
 	</div>
-</div>
+<% end -%>
+

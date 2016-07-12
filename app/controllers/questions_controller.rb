@@ -62,7 +62,18 @@ class QuestionsController < ApplicationController
   # DELETE /questions/1
   # DELETE /questions/1.json
   def destroy
-    @question.destroy
+    auxiliar = @question
+    while true do
+      if auxiliar.anterior == nil
+        break
+      end
+      auxiliar = Question.find_by_id(auxiliar.anterior)
+    end
+    siguiente = Question.find_by_id(auxiliar.id + 1)
+    siguiente2 = Question.find_by_id(siguiente.id + 1)
+    auxiliar.destroy
+    siguiente.destroy
+    siguiente2.destroy
     respond_to do |format|
       format.html { redirect_to [@homework,@question], notice: 'La pregunta fue removida.' }
       format.json { render :show, status: :ok, location: @question }

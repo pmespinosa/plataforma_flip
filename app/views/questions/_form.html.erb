@@ -16,7 +16,7 @@
   <% end %>
   <%= f.hidden_field  :phase, value:@homework.actual_phase, min:"0", max:"3", id:"phase", class:"form-control" %>
 
-  <form class="form-horizontal">
+    <form class="form-horizontal">
 
       <div class="form-group">
         <label for="question" class="col-sm-9 control-label">Pregunta</label>
@@ -27,9 +27,15 @@
         </div>
       </div>
       
-
-      <span class="help-block"></span>
-
+      <div class="row">
+        <div class="span4">
+            <div class="spacer10"></div>
+        </div> 
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-8">
           <div class="actions">
@@ -39,6 +45,5 @@
       </div>
     </form>
   <% end %>
-</div>
 
 

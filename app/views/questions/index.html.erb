@@ -34,6 +34,7 @@
                     <% end %>
               <% else %>
                   <td><%=  %></td>
+                  <td><%=  %></td>
               <% end -%>
           <% else %>
               <td></td>
@@ -46,8 +47,10 @@
             <% if current_user.answers.find_by_question_id([question.id])%>
                 <td><%= link_to 'Responder', edit_homework_question_answer_path(@homework, question, current_user.answers.find_by_question_id(question.id)) %></td>
                 <td><%= link_to 'Eliminar', homework_question_answer_path(@homework, question, current_user.answers.find_by_question_id(question.id)), method: :delete, data: { confirm: '¿Estas Seguro?' } %></td>
+                <td> <%= link_to 'Ver Respuesta', homework_question_answer_path(@homework, question, current_user.answers.find_by_question_id(question.id)) %></td>
             <% else %>
                 <td><%= link_to 'Responder', new_homework_question_answer_path(@homework, question) %></td>
+                <td><%=%></td>
                 <td><%=%></td>
             <% end %>
           <% end %>
@@ -61,7 +64,7 @@
 <%- if current_user.role? && @homework.actual_phase == 1%>
 <%= link_to 'Nueva Pregunta', new_homework_question_path(@homework.id) %>
 <% end -%>
+<br>
+<br>
+<%= link_to 'Editar Actividad', edit_homework_path(@homework) %>
 
-<br>
-<br>
-<%= link_to 'Volver', homeworks_path %>

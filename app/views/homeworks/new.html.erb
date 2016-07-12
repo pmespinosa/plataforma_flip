@@ -1,15 +1,12 @@
 <%- if current_user.role?%>
-<div style="text-align: center">
-	<h1>Nueva Actividad</h1>
-
-	<%= render 'form' %>
-	<div class="row">
-		<div class="span4">
-	    	<div class="spacer10"></div>
-		</div> 
-	</div>
 	<div style="text-align: center">
-		<%= link_to 'Volver', homeworks_path %>
+		<h1>Nueva Actividad</h1>
+
+		<%= render 'form' %>
+		<div class="row">
+			<div class="span4">
+		    	<div class="spacer10"></div>
+			</div> 
+		</div>
 	</div>
-</div>
 <% end -%>

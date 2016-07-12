@@ -19,13 +19,18 @@
             <div class="col-sm-offset-4">
               <div class="col-xs-6">
                 <%= f.text_area :content, cols: 40, rows: 5, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
+                <br></br>
                 <%= f.file_field :image, id:"i_answer" %>
               </div>
             </div>
           </div>
-
-
-          <span class="help-block"></span>
+          
+          <div class="row">
+            <div class="span4">
+                <div class="spacer10"></div>
+            </div> 
+          </div>
+          <br></br>
 
           <div class="form-group" id= "sub">
             <div class="col-sm-offset-2 col-sm-8">
@@ -35,5 +40,5 @@
             </div>
           </div>
       </form>
-      <% end %>
+    <% end %>
 </div>

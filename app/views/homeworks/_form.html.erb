@@ -18,16 +18,14 @@
         <div class="col-sm-offset-4">
           <div class="col-xs-6">
             <%= f.text_field :name, id:"ac_name", class:"form-control", placeholder: 'Ingrese nombre de la actividad' %>
+            <br>
           </div>
         </div>
       </div>
-
       <div class="form-group">
         <label for="ac_phase" class="col-sm-9 control-label">Fase</label>
         <div class="col-sm-offset-4">
-          <div class="col-xs-6">
-          
-           
+          <div class="col-xs-6">   
           </div>
         </div>
       </div>
@@ -43,6 +41,7 @@
               </div>
               <div class="radio-inline">
                   <%= f.radio_button :actual_phase, "3" %> Rehacer
+                  <br>
               </div>
             </div>
         </div>
@@ -58,7 +57,15 @@
           </div>
         </div>
 
-      <span class="help-block"></span>
+      <div class="row">
+        <div class="span4">
+            <div class="spacer10"></div>
+        </div> 
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
 
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-8">
