@@ -8,7 +8,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @users.sort_by{|e| e[:last_name]}.each do |user| %>
+        <% @users.sort_by{|e| [e[:last_name], e[:first_name]]}.each do |user| %>
           <%= fields_for 'asistentes[]', user do |p| %>
             <% if !user.role? %>
               <tr>
@@ -24,8 +24,6 @@
       </tbody>
   </table>
   <div class="actions" style="text-align: center">
-    <%= submit_tag "Guardar Asistencia"%>
-  </div>         
+    <%= submit_tag "Guardar Asistencia", :class=>"btn btn-primary", :form_action=>$lista = true%>
+  </div>
 <% end %>
-
-  

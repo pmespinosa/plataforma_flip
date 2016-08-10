@@ -2,6 +2,10 @@ class UsersController < ApplicationController
   before_action :set_users
 
   def index
+    puts current_user.role
+    if $lista==false && current_user.role == "profesor"
+      redirect_to users_asistencia_path
+    end
     @users = User.all
   end
 
@@ -21,6 +25,19 @@ class UsersController < ApplicationController
     else
       redirect_to users_path, :alert => "No es posible actualizar el usuario."
     end
+  end
+
+  def configuration
+    if params["roles"] != nil
+      params["roles"].each do |p|
+        user = User.find_by_id(p[0])
+        user.role = p[1]["role"]
+        user.save
+      end
+      redirect_to users_path, :notice => "Cambios guardados."
+    end
+    @users = User.all
+
   end
 
 
@@ -43,7 +60,7 @@ class UsersController < ApplicationController
             i2 = rand(libres.length)
             i3 = rand(libres.length)
             if i1 != i2 && i1 != i3 && i2 != i3
-              orden = [i1, i2, i3].sort   
+              orden = [i1, i2, i3].sort
               break
             end
           end
@@ -67,7 +84,7 @@ class UsersController < ApplicationController
           while i2 == i1 do
             i2 = rand(libres.length)
           end
-          p2 = libres[i2]  
+          p2 = libres[i2]
           p1.partner_id = p2.id
           p2.partner_id = p1.id
           p1.save
@@ -83,7 +100,7 @@ class UsersController < ApplicationController
         redirect_to users_path, :notice => "Lista actualizada."
       end
     end
-  end  
+  end
 
   def destroy
     user = User.find(params[:id])

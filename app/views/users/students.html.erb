@@ -1,0 +1,23 @@
+<div style="text-align: left">
+	<h1><%= "Alumnos" %></h1>
+	<table class="table table-striped">
+		<thead>
+	    <tr>
+	      <th>Apellido</th>
+				<th>Nombre</th>
+				<th>Respuesta</th>
+	    </tr>
+	  </thead>
+		<tbody>
+			<% @users.sort_by{|e| e[:last_name]}.each do |user| %>
+				<% if user.role == "alumno"%>
+				<tr>
+					<td><%= user.last_name%></td>
+				  <td><%= user.first_name%></td>
+					<td><%= link_to "Ver Respuesta", user, :class=>"btn btn-primary btn-xs"%></td>
+				</tr>
+				<% end %>
+			<% end %>
+		</tbody>
+	</table>
+</div>

@@ -1,31 +1,3 @@
-<h2>Usuario</h2>
-<p>Nombre: <%= current_user.first_name %> <%= current_user.last_name %></p>
-<p>Correo: <%= current_user.email %></p>
 
-<br>
-<br>
-<br>
-<%- if current_user.role?%>
-  <div class="container">
-    <div class="row">
-      <h4>Configuraciones</h4>
-      <div class="column">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Apellido</th>
-              <th>Nombre</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @users.sort_by{|e| e[:last_name]}.each do |user| %>
-              <tr>
-                <%= render user %>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-<% end -%>
+<h2>Bienvenido <%= current_user.first_name %> <%= current_user.last_name %></h2>
+<p>Correo: <%= current_user.email %></p>

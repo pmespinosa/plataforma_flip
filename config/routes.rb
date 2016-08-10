@@ -5,6 +5,10 @@ Rails.application.routes.draw do
   #end
   get 'users/asistencia'
   post 'users/asistencia'
+  get 'users/configuration'
+  post 'users/configuration'
+  patch 'users/configuration'
+  get 'users/students'
 
   resources :home
   devise_for :users
