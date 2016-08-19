@@ -2,10 +2,6 @@ class UsersController < ApplicationController
   before_action :set_users
 
   def index
-    puts current_user.role
-    if $lista==false && current_user.role == "profesor"
-      redirect_to users_asistencia_path
-    end
     @users = User.all
   end
 
