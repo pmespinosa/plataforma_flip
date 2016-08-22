@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   post 'users/configuration'
   patch 'users/configuration'
   get 'users/students'
+  
+
+  resources :courses
 
   resources :home
   devise_for :users

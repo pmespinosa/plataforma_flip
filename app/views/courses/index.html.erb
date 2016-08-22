@@ -1,0 +1,4 @@
+<h2>Entre correctamente</h2>
+<% @courses.sort_by{|e| e[:name]}.each do |course| %>
+ <p>Curso: <%= course.name %></p>
+ <%end%>

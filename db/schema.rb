@@ -27,8 +27,9 @@ ActiveRecord::Schema.define(version: 20160707190528) do
 
   create_table "courses", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "homeworks", force: :cascade do |t|
