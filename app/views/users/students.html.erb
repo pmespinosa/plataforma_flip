@@ -14,7 +14,7 @@
 				<tr>
 					<td><%= user.last_name%></td>
 				  <td><%= user.first_name%></td>
-					<td><%= button_to "Ver Respuesta", user, :class=>"btn btn-primary btn-xs", style:"font-color:white"%></td>
+					<td><%= link_to "Ver Respuesta", user, :class=>"btn btn-primary btn-xs", :style=>'color:white'%></td>
 				</tr>
 				<% end %>
 			<% end %>
