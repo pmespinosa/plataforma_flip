@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -13,9 +12,6 @@
 
 ActiveRecord::Schema.define(version: 20160707190528) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "question_id"
@@ -26,9 +22,14 @@ ActiveRecord::Schema.define(version: 20160707190528) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.index ["user_id", "question_id"], name: "index_answers_on_user_id_and_question_id"
   end
 
-  add_index "answers", ["user_id", "question_id"], name: "index_answers_on_user_id_and_question_id", using: :btree
+  create_table "courses", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "homeworks", force: :cascade do |t|
     t.string   "name"
@@ -41,16 +42,14 @@ ActiveRecord::Schema.define(version: 20160707190528) do
   create_table "homeworks_questions", id: false, force: :cascade do |t|
     t.integer "homework_id"
     t.integer "question_id"
+    t.index ["homework_id", "question_id"], name: "index_homeworks_questions_on_homework_id_and_question_id"
   end
-
-  add_index "homeworks_questions", ["homework_id", "question_id"], name: "index_homeworks_questions_on_homework_id_and_question_id", using: :btree
 
   create_table "homeworks_users", id: false, force: :cascade do |t|
     t.integer "homework_id"
     t.integer "user_id"
+    t.index ["homework_id", "user_id"], name: "index_homeworks_users_on_homework_id_and_user_id"
   end
-
-  add_index "homeworks_users", ["homework_id", "user_id"], name: "index_homeworks_users_on_homework_id_and_user_id", using: :btree
 
   create_table "questions", force: :cascade do |t|
     t.integer  "phase"
@@ -78,9 +77,8 @@ ActiveRecord::Schema.define(version: 20160707190528) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
-
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

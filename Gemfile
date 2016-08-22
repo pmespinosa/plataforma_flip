@@ -7,6 +7,11 @@ gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 #gem 'sqlite3'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> desarrollo
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -16,6 +21,11 @@ gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+<<<<<<< HEAD
+=======
+gem 'better_errors'
+
+>>>>>>> desarrollo
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -25,6 +35,7 @@ gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
+<<<<<<< HEAD
  gem 'bcrypt', '~> 3.1.7'
 
  gem 'will_paginate'
@@ -33,6 +44,26 @@ gem 'jbuilder', '~> 2.5'
  gem 'autoprefixer-rails'
  gem 'bootswatch-rails'
 
+=======
+gem 'sdoc', '~> 0.4.0', group: :doc
+# Devise
+gem 'devise', '4.1.1'
+# cancancan
+gem 'cancancan'
+# Annotate
+gem 'annotate'
+# Hirb
+gem 'hirb'
+
+gem 'bcrypt', '~> 3.1.7'
+
+gem 'will_paginate'
+
+gem 'bootstrap-sass'
+gem 'autoprefixer-rails'
+gem 'bootswatch-rails'
+gem "paperclip", "~> 5.0.0"
+>>>>>>> desarrollo
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
