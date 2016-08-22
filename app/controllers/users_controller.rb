@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_users
+  before_action :set_courses
 
   def index
     @users = User.all
@@ -122,6 +123,10 @@ class UsersController < ApplicationController
 
   def set_users
     @users = User.all
+  end
+
+  def set_courses
+    @courses = Course.all
   end
 
   def user_params

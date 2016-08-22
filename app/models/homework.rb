@@ -3,4 +3,5 @@ class Homework < ActiveRecord::Base
   has_and_belongs_to_many :questions
   has_many :key_words
   has_many :answers
+  belongs_to :course
 end
