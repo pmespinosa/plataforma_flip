@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Text:</strong>
+  <%= @ct_choice.text %>
+</p>
+
+<p>
+  <strong>Right:</strong>
+  <%= @ct_choice.right %>
+</p>
+
+<p>
+  <strong>Ct question:</strong>
+  <%= @ct_choice.ct_question %>
+</p>
+
+<%= link_to 'Edit', edit_ct_choice_path(@ct_choice) %> |
+<%= link_to 'Back', ct_choices_path %>

@@ -16,3 +16,12 @@ User.create(first_name: 'Camila', last_name: 'Martin', email: 'cami_martin@gmail
 User.create(first_name: 'Patricia', last_name: 'Garcia', email: 'pgh@gmail.com', role: 0, password: '123456', asistencia: false)
 Course.create(name: "Didáctica de las matemáticas I", description: "Curso de la facultad de educación, donde se estudian métodos y bla bla bla")
 Course.create(name: "Didáctica de las matemáticas II", description: "Curso de la facultad de educación, es la continuación de didáctica de las matemáticas I y bla bla bla")
+
+
+
+arbol = Tree.create(video: "https://www.youtube.com/watch?v=69EQUcUpRxo")
+arbol.content.create!(text: "Tarea Matemática")
+]
+
+
+course1 = Course.find_by name: "Didáctica de las matemáticas I" 

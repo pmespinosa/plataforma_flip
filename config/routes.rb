@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
 
+  
+  
+  resources :ct_subhabilities
+  
+  
+
+  
+  
   # resources :questions do
   #   resources :homeworks
   #end
@@ -11,7 +19,20 @@ Rails.application.routes.draw do
   get 'users/students'
 
 
-  resources :courses
+  resources :courses do
+    resources :trees do
+      resources :ct_questions do
+        resources :ct_choices
+        resources :ct_habilities
+      end
+      resources :content_questions do
+        resources :content_choices
+
+      end
+      resources :feedbacks
+      resources :contents
+    end
+  end
 
   resources :home
   devise_for :users

@@ -1,0 +1,2 @@
+module ContentQuestionsHelper
+end

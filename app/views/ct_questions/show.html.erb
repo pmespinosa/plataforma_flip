@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Question:</strong>
+  <%= @ct_question.question %>
+</p>
+
+<p>
+  <strong>Tree:</strong>
+  <%= @ct_question.tree %>
+</p>
+
+<%= link_to 'Edit', edit_ct_question_path(@ct_question) %> |
+<%= link_to 'Back', ct_questions_path %>
