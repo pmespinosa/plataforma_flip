@@ -4,6 +4,8 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
+    current_user.current_course_id = nil
+    current_user.save
   end
 
   def show

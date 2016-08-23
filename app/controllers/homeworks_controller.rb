@@ -1,5 +1,6 @@
 class HomeworksController < ApplicationController
   before_action :set_homework, only: [:show, :edit, :update, :destroy]
+  before_action :homework_params, only: [:create]
 
   # GET /homeworks
   # GET /homeworks.json
@@ -34,6 +35,7 @@ class HomeworksController < ApplicationController
   # POST /homeworks.json
   def create
     @homework = Homework.new(homework_params)
+
 
     respond_to do |format|
       if @homework.save

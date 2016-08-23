@@ -10,6 +10,8 @@ class CoursesController < ApplicationController
   # GET /courses/1.json
   def show
     @courses = Course.all
+    current_user.current_course_id = @course.id
+    current_user.save
   end
 
   def new
