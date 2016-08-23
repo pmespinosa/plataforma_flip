@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 20160707190528) do
     t.integer  "role"
     t.boolean  "asistencia"
     t.integer  "partner_id"
+    t.integer  "current_course_id"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "email",                  default: "", null: false
