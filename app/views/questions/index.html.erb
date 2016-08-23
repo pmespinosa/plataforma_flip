@@ -4,9 +4,9 @@
 
 
 <h1><%= @homework.name %></h1>
-<% if @homework.actual_phase == 1 %>
+<% if @homework.actual_phase == "responder" %>
   <h4>ETAPA: Responder</h4>
-<% elsif @homework.actual_phase == 2 %>
+<% elsif @homework.actual_phase == "argumentar" %>
   <h4>ETAPA: Argumentar</h4>
 <% else %>
   <h4>ETAPA: Rehacer</h4>

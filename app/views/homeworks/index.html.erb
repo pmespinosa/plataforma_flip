@@ -5,9 +5,8 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Nombre Actividad</th>
-      <th>Fase Actual</th>
-      <th>Disponible</th>
+      <th>Pregunta Actividad</th>
+      <th></th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -15,25 +14,12 @@
   <tbody>
     <% @homeworks.each do |homework| %>
       <tr>
-        <td><%= homework.name %></td>
-        <%- if homework.actual_phase == 1%>
-            <td><%= "Responder" %></td>
-        <%- elsif homework.actual_phase == 2%>
-            <td><%= "Argumentar" %></td>
-        <%- else%>
-            <td><%= "Rehacer" %></td>
-        <%- end %>
-        <%- if homework.upload?%>
-          <td><%= 'Si' %></td>
-          <% else %>
-          <td><%= 'No' %></td>
-        <% end -%>
         <%- if current_user.role?%>
-          <td><%= link_to 'Ver Preguntas', homework_questions_path(homework) %></td>
-          <td><%= link_to 'Editar', edit_homework_path(homework) %></td>
-          <td><%= link_to 'Eliminar', homework, method: :delete, data: { confirm: '¿Estas seguro?' } %></td>
+          <td><%= homework.name %></td>
+          <td><%= link_to "Realizar Actividad", homework_path(homework), :class=>"btn btn-primary btn-xs", :style=>'color:white'%></td>
+          <td><%= link_to 'Eliminar', homework,:class=>"btn btn-danger btn-xs", :style=>'color:white', method: :delete, data: { confirm: '¿Estás seguro que desesas eliminar la actividad?' } %></td>
         <% else %>
-          <td><%= link_to 'Ver Preguntas', homework_questions_path(homework) %></td>
+          <td><%= link_to 'Ver Preguntas', homework_path(homework) %></td>
         <% end -%>
 
       </tr>
