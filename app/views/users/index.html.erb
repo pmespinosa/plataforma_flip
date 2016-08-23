@@ -1,6 +1,10 @@
 
 <h2>Bienvenido <%= current_user.first_name %> <%= current_user.last_name %></h2>
 <p>Correo: <%= current_user.email %></p>
+<% if user_signed_in? %>
+  <% current_user.current_course_id = nil%>
+  <% current_user.save%>
+<% end %>
 
 <br></br>
 

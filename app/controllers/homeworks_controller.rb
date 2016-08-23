@@ -5,15 +5,19 @@ class HomeworksController < ApplicationController
   # GET /homeworks.json
   def index
     if current_user.role?
-      @homeworks = Homework.all
+      @homeworks = Homework.where(course_id:current_user.current_course_id)
     else
-      @homeworks = Homework.where(upload:true)
+      @homeworks = Homework.where(course_id:current_user.current_course_id, upload:true)
+      @homework = @homeworks[0]
+      redirect_to homework_questions_path(@homework)
     end
   end
 
   # GET /homeworks/1
   # GET /homeworks/1.json
   def show
+    @homework.upload = true
+    @homework.save
     if current_user.role?
       @questions = Question.all
     else
@@ -34,7 +38,6 @@ class HomeworksController < ApplicationController
   # POST /homeworks.json
   def create
     @homework = Homework.new(homework_params)
-
     respond_to do |format|
       if @homework.save
         format.html { redirect_to homework_questions_path(@homework), notice: 'La actividad ha sido creada.' }
@@ -44,6 +47,8 @@ class HomeworksController < ApplicationController
         format.json { render json: @homework.errors, status: :unprocessable_entity }
       end
     end
+    @homework.course_id = current_user.current_course_id
+    @homework.save
   end
 
   # PATCH/PUT /homeworks/1
