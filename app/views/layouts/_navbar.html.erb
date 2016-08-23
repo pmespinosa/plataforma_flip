@@ -5,6 +5,9 @@
       <div class="navbar-header">
         <% if user_signed_in? %>
           <a class="navbar-brand" href="/users">Inicio</a>
+          <% if !current_user.current_course_id && current_user.role? %>
+            <a class="navbar-brand" href="/courses/new">Crear Curso</a>
+          <% end %>
           <% else %>
           <a class="navbar-brand" href="/">Inicio</a>
         <% end %>
@@ -12,14 +15,14 @@
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <% if user_signed_in? && current_user.current_course_id %>
-          <% if current_user.role? %>
+        <% if user_signed_in? %>
+          <% if current_user.role && current_user.current_course_id? %>
             <ul class="nav navbar-nav">
               <li><%= link_to "Actividades",  homeworks_path%></li>
             </ul>
 
             <ul class="nav navbar-nav">
-              <li><%= link_to "Alumnos",  users_students_path%></li>
+              <li><%= link_to "Alumnos",  course_users_path(current_user.current_course_id)%></li>
             </ul>
 
             <ul class="nav navbar-nav">
@@ -27,14 +30,13 @@
             </ul>
 
             <ul class="nav navbar-nav">
-              <li><%= link_to "Configuraciones",  users_configuration_path%></li>
+              <li><%= link_to "Configuraciones",  edit_course_path(current_user.current_course_id)%></li>
             </ul>
-          <% else %>
+          <% elsif current_user.current_course_id %>
             <ul class="nav navbar-nav">
               <li><%= link_to "Actividad",  homeworks_path%></li>
             </ul>
           <% end %>
-
         <% end %>
 
 

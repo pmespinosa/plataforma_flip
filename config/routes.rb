@@ -10,8 +10,12 @@ Rails.application.routes.draw do
   patch 'users/configuration'
   get 'users/students'
 
-
-  resources :courses
+  post 'courses/:id/configuration' => 'courses#edit'
+  patch 'courses/:id/configuration'=> 'courses#edit'
+  get 'courses/:id/users'=> 'courses#students'
+  resources :courses do
+    resources :users
+  end
 
   resources :home
   devise_for :users

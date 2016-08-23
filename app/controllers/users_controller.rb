@@ -26,20 +26,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def configuration
-    if params["roles"] != nil
-      params["roles"].each do |p|
-        user = User.find_by_id(p[0])
-        user.role = p[1]["role"]
-        user.save
-      end
-      redirect_to users_path, :notice => "Cambios guardados."
-    end
-    @users = User.all
-
-  end
-
-
   def asistencia
     libres = []
     if params["asistentes"] != nil
