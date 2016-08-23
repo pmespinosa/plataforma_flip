@@ -6,7 +6,7 @@ class CreateUsers < ActiveRecord::Migration
       t.integer "role"
       t.boolean "asistencia"
       t.integer "partner_id"
-      t.id "current_course_id"
+      t.integer "current_course_id"
       t.timestamps null: false
     end
   end
