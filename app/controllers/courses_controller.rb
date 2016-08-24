@@ -51,7 +51,6 @@ class CoursesController < ApplicationController
   # POST /homeworks.json
   def create
     @course = Course.new(course_params)
-
     respond_to do |format|
       if @course.save
         format.html { redirect_to users_path, notice: 'El curso ha sido creado.' }
@@ -61,6 +60,8 @@ class CoursesController < ApplicationController
         format.json { render json: @course.errors, status: :unprocessable_entity }
       end
     end
+    current_user.courses << @course
+    current_user.save
   end
 
   def update

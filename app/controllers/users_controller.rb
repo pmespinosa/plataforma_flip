@@ -3,7 +3,6 @@ class UsersController < ApplicationController
   before_action :set_courses
 
   def index
-    @users = User.all
     current_user.current_course_id = nil
     current_user.save
   end
@@ -114,7 +113,7 @@ class UsersController < ApplicationController
   end
 
   def set_courses
-    @courses = Course.all
+    @courses = current_user.courses
   end
 
   def user_params
