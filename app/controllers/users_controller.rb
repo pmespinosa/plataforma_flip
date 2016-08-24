@@ -114,7 +114,7 @@ class UsersController < ApplicationController
   end
 
   def set_courses
-    @courses = Course.all
+    @courses = current_user.courses
   end
 
   def user_params

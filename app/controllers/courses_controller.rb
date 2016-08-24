@@ -51,6 +51,8 @@ class CoursesController < ApplicationController
   # POST /homeworks.json
   def create
     @course = Course.new(course_params)
+    @course.users << current_user
+    current_user.courses << @course
 
     respond_to do |format|
       if @course.save

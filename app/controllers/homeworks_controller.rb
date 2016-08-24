@@ -1,5 +1,6 @@
 class HomeworksController < ApplicationController
   before_action :set_homework, only: [:show, :edit, :update, :destroy]
+  #before_action :set_course_homework, only: [:index]
 
   # GET /homeworks
   # GET /homeworks.json
