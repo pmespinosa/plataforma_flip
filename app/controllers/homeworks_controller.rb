@@ -1,5 +1,6 @@
 class HomeworksController < ApplicationController
   before_action :set_homework, only: [:show, :edit, :update, :destroy]
+  before_action :set_course
 
   # GET /homeworks
   # GET /homeworks.json
@@ -38,6 +39,7 @@ class HomeworksController < ApplicationController
   # POST /homeworks.json
   def create
     @homework = Homework.new(homework_params)
+    @course.homeworks << @homework
     respond_to do |format|
       if @homework.save
         format.html { redirect_to homework_questions_path(@homework), notice: 'La actividad ha sido creada.' }
@@ -79,6 +81,10 @@ class HomeworksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_homework
       @homework = Homework.find(params[:id])
+    end
+
+    def set_course
+      @course = Course.find_by_id(current_user.current_course_id)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
