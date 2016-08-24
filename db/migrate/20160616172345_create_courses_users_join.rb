@@ -4,6 +4,6 @@ class CreateCoursesUsersJoin < ActiveRecord::Migration
       t.integer "course_id"
       t.integer "user_id"
     end
-    add_index :users_courses, ["course_id", "user_id"]
+    add_index :courses_users, ["course_id", "user_id"]
   end
 end
