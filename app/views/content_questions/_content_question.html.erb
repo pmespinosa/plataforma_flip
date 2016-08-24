@@ -1,0 +1,11 @@
+<div>
+
+	<div><%= content_quiestion.text %>
+	</div>
+	<div>
+		<% content_question.content_choices.each do |choice| %>
+	    	<%= f.radio_button%> choice.text <br />
+	    <% end %>
+	</div>
+
+</div>

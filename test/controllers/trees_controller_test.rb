@@ -18,7 +18,7 @@ class TreesControllerTest < ActionController::TestCase
 
   test "should create tree" do
     assert_difference('Tree.count') do
-      post :create, tree: { course_id: @tree.course_id, video: @tree.video }
+      post :create, tree: { course_id: @tree.course_id, iterations: @tree.iterations, video: @tree.video }
     end
 
     assert_redirected_to tree_path(assigns(:tree))
@@ -35,7 +35,7 @@ class TreesControllerTest < ActionController::TestCase
   end
 
   test "should update tree" do
-    patch :update, id: @tree, tree: { course_id: @tree.course_id, video: @tree.video }
+    patch :update, id: @tree, tree: { course_id: @tree.course_id, iterations: @tree.iterations, video: @tree.video }
     assert_redirected_to tree_path(assigns(:tree))
   end
 

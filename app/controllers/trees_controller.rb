@@ -69,6 +69,6 @@ class TreesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tree_params
-      params.require(:tree).permit(:video, :course_id)
+      params.require(:tree).permit(:video, :iterations, :course_id)
     end
 end

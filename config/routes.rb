@@ -2,6 +2,9 @@ Rails.application.routes.draw do
 
   
   
+  resources :content_choices
+  resources :ct_choices
+  resources :trees
   resources :ct_subhabilities
   
   
@@ -22,12 +25,10 @@ Rails.application.routes.draw do
   resources :courses do
     resources :trees do
       resources :ct_questions do
-        resources :ct_choices
-        resources :ct_habilities
+              resources :ct_habilities
       end
       resources :content_questions do
-        resources :content_choices
-
+      
       end
       resources :feedbacks
       resources :contents

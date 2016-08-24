@@ -1,2 +1,7 @@
 <p id="notice"><%= notice %></p>
 <h3><%=@course.name%></h3>
+
+<% @course.trees.each do |element| %>
+  <li><%= element.content.text %></li>
+<% end %>
+

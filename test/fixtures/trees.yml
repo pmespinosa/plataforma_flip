@@ -2,8 +2,10 @@
 
 one:
   video: MyString
+  iterations: 1
   course_id: 
 
 two:
   video: MyString
+  iterations: 1
   course_id: 

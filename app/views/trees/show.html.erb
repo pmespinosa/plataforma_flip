@@ -5,10 +5,19 @@
   <%= @tree.video %>
 </p>
 
+<div>
+	<strong>Pregunta inicial</strong>
+	<div class="row">
+		<% render: @tree.content_quiestions %>
+		<% render: @tree.ct_quiestions %>
+	</div>
+</div>
+
 <p>
-  <strong>Course:</strong>
-  <%= @tree.course %>
+  <strong>Iterations:</strong>
+  <%= @tree.iterations %>
 </p>
+
 
 <%= link_to 'Edit', edit_tree_path(@tree) %> |
 <%= link_to 'Back', trees_path %>
