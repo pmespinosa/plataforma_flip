@@ -99,19 +99,11 @@ ActiveRecord::Schema.define(version: 20160707190528) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "users_courses", id: false, force: :cascade do |t|
-<<<<<<< HEAD
     t.integer "user_id"
     t.integer "course_id"
   end
 
   add_index "users_courses", ["course_id", "user_id"], name: "index_users_courses_on_course_id_and_user_id", using: :btree
   add_index "users_courses", ["user_id", "course_id"], name: "index_users_courses_on_user_id_and_course_id", using: :btree
-=======
-    t.integer "courses_id"
-    t.integer "user_id"
-  end
-
-  add_index "users_courses", ["user_id", "courses_id"], name: "index_users_courses_on_user_id_and_courses_id", using: :btree
->>>>>>> master
 
 end
