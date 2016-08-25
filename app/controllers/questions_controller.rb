@@ -6,14 +6,6 @@ class QuestionsController < ApplicationController
   # GET /questions.json
   def index
     @questions = @homework.questions
-    puts "desde aca"
-    puts @homework.content
-    puts @homework.actual_phase
-    for i in @questions
-      puts i.content
-      puts i.phase
-    end
-    puts "hasta aca"
   end
 
   # GET /questions/1

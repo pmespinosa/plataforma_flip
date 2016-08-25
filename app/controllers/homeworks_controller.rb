@@ -42,10 +42,12 @@ class HomeworksController < ApplicationController
     if current_user.role?
       @questions = Question.all
     else
-      question = @homework.questions.where(:phase =>@homework.actual_phase)[0]
-      puts @homework.actual_phase
-      puts question.phase
-      puts "esto muestra la fase"
+      questions = @homework.questions
+      for q in @homework.questions
+        if q.phase == @homework.actual_phase
+          question = q
+        end
+      end
       if current_user.answers.find_by_question_id([question.id])
         redirect_to edit_homework_question_answer_path(@homework, question, current_user.answers.find_by_question_id(question.id))
       else
