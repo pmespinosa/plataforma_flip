@@ -16,7 +16,7 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <% if user_signed_in? %>
-          <% if current_user.role && current_user.current_course_id? %>
+          <% if current_user.role? && current_user.current_course_id? %>
             <ul class="nav navbar-nav">
               <li><%= link_to "Actividades",  homeworks_path%></li>
             </ul>

@@ -1,27 +1,40 @@
 class HomeworksController < ApplicationController
   before_action :set_homework, only: [:show, :edit, :update, :destroy]
   before_action :set_course
+  before_action :download_homeworks, only: [:show]
 
   # GET /homeworks
   # GET /homeworks.json
   def index
     if current_user.role?
-      @homeworks = Homework.where(course_id:current_user.current_course_id)
+      @homeworks = @course.homeworks
     else
-      @homeworks = Homework.where(course_id:current_user.current_course_id, upload:true)
-      @homework = @homeworks[0]
-      redirect_to homework_questions_path(@homework)
+      @homeworks = @course.homeworks.where(upload: true)
+      redirect_to homework_path(@homeworks[0].id)
     end
   end
 
-  # GET /homeworks/1
-  # GET /homeworks/1.json
+  def change_phase homework
+    if homework.actual_phase == "responder"
+      homework.actual_phase = "argumentar"
+    elsif homework.actual_phase == "argumentar"
+      homework.actual_phase = "rehacer"
+    end
+    homework.save
+  end
+
   def show
     @homework.upload = true
     @homework.save
     if current_user.role?
       @questions = Question.all
     else
+      question = @homework.questions.where(phase: @homework.actual_phase)[0]
+      if current_user.answers.find_by_question_id([question.id])
+        redirect_to edit_homework_question_answer_path(@homework, question, current_user.answers.find_by_question_id(question.id))
+      else
+        redirect_to new_homework_question_answer_path(@homework, question)
+      end
       @answers = Answer.all
     end
   end
@@ -42,7 +55,7 @@ class HomeworksController < ApplicationController
     @course.homeworks << @homework
     respond_to do |format|
       if @homework.save
-        format.html { redirect_to homework_questions_path(@homework), notice: 'La actividad ha sido creada.' }
+        format.html { redirect_to homeworks_path, notice: 'La actividad ha sido creada.' }
         format.json { render :show, status: :created, location: @homework }
       else
         format.html { render :new }
@@ -51,6 +64,7 @@ class HomeworksController < ApplicationController
     end
     @homework.course_id = current_user.current_course_id
     @homework.save
+    QuestionsController.new.create(@homework)
   end
 
   # PATCH/PUT /homeworks/1
@@ -87,8 +101,17 @@ class HomeworksController < ApplicationController
       @course = Course.find_by_id(current_user.current_course_id)
     end
 
+    def download_homeworks
+      if current_user.role?
+        for i in @course.homeworks
+          i.upload = false
+          i.save
+        end
+      end
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def homework_params
-      params.require(:homework).permit(:name, :actual_phase, :upload, :courses)
+      params.require(:homework).permit(:name, :content, :actual_phase, :upload, :courses)
     end
 end

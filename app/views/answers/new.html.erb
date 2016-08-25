@@ -1,20 +1,20 @@
 <div style="text-align: center">
 	<h3><%= @question.content %></h3>
-	
+
 
 	<% partner = User.find_by_id(current_user.partner_id) %>
 	<% if partner != nil %>
 		<% p_answers = partner.answers %>
 		<% answer = p_answers.find_by_question_id(@question.anterior) %>
 
-		<% if (@question.phase == 1 || answer != nil) && @question.phase == @homework.actual_phase%>
-			<% if @question.phase == 2 && answer != nil%>
+		<% if (@question.phase == "responder" || answer != nil) && @question.phase == @homework.actual_phase%>
+			<% if @question.phase == "argumentar" && answer != nil%>
 				<h4><%= "En base a la respuesta de %s %s, discuta y argumente su contenido:" % [partner.first_name, partner.last_name] %></h4>
 					<em><h4><%= "\"" + answer.content + "\"" %></h4></em>
 				<% if answer.image? %>
 					<p><%= image_tag answer.image.url(:large) %></p>
 				<% end %>
-			<% elsif @question.phase == 3 && answer != nil%>
+			<% elsif @question.phase == "rehacer" && answer != nil%>
 				<% my_answers = current_user.answers %>
 				<% ant = Question.find_by_id(@question.anterior) %>
 				<% my_ans = my_answers.find_by_question_id(ant.anterior) %>

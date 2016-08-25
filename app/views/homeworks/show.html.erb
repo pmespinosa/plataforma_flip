@@ -1,23 +1,25 @@
 <p id="notice"><%= notice %></p>
-<h3>Actividad</h3>
-<p>
-  <strong>Nombre:</strong>
-  <%= @homework.name %>
-</p>
+<h1><%= @homework.name %></h1>
+<h4>Etapa: <%= @homework.actual_phase %></h4>
 
-<p>
-  <strong>Fase:</strong>
-  <%= @homework.actual_phase %>
-</p>
-<p>
-  <strong>Disponible:</strong>
-  <%- if @homework.upload?%>
-	  <td><%= 'Si' %></td>
-	  <% else %>
-	  <td><%= 'No' %></td>
-	<% end -%>
-</p>
-
-
-<%= link_to 'Editar', edit_homework_path(@homework) %> |
-
+<h3>Pregunta</h3>
+<div class="column">
+<div class="col-sm-70 col-md-5">
+  <div class="thumbnail">
+    <div class="caption">
+      <p><%= @homework.content %></p>
+      <%= link_to 'Editar', edit_homework_path(@homework),  :class=>"btn btn-primary", :style=>'color:white' %>
+      <% if @homework.actual_phase == "responder" && current_user.role?%>
+        <%= link_to 'Argumentar', homework_path(@homework), :controller => "homeworks", :action => "change_phase", :class=>"btn btn-primary", :style=>'color:white'%>
+      <% elsif @homework.actual_phase == "argumentar" && current_user.role?%>
+        <%= link_to 'Rehacer', homework_path(@homework), :class=>"btn btn-primary", :style=>'color:white' %>
+      <% elsif @homework.actual_phase == "rehacer" && current_user.role?%>
+        <%= link_to 'Discución', homework_path(@homework), :class=>"btn btn-primary", :style=>'color:white' %>
+      <%end%>
+    </div>
+  </div>
+</div>
+</div>
+<br></br>
+<br></br>
+<br></br>

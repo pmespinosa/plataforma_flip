@@ -14,7 +14,9 @@ Rails.application.routes.draw do
   patch 'courses/:id/configuration'=> 'courses#edit'
   get 'courses/:id/users'=> 'courses#students'
   resources :courses do
-    resources :users
+    resources :users do
+      resources :homeworks
+    end
   end
 
   resources :home

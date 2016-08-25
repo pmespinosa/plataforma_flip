@@ -5,9 +5,12 @@
 <table class="table table-striped">
   <thead>
     <tr>
+      <th>Nombre Actividad</th>
       <th>Pregunta Actividad</th>
       <th></th>
-      <th colspan="3"></th>
+      <th></th>
+
+
     </tr>
   </thead>
 
@@ -16,6 +19,11 @@
       <tr>
         <%- if current_user.role?%>
           <td><%= homework.name %></td>
+          <% if homework.content.length > 30%>
+            <td><%= homework.content[0,40] %>...</td>
+          <% else %>
+            <td><%= homework.content%></td>
+          <% end -%>
           <td><%= link_to "Realizar Actividad", homework_path(homework), :class=>"btn btn-primary btn-xs", :style=>'color:white'%></td>
           <td><%= link_to 'Eliminar', homework,:class=>"btn btn-danger btn-xs", :style=>'color:white', method: :delete, data: { confirm: '¿Estás seguro que desesas eliminar la actividad?' } %></td>
         <% else %>
