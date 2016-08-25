@@ -1,7 +1,7 @@
 class HomeworksController < ApplicationController
-  before_action :set_homework, only: [:show, :edit, :update, :destroy]
+  before_action :set_homework, only: [:show, :edit, :update, :destroy, :change_phase]
   before_action :set_course
-  before_action :download_homeworks, only: [:show]
+  before_action :set_unavailable
 
   # GET /homeworks
   # GET /homeworks.json
@@ -10,17 +10,30 @@ class HomeworksController < ApplicationController
       @homeworks = @course.homeworks
     else
       @homeworks = @course.homeworks.where(upload: true)
-      redirect_to homework_path(@homeworks[0].id)
+      if @homeworks[0]
+        redirect_to homework_path(@homeworks[0])
+      end
     end
   end
 
-  def change_phase homework
-    if homework.actual_phase == "responder"
-      homework.actual_phase = "argumentar"
-    elsif homework.actual_phase == "argumentar"
-      homework.actual_phase = "rehacer"
+  def change_phase
+    if params["phase"] != nil
+      if params[:next]
+        if @homework.actual_phase == "responder"
+          @homework.actual_phase = "argumentar"
+        elsif @homework.actual_phase == "argumentar"
+          @homework.actual_phase = "rehacer"
+        end
+      elsif params[:previous]
+        if @homework.actual_phase == "argumentar"
+          @homework.actual_phase = "responder"
+        elsif @homework.actual_phase == "rehacer"
+          @homework.actual_phase = "argumentar"
+        end
+      end
+      @homework.save
     end
-    homework.save
+    redirect_to homework_path(@homework.id)
   end
 
   def show
@@ -29,7 +42,10 @@ class HomeworksController < ApplicationController
     if current_user.role?
       @questions = Question.all
     else
-      question = @homework.questions.where(phase: @homework.actual_phase)[0]
+      question = @homework.questions.where(:phase =>@homework.actual_phase)[0]
+      puts @homework.actual_phase
+      puts question.phase
+      puts "esto muestra la fase"
       if current_user.answers.find_by_question_id([question.id])
         redirect_to edit_homework_question_answer_path(@homework, question, current_user.answers.find_by_question_id(question.id))
       else
@@ -39,17 +55,13 @@ class HomeworksController < ApplicationController
     end
   end
 
-  # GET /homeworks/new
   def new
     @homework = Homework.new
   end
 
-  # GET /homeworks/1/edit
   def edit
   end
 
-  # POST /homeworks
-  # POST /homeworks.json
   def create
     @homework = Homework.new(homework_params)
     @course.homeworks << @homework
@@ -67,8 +79,6 @@ class HomeworksController < ApplicationController
     QuestionsController.new.create(@homework)
   end
 
-  # PATCH/PUT /homeworks/1
-  # PATCH/PUT /homeworks/1.json
   def update
     respond_to do |format|
       if @homework.update(homework_params)
@@ -101,7 +111,7 @@ class HomeworksController < ApplicationController
       @course = Course.find_by_id(current_user.current_course_id)
     end
 
-    def download_homeworks
+    def set_unavailable
       if current_user.role?
         for i in @course.homeworks
           i.upload = false

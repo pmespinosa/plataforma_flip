@@ -1,5 +1,4 @@
 
-<% puts "estoy en el form" %>
 <div style="text-align: center">
     <%= form_for([@homework, @question, @answer], html: { multipart: true }) do |f| %>
       <% if @answer.errors.any? %>

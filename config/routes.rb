@@ -3,25 +3,28 @@ Rails.application.routes.draw do
   # resources :questions do
   #   resources :homeworks
   #end
-  get 'users/asistencia'
-  post 'users/asistencia'
-  get 'users/configuration'
-  post 'users/configuration'
-  patch 'users/configuration'
+
+  resources :home
+  devise_for :users
+  resources :users
+
+  get 'courses/users/asistencia'=> 'users#asistencia'
+  post 'courses/users/asistencia'=> 'users#asistencia'
   get 'users/students'
 
   post 'courses/:id/configuration' => 'courses#edit'
   patch 'courses/:id/configuration'=> 'courses#edit'
   get 'courses/:id/users'=> 'courses#students'
+
+  get 'courses/:id/asistencia', to:'courses#asistencia', as:"course_asistencia"
+  post 'courses/:id/asistencia' => 'courses#asistencia'
   resources :courses do
     resources :users do
       resources :homeworks
     end
   end
 
-  resources :home
-  devise_for :users
-  resources :users
+  post  'homeworks/:id' => 'homeworks#change_phase'
   resources :homeworks do
     resources :questions do
       resources :answers

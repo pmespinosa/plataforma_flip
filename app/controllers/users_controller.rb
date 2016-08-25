@@ -81,7 +81,7 @@ class UsersController < ApplicationController
             libres.delete_at(i1)
           end
         end
-        redirect_to users_path, :notice => "Lista actualizada."
+        redirect_to course_path(current_user.current_course_id)
       end
     end
   end
