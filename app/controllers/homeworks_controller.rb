@@ -82,9 +82,13 @@ class HomeworksController < ApplicationController
   end
 
   def update
+    for question in @homework.questions
+      question.update(content:@homework.content)
+      question.save
+    end
     respond_to do |format|
       if @homework.update(homework_params)
-        format.html { redirect_to homework_questions_path(@homework), notice: 'La actividad ha sido actualizada.' }
+        format.html { redirect_to homework_path(@homework), notice: 'La actividad ha sido actualizada.' }
         format.json { render :show, status: :ok, location: @homework }
       else
         format.html { render :edit }
