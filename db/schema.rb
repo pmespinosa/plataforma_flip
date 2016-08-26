@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160823154227) do
+ActiveRecord::Schema.define(version: 20160824183831) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,9 +111,10 @@ ActiveRecord::Schema.define(version: 20160823154227) do
   add_index "feedbacks", ["tree_id"], name: "index_feedbacks_on_tree_id", using: :btree
 
   create_table "homeworks", force: :cascade do |t|
-    t.string   "name"
+    t.text     "name"
     t.integer  "actual_phase"
     t.boolean  "upload"
+    t.integer  "course_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
@@ -156,6 +157,7 @@ ActiveRecord::Schema.define(version: 20160823154227) do
     t.integer  "role"
     t.boolean  "asistencia"
     t.integer  "partner_id"
+    t.integer  "current_course_id"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "email",                  default: "", null: false

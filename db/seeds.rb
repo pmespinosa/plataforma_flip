@@ -43,30 +43,75 @@ content3 = Content.new(text: "Problemas matemáticos")
 
 
 
-the_ct_question = Ct_question.new(text: "pregunta pensamiento crítico")
-the_content_question = Content_question.new(text: "pregunta contenido")
+#the_ct_question = CtQuestion.new(question: "pregunta pensamiento crítico")
+#the_content_question = ContentQuestion.new(question: "pregunta contenido")
 
-the_content_question.content_choices.create![
+#the_content_question.content_choices.create![
 
-	{text: "alternativa a", right: false},
-	{text: "alternativa b", right: false},
-	{text: "alternativa c", right: true}
-]
+#	{text: "alternativa a", right: false},
+#	{text: "alternativa b", right: false},
+#	{text: "alternativa c", right: true}
+#]
 
-the_ct_question.ct_choices.create![
+#the_ct_question.ct_choices.create![
 
-	{text: "alternativa a", right: false},
-	{text: "alternativa b", right: false},
-	{text: "alternativa c", right: true},
-	{text: "alternativa d", right: true}
+#	{text: "alternativa a", right: false},
+#	{text: "alternativa b", right: false},
+#	{text: "alternativa c", right: true},
+#	{text: "alternativa d", right: true}
+#
+#]
 
-]
+#the_ct_choices = CtChoice.create![
+#					{text: "alternativa a", right: false},
+#					{text: "alternativa b", right: false},
+#					{text: "alternativa c", right: true},
+#					{text: "alternativa d", right: true}
+#				]
+
+#the_content_choices = ContentChoice.create![
+#						{text: "alternativa a", right: false},
+#						{text: "alternativa b", right: false},
+#						{text: "alternativa c", right: true},
+#						{text: "alternativa d", right: true}
+#					 ]
+
+
+
+
+choice1 = ContentChoice.create(text: "alternativa a", right: false)
+choice2 = ContentChoice.create(text: "alternativa b", right: false)
+choice3 = ContentChoice.create(text: "alternativa c", right: true)
+
+choicect1 = CtChoice.create(text: "alternativact a", right: false)
+choicect2 = CtChoice.create(text: "alternativact b", right: false)
+choicect3 = CtChoice.create(text: "alternativact c", right: true)
+
 
 course1.trees.create! [
 	{video: "https://www.youtube.com/watch?v=69EQUcUpRxo",iterations: 1, content: content1,
-		ct_question: the_ct_question, content_choices: the_content_question},	
+		ct_questions: [CtQuestion.create(question: "Cuando descubrio america colon?",
+			ct_choices: [choicect1, choicect2, choicect3] 
+			)],
+		content_questions: [ContentQuestion.create(question: "de que color es el cielo",
+			content_choices: [choice1, choice2, choice3] 
+			)]
+			
+	},	
 	{video: "https://www.youtube.com/watch?v=uhBHL3v4d3I",iterations: 1, content: content2,
-		ct_question: the_ct_question, content_choices: the_content_question},
+		ct_questions: [CtQuestion.create(question: "te gusta el tanaganica?",
+			ct_choices: [choicect1, choicect2, choicect3] 
+			)],
+		content_questions: [ContentQuestion.create(question: "Prefieres el tanganana?",
+			content_choices: [choice1, choice2, choice3] 
+			)]
+	},
 	{video: "https://www.youtube.com/watch?v=WM8bTdBs-cw",iterations: 1, content: content3, 
-		ct_question: the_ct_question, content_choices: the_content_question}
+		ct_questions: [CtQuestion.create(question: "De que color es el caballo blanco?",
+			ct_choices: [choicect1, choicect2, choicect3] 
+			)],
+		content_questions: [ContentQuestion.create(question: "que es una tarea?",
+			content_choices: [choice1, choice2, choice3] 
+			)]
+	}
 ]

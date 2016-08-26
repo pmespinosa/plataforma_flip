@@ -1,7 +1,17 @@
 <p id="notice"><%= notice %></p>
-<h3><%=@course.name%></h3>
+<h3><%=@course.name + ' > Árboles' %></h3>
 
-<% @course.trees.each do |element| %>
-  <li><%= element.content.text %></li>
+
+<br></br>
+
+ <% @course.trees.sort_by{|e| e[:created_at]}.each do |tree| %>
+  <div class="panel panel-default"> 
+    <div class="panel-body">       
+       <%= link_to tree.content.text, tree_path(tree) %>
+       <p><%= link_to 'Editar', edit_tree_path(tree), :class=>"btn btn-primary pull-right", :style=>'color:white'%></p>
+       <p><%= link_to 'Eliminar', tree, method: :delete, data: { confirm: '¿Seguro que deseas eliminar el arbol?' }, :class=>"btn btn-primary pull-right", :style=>'color:white' %></p>
+       <div class="clearfix"></div>
+    </div>
+  </div>
 <% end %>
 

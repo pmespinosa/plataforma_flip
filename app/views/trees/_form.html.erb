@@ -11,19 +11,19 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :video %><br>
-    <%= f.text_field :video %>
-  </div>
-  <div class="field">
-    <%= f.label :iterations %><br>
-    <%= f.number_field :iterations %>
-  </div>
-  <div class="field">
-    <%= f.label :course_id %><br>
-    <%= f.text_field :course_id %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+
+<form class="form-horizontal">
+  <fieldset>
+    <legend><%=@tree.content.text %></legend>
+
+    <% @tree.content_questions.each do |content_question| %>
+      <% render @content_question %><br> 
+    <% end %>
+
+
+
+ </fieldset>
+</form>
+
+   
 <% end %>

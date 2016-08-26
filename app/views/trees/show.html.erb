@@ -1,16 +1,18 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Video:</strong>
-  <%= @tree.video %>
-</p>
+
 
 <div>
-	<strong>Pregunta inicial</strong>
-	<div class="row">
-		<% render: @tree.content_quiestions %>
-		<% render: @tree.ct_quiestions %>
-	</div>
+	<form class="form-horizontal">
+	  <fieldset>
+	    <legend><%=@tree.content.text %></legend>
+	    <p><strong>Video: </strong><%= @tree.video %></p>
+	    <div>
+	      <%= render @tree.content_questions %><br> 
+	    </div>
+
+ 	  </fieldset>
+    </form>
 </div>
 
 <p>
