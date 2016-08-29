@@ -1,19 +1,71 @@
 <p id="notice"><%= notice %></p>
 
 
+<legend><%= @tree.content.text %></legend>
+<legend>Video: <%= @tree.video %></legend>
 
-<div>
-	<form class="form-horizontal">
-	  <fieldset>
-	    <legend><%=@tree.content.text %></legend>
-	    <p><strong>Video: </strong><%= @tree.video %></p>
-	    <div>
-	      <%= render @tree.content_questions %><br> 
-	    </div>
+<p>
+  <strong>Pregunta Inicial Contenido (1.1)</strong>
+  <%= @initial_content_question.question %>
+</p>
 
- 	  </fieldset>
-    </form>
-</div>
+<p>
+  <strong>Pregunta Inicial_Pensamiento Crítico (1.1)</strong>
+  <%= @initial_ct_question.question %>
+</p>
+---	 
+<p>
+  <strong>Feedback Simple (1.1)</strong>
+  <%= @initial_simple_feedback.text %>
+</p>
+<p>
+  <strong>Feedback Complejo (1.1)</strong>
+  <%= @initial_complex_feedback.text %>
+</p>
+---
+
+<p>
+  <strong>Pregunta Recuperativa Contenido (1.2)</strong>
+  <%= @recuperative_content_question.question %>
+</p>
+	 
+
+<p>
+  <strong>Pregunta Recuperativa Pensamiento Crítico (1.2)</strong>
+  <%= @recuperative_ct_question.question %>
+</p>
+	 
+--<p>
+  <strong>Feedback Simple (1.2) </strong>
+  <%= @recuperative_simple_feedback.text %>
+</p>
+<p>
+  <strong>Feedback Complejo (1.2)</strong>
+  <%= @recuperative_complex_feedback.text %>
+</p>
+
+--
+
+<p>
+  <strong>Pregunta Profundización Contenido (2.0)</strong>
+  <%= @deeping_content_question.question %>
+</p>
+
+<p>
+  <strong>Pregunta Profundización Pensamiento Crítico (2.0)</strong>
+  <%= @deeping_ct_question.question %>
+</p>
+	  
+----
+<p>
+  <strong> Feedback Complejo (2.0) </strong>
+  <%= @deeping_simple_feedback.text %>
+</p>
+<p>
+  <strong> Feedback Complejo (2.0) </strong>
+  <%= @deeping_complex_feedback.text%>
+</p>
+----
 
 <p>
   <strong>Iterations:</strong>

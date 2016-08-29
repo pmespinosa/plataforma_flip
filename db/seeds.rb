@@ -83,20 +83,56 @@ choice1 = ContentChoice.create(text: "alternativa a", right: false)
 choice2 = ContentChoice.create(text: "alternativa b", right: false)
 choice3 = ContentChoice.create(text: "alternativa c", right: true)
 
-choicect1 = CtChoice.create(text: "alternativact a", right: false)
+choicect1 = CtChoice.create(text: "alternativact a", right: true)
 choicect2 = CtChoice.create(text: "alternativact b", right: false)
 choicect3 = CtChoice.create(text: "alternativact c", right: true)
 
+cchoice1 = ContentChoice.create(text: "alternativa a", right: false)
+cchoice2 = ContentChoice.create(text: "alternativa b", right: false)
+cchoice3 = ContentChoice.create(text: "alternativa c", right: true)
+
+cchoicect1 = CtChoice.create(text: "alternativact a", right: true)
+cchoicect2 = CtChoice.create(text: "alternativact b", right: false)
+cchoicect3 = CtChoice.create(text: "alternativact c", right: true)
+
+ccchoice1 = ContentChoice.create(text: "alternativa a", right: false)
+ccchoice2 = ContentChoice.create(text: "alternativa b", right: false)
+ccchoice3 = ContentChoice.create(text: "alternativa c", right: true)
+
+ccchoicect1 = CtChoice.create(text: "alternativact a", right: true)
+ccchoicect2 = CtChoice.create(text: "alternativact b", right: false)
+ccchoicect3 = CtChoice.create(text: "alternativact c", right: true)
+
+cccchoice1 = ContentChoice.create(text: "alternativa a", right: false)
+cccchoice2 = ContentChoice.create(text: "alternativa b", right: false)
+cccchoice3 = ContentChoice.create(text: "alternativa c", right: true)
+
+cccchoicect1 = CtChoice.create(text: "alternativact a", right: true)
+cccchoicect2 = CtChoice.create(text: "alternativact b", right: false)
+cccchoicect3 = CtChoice.create(text: "alternativact c", right: true)
 
 course1.trees.create! [
 	{video: "https://www.youtube.com/watch?v=69EQUcUpRxo",iterations: 1, content: content1,
-		ct_questions: [CtQuestion.create(question: "Cuando descubrio america colon?",
-			ct_choices: [choicect1, choicect2, choicect3] 
-			)],
-		content_questions: [ContentQuestion.create(question: "de que color es el cielo",
-			content_choices: [choice1, choice2, choice3] 
-			)]
-			
+		ct_questions: [CtQuestion.create(question: "Pregunta inicial pensamiento crítico",
+			ct_choices: [cchoicect1, cchoicect2, cchoicect3] 
+			),
+			CtQuestion.create(question: "Pregunta recuperativa pensamiento crítico",
+			ct_choices: [ccchoicect1, ccchoicect2, ccchoicect3] 
+			),
+			CtQuestion.create(question: "Pregunta profundizacion pensamiento crítico",
+			ct_choices: [cccchoicect1, cccchoicect2, cccchoicect3] 
+			)
+		],
+		content_questions: [ContentQuestion.create(question: "Pregunta inicial contenido",
+			content_choices: [cchoice1, cchoice2, cchoice3] 
+			),
+		ContentQuestion.create(question: "Pregunta recuperativa pensamiento crítico",
+			content_choices: [ccchoice1, ccchoice2, ccchoice3] 
+			),
+		ContentQuestion.create(question: "Pregunta profundizacion pensamiento crítico",
+			content_choices: [cccchoice1, cccchoice2, cccchoice3] 
+			)
+		]			
 	},	
 	{video: "https://www.youtube.com/watch?v=uhBHL3v4d3I",iterations: 1, content: content2,
 		ct_questions: [CtQuestion.create(question: "te gusta el tanaganica?",

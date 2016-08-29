@@ -11,19 +11,40 @@
     </div>
   <% end %>
 
+   
+    <%= f.fields_for :content do |content_fields| %>
+      <div>
+        <%= content_fields.label :content, 'Contenido' %>
+        <%= content_fields.text_field :text %>
+      </div>
+    <% end %>
 
-<form class="form-horizontal">
-  <fieldset>
-    <legend><%=@tree.content.text %></legend>
+    
+    <div class="field">
+      <%= f.label :video %><br>
+      <%= f.text_field :video %>
+    </div>
+   
+    <div class="field">
+      <%= f.label :iterations %><br>
+      <%= f.number_field :iterations %>
+    </div>
 
-    <% @tree.content_questions.each do |content_question| %>
-      <% render @content_question %><br> 
+
+    <%= f.fields_for :content_questions do |builder| %>
+      <%= render "content_question_fields", :f => builder %>
+    <% end %>
+
+    <%= f.fields_for :ct_questions do |builder| %>
+      <%= render "ct_question_fields", :f => builder %>
     <% end %>
 
 
 
- </fieldset>
-</form>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
 
-   
+
+
 <% end %>
