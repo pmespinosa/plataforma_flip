@@ -7,12 +7,12 @@
  <% @course.trees.sort_by{|e| e[:created_at]}.each do |tree| %>
   <div class="panel panel-default"> 
     <div class="panel-body">       
-       <%= link_to tree.content.text, tree_path(tree) %>       
-       <p><%= link_to 'Eliminar', tree, method: :delete, data: { confirm: '¿Seguro que deseas eliminar el arbol?' }, :class=>"btn btn-primary pull-right", :style=>'color:white' %></p>
+       <%= link_to tree.content.text, course_tree_path(@course, tree) %>       
+       <p><%= link_to 'Eliminar', [@course, tree], method: :delete, data: { confirm: '¿Seguro que deseas eliminar el arbol?' }, :class=>"btn btn-primary pull-right", :style=>'color:white' %></p>
        <div class="clearfix"></div>
-       <p><%= link_to 'Editar', edit_tree_path(tree), :class=>"btn btn-primary pull-right", :style=>'color:white'%></p>
+       <p><%= link_to 'Editar', edit_course_tree_path(@course, tree), :class=>"btn btn-primary pull-right", :style=>'color:white'%></p>
     </div>
   </div>
 <% end %>
 
-<%= link_to 'Agregar Video', new_tree_path %>
+<%= link_to 'Agregar Video', new_course_tree_path(@course) %>

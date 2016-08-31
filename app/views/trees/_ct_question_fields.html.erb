@@ -1,10 +1,8 @@
 <p>
-  <%= f.label :question, "Pregunta Pensamiento Crítico" %><br />
   <%= f.text_area :question, :rows => 3 %><br />
-  <%= f.check_box :_destroy %>
-  <%= f.label :_destroy, "Eliminar Pregunta" %>
+
 </p>
-<%= f.fields_for :content_choices do |builder| %>
+<%= f.fields_for :ct_choices do |builder| %>
   <%= render 'ct_choice_fields', :f => builder %>
 <% end %>
 

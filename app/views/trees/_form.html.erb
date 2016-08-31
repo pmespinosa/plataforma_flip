@@ -1,4 +1,4 @@
-<%= form_for(@tree) do |f| %>
+<%= simple_form_for([@course,@tree]) do |f| %>
   <% if @tree.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@tree.errors.count, "error") %> prohibited this tree from being saved:</h2>
@@ -30,17 +30,52 @@
       <%= f.number_field :iterations %>
     </div>
 
+<table style="width:100%">
+    <tr>
+      <td>
+      <%= f.fields_for :initial_content_question do |builder| %>
+        <p>Pregunta inicial de contenido (1.1)</p>
+        <legend><%= render "content_question_fields", :f => builder %></legend>
+      <% end %>
+      </td>
+      <td>
+      <%= f.fields_for :initial_ct_question do |builder| %>
+        <p>Pregunta inicial de pensamiento crítico (1.1)</p>
+        <%= render "ct_question_fields", :f => builder %>
+      <% end %>
+      </td>
+    </tr>
 
-    <%= f.fields_for :content_questions do |builder| %>
-      <%= render "content_question_fields", :f => builder %>
-    <% end %>
+    <tr>
+      <td>
+      <%= f.fields_for :recuperative_content_question do |builder| %>
+        <p>Pregunta recuperativa de contenido (1.2)</p>
+        <%= render "content_question_fields", :f => builder %>
+      <% end %>
+      </td>
+      <td>
+      <%= f.fields_for :recuperative_ct_question do |builder| %>
+        <p>Pregunta recuperativa de pensamiento crítico (1.2)</p>
+        <%= render "ct_question_fields", :f => builder %>
+      <% end %>
+      </td>
+    </tr>
 
-    <%= f.fields_for :ct_questions do |builder| %>
-      <%= render "ct_question_fields", :f => builder %>
-    <% end %>
-
-
-
+    <tr>
+      <td>
+      <%= f.fields_for :deeping_content_question do |builder| %>
+        <p>Pregunta de profundizacipn de contenido (2.0)</p>
+        <%= render "content_question_fields", :f => builder %>
+      <% end %>
+      </td>
+      <td>
+      <%= f.fields_for :deeping_ct_question do |builder| %>
+        <p>Pregunta de profundización de pensamiento crítico (2.0)</p>
+        <%= render "ct_question_fields", :f => builder %>
+      <% end %>
+      </td>
+    </tr>
+</table>
     <div class="actions">
       <%= f.submit %>
     </div>

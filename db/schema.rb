@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160824183831) do
+ActiveRecord::Schema.define(version: 20160830025449) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 20160824183831) do
     t.integer  "tree_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "header"
   end
 
   add_index "content_questions", ["tree_id"], name: "index_content_questions_on_tree_id", using: :btree
@@ -87,6 +88,7 @@ ActiveRecord::Schema.define(version: 20160824183831) do
     t.integer  "tree_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "header"
   end
 
   add_index "ct_questions", ["tree_id"], name: "index_ct_questions_on_tree_id", using: :btree

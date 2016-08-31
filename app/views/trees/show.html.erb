@@ -6,66 +6,37 @@
 
 <p>
   <strong>Pregunta Inicial Contenido (1.1)</strong>
-  <%= @initial_content_question.question %>
+  <%= @tree.initial_content_question.question %>
 </p>
 
 <p>
   <strong>Pregunta Inicial_Pensamiento Crítico (1.1)</strong>
-  <%= @initial_ct_question.question %>
+  <%= @tree.initial_ct_question.question %>
 </p>
----	 
-<p>
-  <strong>Feedback Simple (1.1)</strong>
-  <%= @initial_simple_feedback.text %>
-</p>
-<p>
-  <strong>Feedback Complejo (1.1)</strong>
-  <%= @initial_complex_feedback.text %>
-</p>
----
 
 <p>
   <strong>Pregunta Recuperativa Contenido (1.2)</strong>
-  <%= @recuperative_content_question.question %>
+  <%= @tree.recuperative_content_question.question %>
 </p>
 	 
 
 <p>
   <strong>Pregunta Recuperativa Pensamiento Crítico (1.2)</strong>
-  <%= @recuperative_ct_question.question %>
+  <%= @tree.recuperative_ct_question.question %>
 </p>
 	 
---<p>
-  <strong>Feedback Simple (1.2) </strong>
-  <%= @recuperative_simple_feedback.text %>
-</p>
-<p>
-  <strong>Feedback Complejo (1.2)</strong>
-  <%= @recuperative_complex_feedback.text %>
-</p>
 
---
 
 <p>
   <strong>Pregunta Profundización Contenido (2.0)</strong>
-  <%= @deeping_content_question.question %>
+  <%= @tree.deeping_content_question.question %>
 </p>
 
 <p>
   <strong>Pregunta Profundización Pensamiento Crítico (2.0)</strong>
-  <%= @deeping_ct_question.question %>
+  <%= @tree.deeping_ct_question.question %>
 </p>
 	  
-----
-<p>
-  <strong> Feedback Complejo (2.0) </strong>
-  <%= @deeping_simple_feedback.text %>
-</p>
-<p>
-  <strong> Feedback Complejo (2.0) </strong>
-  <%= @deeping_complex_feedback.text%>
-</p>
-----
 
 <p>
   <strong>Iterations:</strong>
@@ -73,5 +44,5 @@
 </p>
 
 
-<%= link_to 'Edit', edit_tree_path(@tree) %> |
-<%= link_to 'Back', trees_path %>
+<%= link_to 'Edit', edit_course_tree_path(@course, @tree) %> |
+<%= link_to 'Back', course_path(@course) %>
