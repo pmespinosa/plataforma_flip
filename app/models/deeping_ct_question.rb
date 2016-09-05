@@ -1,0 +1,2 @@
+class DeepingCtQuestion < CtQuestion
+end

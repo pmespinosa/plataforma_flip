@@ -11,67 +11,67 @@
     </div>
   <% end %>
 
+
+    <br>
    
     <%= f.fields_for :content do |content_fields| %>
-      <div>
-        <%= content_fields.label :content, 'Contenido' %>
-        <%= content_fields.text_field :text %>
+      <div class="input-group">
+        <%= content_fields.label :content, 'Contenido', :class => "input-group-addon" %>
+        <%= content_fields.text_field :text, :class=>"form-control", :placeholder=>"Contenido del Video" %>
       </div>
     <% end %>
+    <br>
 
-    
-    <div class="field">
-      <%= f.label :video %><br>
-      <%= f.text_field :video %>
+    <div class="input-group">
+      <%= f.label :video, 'Video', :class => "input-group-addon"%>
+      <%= f.text_field :video, :class=>"form-control", :placeholder=>"URL de Video asociado" %>
     </div>
+    <br>
+
    
-    <div class="field">
-      <%= f.label :iterations %><br>
-      <%= f.number_field :iterations %>
-    </div>
 
 <table style="width:100%">
     <tr>
       <td>
-      <%= f.fields_for :initial_content_question do |builder| %>
-        <p>Pregunta inicial de contenido (1.1)</p>
-        <legend><%= render "content_question_fields", :f => builder %></legend>
+      <%= f.simple_fields_for :initial_content_question, @tree.initial_content_question do |builder| %>
+        <label for="basic-url">Pregunta inicial de contenido (1.1)</label>
+        <%= render "initial_content_question_fields", :f => builder %>
       <% end %>
       </td>
       <td>
-      <%= f.fields_for :initial_ct_question do |builder| %>
-        <p>Pregunta inicial de pensamiento crítico (1.1)</p>
-        <%= render "ct_question_fields", :f => builder %>
+      <%= f.simple_fields_for :initial_ct_question do |builder| %>
+         <label for="basic-url">Pregunta inicial de pensamiento crítico (1.1)</label>
+         <%= render "initial_ct_question_fields", :f => builder %>
+      <% end %>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+      <%= f.simple_fields_for :recuperative_content_question do |builder| %>
+        <label for="basic-url">Pregunta recuperativa de contenido (1.2)</label>
+        <%= render "recuperative_content_question_fields", :f => builder %>
+      <% end %>
+      </td>
+      <td>
+      <%= f.simple_fields_for :recuperative_ct_question do |builder| %>
+        <label for="basic-url">Pregunta recuperativa de pensamiento crítico (1.2)</label>
+        <%= render "recuperative_ct_question_fields", :f => builder %>
       <% end %>
       </td>
     </tr>
 
     <tr>
       <td>
-      <%= f.fields_for :recuperative_content_question do |builder| %>
-        <p>Pregunta recuperativa de contenido (1.2)</p>
-        <%= render "content_question_fields", :f => builder %>
+      <%= f.simple_fields_for :deeping_content_question do |builder| %>
+        <label for="basic-url">Pregunta de profundización de contenido (2.0)</label>
+        <%= render "deeping_content_question_fields", :f => builder %>
       <% end %>
       </td>
       <td>
-      <%= f.fields_for :recuperative_ct_question do |builder| %>
-        <p>Pregunta recuperativa de pensamiento crítico (1.2)</p>
-        <%= render "ct_question_fields", :f => builder %>
-      <% end %>
-      </td>
-    </tr>
-
-    <tr>
-      <td>
-      <%= f.fields_for :deeping_content_question do |builder| %>
-        <p>Pregunta de profundizacipn de contenido (2.0)</p>
-        <%= render "content_question_fields", :f => builder %>
-      <% end %>
-      </td>
-      <td>
-      <%= f.fields_for :deeping_ct_question do |builder| %>
-        <p>Pregunta de profundización de pensamiento crítico (2.0)</p>
-        <%= render "ct_question_fields", :f => builder %>
+      <%= f.simple_fields_for :deeping_ct_question do |builder| %>
+        <label for="basic-url">Pregunta de profundización de pensamiento crítico (2.0)</label>
+        <%= render "deeping_ct_question_fields", :f => builder %>
       <% end %>
       </td>
     </tr>

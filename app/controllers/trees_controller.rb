@@ -1,6 +1,12 @@
 class TreesController < ApplicationController
   before_action :set_tree, only: [:show, :edit, :update, :destroy]
    before_action :set_course, only: [:create, :new]
+   before_action :set_tree_edx, only: [:edx_view]
+
+   def edx_view
+    @username = params['lis_person_sourcedid']
+    render 'edx_view'
+   end
 
   # GET /trees
   # GET /trees.json
@@ -118,10 +124,9 @@ class TreesController < ApplicationController
   # PATCH/PUT /trees/1
   # PATCH/PUT /trees/1.json
   def update
-    @tree = @course.trees.new(tree_params)
-
+    
     respond_to do |format|
-      if @tree.update(tree_params)
+      if @tree.update(tree_params) 
         format.html { redirect_to @course, notice: 'Tree was successfully updated.' }
         format.json { render :show, status: :ok, location: @tree }
       else
@@ -136,7 +141,7 @@ class TreesController < ApplicationController
   def destroy
     @tree.destroy
     respond_to do |format|
-      format.html { redirect_to trees_url, notice: 'Tree was successfully destroyed.' }
+      format.html { redirect_to @course, notice: 'Tree was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -149,6 +154,12 @@ class TreesController < ApplicationController
      
     end
 
+    def set_tree_edx
+      @course = Course.find(1)
+      @tree = @course.trees.find(params[:id])
+     
+    end
+
     def set_course
       @course = Course.find(params[:course_id])
      
@@ -156,19 +167,19 @@ class TreesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tree_params
-      params.require(:tree).permit(:video, content_attributes: [:text], 
-        initial_content_question_attributes: [:question],
-        initial_ct_question_attributes: [:question],
-        recuperative_content_question_attributes: [:question],
-        recuperative_ct_question_attributes: [:question],
-        deeping_content_question_attributes: [:question],
-        deeping_ct_question_attributes: [:question])
+      params.require(:tree).permit(:video, content_attributes: [:id, :text], 
+        initial_content_question_attributes: [:id, :question, :_destroy, content_choices_attributes: [:id, :text, :right, :_destroy]],
+        initial_ct_question_attributes: [:id, :question, :_destroy, ct_choices_attributes: [:id, :text, :right, :_destroy]],
+        recuperative_content_question_attributes: [:id, :question, :_destroy, content_choices_attributes: [:id, :text, :right, :_destroy]],
+        recuperative_ct_question_attributes: [:id, :question, :_destroy, ct_choices_attributes: [:id, :text, :right, :_destroy]],
+        deeping_content_question_attributes: [:id, :question, :_destroy, content_choices_attributes: [:id, :text, :right, :_destroy]],
+        deeping_ct_question_attributes: [:id, :question, :_destroy, ct_choices_attributes: [:id, :text, :right, :_destroy]])
 
     end
     def ct_question_params
-      params.require(:tree).permit(:header, :question, :tree_id)
+      params.require(:tree).permit(:question, :tree_id, ct_choices_attributes: [:text, :right])
     end
     def content_question_params
-      params.require(:tree).permit(:header, :question, :tree_id)
+      params.require(:tree).permit(:question, :tree_id, content_choices_attributes: [:text, :right])
     end
 end

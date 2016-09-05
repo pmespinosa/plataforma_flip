@@ -1,5 +1,9 @@
-<p>
-  <%= f.label :text, "Alternativa" %>
-  <%= f.text_field :text %>
-</p>
-
+<div class='nested-fields'>
+	<div class="input-group">
+		<span class="input-group-addon" id="check">
+			<%= f.check_box :right, :class => 'inline'%>
+		</span>
+		<%= f.text_field :text, :class => "form-control" %>
+		<%= link_to_remove_association "remove choice", f %>	
+	</div>
+</div>

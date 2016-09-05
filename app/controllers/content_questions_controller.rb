@@ -69,6 +69,6 @@ class ContentQuestionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def content_question_params
-      params.require(:content_question).permit(:question, :tree_id)
+      params.require(:content_question).permit(:id, :question, :tree_id)
     end
 end

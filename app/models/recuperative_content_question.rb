@@ -1,0 +1,2 @@
+class RecuperativeContentQuestion < ContentQuestion
+end

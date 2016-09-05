@@ -1,0 +1,2 @@
+class RecuperativeCtQuestion < CtQuestion
+end

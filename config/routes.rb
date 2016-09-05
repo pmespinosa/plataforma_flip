@@ -20,7 +20,8 @@ Rails.application.routes.draw do
   post 'users/configuration'
   patch 'users/configuration'
   get 'users/students'
-
+  #post 'courses/:id' => 'courses#show'
+  post '/courses/:id/trees/:id' => 'trees#edx_view'
 
   resources :courses do
     resources :trees do

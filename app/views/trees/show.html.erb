@@ -9,10 +9,18 @@
   <%= @tree.initial_content_question.question %>
 </p>
 
+<% @tree.initial_content_question.content_choices.each do |choice| %>
+<p> <%= choice.text %> </p>
+<% end %>
+
 <p>
   <strong>Pregunta Inicial_Pensamiento Crítico (1.1)</strong>
   <%= @tree.initial_ct_question.question %>
 </p>
+
+<% @tree.initial_ct_question.ct_choices.each do |choice| %>
+<p> <%= choice.text %> </p>
+<% end %>
 
 <p>
   <strong>Pregunta Recuperativa Contenido (1.2)</strong>

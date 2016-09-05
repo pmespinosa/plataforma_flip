@@ -111,43 +111,43 @@ cccchoicect1 = CtChoice.create(text: "alternativact a", right: true)
 cccchoicect2 = CtChoice.create(text: "alternativact b", right: false)
 cccchoicect3 = CtChoice.create(text: "alternativact c", right: true)
 
-course1.trees.create! [
-	{video: "https://www.youtube.com/watch?v=69EQUcUpRxo",iterations: 1, content: content1,
-		ct_questions: [CtQuestion.create(question: "Pregunta inicial pensamiento crítico",
-			ct_choices: [cchoicect1, cchoicect2, cchoicect3] 
-			),
-			CtQuestion.create(question: "Pregunta recuperativa pensamiento crítico",
-			ct_choices: [ccchoicect1, ccchoicect2, ccchoicect3] 
-			),
-			CtQuestion.create(question: "Pregunta profundizacion pensamiento crítico",
-			ct_choices: [cccchoicect1, cccchoicect2, cccchoicect3] 
-			)
-		],
-		content_questions: [ContentQuestion.create(question: "Pregunta inicial contenido",
-			content_choices: [cchoice1, cchoice2, cchoice3] 
-			),
-		ContentQuestion.create(question: "Pregunta recuperativa pensamiento crítico",
-			content_choices: [ccchoice1, ccchoice2, ccchoice3] 
-			),
-		ContentQuestion.create(question: "Pregunta profundizacion pensamiento crítico",
-			content_choices: [cccchoice1, cccchoice2, cccchoice3] 
-			)
-		]			
-	},	
-	{video: "https://www.youtube.com/watch?v=uhBHL3v4d3I",iterations: 1, content: content2,
-		ct_questions: [CtQuestion.create(question: "te gusta el tanaganica?",
-			ct_choices: [choicect1, choicect2, choicect3] 
-			)],
-		content_questions: [ContentQuestion.create(question: "Prefieres el tanganana?",
-			content_choices: [choice1, choice2, choice3] 
-			)]
-	},
-	{video: "https://www.youtube.com/watch?v=WM8bTdBs-cw",iterations: 1, content: content3, 
-		ct_questions: [CtQuestion.create(question: "De que color es el caballo blanco?",
-			ct_choices: [choicect1, choicect2, choicect3] 
-			)],
-		content_questions: [ContentQuestion.create(question: "que es una tarea?",
-			content_choices: [choice1, choice2, choice3] 
-			)]
-	}
-]
+#course1.trees.create! [
+#	{video: "https://www.youtube.com/watch?v=69EQUcUpRxo",iterations: 1, content: content1,
+#		ct_questions: [CtQuestion.create(question: "Pregunta inicial pensamiento crítico",
+#			ct_choices: [cchoicect1, cchoicect2, cchoicect3] 
+#			),
+#			CtQuestion.create(question: "Pregunta recuperativa pensamiento crítico",
+#			ct_choices: [ccchoicect1, ccchoicect2, ccchoicect3] 
+#			),
+#			CtQuestion.create(question: "Pregunta profundizacion pensamiento crítico",
+#			ct_choices: [cccchoicect1, cccchoicect2, cccchoicect3] 
+#			)
+#		],
+#		content_questions: [ContentQuestion.create(question: "Pregunta inicial contenido",
+#			content_choices: [cchoice1, cchoice2, cchoice3] 
+#			),
+#		ContentQuestion.create(question: "Pregunta recuperativa pensamiento crítico",
+#			content_choices: [ccchoice1, ccchoice2, ccchoice3] 
+#			),
+#		ContentQuestion.create(question: "Pregunta profundizacion pensamiento crítico",
+#			content_choices: [cccchoice1, cccchoice2, cccchoice3] 
+#			)
+#		]			
+#	},	
+#	{video: "https://www.youtube.com/watch?v=uhBHL3v4d3I",iterations: 1, content: content2,
+#		ct_questions: [CtQuestion.create(question: "te gusta el tanaganica?",
+#			ct_choices: [choicect1, choicect2, choicect3] 
+#			)],
+#		content_questions: [ContentQuestion.create(question: "Prefieres el tanganana?",
+#			content_choices: [choice1, choice2, choice3] 
+#			)]
+#	},
+#	{video: "https://www.youtube.com/watch?v=WM8bTdBs-cw",iterations: 1, content: content3, 
+#		ct_questions: [CtQuestion.create(question: "De que color es el caballo blanco?",
+#			ct_choices: [choicect1, choicect2, choicect3] 
+#			)],
+#		content_questions: [ContentQuestion.create(question: "que es una tarea?",
+#			content_choices: [choice1, choice2, choice3] 
+#			)]
+#	}
+#]

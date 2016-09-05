@@ -1,5 +1,6 @@
 class CoursesController < ApplicationController
   before_action :set_course, only: [:show, :edit, :update, :destroy]
+  # before_action agregar que pida usuario gem device
 
   def index
     @course = Course.find(params[:id])
@@ -10,8 +11,8 @@ class CoursesController < ApplicationController
   # GET /courses/1.json
   def show
     @courses = Course.all
+    @username = params['lis_person_sourcedid']
   end
-
   def new
     @course = Course.new
   end
