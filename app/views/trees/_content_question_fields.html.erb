@@ -5,8 +5,11 @@
 	<br>
 
 	<%= f.fields_for :content_choices do |builder| %>
-	  <%= render 'content_choice_fields', :f => builder %>
+		<form class="form-inline">
+		  <%= render 'content_choice_fields', :f => builder %>
+		  <%= link_to_add_association '', f, :content_choices, :class => "glyphicon glyphicon-remove-sign" %>
+		</form>
 	<% end %>
 	<br>
-	<%= link_to_add_association 'add choice', f, :content_choices, :class => "btn btn-small btn-primary" %>
+	
 </div>
