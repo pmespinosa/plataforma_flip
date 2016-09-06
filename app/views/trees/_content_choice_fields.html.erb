@@ -1,14 +1,13 @@
 <div class='nested-fields'>
-	<form class="form-inline">
 		<div class="input-group">
 			<span class="input-group-addon" id="check">
 				<%= f.check_box :right, :class => 'inline'%>
 			</span>
 			<%= f.text_field :text, :class => "form-control" %>
 		</div>
-			<%= link_to_remove_association "", f, :class => "glyphicon glyphicon-remove-sign" %>
-		</div>
-	</form>
+		<%= link_to_remove_association '<span class="glyphicon glyphicon-remove-sign"></span>'.html_safe, f, :class => "" %>
+	<br>
 </div>
+
 
 

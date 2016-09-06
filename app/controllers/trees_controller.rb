@@ -96,8 +96,7 @@ class TreesController < ApplicationController
     @tree.build_recuperative_content_question if @tree.recuperative_content_question.nil?  
     @tree.build_recuperative_ct_question if @tree.recuperative_ct_question.nil?  
     @tree.build_deeping_content_question if @tree.deeping_content_question.nil?
-    @tree.build_deeping_ct_question if @tree.deeping_content_question.nil?
-  
+    @tree.build_deeping_ct_question if @tree.deeping_content_question.nil?  
   
   end
 

@@ -1,13 +1,12 @@
 <div class='nested-fields'>
 	<div class="input-group">
-	 	 <%= f.text_area :question, :rows => 3, :class=>"form-control" %>
+	 	 <%= f.text_area :question,  size: "60x5", :class=>"form-control"%>
 	</div>
 	<br>
 	<%= f.fields_for :ct_choices do |builder| %>
 	  <%= render 'ct_choice_fields', :f => builder %>
 	<% end %>
-	<br>
 	<div class='nested-fields'>
-		<%= link_to_add_association 'add choice', f, :ct_choices, :class => "btn btn-small btn-primary" %>
+		<%= link_to_add_association '<span class=" glyphicon glyphicon-plus-sign"></span>'.html_safe, f, :ct_choices, :class => "btn btn-default" %>
 	</div>
 </div>
