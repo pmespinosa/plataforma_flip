@@ -3,13 +3,11 @@
 		 <%= f.text_area :question, :rows => 3, :class=>"form-control" %>
 	</div>
 	<br>
-
 	<%= f.fields_for :content_choices do |builder| %>
-		<form class="form-inline">
-		  <%= render 'content_choice_fields', :f => builder %>
-		  <%= link_to_add_association '', f, :content_choices, :class => "glyphicon glyphicon-remove-sign" %>
-		</form>
+	  <%= render 'content_choice_fields', :f => builder %>
 	<% end %>
-	<br>
-	
+	<br>	
+	<div class='nested-fields'>
+		<%= link_to_add_association 'add choice', f, :content_choices, :class => "btn btn-small btn-primary" %>
+	</div>
 </div>
