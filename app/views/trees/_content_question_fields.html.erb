@@ -7,4 +7,6 @@
 	<%= f.fields_for :content_choices do |builder| %>
 	  <%= render 'content_choice_fields', :f => builder %>
 	<% end %>
+	<br>
+	<%= link_to_add_association 'add choice', f, :content_choices, :class => "btn btn-small btn-primary" %>
 </div>

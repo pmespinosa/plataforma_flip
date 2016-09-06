@@ -30,51 +30,56 @@
 
    
 
-<table style="width:100%">
+<table class="table table-hover" style="width:100%">
+<tbody>
     <tr>
-      <td>
+      <td style="padding:40px 15px 40px 0px;">
       <%= f.simple_fields_for :initial_content_question, @tree.initial_content_question do |builder| %>
         <label for="basic-url">Pregunta inicial de contenido (1.1)</label>
-        <%= render "initial_content_question_fields", :f => builder %>
+        <%= render "content_question_fields", :f => builder %>
       <% end %>
       </td>
-      <td>
+      <td style="padding:40px 0px 40px 15px;">
       <%= f.simple_fields_for :initial_ct_question do |builder| %>
          <label for="basic-url">Pregunta inicial de pensamiento crítico (1.1)</label>
-         <%= render "initial_ct_question_fields", :f => builder %>
+         <%= render "ct_question_fields", :f => builder %>
       <% end %>
       </td>
+      <br>
     </tr>
     
     <tr>
-      <td>
+      <td style="padding:40px 15px 40px 0px;">
       <%= f.simple_fields_for :recuperative_content_question do |builder| %>
         <label for="basic-url">Pregunta recuperativa de contenido (1.2)</label>
-        <%= render "recuperative_content_question_fields", :f => builder %>
+        <%= render "content_question_fields", :f => builder %>
       <% end %>
       </td>
-      <td>
+      <td style="padding:40px 0px 40px 15px;">
       <%= f.simple_fields_for :recuperative_ct_question do |builder| %>
         <label for="basic-url">Pregunta recuperativa de pensamiento crítico (1.2)</label>
-        <%= render "recuperative_ct_question_fields", :f => builder %>
+        <%= render "ct_question_fields", :f => builder %>
       <% end %>
       </td>
+      <br>
     </tr>
 
     <tr>
-      <td>
+      <td style="padding:40px 15px 40px 0px;">
       <%= f.simple_fields_for :deeping_content_question do |builder| %>
         <label for="basic-url">Pregunta de profundización de contenido (2.0)</label>
-        <%= render "deeping_content_question_fields", :f => builder %>
+        <%= render "content_question_fields", :f => builder %>
       <% end %>
       </td>
-      <td>
+      <td style="padding:40px 0px 40px 15px;">
       <%= f.simple_fields_for :deeping_ct_question do |builder| %>
         <label for="basic-url">Pregunta de profundización de pensamiento crítico (2.0)</label>
-        <%= render "deeping_ct_question_fields", :f => builder %>
+        <%= render "ct_question_fields", :f => builder %>
       <% end %>
       </td>
+      <br>
     </tr>
+<tbody>
 </table>
     <div class="actions">
       <%= f.submit %>
