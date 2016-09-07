@@ -5,6 +5,7 @@ class Homework < ActiveRecord::Base
 
   def set_default_actual_phase
     self.actual_phase ||= :responder
+    self.upload ||= false
   end
 
   has_and_belongs_to_many :users
