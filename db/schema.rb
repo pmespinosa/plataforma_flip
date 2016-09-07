@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160905224526) do
+ActiveRecord::Schema.define(version: 20160907042920) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,10 +104,11 @@ ActiveRecord::Schema.define(version: 20160905224526) do
   add_index "ct_subhabilities", ["ct_hability_id"], name: "index_ct_subhabilities_on_ct_hability_id", using: :btree
 
   create_table "feedbacks", force: :cascade do |t|
-    t.string   "text"
+    t.text     "text"
     t.integer  "tree_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "type"
   end
 
   add_index "feedbacks", ["tree_id"], name: "index_feedbacks_on_tree_id", using: :btree

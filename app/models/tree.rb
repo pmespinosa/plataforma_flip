@@ -12,12 +12,12 @@ class Tree < ActiveRecord::Base
   has_one :deeping_ct_question, :class_name => "DeepingCtQuestion", :dependent => :destroy
   has_many :feedbacks, :dependent => :destroy
 
-  has_one :initial_simple_feedback, :class_name => "Feedback", :dependent => :destroy
-  has_one :initial_complex_feedback, :class_name => "Feedback", :dependent => :destroy
-  has_one :recuperative_simple_feedback, :class_name => "Feedback", :dependent => :destroy
-  has_one :recuperative_complex_feedback, :class_name => "Feedback", :dependent => :destroy
-  has_one :deeping_simple_feedback, :class_name => "Feedback", :dependent => :destroy
-  has_one :deeping_complex_feedback, :class_name => "Feedback", :dependent => :destroy
+  has_one :initial_simple_feedback, :class_name => "InitialSimpleFeedback", :dependent => :destroy
+  has_one :initial_complex_feedback, :class_name => "InitialComplexFeedback", :dependent => :destroy
+  has_one :recuperative_simple_feedback, :class_name => "RecuperativeSimpleFeedback", :dependent => :destroy
+  has_one :recuperative_complex_feedback, :class_name => "RecuperativeComplexFeedback", :dependent => :destroy
+  has_one :deeping_simple_feedback, :class_name => "DeepingSimpleFeedback", :dependent => :destroy
+  has_one :deeping_complex_feedback, :class_name => "DeepingComplexFeedback", :dependent => :destroy
 
 
   accepts_nested_attributes_for :content, :reject_if => lambda { |a| a[:text].blank? }, :allow_destroy => true
@@ -30,5 +30,12 @@ class Tree < ActiveRecord::Base
   accepts_nested_attributes_for :recuperative_ct_question, :reject_if => lambda { |a| a[:question].blank? }, :allow_destroy => true
   accepts_nested_attributes_for :deeping_content_question, :reject_if => lambda { |a| a[:question].blank? }, :allow_destroy => true
   accepts_nested_attributes_for :deeping_ct_question, :reject_if => lambda { |a| a[:question].blank? }, :allow_destroy => true
+
+  accepts_nested_attributes_for :initial_simple_feedback,  :reject_if => lambda { |a| a[:text].blank? }, :allow_destroy => true
+  accepts_nested_attributes_for :initial_complex_feedback, :reject_if => lambda { |a| a[:text].blank? }, :allow_destroy => true
+  accepts_nested_attributes_for :recuperative_simple_feedback, :reject_if => lambda { |a| a[:text].blank? }, :allow_destroy => true
+  accepts_nested_attributes_for :recuperative_complex_feedback, :reject_if => lambda { |a| a[:text].blank? }, :allow_destroy => true
+  accepts_nested_attributes_for :deeping_simple_feedback, :reject_if => lambda { |a| a[:text].blank? }, :allow_destroy => true
+  accepts_nested_attributes_for :deeping_complex_feedback, :reject_if => lambda { |a| a[:text].blank? }, :allow_destroy => true
   
 end

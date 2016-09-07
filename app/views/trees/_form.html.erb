@@ -32,7 +32,7 @@
 <tbody>
     <tr>
       <td style="padding:40px 15px 40px 0px;">
-      <%= f.simple_fields_for :initial_content_question, @tree.initial_content_question do |builder| %>
+      <%= f.simple_fields_for :initial_content_question do |builder| %>
         <label for="basic-url">Pregunta inicial de contenido (1.1)</label>
         <%= render "content_question_fields", :f => builder %>
       <% end %>
@@ -42,6 +42,26 @@
          <label for="basic-url">Pregunta inicial de pensamiento crítico (1.1)</label>
          <%= render "ct_question_fields", :f => builder %>
       <% end %>
+      </td>
+      <br>
+    </tr>
+
+    <tr>
+      <td style="padding:40px 15px 40px 0px;">
+        <%= f.simple_fields_for :initial_simple_feedback do |builder| %>
+        <%= builder.label :content, 'Feedback "Simple' %>
+         <div class='nested-fields'>          
+         <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
+         </div>
+        <% end %>
+      </td>
+      <td style="padding:40px 15px 40px 0px;">
+        <%= f.simple_fields_for :initial_complex_feedback do |builder| %>
+         <%= builder.label :content, 'Feedback "Complejo' %>
+         <div class='nested-fields'>
+         <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
+         </div>
+        <% end %>
       </td>
       <br>
     </tr>
@@ -64,6 +84,26 @@
 
     <tr>
       <td style="padding:40px 15px 40px 0px;">
+        <%= f.simple_fields_for :recuperative_simple_feedback do |builder| %>
+        <%= builder.label :content, 'Feedback "Simple' %>
+         <div class='nested-fields'>          
+         <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
+         </div>
+        <% end %>
+      </td>
+      <td style="padding:40px 15px 40px 0px;">
+        <%= f.simple_fields_for :recuperative_complex_feedback do |builder| %>
+         <%= builder.label :content, 'Feedback "Complejo' %>
+         <div class='nested-fields'>
+         <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
+         </div>
+        <% end %>
+      </td>
+      <br>
+    </tr>
+
+    <tr>
+      <td style="padding:40px 15px 40px 0px;">
       <%= f.simple_fields_for :deeping_content_question do |builder| %>
         <label for="basic-url">Pregunta de profundización de contenido (2.0)</label>
         <%= render "content_question_fields", :f => builder %>
@@ -74,6 +114,26 @@
         <label for="basic-url">Pregunta de profundización de pensamiento crítico (2.0)</label>
         <%= render "ct_question_fields", :f => builder %>
       <% end %>
+      </td>
+      <br>
+    </tr>
+
+    <tr>
+      <td style="padding:40px 15px 40px 0px;">
+        <%= f.simple_fields_for :deeping_simple_feedback do |builder| %>
+        <%= builder.label :content, 'Feedback "Simple' %>
+         <div class='nested-fields'>          
+         <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
+         </div>
+        <% end %>
+      </td>
+      <td style="padding:40px 15px 40px 0px;">
+        <%= f.simple_fields_for :deeping_complex_feedback do |builder| %>
+         <%= builder.label :content, 'Feedback "Complejo' %>
+         <div class='nested-fields'>
+         <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
+         </div>
+        <% end %>
       </td>
       <br>
     </tr>

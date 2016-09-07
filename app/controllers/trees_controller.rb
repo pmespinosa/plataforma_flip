@@ -99,12 +99,12 @@ class TreesController < ApplicationController
     @tree.build_deeping_ct_question if @tree.deeping_content_question.nil? 
 
 
-    @tree.build_initial_simple_feedback if @tree.build_initial_simple_feedback.nil?
-    @tree.build_initial_complex_feedback if @tree.build_initial_complex_feedback.nil?
-    @tree.build_recuperative_simple_feedback if @tree.build_recuperative_simple_feedback.nil?
-    @tree.build_recuperative_complex_feedback if @tree.build_recuperative_complex_feedback.nil?
-    @tree.build_deeping_simple_feedback if @tree.build_deeping_simple_feedback.nil?
-    @tree.build_deeping_complex_feedback if @tree.build_deeping_complex_feedback.nil?
+    @tree.build_initial_simple_feedback if @tree.initial_simple_feedback.nil?
+    @tree.build_initial_complex_feedback if @tree.initial_complex_feedback.nil?
+    @tree.build_recuperative_simple_feedback if @tree.recuperative_simple_feedback.nil?
+    @tree.build_recuperative_complex_feedback if @tree.recuperative_complex_feedback.nil?
+    @tree.build_deeping_simple_feedback if @tree.deeping_simple_feedback.nil?
+    @tree.build_deeping_complex_feedback if @tree.deeping_complex_feedback.nil?
   
   end
 
@@ -180,7 +180,14 @@ class TreesController < ApplicationController
         recuperative_content_question_attributes: [:id, :question, :_destroy, content_choices_attributes: [:id, :text, :right, :_destroy]],
         recuperative_ct_question_attributes: [:id, :question, :_destroy, ct_choices_attributes: [:id, :text, :right, :_destroy]],
         deeping_content_question_attributes: [:id, :question, :_destroy, content_choices_attributes: [:id, :text, :right, :_destroy]],
-        deeping_ct_question_attributes: [:id, :question, :_destroy, ct_choices_attributes: [:id, :text, :right, :_destroy]])
+        deeping_ct_question_attributes: [:id, :question, :_destroy, ct_choices_attributes: [:id, :text, :right, :_destroy]],
+        initial_simple_feedback_attributes: [:id, :text, :_destroy],
+        initial_complex_feedback_attributes: [:id, :text, :_destroy],
+        recuperative_simple_feedback_attributes: [:id, :text, :_destroy],
+        recuperative_complex_feedback_attributes: [:id, :text, :_destroy],
+        deeping_simple_feedback_attributes: [:id, :text, :_destroy],
+        deeping_complex_feedback_attributes: [:id, :text, :_destroy],
+        )
 
     end
     def ct_question_params
