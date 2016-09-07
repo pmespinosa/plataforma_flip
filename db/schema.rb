@@ -37,10 +37,19 @@ ActiveRecord::Schema.define(version: 20160707190528) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "courses_users", id: false, force: :cascade do |t|
+    t.integer "course_id"
+    t.integer "user_id"
+  end
+
+  add_index "courses_users", ["course_id", "user_id"], name: "index_courses_users_on_course_id_and_user_id", using: :btree
+
   create_table "homeworks", force: :cascade do |t|
-    t.string   "name"
+    t.text     "name"
+    t.text     "content"
     t.integer  "actual_phase"
     t.boolean  "upload"
+    t.integer  "course_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
@@ -73,6 +82,7 @@ ActiveRecord::Schema.define(version: 20160707190528) do
     t.integer  "role"
     t.boolean  "asistencia"
     t.integer  "partner_id"
+    t.integer  "current_course_id"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "email",                  default: "", null: false
@@ -89,5 +99,12 @@ ActiveRecord::Schema.define(version: 20160707190528) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "users_courses", id: false, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "course_id"
+  end
+
+  add_index "users_courses", ["user_id", "course_id"], name: "index_users_courses_on_user_id_and_course_id", using: :btree
 
 end

@@ -27,15 +27,15 @@ class QuestionsController < ApplicationController
 
   # POST /questions
   # POST /questions.json
-  def create
-    @question = Question.new(question_params)
-    @question2 = Question.new(phase:2, content:@question.content)
-    @question3 = Question.new(phase:3, content:@question.content)
-    @homework.questions << @question
-    @homework.questions << @question2
-    @homework.questions << @question3
+  def create homework
+    @question = Question.new(phase:0, content: homework.content)
+    @question2 = Question.new(phase:1, content:homework.content)
+    @question3 = Question.new(phase:2, content:homework.content)
+    homework.questions << @question
+    homework.questions << @question2
+    homework.questions << @question3
+    homework.save
     if @question.save && @question2.save && @question3.save
-      redirect_to homework_questions_path(@homework), notice: 'La pregunta fue creada.'
       @question2.anterior = @question.id
       @question3.anterior = @question2.id
       @question2.save

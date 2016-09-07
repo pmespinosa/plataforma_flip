@@ -1,0 +1,35 @@
+<div style="text-align: left">
+	<h1><%= "Configuraciones" %></h1>
+
+<%= form_tag controller:"courses", action:"edit", method:"patch" do %>
+  <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Apellido</th>
+          <th>Nombre</th>
+					<th>Rol</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.sort_by{|e| [e[:last_name], e[:first_name]]}.each do |user| %>
+          <%= fields_for 'roles[]', user do |p| %>
+              <tr>
+                <div class="field">
+                  <td style="text-align:left"><%= user.last_name %></td>
+                  <td style="text-align:left"><%= user.first_name %></td>
+									<td><%= p.select(:role, User.roles.keys.map {|role| [role.titleize,role]}) %></td>
+									<td>
+										<%= button_to("Remover", course_path(user), :class => 'btn btn-xs btn-danger',
+										:data => { :confirm => "¿Está seguro que desea eliminar el ususario?" },
+										:method => :remove_from_course) unless user == current_user %>
+									</td>
+                </div>
+              </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+  </table>
+  <div class="actions" style="text-align: center">
+    <%= submit_tag "Guardar Cambios", :class=>"btn btn-primary"%>
+  </div>
+<% end %>

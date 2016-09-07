@@ -3,7 +3,8 @@ class UsersController < ApplicationController
   before_action :set_courses
 
   def index
-    @users = User.all
+    current_user.current_course_id = nil
+    current_user.save
   end
 
   def show
@@ -23,20 +24,6 @@ class UsersController < ApplicationController
       redirect_to users_path, :alert => "No es posible actualizar el usuario."
     end
   end
-
-  def configuration
-    if params["roles"] != nil
-      params["roles"].each do |p|
-        user = User.find_by_id(p[0])
-        user.role = p[1]["role"]
-        user.save
-      end
-      redirect_to users_path, :notice => "Cambios guardados."
-    end
-    @users = User.all
-
-  end
-
 
   def asistencia
     libres = []
@@ -94,7 +81,7 @@ class UsersController < ApplicationController
             libres.delete_at(i1)
           end
         end
-        redirect_to users_path, :notice => "Lista actualizada."
+        redirect_to course_path(current_user.current_course_id)
       end
     end
   end
@@ -126,7 +113,7 @@ class UsersController < ApplicationController
   end
 
   def set_courses
-    @courses = Course.all
+    @courses = current_user.courses
   end
 
   def user_params
