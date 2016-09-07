@@ -12,17 +12,12 @@ class Tree < ActiveRecord::Base
   has_one :deeping_ct_question, :class_name => "DeepingCtQuestion", :dependent => :destroy
   has_many :feedbacks, :dependent => :destroy
 
-  #has_many :content_choices, through: :content_questions, :dependent => :destroy
-  #has_many :ct_choices, through: :ct_questions, :dependent => :destroy
-
-  #has_many :initial_content_choices, :class_name => "ContenChoice", through: :initial_content_question: :dependent => :destroy
-  #has_many :initial_content_choices, :class_name => "ContenChoice", through: :initial_content_question: :dependent => :destroy
-  #has_many :initial_content_choices, :class_name => "ContenChoice", through: :initial_content_question: :dependent => :destroy
-  #has_many :initial_content_choices, :class_name => "ContenChoice", through: :initial_content_question: :dependent => :destroy
-  #has_many :initial_content_choices, :class_name => "ContenChoice", through: :initial_content_question: :dependent => :destroy
-  #has_many :initial_content_choices, :class_name => "ContenChoice", through: :initial_content_question: :dependent => :destroy
-
-
+  has_one :initial_simple_feedback, :class_name => "Feedback", :dependent => :destroy
+  has_one :initial_complex_feedback, :class_name => "Feedback", :dependent => :destroy
+  has_one :recuperative_simple_feedback, :class_name => "Feedback", :dependent => :destroy
+  has_one :recuperative_complex_feedback, :class_name => "Feedback", :dependent => :destroy
+  has_one :deeping_simple_feedback, :class_name => "Feedback", :dependent => :destroy
+  has_one :deeping_complex_feedback, :class_name => "Feedback", :dependent => :destroy
 
 
   accepts_nested_attributes_for :content, :reject_if => lambda { |a| a[:text].blank? }, :allow_destroy => true

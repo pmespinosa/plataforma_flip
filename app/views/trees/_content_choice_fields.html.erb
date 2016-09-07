@@ -4,8 +4,10 @@
 				<%= f.check_box :right, :class => 'inline'%>
 			</span>
 			<%= f.text_field :text, :class => "form-control" %>
+			<div class="input-group-btn">
+   				<%= link_to_remove_association '<span class="glyphicon glyphicon-remove-sign red"></span>'.html_safe, f, :class => "btn" %>
+  			</div>			
 		</div>
-		<%= link_to_remove_association '<span class="glyphicon glyphicon-remove-sign"></span>'.html_safe, f, :class => "" %>
 	<br>
 </div>
 

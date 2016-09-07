@@ -79,12 +79,12 @@ class TreesController < ApplicationController
     @tree.build_deeping_ct_question
     4.times { @tree.deeping_ct_question.ct_choices.build }
 
-    @initial_simple_feedback = @tree.feedbacks.build
-    @initial_complex_feedback = @tree.feedbacks.build
-    @recuperative_simple_feedback = @tree.feedbacks.build
-    @recuperative_complex_feedback = @tree.feedbacks.build
-    @deeping_simple_feedback = @tree.feedbacks.build
-    @deeping_complex_feedback = @tree.feedbacks.build
+    @tree.build_initial_simple_feedback
+    @tree.build_initial_complex_feedback
+    @tree.build_recuperative_simple_feedback
+    @tree.build_recuperative_complex_feedback
+    @tree.build_deeping_simple_feedback
+    @tree.build_deeping_complex_feedback
 
   end
 
@@ -96,7 +96,15 @@ class TreesController < ApplicationController
     @tree.build_recuperative_content_question if @tree.recuperative_content_question.nil?  
     @tree.build_recuperative_ct_question if @tree.recuperative_ct_question.nil?  
     @tree.build_deeping_content_question if @tree.deeping_content_question.nil?
-    @tree.build_deeping_ct_question if @tree.deeping_content_question.nil?  
+    @tree.build_deeping_ct_question if @tree.deeping_content_question.nil? 
+
+
+    @tree.build_initial_simple_feedback if @tree.build_initial_simple_feedback.nil?
+    @tree.build_initial_complex_feedback if @tree.build_initial_complex_feedback.nil?
+    @tree.build_recuperative_simple_feedback if @tree.build_recuperative_simple_feedback.nil?
+    @tree.build_recuperative_complex_feedback if @tree.build_recuperative_complex_feedback.nil?
+    @tree.build_deeping_simple_feedback if @tree.build_deeping_simple_feedback.nil?
+    @tree.build_deeping_complex_feedback if @tree.build_deeping_complex_feedback.nil?
   
   end
 
