@@ -7,11 +7,11 @@ class TreesController < ApplicationController
     @username = params['lis_person_sourcedid']
     #render 'edx_view'
 
-    render partial: "edx_view2", :locals => {:content_question => @tree.initial_content_question, :ct_question => @tree.initial_ct_question, 
-     :feedback_simple=> @tree.initial_simple_feedback, :feedback_complex => @tree.initial_complex_feedback}
+    #render partial: 'edx_view', :locals => {:content_question => @tree.initial_content_question, :ct_question => @tree.initial_ct_question, 
+     #:feedback_simple=> @tree.initial_simple_feedback, :feedback_complex => @tree.initial_complex_feedback}
     
-    #render partial: "edx_view2", :content_question => @tree.initial_content_question, :ct_question => @tree.initial_ct_question, 
-     # :feedback_simple=> @tree.initial_simple_feedback, :feedback_complex => @tree.initial_complex_feedback
+    render "edx_view2", :locals => {:content_question => @tree.initial_content_question, :ct_question => @tree.initial_ct_question, 
+      :feedback_simple=> @tree.initial_simple_feedback, :feedback_complex => @tree.initial_complex_feedback}
   end
 
   # GET /trees
