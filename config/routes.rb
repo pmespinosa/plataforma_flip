@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   patch 'users/configuration'
   get 'users/students'
   #post 'courses/:id' => 'courses#show'
-  post '/courses/:id/trees/:id' => 'trees#edx_view'
+  post '/courses/:course_id/trees/:id' => 'trees#edx_view'
 
   resources :courses do
     resources :trees do

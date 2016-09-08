@@ -3,10 +3,16 @@ class TreesController < ApplicationController
    before_action :set_course, only: [:create, :new]
    before_action :set_tree_edx, only: [:edx_view]
 
-   def edx_view
+  def edx_view
     @username = params['lis_person_sourcedid']
-    render 'edx_view'
-   end
+    #render 'edx_view'
+
+    render partial: "edx_view2", :locals => {:content_question => @tree.initial_content_question, :ct_question => @tree.initial_ct_question, 
+     :feedback_simple=> @tree.initial_simple_feedback, :feedback_complex => @tree.initial_complex_feedback}
+    
+    #render partial: "edx_view2", :content_question => @tree.initial_content_question, :ct_question => @tree.initial_ct_question, 
+     # :feedback_simple=> @tree.initial_simple_feedback, :feedback_complex => @tree.initial_complex_feedback
+  end
 
   # GET /trees
   # GET /trees.json
@@ -162,7 +168,7 @@ class TreesController < ApplicationController
     end
 
     def set_tree_edx
-      @course = Course.find(1)
+      @course = Course.find(params[:course_id])
       @tree = @course.trees.find(params[:id])
      
     end
@@ -175,12 +181,12 @@ class TreesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def tree_params
       params.require(:tree).permit(:video, content_attributes: [:id, :text], 
-        initial_content_question_attributes: [:id, :question, :_destroy, content_choices_attributes: [:id, :text, :right, :_destroy]],
-        initial_ct_question_attributes: [:id, :question, :_destroy, ct_choices_attributes: [:id, :text, :right, :_destroy]],
-        recuperative_content_question_attributes: [:id, :question, :_destroy, content_choices_attributes: [:id, :text, :right, :_destroy]],
-        recuperative_ct_question_attributes: [:id, :question, :_destroy, ct_choices_attributes: [:id, :text, :right, :_destroy]],
-        deeping_content_question_attributes: [:id, :question, :_destroy, content_choices_attributes: [:id, :text, :right, :_destroy]],
-        deeping_ct_question_attributes: [:id, :question, :_destroy, ct_choices_attributes: [:id, :text, :right, :_destroy]],
+        initial_content_question_attributes: [:id, :question, :_destroy, content_choices_attributes: [:id, :text, :right, :content_question_id, :_destroy]],
+        initial_ct_question_attributes: [:id, :question, :_destroy, ct_choices_attributes: [:id, :text, :right, :ct_question_id, :_destroy]],
+        recuperative_content_question_attributes: [:id, :question, :_destroy, content_choices_attributes: [:id, :text, :right, :content_question_id, :_destroy]],
+        recuperative_ct_question_attributes: [:id, :question, :_destroy, ct_choices_attributes: [:id, :text, :right, :ct_question_id, :_destroy]],
+        deeping_content_question_attributes: [:id, :question, :_destroy, content_choices_attributes: [:id, :text, :right, :content_question_id, :_destroy]],
+        deeping_ct_question_attributes: [:id, :question, :_destroy, ct_choices_attributes: [:id, :text, :right, :ct_question_id, :_destroy]],
         initial_simple_feedback_attributes: [:id, :text, :_destroy],
         initial_complex_feedback_attributes: [:id, :text, :_destroy],
         recuperative_simple_feedback_attributes: [:id, :text, :_destroy],

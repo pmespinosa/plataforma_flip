@@ -31,10 +31,10 @@
 	       <td><%= link_to tree.content.text, course_tree_path(@course, tree) %></td>	       
 	       <td>
 	       	<div class="btn-group" role="group" aria-label="...">
-			  <button type="button" class="btn btn-default">Revisar</button>
-			  <%= link_to 'Editar', edit_course_tree_path(@course, tree), :class => "btn btn-default" %>
-	       	  <%= link_to 'Eliminar', [@course, tree], method: :delete, data: { confirm: '¿Seguro que deseas eliminar el arbol?' }, :class => "btn btn-default"  %>			  		  
-			</div>
+    			  <%= link_to 'Revisar', [@course, tree], method: :post, :class => "btn btn-default" %>
+    			  <%= link_to 'Editar', edit_course_tree_path(@course, tree), :class => "btn btn-default" %>
+    	      <%= link_to 'Eliminar', [@course, tree], method: :delete, data: { confirm: '¿Seguro que deseas eliminar el arbol?' }, :class => "btn btn-default"  %>			  		  
+    			</div>
 	       </td>      
 	    </tr>	  
 	 <% end %>

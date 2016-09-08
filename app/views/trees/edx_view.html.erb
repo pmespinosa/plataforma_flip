@@ -14,55 +14,72 @@
 </br>
 <h2>Usuario conectado: <%= @username %></h2> 
 
-<%= f.fields_for :content do |content_fields| %>
+
+
+
       <!--div class="input-group">
         <span class="input-group-addon" id="basic-addon1">@</span>
         <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
       </div-->
-      <div class="input-group">
-        <%= content_fields.label :content, 'Contenido', :class => "input-group-addon" %>
-        <%= content_fields.label :text, 'Tipos de tareas',:class=>"form-control", :placeholder=>"Contenido del Video" %>
-      </div>
-    <% end %>
+<div class="input-group">
+  <div class="input-group-addon">Contenido</div>
+  <div class="form-control"><%= @tree.content.text %></div>
+</div>
 
-    <br>
 
+<br>
    
 
 <table style="width:100%">
     <tr>
-      <td>
-      <%= f.fields_for :initial_content_question do |builder1| %>
+      <td style="width:50%">
 
-        <label for="basic-url">Pregunta inicial de contenido (1.1)</label>
-        <%= builder1.label :question, "El tipo de tarea es:" %>
-        <br>
-        <%= builder1.fields_for :content_choices do |builder11| %>
-          <div class="input-group">
-            <span class="input-group-addon" id="check">
-              <%= builder11.check_box :right, :class => 'inline'%>
-            </span>
-            <%= builder11.label :text, "Alternativa Y", :class => "form-control" %>
-          </div>
-        <% end %>
-      <% end %>
-      </td>
-      <td>
-        <%= f.fields_for :initial_ct_question do |builder2| %>
+        <h5>Pregunta inicial de contenido (1.1)</h5>
+         <%= f.fields_for :initial_content_question do |question_fields| %>
+            <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
 
-        <label for="basic-url">Pregunta inicial de pensamiento crítico (1.1)</label>
-        <%= builder2.label :question, "Porque..." %>
+          <br>
+            <%= @tree.initial_content_question.content_choices.each do |choice| %>
+
+             <%= f.fields_for :content_choices do |choice_fields| %>
+            <div class="input-group">
+              <span class="input-group-addon" id="check">
+                <%= choice_fields.check_box :right, :class => 'inline'%>
+              </span>
+              <%= choice_fields.label :text, :readonly => true, :class => "form-control" %>
+            </div>
+            <% end %>
+            <br>
+          <% end %>
+
+         <% end %>
         <br>
-        <%= builder2.fields_for :ct_choices do |builder22| %>
-          <div class="input-group">
-            <span class="input-group-addon" id="check">
-              <%= builder22.check_box :right, :class => 'inline'%>
-            </span>
-            <%= builder22.label :text, "Alternativa X", :class => "form-control" %>
-          </div>
-        <% end %>
-      <% end %>
       </td>
+
+
+      <td>
+        <h5>Pregunta inicial de pensamiento crítico (1.1)</h5>
+         <%= f.fields_for :initial_ct_question do |question_fields| %>
+            <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
+
+          <br>
+            <%= @tree.initial_ct_question.ct_choices.each do |choice| %>
+
+             <%= f.fields_for :ct_choices do |choice_fields| %>
+            <div class="input-group">
+              <span class="input-group-addon" id="check">
+                <%= choice_fields.check_box :right, :class => 'inline'%>
+              </span>
+              <%= choice_fields.label :text, :readonly => true, :class => "form-control" %>
+            </div>
+            <% end %>
+            <br>
+          <% end %>
+          hola
+         <% end %>
+        <br>
+      </td>
+       
     </tr>
 </table>
 

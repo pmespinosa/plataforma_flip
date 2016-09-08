@@ -1,0 +1,75 @@
+<%= simple_form_for([@course,@tree]) do |f| %>
+
+
+<h2>Usuario conectado: <%= @username %></h2> 
+
+
+
+
+      <!--div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">@</span>
+        <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+      </div-->
+<!--div class="input-group">
+  <div class="input-group-addon">Contenido</div>
+  <div class="form-control"><%= @tree.content.text %></div>
+</div-->
+
+
+<br>
+   
+
+<table class="table table-hover" style="width:100%">
+    <tr>
+      <td style="width:50%">
+
+        <h5>Pregunta inicial de contenido (1.1)</h5>
+        
+        <%= fields_for content_question do |question_fields| %>
+            <div class="input-group">
+              <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
+            </div>
+            <br>
+
+            <%= question_fields.fields_for :content_choices do |choice_fields| %>
+              <div class="input-group">
+                <span class="input-group-addon" id="check">
+                  <%= choice_fields.check_box :right, :class => 'inline'%>
+                </span>
+                <%= choice_fields.text_area :text, :readonly => true, :class => "form-control" %>
+              </div>
+            <% end %>
+            <br>
+         <% end %>
+         <br>
+      </td>
+
+      <td style="width:50%">
+
+        <h5>Pregunta inicial de pensamiento crítico (1.1)</h5>
+        
+        <%= fields_for ct_question do |question_fields| %>
+            <div class="input-group">
+            <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
+            </div>
+            <br>
+
+            <%= question_fields.fields_for :ct_choices do |choice_fields| %>
+              <div class="input-group">
+                <span class="input-group-addon" id="check">
+                  <%= choice_fields.check_box :right, :class => 'inline'%>
+                </span>
+                <%= choice_fields.text_area :text, :readonly => true, :class => "form-control" %>
+              </div>
+            <% end %>
+            <br>
+         <% end %>
+         <br>
+      </td>
+    </tr>
+</table>
+
+<br>
+ <button type="button" class="btn btn-default">Contiuar</button>
+
+ <% end %>
