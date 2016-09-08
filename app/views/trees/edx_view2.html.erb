@@ -3,19 +3,6 @@
 
 <h2>Usuario conectado: <%= @username %></h2> 
 
-
-
-
-      <!--div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">@</span>
-        <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
-      </div-->
-<!--div class="input-group">
-  <div class="input-group-addon">Contenido</div>
-  <div class="form-control"><%= @tree.content.text %></div>
-</div-->
-
-
 <br>
    
 
@@ -34,7 +21,8 @@
             <%= question_fields.fields_for :content_choices do |choice_fields| %>
               <div class="input-group">
                 <span class="input-group-addon" id="check">
-                  <%= choice_fields.check_box :right, :class => 'inline'%>
+                  <%= check_box_tag 'content_checked[#{choice_fields.id}]', :class => 'inline' %>
+                  <%#= choice_fields.check_box :right, :class => 'inline'%>
                 </span>
                 <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
               </div>
@@ -56,7 +44,8 @@
             <%= question_fields.fields_for :ct_choices do |choice_fields| %>
               <div class="input-group">
                 <span class="input-group-addon" id="check">
-                  <%= choice_fields.check_box :right, :class => 'inline'%>
+                  <%= check_box_tag 'ct_checked[#{choice_fields.id}]', :class => 'inline' %>
+                  <%#= choice_fields.check_box :right, :class => 'inline'%>
                 </span>
                 <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
               </div>
@@ -68,7 +57,8 @@
     </tr>
 </table>
 
-<br>
- <button type="button" class="btn btn-default">Contiuar</button>
+ <%= link_to 'Revisar', [@course, tree, {:type =>'initial'}], method: :post, :class => "btn btn-default" %>
+  
+  <br>
 
- <% end %>
+<% end %>

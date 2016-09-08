@@ -1,17 +1,33 @@
 class TreesController < ApplicationController
   before_action :set_tree, only: [:show, :edit, :update, :destroy]
    before_action :set_course, only: [:create, :new]
-   before_action :set_tree_edx, only: [:edx_view]
+   before_action :set_tree_edx, only: [:edx_view, :decide]
+   before_action :set_initial, only: [:edx_view, :decide]
 
-  def edx_view
+  def edx_view 
     @username = params['lis_person_sourcedid']
     #render 'edx_view'
-
+    puts "aca-------------------------"
+    puts params[:type].to_s
     #render partial: 'edx_view', :locals => {:content_question => @tree.initial_content_question, :ct_question => @tree.initial_ct_question, 
      #:feedback_simple=> @tree.initial_simple_feedback, :feedback_complex => @tree.initial_complex_feedback}
-    
-    render "edx_view2", :locals => {:content_question => @tree.initial_content_question, :ct_question => @tree.initial_ct_question, 
+    if params[:type] == "initial"
+      render "edx_view2", :locals => {:content_question => @tree.initial_content_question, :ct_question => @tree.initial_ct_question, 
       :feedback_simple=> @tree.initial_simple_feedback, :feedback_complex => @tree.initial_complex_feedback}
+    else
+      #if  content_checked[1]
+      render "edx_view2", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question, 
+      :feedback_simple=> @tree.recuperative_simple_feedback, :feedback_complex => @tree.recuperative_complex_feedback}
+      #else
+      #render "edx_view2", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question, 
+       # :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback}
+      #end
+    end
+  end
+
+  def change_initial
+       @initial = false
+       edx_view
   end
 
   # GET /trees
@@ -23,28 +39,6 @@ class TreesController < ApplicationController
   # GET /trees/1
   # GET /trees/1.json
   def show
-
-    #@initial_content_question = @tree.content_questions.find_by header: "initial_content_question"
-
-    #puts "holes"
-    #puts @initial_content_question.inspect
-
-    #@initial_ct_question = @tree.ct_questions.find_by header: "initial_ct_question"
-
-    #@recuperative_content_question = @tree.content_questions.find_by header: "recuperative_content_question"
-
-    #@recuperative_ct_question = @tree.ct_questions.find_by header: "recuperative_ct_question"
-
-    #@deeping_content_question = @tree.content_questions.find_by header: "deeping_content_question"
-
-    #@deeping_ct_question = @tree.ct_questions.find_by header: "deeping_ct_question"
-
-    #@initial_simple_feedback = @tree.feedbacks.build
-    #@initial_complex_feedback = @tree.feedbacks.build
-    #@recuperative_simple_feedback = @tree.feedbacks.build
-    #@recuperative_complex_feedback = @tree.feedbacks.build
-    #@deeping_simple_feedback = @tree.feedbacks.build
-    #@deeping_complex_feedback = @tree.feedbacks.build
   end
 
   # GET /trees/new
@@ -52,13 +46,6 @@ class TreesController < ApplicationController
     
     @tree = Tree.new
   
-    #@course = Course.find(:course_id)
-    puts "aca-----------"
-    #puts @course.inspect
-    #@tree = @course.trees.new
-    #@tree = @course.trees.build
-    #respond_with(@tree)
-   
     @tree.build_content
     
     #@initial_content_question = @tree.content_questions.build(:header => "initial_content_question")
@@ -194,12 +181,20 @@ class TreesController < ApplicationController
         deeping_simple_feedback_attributes: [:id, :text, :_destroy],
         deeping_complex_feedback_attributes: [:id, :text, :_destroy],
         )
-
     end
+
     def ct_question_params
       params.require(:tree).permit(:question, :tree_id, ct_choices_attributes: [:text, :right])
     end
+
     def content_question_params
       params.require(:tree).permit(:question, :tree_id, content_choices_attributes: [:text, :right])
     end
+
+    def set_initial
+        @initial = true
+    end
+
+    
+
 end
