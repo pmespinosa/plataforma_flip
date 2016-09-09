@@ -1,6 +1,6 @@
 <div style="text-align: left">
 	<h1><%= "Configuraciones" %></h1>
-
+	<h3><b>Código Curso: </b><%= @course.course_code%></h3>
 <%= form_tag controller:"courses", action:"edit", method:"patch" do %>
   <table class="table table-striped">
       <thead>

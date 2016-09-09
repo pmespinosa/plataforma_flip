@@ -1,41 +1,159 @@
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse" style="background-color:#337AB7">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
 
       <div class="navbar-header">
         <% if user_signed_in? %>
-          <a class="navbar-brand" href="/users">Inicio</a>
-          <% if !current_user.current_course_id && current_user.role? %>
-            <a class="navbar-brand" href="/courses/new">Crear Curso</a>
-          <% end %>
+          <% if current_page?(users_path) || current_page?(new_course_path)%>
+            <a class="navbar-brand" href="/users" style="color:yellow">Mis Cursos</a>
+          <% elsif current_page?(new_homework_path) %>
+            <a class="navbar-brand" href="/users" >Mis Cursos</a>
           <% else %>
-          <a class="navbar-brand" href="/">Inicio</a>
+            <a class="navbar-brand" href="/users" >Mis Cursos</a>
+          <% end %>
+
         <% end %>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <% if user_signed_in? %>
-          <% if current_user.role? && current_user.current_course_id? %>
-            <ul class="nav navbar-nav">
-              <li><%= link_to "Actividades",  homeworks_path%></li>
-            </ul>
+          <% if current_user.role? %> <!-- && current_user.current_course_id? -->
+            <% if current_page?(users_path)%> <!-- SI ESTAS EN MIS CURSOS-->
+              <ul class="nav navbar-nav">
+                <li class="disabled"><%= link_to "Fase Inicio",  users_path %></li>
+              </ul>
 
-            <ul class="nav navbar-nav">
-              <li><%= link_to "Alumnos",  course_users_path(current_user.current_course_id)%></li>
-            </ul>
+              <ul class="nav navbar-nav">
+                <li class="disabled"><%= link_to "Fase Desarrollo",  users_path %></li>
+              </ul>
 
-            <ul class="nav navbar-nav">
-              <li><%= link_to "Asistencia",  course_asistencia_path(current_user.current_course_id)%></li>
-            </ul>
+              <ul class="nav navbar-nav">
+                <li  class="disabled"><%= link_to "Actividades",  users_path %></li>
+              </ul>
 
-            <ul class="nav navbar-nav">
-              <li><%= link_to "Configuraciones",  edit_course_path(current_user.current_course_id)%></li>
-            </ul>
+              <ul class="nav navbar-nav">
+                <li class="disabled"><%= link_to "Asistencia",  users_path %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li class="disabled"><%= link_to "Configuraciones",  users_path %></li>
+              </ul>
+            <% elsif current_page?(course_path(current_user.current_course_id))%> <!-- SI ESTAS EN INICIO CURSO-->
+              <ul class="nav navbar-nav">
+                <li><%= link_to "Fase Inicio",  users_path %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= link_to "Fase Desarrollo",  users_path %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= link_to "Actividades",  homeworks_path %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= link_to "Asistencia",  course_asistencia_path(current_user.current_course_id) %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= link_to "Configuraciones",  edit_course_path(current_user.current_course_id) %></li>
+              </ul>
+            <% elsif current_page?(homeworks_path)%> <!-- SI ESTAS EN ACTIVIDADES -->
+              <ul class="nav navbar-nav">
+                <li><%= link_to "Fase Inicio",  users_path %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= link_to "Fase Desarrollo",  users_path %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= link_to "Actividades",  homeworks_path, :style => "color:yellow" %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= link_to "Asistencia",  course_asistencia_path(current_user.current_course_id) %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= link_to "Configuraciones",  edit_course_path(current_user.current_course_id) %></li>
+              </ul>
+
+            <% elsif current_page?(new_course_path)%> <!-- SI ESTAS EN CREAR CURSO -->
+              <ul class="nav navbar-nav">
+                <li  class="disabled"><%= link_to "Fase Inicio",  new_course_path %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li  class="disabled"><%= link_to "Fase Desarrollo",  new_course_path %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li class="disabled"><%= link_to "Actividades",  new_course_path %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li class="disabled"><%= link_to "Asistencia",  new_course_path %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li class="disabled"><%= link_to "Configuraciones",  new_course_path %></li>
+              </ul>
+
+            <% elsif current_page?(new_homework_path)%> <!-- SI ESTAS EN CREAR ACTIVIDAD -->
+              <ul class="nav navbar-nav">
+                <li  class="disabled"><%= link_to "Fase Inicio",  new_homework_path %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li  class="disabled"><%= link_to "Fase Desarrollo",  new_homework_path %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= link_to "Actividades",  homeworks_path, :style => "color:yellow" %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li class="disabled"><%= link_to "Asistencia",  new_homework_path %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li class="disabled"><%= link_to "Configuraciones",  new_homework_path %></li>
+              </ul>
+
+            <% else %>
+              <ul class="nav navbar-nav">
+                <li><%= link_to "Fase Inicio",  users_path %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= link_to "Fase Desarrollo",  users_path %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= link_to "Actividades",  homeworks_path %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= link_to "Asistencia",  course_asistencia_path(current_user.current_course_id) %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= link_to "Configuraciones",  edit_course_path(current_user.current_course_id) %></li>
+              </ul>
+            <% end %>
+
           <% elsif current_user.current_course_id %>
-            <ul class="nav navbar-nav">
-              <li><%= link_to "Actividad",  homeworks_path%></li>
-            </ul>
+            <% if current_page?(users_path) %>
+              <ul class="nav navbar-nav">
+                <li class="disabled"><%= link_to "Actividad",  users_path %></li>
+              </ul>
+            <% else %>
+              <ul class="nav navbar-nav">
+                <li><%= link_to "Actividad",  homeworks_path%></li>
+              </ul>
+            <% end %>
           <% end %>
         <% end %>
 

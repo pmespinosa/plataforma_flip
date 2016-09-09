@@ -17,13 +17,14 @@ class CoursesController < ApplicationController
   end
 
   def edit
+    @course = Course.find(params[:id])
     if params["roles"] != nil
       params["roles"].each do |p|
         user = User.find_by_id(p[0])
         user.role = p[1]["role"]
         user.save
       end
-      redirect_to course_path(current_user.current_course_id), :notice => "Cambios guardados."
+      redirect_to course_path(current_user.current_course_id)
     end
     @users = @course.users
   end
@@ -32,8 +33,14 @@ class CoursesController < ApplicationController
     @course = Course.new(course_params)
     respond_to do |format|
       if @course.save
-        format.html { redirect_to users_path, notice: 'El curso ha sido creado.' }
-        format.json { render :show, status: :created, location: @course }
+        @course.course_code = (current_user.id.to_s + @course.id.to_s).to_i
+        if @course.save
+          format.html { redirect_to users_path}
+          format.json { render :show, status: :created, location: @course }
+        else
+          format.html { render :new }
+          format.json { render json: @course.errors, status: :unprocessable_entity }
+        end
       else
         format.html { render :new }
         format.json { render json: @course.errors, status: :unprocessable_entity }
@@ -104,7 +111,7 @@ class CoursesController < ApplicationController
             libres.delete_at(i1)
           end
         end
-        redirect_to course_path(current_user.current_course_id), :notice => "Lista actualizada."
+        redirect_to course_path(current_user.current_course_id)
       end
     end
   end
