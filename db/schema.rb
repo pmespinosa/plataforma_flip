@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20160707190528) do
   create_table "courses", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
+    t.integer  "course_code"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -82,7 +83,7 @@ ActiveRecord::Schema.define(version: 20160707190528) do
     t.integer  "role"
     t.boolean  "asistencia"
     t.integer  "partner_id"
-    t.integer  "current_course_id"
+    t.integer  "current_course_id",      default: 0
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "email",                  default: "", null: false

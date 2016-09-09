@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :set_courses
 
   def index
-    current_user.current_course_id = nil
+    current_user.current_course_id = 11111 # CAMBIE NIL => numero para que no se caiga cuando activa o desactiva navbar
     current_user.save
   end
 
@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     unless current_user.profesor?
       unless @user == current_user
-        redirect_to :back, :alert => "Acceso no permitido."
+        redirect_to :back
       end
     end
   end
@@ -19,9 +19,9 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update_attributes(secure_params)
-      redirect_to users_path, :notice => "Usuario actualizado."
+      redirect_to users_path
     else
-      redirect_to users_path, :alert => "No es posible actualizar el usuario."
+      redirect_to users_path
     end
   end
 
@@ -89,14 +89,14 @@ class UsersController < ApplicationController
   def destroy
     user = User.find(params[:id])
     user.destroy
-    redirect_to users_path, :notice => "Usuario eliminado."
+    redirect_to users_path
   end
 
   private
 
   def admin_only
     unless current_user.profesor?
-      redirect_to :back, :alert => "Acceso no permitido."
+      redirect_to :back
     end
   end
 
