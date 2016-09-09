@@ -143,17 +143,6 @@
                 <li><%= link_to "Configuraciones",  edit_course_path(current_user.current_course_id) %></li>
               </ul>
             <% end %>
-
-          <% elsif current_user.current_course_id %>
-            <% if current_page?(users_path) %>
-              <ul class="nav navbar-nav">
-                <li class="disabled"><%= link_to "Actividad",  users_path %></li>
-              </ul>
-            <% else %>
-              <ul class="nav navbar-nav">
-                <li><%= link_to "Actividad",  homeworks_path%></li>
-              </ul>
-            <% end %>
           <% end %>
         <% end %>
 
