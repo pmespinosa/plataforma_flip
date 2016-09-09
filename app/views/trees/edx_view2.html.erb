@@ -62,7 +62,17 @@
   <% puts "holaaaaaa------------------------------------------" %>
   <% puts @course.id %>
   <% puts @tree.id %>
-  <%= hidden_field_tag "type", "recuperative" %>
+
+
+  <% if type == "initial" %>
+    <%= hidden_field_tag "type", "recuperative" %>
+  <% elsif type == "recuperative" %>
+    <%= hidden_field_tag "type", "deeping" %>
+  <% elsif type == "deeping" %>
+    <%= hidden_field_tag "type", "final" %>
+  <% end %>
+
+
   <%= hidden_field_tag "course_id", @course.id %>
   <%= hidden_field_tag "id", @tree.id %>
 
