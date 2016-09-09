@@ -1,7 +1,7 @@
 class TreesController < ApplicationController
   before_action :set_tree, only: [:show, :edit, :update, :destroy]
    before_action :set_course, only: [:create, :new]
-   before_action :set_tree_edx, only: [:edx_view, :decide]
+   before_action :set_tree_edx, only: [:edx_view]
    
 
   def edx_view 
@@ -11,36 +11,154 @@ class TreesController < ApplicationController
     puts params[:type].to_s
     #render partial: 'edx_view', :locals => {:content_question => @tree.initial_content_question, :ct_question => @tree.initial_ct_question, 
      #:feedback_simple=> @tree.initial_simple_feedback, :feedback_complex => @tree.initial_complex_feedback}
-    if params[:type] == "initial"
-      render "edx_view2", :locals => {:content_question => @tree.initial_content_question, :ct_question => @tree.initial_ct_question, 
-      :feedback_simple=> @tree.initial_simple_feedback, :feedback_complex => @tree.initial_complex_feedback, :type => "initial"}
-    elsif params[:type] == "recuperative"      
-      #if  content_checked[1]
-      params[:ct_choices].each do |choice|
-        puts choice
+    if params[:type].to_s == "initial"
+
+
+      if params[:state].to_s == "no_saw"
+
+        render "edx_view2", :locals => {:content_question => @tree.initial_content_question, :ct_question => @tree.initial_ct_question, 
+        :feedback_simple=> @tree.initial_simple_feedback, :feedback_complex => @tree.initial_complex_feedback, 
+        :type => "initial", :state => "no_saw", :feedback_quality => "none"}
+    
+  
+
+      elsif params[:state].to_s == "answered"
+         @correct_content= true
+         @correct_ct= true   
+         @tree.initial_content_question.content_choices.each do |choice|
+            if params[:content_choices] && params[:content_choices][choice.id] 
+              if choice.right != params[:content_choices][choice.id].last
+                @correct_content = false
+                break
+              end
+            end
+          end
+          @tree.initial_ct_question.ct_choices.each do |choice|
+            if params[:ct_choices] && params[:ct_choices][choice.id] 
+              if choice.right != params[:ct_choices][choice.id].last
+                @correct_ct = false
+                break
+              end
+            end
+          end
+
+          if @correct_ct == true && @correct_content == true
+            render "edx_view2", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question, 
+            :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback, 
+            :type => "deeping", :state =>"no_saw", :feedback_quality => "none"}
+
+          elsif @correct_ct == true && @correct_content == false
+            render "edx_view2", :locals => {:content_question => @tree.initial_content_question, :ct_question => @tree.initial_ct_question, 
+            :feedback_simple=> @tree.initial_simple_feedback, :feedback_complex => @tree.initial_complex_feedback, 
+             :type => "initial", :state =>"answered", :feedback_quality => "simple"}
+
+          else
+            render "edx_view2", :locals => {:content_question => @tree.initial_content_question, :ct_question => @tree.initial_ct_question, 
+            :feedback_simple=> @tree.initial_simple_feedback, :feedback_complex => @tree.initial_complex_feedback, 
+             :type => "initial", :state => "answered", :feedback_quality => "complex"}
+          end
+
+      elsif params[:state].to_s == "feedback_saw"
+          render "edx_view2", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question, 
+              :feedback_simple=> @tree.recuperative_simple_feedback, :feedback_complex => @tree.recuperative_complex_feedback, 
+              :type => "recuperative", :state => "no_saw", :feedback_quality => "none"}
       end
-      puts "chao---------------------"
-      render "edx_view2", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question, 
-      :feedback_simple=> @tree.recuperative_simple_feedback, :feedback_complex => @tree.recuperative_complex_feedback, :type => "recuperative"}
-    elsif params[:type] == "deeping"       
-      render "edx_view2", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question, 
-        :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback, :type => "deeping"}      
+
+    elsif params[:type] == "recuperative" 
+
+      if params[:state].to_s == "answered"
+         @correct_content= true
+         @correct_ct= true   
+         @tree.recuperative_content_question.content_choices.each do |choice|
+            if params[:content_choices] && params[:content_choices][choice.id] 
+              if choice.right != params[:content_choices][choice.id].last
+                @correct_content = false
+                break
+              end
+            end
+          end
+          @tree.recuperative_ct_question.ct_choices.each do |choice|
+            if params[:ct_choices] && params[:ct_choices][choice.id]  
+              if choice.right != params[:ct_choices][choice.id].last
+                @correct_ct = false
+                break
+              end
+            end
+          end
+
+          if @correct_ct == true && @correct_content == true
+            render "edx_view2", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question, 
+            :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback, 
+            :type => "deeping", :state =>"no_saw", :feedback_quality => "none"}
+
+          elsif @correct_ct == true && @correct_content == false
+            render "edx_view2", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question, 
+            :feedback_simple=> @tree.recuperative_simple_feedback, :feedback_complex => @tree.recuperative_complex_feedback, 
+             :type => "recuperative", :state =>"answered", :feedback_quality => "simple"}
+
+          else
+            render "edx_view2", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question, 
+            :feedback_simple=> @tree.recuperative_simple_feedback, :feedback_complex => @tree.recuperative_complex_feedback, 
+             :type => "recuperative", :state =>"answered", :feedback_quality => "complex"}
+          end
+
+
+      elsif params[:state].to_s == "feedback_saw"
+          render "edx_view2", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question, 
+              :feedback_simple=> @tree.recuperative_simple_feedback, :feedback_complex => @tree.recuperative_complex_feedback, 
+              :type => "recuperative", :state => "end", :feedback_quality => "none"}
+      end
+
+
+    elsif params[:type].to_s == "deeping" 
+
+      if params[:state].to_s == "answered"
+         @correct_content= true
+         @correct_ct= true   
+         @tree.deeping_content_question.content_choices.each do |choice|
+            if params[:content_choices] && params[:content_choices][choice.id] 
+              if choice.right != params[:content_choices][choice.id].last
+                @correct_content = false
+                break
+              end
+            end
+          end
+          @tree.deeping_ct_question.ct_choices.each do |choice|
+            if params[:ct_choices] && params[:ct_choices][choice.id] 
+              if choice.right != params[:ct_choices][choice.id].last
+                @correct_ct = false
+                break
+              end
+            end
+          end
+
+          if @correct_ct == true && @correct_content == true
+            render "edx_view2", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question, 
+              :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback, 
+              :type => "recuperative", :state => "end", :feedback_quality => "none"}
+
+          elsif @correct_ct == true && @correct_content == false
+            render "edx_view2", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question, 
+            :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback, 
+             :type => "recuperative", :state =>"answered", :feedback_quality => "simple"}
+
+          else
+            render "edx_view2", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question, 
+            :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback, 
+             :type => "recuperative", :state =>"answered", :feedback_quality => "complex"}
+          end
+
+
+      elsif params[:state].to_s == "feedback_saw"
+          render "edx_view2", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question, 
+              :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback, 
+              :type => "recuperative", :state => "end", :feedback_quality => "none"}
+           
+      end 
     end
   end
 
-  def decide
-    if params[:type] == "initial"
-      render "edx_view2", :locals => {:content_question => @tree.initial_content_question, :ct_question => @tree.initial_ct_question, 
-      :feedback_simple=> @tree.initial_simple_feedback, :feedback_complex => @tree.initial_complex_feedback}
-    else
-      #if  content_checked[1]
-      render "edx_view2", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question, 
-      :feedback_simple=> @tree.recuperative_simple_feedback, :feedback_complex => @tree.recuperative_complex_feedback}
-      #else
-      #render "edx_view2", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question, 
-       # :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback}
-    end
-  end
+
 
   def change_initial
        @initial = false
