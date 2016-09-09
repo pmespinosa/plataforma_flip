@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   post 'courses/users/asistencia'=> 'users#asistencia'
   get 'users/students'
 
+  post 'courses/new' => 'courses#agregate'
   post 'courses/:id/configuration' => 'courses#edit'
   patch 'courses/:id/configuration'=> 'courses#edit'
   get 'courses/:id/users'=> 'courses#students'

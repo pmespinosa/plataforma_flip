@@ -10,6 +10,9 @@ class CoursesController < ApplicationController
     @courses = Course.all
     current_user.current_course_id = @course.id
     current_user.save
+    if !current_user.role?
+      redirect_to homeworks_path
+    end
   end
 
   def new
@@ -27,6 +30,17 @@ class CoursesController < ApplicationController
       redirect_to course_path(current_user.current_course_id)
     end
     @users = @course.users
+  end
+
+  def agregate
+    course = Course.all.where(course_code: params["new_code_course"]["course_code"])[0]
+    if course
+      if !current_user.courses.find_by_id(course.id)
+        current_user.courses << course
+        current_user.save
+      end
+    end
+    redirect_to users_path
   end
 
   def create
@@ -54,7 +68,7 @@ class CoursesController < ApplicationController
     @users = @course.users
   end
 
-  def asistencia
+  def asistencia homework
     @users = @course.users
     libres = []
     if params["asistentes"] != nil
@@ -111,7 +125,8 @@ class CoursesController < ApplicationController
             libres.delete_at(i1)
           end
         end
-        redirect_to course_path(current_user.current_course_id)
+        redirect_to homework_path(homework)
+        #redirect_to course_path(current_user.current_course_id)
       end
     end
   end

@@ -1,12 +1,19 @@
-<%- if current_user.role?%>
-	<div style="text-align: center">
-		<h1>Nuevo Curso</h1>
+<div style="text-align: center">
+	<h1>Nuevo Curso</h1>
 
-		<%= render 'form' %>
+	<% if current_user.role? %>
+		<%= render 'form1' %>
 		<div class="row">
 			<div class="span4">
 		    	<div class="spacer10"></div>
 			</div>
 		</div>
-	</div>
-<% end -%>
+	<% else %>
+		<%= render 'form2' %>
+		<div class="row">
+			<div class="span4">
+					<div class="spacer10"></div>
+			</div>
+		</div>
+	<% end %>
+</div>
