@@ -17,15 +17,16 @@
               <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
             </div>
             <br>
-
-            <%= question_fields.fields_for :content_choices do |choice_fields| %>
-              <div class="input-group">
-                <span class="input-group-addon" id="check">
-                  <%= check_box_tag 'content_checked[#{choice_fields.id}]', :class => 'inline' %>
-                  <%#= choice_fields.check_box :right, :class => 'inline'%>
-                </span>
-                <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
-              </div>
+            <%= form_tag "decide", :method => :post do %>
+              <%= question_fields.fields_for :content_choices do |choice_fields| %>
+                <div class="input-group">
+                  <span class="input-group-addon" id="check">
+                     <%= check_box_tag "content_choices[]", :id, false, :class => 'inline' %>
+                    <%#= choice_fields.check_box :right, :class => 'inline'%>
+                  </span>
+                  <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                </div>
+              <% end %>
             <% end %>
          <% end %>
          <br>
@@ -40,16 +41,17 @@
             <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
             </div>
             <br>
-
-            <%= question_fields.fields_for :ct_choices do |choice_fields| %>
-              <div class="input-group">
-                <span class="input-group-addon" id="check">
-                  <%= check_box_tag 'ct_checked[#{choice_fields.id}]', :class => 'inline' %>
-                  <%#= choice_fields.check_box :right, :class => 'inline'%>
-                </span>
-                <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
-              </div>
-            <% end %>
+            <%= form_tag "decide", :method => :post do %>
+              <%= question_fields.fields_for :ct_choices do |choice_fields| %>
+                <div class="input-group">
+                  <span class="input-group-addon" id="check">
+                    <%= check_box_tag "ct_choices[]", :id, false, :class => 'inline' %>
+                    <%#= choice_fields.check_box :right, :class => 'inline'%>
+                  </span>
+                  <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                </div>
+              <% end %>
+             <% end %>
             <br>
          <% end %>
          <br>
@@ -57,7 +59,7 @@
     </tr>
 </table>
 
- <%= link_to 'Revisar', [@course, tree, {:type =>'initial'}], method: :post, :class => "btn btn-default" %>
+ <%= link_to 'Revisar', [@course, @tree, {:type =>'recuperative'}], method: :post, :class => "btn btn-default" %>
   
   <br>
 
