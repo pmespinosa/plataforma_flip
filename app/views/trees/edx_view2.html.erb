@@ -1,69 +1,75 @@
-<%= simple_form_for([@course,@tree]) do |f| %>
+<%= form_tag controller:"trees", action: "edx_view", :method => :post do %>
 
+  <h2>Usuario <%= @username %></h2> 
 
-<h2>Usuario conectado: <%= @username %></h2> 
-
-<br>
-   
-
-<table class="table table-hover" style="width:100%">
-    <tr>
-      <td style="width:50%">
-
-        <h5>Pregunta inicial de contenido (1.1)</h5>
-        
-        <%= fields_for content_question do |question_fields| %>
-            <div class="input-group">
-              <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
-            </div>
-            <br>
-            <%= form_tag "edx_view", :method => :post do %>
-              <%= question_fields.fields_for :content_choices do |choice_fields| %>
-                <div class="input-group">
-                  <span class="input-group-addon" id="check">
-                     <%= hidden_field_tag 'content_choices[]', '' %>
-                     <%= check_box_tag 'content_choices[]', :id %>
-                    <%#= choice_fields.check_box :right, :class => 'inline'%>
-                  </span>
-                  <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
-                </div>
-              <% end %>
-            <% end %>
-         <% end %>
-         <br>
-      </td>
-
-      <td style="width:50%">
-
-        <h5>Pregunta inicial de pensamiento crítico (1.1)</h5>
-        
-        <%= fields_for ct_question do |question_fields| %>
-            <div class="input-group">
-            <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
-            </div>
-            <br>
-            <%= form_tag "edx_view", :method => :post do %>
-              <%= question_fields.fields_for :ct_choices do |choice_fields| %>
-                <div class="input-group">
-                  <span class="input-group-addon" id="check">
-                    <%= hidden_field_tag 'ct_choices[]', '' %>
-                    <%= check_box_tag 'ct_choices[]', :id %>
-                    <%#= choice_fields.check_box :right, :class => 'inline'%>
-                  </span>
-                  <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
-                </div>
-              <% end %>
-             <% end %>
-            <br>
-         <% end %>
-         <br>
-      </td>
-    </tr>
-</table>
-
- <%= link_to 'Revisar', [@course, @tree, {:type =>'recuperative'}], method: :post, :class => "btn btn-default" %>
- <%#= link_to 'Revisar2', :action => "decide" , :course_id => @course.id, :id => @tree.id, :type =>'recuperative', method: :post, :class => "btn btn-default" %>
-  
   <br>
+     
+
+  <table class="table table-hover" style="width:100%">
+      <tr>
+        <td style="width:50%">
+
+          <h5>Pregunta inicial de contenido (1.1)</h5>
+          
+          <%= fields_for content_question do |question_fields| %>
+              <div class="input-group">
+                <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
+              </div>
+              <br>
+              <%#= form_tag "edx_view", :method => :post do %>
+                <%= question_fields.fields_for :content_choices do |choice_fields| %>
+                  <div class="input-group">
+                    <span class="input-group-addon" id="check">
+                       <%= hidden_field_tag 'content_choices[]', '' %>
+                       <%= check_box_tag 'content_choices[]', :text %>
+                      <%#= choice_fields.check_box :right, :class => 'inline'%>
+                    </span>
+                    <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                  </div>
+                <% end %>
+              <%# end %>
+           <% end %>
+           <br>
+        </td>
+
+        <td style="width:50%">
+
+          <h5>Pregunta inicial de pensamiento crítico (1.1)</h5>
+          
+          <%= fields_for ct_question do |question_fields| %>
+              <div class="input-group">
+              <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
+              </div>
+              <br>
+              <%#= form_tag "edx_view", :method => :post do %>
+                <%= question_fields.fields_for :ct_choices do |choice_fields| %>
+                  <div class="input-group">
+                    <span class="input-group-addon" id="check">
+                      <%= hidden_field_tag 'ct_choices[]', '' %>
+                      <%= check_box_tag 'ct_choices[]', :text %>
+                      <%#= choice_fields.check_box :right, :class => 'inline'%>
+                    </span>
+                    <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                  </div>
+                <% end %>
+               <%# end %>
+              <br>
+           <% end %>
+           <br>
+        </td>
+      </tr>
+  </table> 
+  <% puts "holaaaaaa------------------------------------------" %>
+  <% puts @course.id %>
+  <% puts @tree.id %>
+  <%= hidden_field_tag "type", "recuperative" %>
+  <%= hidden_field_tag "course_id", @course.id %>
+  <%= hidden_field_tag "id", @tree.id %>
+
+
+   <%#= link_to 'Revisar', [@course, @tree, {:type =>'recuperative'}], method: :post, :class => "btn btn-default" %>
+   <%#= link_to 'Revisar2', :action => "decide" , :course_id => @course.id, :id => @tree.id, :type =>'recuperative', method: :post, :class => "btn btn-default" %>
+    <%= submit_tag "Continuar", class: "btn btn-default" %>
+    <br>
 
 <% end %>

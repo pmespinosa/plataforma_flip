@@ -2,7 +2,7 @@ class TreesController < ApplicationController
   before_action :set_tree, only: [:show, :edit, :update, :destroy]
    before_action :set_course, only: [:create, :new]
    before_action :set_tree_edx, only: [:edx_view, :decide]
-   before_action :set_initial, only: [:edx_view, :decide]
+   
 
   def edx_view 
     @username = params['lis_person_sourcedid']
@@ -19,6 +19,7 @@ class TreesController < ApplicationController
       params[:ct_choices].each do |choice|
         puts choice
       end
+      puts "chao---------------------"
       render "edx_view2", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question, 
       :feedback_simple=> @tree.recuperative_simple_feedback, :feedback_complex => @tree.recuperative_complex_feedback}
       #else
@@ -208,9 +209,7 @@ class TreesController < ApplicationController
       params.require(:tree).permit(:question, :tree_id, content_choices_attributes: [:text, :right])
     end
 
-    def set_initial
-        @initial = true
-    end
+  
 
     
 
