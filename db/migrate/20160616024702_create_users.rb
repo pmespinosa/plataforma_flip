@@ -6,7 +6,7 @@ class CreateUsers < ActiveRecord::Migration
       t.integer "role"
       t.boolean "asistencia"
       t.integer "partner_id"
-      t.integer "current_course_id"
+      t.integer "current_course_id", :default => 0 #agregue default para eliminar nil
       t.timestamps null: false
     end
   end
