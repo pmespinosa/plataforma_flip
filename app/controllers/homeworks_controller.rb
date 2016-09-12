@@ -49,7 +49,7 @@ class HomeworksController < ApplicationController
   end
 
   def show
-    @users = User.all.where(role:0)
+    @users = User.all.where(role:0, asistencia:true)
     @homework.upload = true
     @homework.save
     if current_user.role?
