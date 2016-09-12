@@ -32,14 +32,16 @@
                 <div class="actions" style="text-align: center">
                   <% if @homework.upload == true%>
                     <%= submit_tag "Rehacer", name: 'next', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px"%>
-                    <%= submit_tag "Discusión", name: 'previous', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px"%>
+                    <%= submit_tag "Discusión", name: 'discussion', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px"%>
                   <% else%>
                     <%= submit_tag "Rehacer", name: 'next', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px"%>
                   <% end%>
                 </div>
               <% elsif @homework.actual_phase == "rehacer" && current_user.role?%>
                 <div class="actions" style="text-align: center">
-                  <%= submit_tag "Discusión", name: 'next', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px"%>
+                  <% if @homework.upload == true%>
+                    <%= submit_tag "Discusión", name: 'discussion', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px"%>
+                  <% end%>
                 </div>
               <%end%>
             <%end%>

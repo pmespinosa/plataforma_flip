@@ -202,6 +202,8 @@ class HomeworksController < ApplicationController
             libres.delete_at(i1)
           end
         end
+        @homework.upload = true
+        @homework.save
         redirect_to homework_path(@homework)
       end
     end
