@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :users
 
+  get 'homeworks/:id/studentanswer', to:"homeworks#answers"
 
   post 'courses/new' => 'courses#agregate'
   post 'courses/:id/edit' => 'courses#edit'

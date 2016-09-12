@@ -21,13 +21,21 @@
               <%= p.hidden_field  :phase, value:@homework.actual_phase, class:"form-control" %>
               <% if @homework.actual_phase == "responder" && current_user.role?%>
                 <div class="actions" style="text-align: center">
-                  <%= submit_tag "Argumentar", name: 'next', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px"%>
-                  <%= link_to 'Discusión', homeworks_path,  :class=>"btn btn-primary", :style=>'color:white; height:75px; width:150px; font-size:20px; line-height: 60px' %>
+                  <% if @homework.upload == true%>
+                    <%= submit_tag "Argumentar", name: 'next', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px"%>
+                    <%= submit_tag "Discusión", name: 'discussion', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px"%>
+                  <% else%>
+                    <%= submit_tag "Argumentar", name: 'next', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px"%>
+                  <%end%>
                 </div>
               <% elsif @homework.actual_phase == "argumentar" && current_user.role?%>
                 <div class="actions" style="text-align: center">
-                  <%= submit_tag "Rehacer", name: 'next', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px"%>
-                  <%= submit_tag "Discusión", name: 'previous', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px"%>
+                  <% if @homework.upload == true%>
+                    <%= submit_tag "Rehacer", name: 'next', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px"%>
+                    <%= submit_tag "Discusión", name: 'previous', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px"%>
+                  <% else%>
+                    <%= submit_tag "Rehacer", name: 'next', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px"%>
+                  <% end%>
                 </div>
               <% elsif @homework.actual_phase == "rehacer" && current_user.role?%>
                 <div class="actions" style="text-align: center">
@@ -59,9 +67,15 @@
     <% @users.sort_by{|e| e[:last_name]}.each do |user| %>
       <% if user.role == "alumno"%>
       <tr>
-        <td><%= user.last_name%></td>
-        <td><%= user.first_name%></td>
-        <td><%= link_to "Ver Respuesta", user, :class=>"btn btn-primary btn-xs", :style=>'color:white'%></td>
+        <%= form_tag ':id/studentanswer', action:"answers", method:"get" do %>
+          <%= fields_for 'homework', @homework do |p| %>
+            <%= p.hidden_field  :homework, value:@homework.id, class:"form-control" %>
+            <%= p.hidden_field  :user, value:user.id, class:"form-control" %>
+            <td><%= user.last_name%></td>
+            <td><%= user.first_name%></td>
+            <td><%= submit_tag "Ver Respuesta", class: "btn btn-primary btn-xs", method:"get" %></td>
+          <% end %>
+        <% end %>
       </tr>
       <% end %>
     <% end %>
