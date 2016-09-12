@@ -41,19 +41,17 @@ class HomeworksController < ApplicationController
           @homework.actual_phase = "argumentar"
           @homework.upload = true
         end
+      elsif params[:discussion]
+        @homework.upload = false
       end
       @homework.save
     end
     redirect_to homework_path(@homework.id)
   end
 
-  def actualizar
-  end
-
   def show
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades", "Realizar Actividad"]
     @users = User.all.where(role:0, asistencia:true)
-    @homework.upload = true
     @homework.save
     if current_user.role?
       @questions = Question.all
@@ -80,6 +78,12 @@ class HomeworksController < ApplicationController
 
   def edit
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades", "Editar Actividad"]
+  end
+
+  def answers
+    @user = User.find_by_id(params["homework"]["user"])
+    @homework = Homework.where(id:params["homework"]["homework"].to_i)[0]
+    render 'studentanswer'
   end
 
   def create
@@ -199,6 +203,8 @@ class HomeworksController < ApplicationController
             libres.delete_at(i1)
           end
         end
+        @homework.upload = true
+        @homework.save
         redirect_to homework_path(@homework)
       end
     end
