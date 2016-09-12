@@ -32,7 +32,7 @@ class AnswersController < ApplicationController
     @question.answers << @answer
     @answer.question = @question
     if @answer.save
-      redirect_to homework_questions_path(@homework), notice: 'La respuesta ha sido enviada.'
+      redirect_to homework_question_answers_path(@homework, @question), notice: 'La respuesta ha sido enviada.'
     else
       render :new
     end
@@ -41,7 +41,7 @@ class AnswersController < ApplicationController
   def update
     respond_to do |format|
       if @answer.update(answer_params)
-        format.html { redirect_to homework_questions_path(@homework), notice: 'La respuesta ha sido actualizada.' }
+        format.html { redirect_to homework_question_answers_path(@homework, @question), notice: 'La respuesta ha sido actualizada.' }
         format.json { render :show, status: :ok, location: @homework }
       else
         format.html { render :edit }
