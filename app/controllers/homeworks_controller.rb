@@ -21,14 +21,18 @@ class HomeworksController < ApplicationController
       if params[:next]
         if @homework.actual_phase == "responder"
           @homework.actual_phase = "argumentar"
+          @homework.upload = true
         elsif @homework.actual_phase == "argumentar"
           @homework.actual_phase = "rehacer"
+          @homework.upload = true
         end
       elsif params[:previous]
         if @homework.actual_phase == "argumentar"
           @homework.actual_phase = "responder"
+          @homework.upload = true
         elsif @homework.actual_phase == "rehacer"
           @homework.actual_phase = "argumentar"
+          @homework.upload = true
         end
       end
       @homework.save
@@ -37,6 +41,7 @@ class HomeworksController < ApplicationController
   end
 
   def show
+    @users = User.all.where(role:0)
     @homework.upload = true
     @homework.save
     if current_user.role?

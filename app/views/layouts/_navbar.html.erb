@@ -123,10 +123,6 @@
                 <li ><%= button_to "Mis Cursos", users_path, :class => "btn btn-primary", :style => "font-size:18px" %></li>
               </ul>
 
-              <ul class="nav navbar-nav">
-                <li><%= button_to "Actividades", homeworks_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
-              </ul>
-
             <% elsif current_page?(root_path)%> <!-- 1)REALIZAR ACTIVIDAD -->
 
               <ul class="nav navbar-nav">
@@ -141,10 +137,6 @@
 
               <ul class="nav navbar-nav">
                 <li ><%= button_to "Mis Cursos", users_path, :class => "btn btn-primary", :style => "font-size:18px" %></li>
-              </ul>
-
-              <ul class="nav navbar-nav">
-                <li><%= button_to "Actividades", homeworks_path, :class => "btn btn-primary", :style => "font-size:18px", method: :get %></li>
               </ul>
 
             <% end %>

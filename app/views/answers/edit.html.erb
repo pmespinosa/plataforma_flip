@@ -1,5 +1,6 @@
 <div style="text-align: center">
-	<h3><%= @question.content %></h3>
+	<% if @homework.upload %>
+	<h3><%= @homework.content %></h3>
 
 	<% partner = User.find_by_id(current_user.partner_id) %>
 	<% p_answers = partner.answers %>
@@ -35,4 +36,5 @@
 	<% else %>
 		<h4><%= "FORMULARIO NO DISPONIBLE" %></h4>
 	<%end%>
+<%end%>
 </div>

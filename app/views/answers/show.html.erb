@@ -5,19 +5,19 @@
 	<% p_answers = partner.answers %>
 	<% answer = p_answers.find_by_question_id(@question.anterior) %>
 
-	<% if @question.phase == 1 %>
+	<% if @question.phase == "responder" %>
 		<% actual = current_user.answers.find_by_question_id(@question.id) %>
 		<%= actual.content %>
 		<% if actual.image? %>
 			<p><%= image_tag actual.image.url(:large) %></p>
 		<% end %>
-	<% elsif @question.phase == 2 %>
+	<% elsif @question.phase == "argumentar" %>
 		<h4><%= "En base a la respuesta de %s %s, discuta y argumente su contenido:" % [partner.first_name, partner.last_name] %></h4>
 		<em><h4><%=answer.content %></h4></em>
 		<% if answer.image? %>
 			<p><%= image_tag answer.image.url(:large) %></p>
 		<% end %>
-	<% elsif @question.phase == 3 %>
+	<% elsif @question.phase == "rehacer" %>
 		<% my_answers = current_user.answers %>
 		<% ant = Question.find_by_id(@question.anterior) %>
 		<% my_ans = my_answers.find_by_question_id(ant.anterior) %>

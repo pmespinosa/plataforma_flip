@@ -15,6 +15,8 @@ Rails.application.routes.draw do
 
   get 'homework/:id/asistencia', to:'homeworks#asistencia', as:"homework_asistencia"
   post 'homework/:id/asistencia',to:'homeworks#asistencia'
+  post 'homework/:id/edit',to:'homeworks#edit'
+  get 'homework/:id/edit',to:'homeworks#edit'
   resources :courses do
     resources :users do
       resources :homeworks
