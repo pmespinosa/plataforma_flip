@@ -40,6 +40,9 @@ class HomeworksController < ApplicationController
     redirect_to homework_path(@homework.id)
   end
 
+  def actualizar
+  end
+
   def show
     @users = User.all.where(role:0)
     @homework.upload = true
@@ -70,20 +73,36 @@ class HomeworksController < ApplicationController
   end
 
   def create
-    @homework = Homework.new(homework_params)
-    @course.homeworks << @homework
-    respond_to do |format|
-      if @homework.save
-        format.html { redirect_to homeworks_path, notice: 'La actividad ha sido creada.' }
-        format.json { render :show, status: :created, location: @homework }
-      else
-        format.html { render :new }
-        format.json { render json: @homework.errors, status: :unprocessable_entity }
+    if params["tag_in_index"]
+      @homework = Homework.where(upload:true)[0]
+      for q in @homework.questions
+        if q.phase == @homework.actual_phase
+          question = q
+        end
       end
+      if params["tag_in_index"] == "Editar Respuesta"
+        redirect_to homeworks_path
+      elsif params["tag_in_index"] == "Actualizar" && current_user.answers.find_by_question_id([question.id]) == nil
+        redirect_to new_homework_question_answer_path(@homework, question)
+      else
+        redirect_to homework_question_answers_path(@homework, question)
+      end
+    else
+      @homework = Homework.new(homework_params)
+      @course.homeworks << @homework
+      respond_to do |format|
+        if @homework.save
+          format.html { redirect_to homeworks_path, notice: 'La actividad ha sido creada.' }
+          format.json { render :show, status: :created, location: @homework }
+        else
+          format.html { render :new }
+          format.json { render json: @homework.errors, status: :unprocessable_entity }
+        end
+      end
+      @homework.course_id = current_user.current_course_id
+      @homework.save
+      QuestionsController.new.create(@homework)
     end
-    @homework.course_id = current_user.current_course_id
-    @homework.save
-    QuestionsController.new.create(@homework)
   end
 
   def update

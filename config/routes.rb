@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :users
 
+
   post 'courses/new' => 'courses#agregate'
   post 'courses/:id/edit' => 'courses#edit'
   patch 'courses/:id/edit'=> 'courses#edit'

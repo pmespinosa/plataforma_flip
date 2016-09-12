@@ -1,23 +1,68 @@
-<h1><%= @homework.name %></h1>
+<h2><%= "Su respuesta fue enviada, ahora debe esperar para la siguiente etapa." %></h2>
+<% if current_user.partner_id != nil %>
+	<div style="text-align: center">
+		<% @homework = Homework.where(upload:true)[0]%>
+		<% @homework.questions.each do |question| %>
+			<% if question.phase == @homework.actual_phase %>
+				<br>
+				<h3><%= question.content %></h3>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Contenido</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+				<% partner = User.find_by_id(current_user.partner_id) %>
+				<% p_answers = partner.answers %>
+				<% answer = p_answers.find_by_question_id(question.anterior) %>
 
-  <tbody>
-    <% if !@answer.nil? %>
-        <tr>
-          <td><%= @answer.content %></td>
-            <td><%= link_to 'Ver', homework_question_answer_path(@homework, @question, @answer) %></td>
-            <td><%= link_to 'Editar', edit_homework_question_answer_path(@homework, @question, @answer) %></td>
-            <td><%= link_to 'Eliminar', homework_question_answer_path(@homework, @question, @answer), method: :delete, data: { confirm: '¿Estas Seguro?' } %></td>
-          </tr>
-      <% end %>
-  </tbody>
-</table>
-
-<br>
+				<% actual = current_user.answers.find_by_question_id(question.id) %>
+				<% if actual != nil %>
+					<% if question.phase == "responder" %>
+						<h4>Respuesta: </h4>
+				    <h4><em><%= actual.content %></em></h4>
+						<% if actual.image? %>
+							<p><%= image_tag actual.image.url(:large) %></p>
+						<% end %>
+					<% elsif question.phase == "argumentar" %>
+						<h4><%= "En base a la respuesta de %s %s, discuta y argumente su contenido:" % [partner.first_name, partner.last_name] %></h4>
+						<em><h4><%=answer.content %></h4></em>
+						<% if answer.image? %>
+							<p><%= image_tag answer.image.url(:large) %></p>
+						<% end %>
+						<h4>Argumentación de <%=current_user.first_name + " " + current_user.last_name %>: </h4>
+						<h4><em><%= actual.content %></em></h4>
+						<% if actual.image? %>
+							<p><%= image_tag actual.image.url(:large) %></p>
+						<% end %>
+					<% elsif question.phase == "rehacer" %>
+						<% my_answers = current_user.answers %>
+						<% previus = Question.find_by_id(question.anterior) %>
+						<% my_answer = my_answers.find_by_question_id(previus.anterior) %>
+						<br>
+						<h4>Primera respuesta de <%=current_user.first_name + " " + current_user.last_name%> :</h4>
+						<em><h4><%="\"" + my_answer.content + "\""%></h4></em>
+						<% if my_answer.image? %>
+							<p><%= image_tag my_answer.image.url(:large) %></p>
+						<% end %>
+						<br>
+						<h4>Argumentación de <%= partner.first_name + " " + partner.last_name%> :</h4>
+						<em><h4><%=answer.content %></h4></em>
+						<% if answer.image? %>
+							<p><%= image_tag answer.image.url(:large) %></p>
+						<% end %>
+						<br>
+						<h4>Respuesta final de <%= current_user.first_name + " " + current_user.last_name%> :</h4>
+				        <em><h4><%=actual.content %></h4></em>
+				        <% if actual.image?%>
+				        	<p><%= image_tag actual.image.url(:large) %></p>
+				        <%end%>
+					<%end%>
+				<%end%>
+			<%end%>
+		<%end%>
+    <br></br>
+        <%= form_tag controller:"homeworks", method:"get" do %>
+          <%= fields_for 'actualizar', @homework do |p| %>
+            <%= submit_tag "Editar Respuesta", name: 'tag_in_index', class: "btn btn-primary", action:"show", style:"height:35px; width:130px"%>
+            <%= submit_tag "Actualizar", name: 'tag_in_index', class: "btn btn-primary", action:"actualizar", style:"height:35px; width:130px"%>
+          <%end%>
+        <%end%>
+    <br></br>
+	</div>
+<%end%>

@@ -58,10 +58,12 @@
 			<%end%>
 		<%end%>
     <br></br>
-    <%= form_for homework, :html => { :class => "button_to" } do |f|%>
-      <%= f.hidden_field :name, value:"editar"%>
-      <%= f.submit "Editar Respuesta", :class=>"btn btn-primary", :style=>'color:white'%>
-    <% end%>
+        <%= form_tag controller:"homeworks", method:"get" do %>
+          <%= fields_for 'actualizar', homework do |p| %>
+            <%= submit_tag "Editar Respuesta", name: 'actualizar', class: "btn btn-primary", action:"editar"%>
+            <%= submit_tag "Actualizar", name: 'actualizar', class: "btn btn-primary", action:"actualizar"%>
+          <%end%>
+        <%end%>
     <br></br>
 	</div>
 <%end%>
