@@ -9,8 +9,9 @@
 <body>
 
 <%= render '/layouts/navbar' %>
-
-
+<% if user_signed_in? %>
+  <%= render '/layouts/breadcrumbs' %>
+<% end %>
 <div class="container">
   <main role="main">
     <%= yield %>

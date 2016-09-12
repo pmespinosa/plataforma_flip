@@ -1,15 +1,18 @@
 class UsersController < ApplicationController
   before_action :set_users
   before_action :set_courses
+  before_action :set_breadcrumbs
   before_action :set_miscursos_visible, only: :index
   before_action :set_actividades_visible, only: :show
 
   def index
+    @breadcrumbs = ["Mis Cursos"]
     current_user.current_course_id = 11111 # CAMBIE NIL => numero para que no se caiga cuando activa o desactiva navbar
     current_user.save
   end
 
   def show
+    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades", "Asistencia", "Realizar Actividad", "Respuesta Alumno"]
     @user = User.find(params[:id])
     unless current_user.profesor?
       unless @user == current_user
@@ -75,6 +78,10 @@ class UsersController < ApplicationController
 
   def set_configuraciones_visible
     @Configuraciones_visible = true
+  end
+
+  def set_breadcrumbs
+    @breadcrumbs = []
   end
 
   def user_params

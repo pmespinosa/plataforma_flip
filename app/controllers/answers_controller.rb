@@ -6,6 +6,7 @@ class AnswersController < ApplicationController
   # GET /answers
   # GET /answers.json
   def index
+    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Realizar Actividad"]
     @answer = current_user.answers.find_by_question_id(params[:question_id])
   end
 
@@ -22,6 +23,7 @@ class AnswersController < ApplicationController
 
   # GET /answer/1/edit
   def edit
+    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Realizar Actividad"]
   end
 
   # POST /answer

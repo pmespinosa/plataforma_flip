@@ -4,11 +4,11 @@
 <h3><b>Pregunta:</b> <%= @homework.content%></h3>
 <%= form_tag controller:"homeworks", action:"change_phase", method:"post" do %>
   <% if @homework.actual_phase == "responder"%> <!-- AQUI VA LA FASE NO ACTIVA -->
-    <%= link_to 'Volver', homeworks_path,  :class=>"btn btn-primary", :style=>'color:white' %>
+    <%= link_to 'Volver Actividades', homeworks_path,  :class=>"btn btn-primary", :style=>'color:white' %>
   <% elsif @homework.actual_phase == "argumentar"%>
-    <%= submit_tag "Volver", name: 'previous', class: "btn btn-primary"%>
+    <%= submit_tag "Etapa Anterior", name: 'previous', class: "btn btn-primary"%>
   <%else%>
-    <%= submit_tag "Volver", name: 'previous', class: "btn btn-primary"%>
+    <%= submit_tag "Etapa Anterior", name: 'previous', class: "btn btn-primary"%>
   <% end %>
   <div class="column">
     <div class="col-sm-70 col-md-5">

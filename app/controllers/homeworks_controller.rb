@@ -11,6 +11,7 @@ class HomeworksController < ApplicationController
   # GET /homeworks
   # GET /homeworks.json
   def index
+    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades"]
     if current_user.role?
       @homeworks = @course.homeworks
     else
@@ -71,10 +72,12 @@ class HomeworksController < ApplicationController
   end
 
   def new
+    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades", "Crear Actividad"]
     @homework = Homework.new
   end
 
   def edit
+    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades", "Editar Actividad"]
   end
 
   def create
@@ -117,8 +120,8 @@ class HomeworksController < ApplicationController
     end
     respond_to do |format|
       if @homework.update(homework_params)
-        format.html { redirect_to homework_path(@homework), notice: 'La actividad ha sido actualizada.' }
-        format.json { render :show, status: :ok, location: @homework }
+        format.html { redirect_to homeworks_path } # REDIRECT TO INDEX
+        format.json { render :index, status: :ok }
       else
         format.html { render :edit }
         format.json { render json: @homework.errors, status: :unprocessable_entity }
@@ -137,6 +140,7 @@ class HomeworksController < ApplicationController
   end
 
   def asistencia
+    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades", "Asistencia"]
     @users = Course.find_by_id(current_user.current_course_id).users
     libres = []
     if params["asistentes"] != nil

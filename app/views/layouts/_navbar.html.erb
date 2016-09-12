@@ -60,15 +60,6 @@
                 <li ><%= button_to "Mis Cursos", users_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
               </ul>
             <% end %>
-            <% if  @actividades_visible %> <!-- BOTON ACTIVIDAD -->
-              <ul class="nav navbar-nav">
-                <li><%= button_to "Actividades", homeworks_path, :class => "btn btn-primary", :style => "font-size:18px", method: :get %></li>
-              </ul>
-            <% else %>
-              <ul class="nav navbar-nav">
-                <li><%= button_to "Actividades", homeworks_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px", method: :get %></li>
-              </ul>
-            <% end %>
           <% end %>
         <% end %>
       </div>

@@ -12,6 +12,7 @@ class CoursesController < ApplicationController
   end
 
   def show
+    @breadcrumbs = ["Mis Cursos", @course.name]
     @courses = Course.all
     current_user.current_course_id = @course.id
     current_user.save
@@ -21,10 +22,12 @@ class CoursesController < ApplicationController
   end
 
   def new
+    @breadcrumbs = ["Mis Cursos", "Crear Curso"]
     @course = Course.new
   end
 
   def edit
+    @breadcrumbs = ["Mis Cursos", @course.name, "Configuraciones"]
     @course = Course.find(params[:id])
     if params["roles"] != nil
       params["roles"].each do |p|

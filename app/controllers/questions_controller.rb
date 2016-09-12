@@ -6,6 +6,7 @@ class QuestionsController < ApplicationController
   # GET /questions
   # GET /questions.json
   def index
+    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Realizar Actividad"]
     @questions = @homework.questions
   end
 
@@ -51,7 +52,7 @@ class QuestionsController < ApplicationController
   def update
     respond_to do |format|
       if @question.update(question_params)
-        format.html { redirect_to homework_questions_path(@homework), notice: 'La pregunta fue actualizada.' }
+        format.html { redirect_to homework_questions_path(@homework) }
         format.json { render :show, status: :ok, location: @question }
       else
         format.html { render :edit }
@@ -76,7 +77,7 @@ class QuestionsController < ApplicationController
     siguiente.destroy
     siguiente2.destroy
     respond_to do |format|
-      format.html { redirect_to [@homework,@question], notice: 'La pregunta fue removida.' }
+      format.html { redirect_to [@homework,@question] }
       format.json { render :show, status: :ok, location: @question }
     end
   end
