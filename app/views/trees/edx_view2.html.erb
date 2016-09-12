@@ -45,10 +45,9 @@
                 <%#= form_tag "edx_view", :method => :post do %>
                   <%= question_fields.fields_for :ct_choices do |choice_fields| %>
                     <div class="input-group">
+                    <%= hidden_field_tag "ct_choices[#{choice_fields.object.id}]", :false %>
                       <span class="input-group-addon" id="check">
-                        <%= hidden_field_tag "ct_choices[#{choice_fields.object.id}][]", false %>
-                        <%= check_box_tag "ct_choices[#{choice_fields.object.id}][]", true %>
-                        <%#= choice_fields.check_box :right, :class => 'inline'%>
+                        <%= check_box_tag "ct_choices[#{choice_fields.object.id}]", :true %>
                       </span>
                       <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
                     </div>

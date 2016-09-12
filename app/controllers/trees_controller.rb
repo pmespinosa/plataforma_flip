@@ -57,13 +57,15 @@ class TreesController < ApplicationController
               end
             end
         end
+
         @tree.initial_ct_question.ct_choices.each do |choice|
-          if params[:ct_choices] && params[:ct_choices][choice.id] 
-            if choice.right != params[:ct_choices][choice.id].last
-              @correct_ct = false
-              break
+
+            if params[:ct_choices] && params[:ct_choices][choice.id.to_s] 
+              if choice.right.to_s != params[:ct_choices][choice.id.to_s]
+                @correct_ct = false
+                break
+              end
             end
-          end
         end
 
         #puts "probandooooooooooooooooooooo------------"
@@ -76,7 +78,7 @@ class TreesController < ApplicationController
             :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback, 
             :type => "deeping", :state =>"no_saw", :feedback_quality => "none"}
 
-          elsif @correct_ct == true && @correct_content == false
+          elsif @correct_content == true && @correct_ct == false
             render "edx_view2", :locals => {:content_question => @tree.initial_content_question, :ct_question => @tree.initial_ct_question, 
             :feedback_simple=> @tree.initial_simple_feedback, :feedback_complex => @tree.initial_complex_feedback, 
              :type => "initial", :state =>"answered", :feedback_quality => "simple"}
@@ -98,44 +100,60 @@ class TreesController < ApplicationController
       if params[:state].to_s == "answered"
          @correct_content= true
          @correct_ct= true   
+
          @tree.recuperative_content_question.content_choices.each do |choice|
-            if params[:content_choices] && params[:content_choices][choice.id] 
-              if choice.right != params[:content_choices][choice.id].last
+
+            puts "controllr: antes de entrar al if de content. Todo array y array del id de choice"
+            puts params[:content_choices]
+            #puts "controller_ choice id:"
+            #puts choice.id
+            #puts "controller: arreglo de choice id:"
+            #puts "el valor es: " + params[:content_choices][choice.id.to_s]
+            #puts params[:content_choices][choice.id][].last
+
+            if params[:content_choices] && params[:content_choices][choice.id.to_s]
+
+              puts "probandooo_antes------------"
+              puts "ID: " + choice.id.to_s + " right?: " + choice.right.to_s
+              if choice.right.to_s != params[:content_choices][choice.id.to_s]
+                puts "entre al if"
                 @correct_content = false
                 break
               end
             end
-          end
-          @tree.recuperative_ct_question.ct_choices.each do |choice|
-            if params[:ct_choices] && params[:ct_choices][choice.id]  
-              if choice.right != params[:ct_choices][choice.id].last
+        end
+
+        @tree.recuperative_ct_question.ct_choices.each do |choice|
+
+            if params[:ct_choices] && params[:ct_choices][choice.id.to_s] 
+              if choice.right.to_s != params[:ct_choices][choice.id.to_s]
                 @correct_ct = false
                 break
               end
             end
-          end
-
+        end
+  
           if @correct_ct == true && @correct_content == true
             render "edx_view2", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question, 
             :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback, 
             :type => "deeping", :state =>"no_saw", :feedback_quality => "none"}
 
-          elsif @correct_ct == true && @correct_content == false
+          elsif @correct_content == true && @correct_ct == false
             render "edx_view2", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question, 
             :feedback_simple=> @tree.recuperative_simple_feedback, :feedback_complex => @tree.recuperative_complex_feedback, 
-             :type => "recuperative", :state =>"answered", :feedback_quality => "simple"}
+             :type => "deeping", :state =>"answered", :feedback_quality => "simple"}
 
           else
             render "edx_view2", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question, 
             :feedback_simple=> @tree.recuperative_simple_feedback, :feedback_complex => @tree.recuperative_complex_feedback, 
-             :type => "recuperative", :state =>"answered", :feedback_quality => "complex"}
+             :type => "deeping", :state =>"answered", :feedback_quality => "complex"}
           end
 
 
       elsif params[:state].to_s == "feedback_saw"
           render "edx_view2", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question, 
               :feedback_simple=> @tree.recuperative_simple_feedback, :feedback_complex => @tree.recuperative_complex_feedback, 
-              :type => "recuperative", :state => "end", :feedback_quality => "none"}
+              :type => "deeping", :state => "end", :feedback_quality => "none"}
       end
 
 
@@ -144,29 +162,45 @@ class TreesController < ApplicationController
       if params[:state].to_s == "answered"
          @correct_content= true
          @correct_ct= true   
+
          @tree.deeping_content_question.content_choices.each do |choice|
-            if params[:content_choices] && params[:content_choices][choice.id] 
-              if choice.right != params[:content_choices][choice.id].last
+
+            puts "controllr: antes de entrar al if de content. Todo array y array del id de choice"
+            puts params[:content_choices]
+            #puts "controller_ choice id:"
+            #puts choice.id
+            #puts "controller: arreglo de choice id:"
+            #puts "el valor es: " + params[:content_choices][choice.id.to_s]
+            #puts params[:content_choices][choice.id][].last
+
+            if params[:content_choices] && params[:content_choices][choice.id.to_s]
+
+              puts "probandooo_antes------------"
+              puts "ID: " + choice.id.to_s + " right?: " + choice.right.to_s
+              if choice.right.to_s != params[:content_choices][choice.id.to_s]
+                puts "entre al if"
                 @correct_content = false
                 break
               end
             end
-          end
-          @tree.deeping_ct_question.ct_choices.each do |choice|
-            if params[:ct_choices] && params[:ct_choices][choice.id] 
-              if choice.right != params[:ct_choices][choice.id].last
+        end
+
+        @tree.deeping_ct_question.ct_choices.each do |choice|
+
+            if params[:ct_choices] && params[:ct_choices][choice.id.to_s] 
+              if choice.right.to_s != params[:ct_choices][choice.id.to_s]
                 @correct_ct = false
                 break
               end
             end
-          end
+        end
 
           if @correct_ct == true && @correct_content == true
             render "edx_view2", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question, 
               :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback, 
               :type => "recuperative", :state => "end", :feedback_quality => "none"}
 
-          elsif @correct_ct == true && @correct_content == false
+          elsif @correct_content == true && @correct_ct == false
             render "edx_view2", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question, 
             :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback, 
              :type => "recuperative", :state =>"answered", :feedback_quality => "simple"}
