@@ -7,6 +7,7 @@ class HomeworksController < ApplicationController
   before_action :set_reporte_visible, only: :index
   before_action :set_actividades_visible, only: [:index, :show, :asistencia, :edit, :new]
   before_action :set_configuraciones_visible, only: :index
+  before_action :set_breadcrumbs
 
   # GET /homeworks
   # GET /homeworks.json
@@ -242,8 +243,12 @@ class HomeworksController < ApplicationController
       @Configuraciones_visible = true
     end
 
+    def set_breadcrumbs
+      @breadcrumbs = []
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def homework_params
-      params.require(:homework).permit(:name, :content, :actual_phase, :upload, :courses)
+      params.require(:homework).permit(:name, :content, :actual_phase, :upload, :courses, :image)
     end
 end

@@ -2,6 +2,7 @@ class AnswersController < ApplicationController
   before_action :set_question, :set_homework
   before_action :set_answer, only: [:edit, :destroy, :show, :update]
   before_action :set_actividades_visible, only: :new
+  before_action :set_breadcrumbs
   before_filter :authenticate_user!
   # GET /answers
   # GET /answers.json
@@ -18,6 +19,7 @@ class AnswersController < ApplicationController
 
   # GET /answer/new
   def new
+    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Realizar Actividad"]
     @answer = Answer.new
   end
 
@@ -92,6 +94,10 @@ class AnswersController < ApplicationController
 
     def set_configuraciones_visible
       @Configuraciones_visible = true
+    end
+
+    def set_breadcrumbs
+      @breadcrumbs = []
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
