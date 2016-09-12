@@ -1,0 +1,174 @@
+<nav class="navbar navbar-inverse" style="background-color:#337AB7">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+
+      <div class="navbar-header">
+        <% if user_signed_in? %> <!-- SIGN IN -->
+          <% if current_user.role? %> <!-- ##VISTA PROFESOR## -->
+            <% if current_page?(users_path) || current_page?(new_course_path)%> <!-- 1)VISTA MIS CURSOS/CREAR CURSO -->
+
+              <ul class="nav navbar-nav">
+                <li ><%= button_to "Mis Cursos", users_path, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Evaluación Formativa", users_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Reporte", users_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Actividades", homeworks_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Configuraciones", edit_course_path(current_user.current_course_id), :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+
+            <% elsif current_page?(root_path) %> <!-- 2.1)CREAR/EDITAR ARBOL/ETC. -->
+
+              <ul class="nav navbar-nav">
+                <li ><%= button_to "Mis Cursos", users_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Evaluación Formativa", users_path, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Reporte", users_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Actividades", homeworks_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Configuraciones", edit_course_path(current_user.current_course_id), :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+
+            <% elsif current_page?(root_path) %> <!-- 3.1)VER REPORTE -->
+
+              <ul class="nav navbar-nav">
+                <li ><%= button_to "Mis Cursos", users_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Evaluación Formativa", users_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Reporte", users_path, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Actividades", homeworks_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Configuraciones", edit_course_path(current_user.current_course_id), :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+
+            <% elsif current_page?(root_path) || current_page?(new_homework_path) || @boton_visible %> <!-- 4.1)CREAR/REALIZAR ACTIVIDAD -->
+
+              <ul class="nav navbar-nav">
+                <li ><%= button_to "Mis Cursos", users_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Evaluación Formativa", users_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Reporte", users_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Actividades", homeworks_path, :class => "btn btn-primary", :style => "font-size:18px", method: :get %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Configuraciones", edit_course_path(current_user.current_course_id), :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+
+            <% else %> <!-- 5)TODO ACTIVADO (VISTA CURSO/EVALUACION FORMATIVA/REPORTES/ACTIVIDADES/CONFIGURACIONES/ETC.) -->
+
+              <ul class="nav navbar-nav">
+                <li ><%= button_to "Mis Cursos", users_path, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Evaluación Formativa", users_path, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Reporte", users_path, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Actividades", homeworks_path, :class => "btn btn-primary", :style => "font-size:18px", method: :get %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Configuraciones", edit_course_path(current_user.current_course_id), :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+
+            <% end %>
+          <% else %> <!-- ##VISTA ALUMNO## -->
+            <% if current_page?(users_path) || current_page?(new_course_path) %> <!-- VISTA MIS CURSOS -->
+
+              <ul class="nav navbar-nav">
+                <li ><%= button_to "Mis Cursos", users_path, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Actividades", homeworks_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px", method: :get %></li>
+              </ul>
+
+            <% elsif current_page?(root_path)%> <!-- 1)REALIZAR ACTIVIDAD -->
+
+              <ul class="nav navbar-nav">
+                <li ><%= button_to "Mis Cursos", users_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Actividades", homeworks_path, :class => "btn btn-primary", :style => "font-size:18px", method: :get %></li>
+              </ul>
+
+            <% else %> <!-- 2)VISTA CURSO -->
+
+              <ul class="nav navbar-nav">
+                <li ><%= button_to "Mis Cursos", users_path, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Actividades", homeworks_path, :class => "btn btn-primary", :style => "font-size:18px", method: :get %></li>
+              </ul>
+
+            <% end %>
+          <% end %>
+        <% else %> <!-- NOT SIGN IN -->
+        <% end %>
+      </div>
+
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <% if user_signed_in? %>
+            <li class="dropdown">
+              <a href="/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="font-size:18px; color:white">
+                <%= current_user.email.to_s %> <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li><%= link_to 'Cerrar Sesión', destroy_user_session_path, method: :delete, :style => "font-size:18px" %></li>
+              </ul>
+            </li>
+
+          <% end %>
+        </ul>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>

@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   before_action :set_users
   before_action :set_courses
+  before_action :set_miscursos_visible, only: :index
+  before_action :set_actividades_visible, only: :show
 
   def index
     current_user.current_course_id = 11111 # CAMBIE NIL => numero para que no se caiga cuando activa o desactiva navbar
@@ -53,6 +55,26 @@ class UsersController < ApplicationController
 
   def set_courses
     @courses = current_user.courses
+  end
+
+  def set_miscursos_visible
+    @miscursos_visible = true
+  end
+
+  def set_ef_visible
+    @ef_visible = true
+  end
+
+  def set_reporte_visible
+    @reporte_visible = true
+  end
+
+  def set_actividades_visible
+    @actividades_visible = true
+  end
+
+  def set_configuraciones_visible
+    @Configuraciones_visible = true
   end
 
   def user_params

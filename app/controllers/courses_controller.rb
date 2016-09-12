@@ -1,5 +1,10 @@
 class CoursesController < ApplicationController
   before_action :set_course, only: [:asistencia, :students, :show, :edit, :update, :destroy]
+  before_action :set_miscursos_visible, only: [:new, :show, :edit]
+  before_action :set_ef_visible, only: [:show, :edit]
+  before_action :set_reporte_visible, only: [:show, :edit]
+  before_action :set_actividades_visible, only: [:show, :edit]
+  before_action :set_configuraciones_visible, only: [:show, :edit]
 
   def index
     @course = Course.find(params[:id])
@@ -89,6 +94,26 @@ class CoursesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_course
       @course = Course.find(params[:id])
+    end
+
+    def set_miscursos_visible
+      @miscursos_visible = true
+    end
+
+    def set_ef_visible
+      @ef_visible = true
+    end
+
+    def set_reporte_visible
+      @reporte_visible = true
+    end
+
+    def set_actividades_visible
+      @actividades_visible = true
+    end
+
+    def set_configuraciones_visible
+      @Configuraciones_visible = true
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -5,143 +5,71 @@
       <div class="navbar-header">
         <% if user_signed_in? %> <!-- SIGN IN -->
           <% if current_user.role? %> <!-- ##VISTA PROFESOR## -->
-            <% if current_page?(users_path) || current_page?(new_course_path)%> <!-- 1)VISTA MIS CURSOS/CREAR CURSO -->
-
+            <% if @miscursos_visible %> <!-- BOTON MIS CURSOS -->
               <ul class="nav navbar-nav">
                 <li ><%= button_to "Mis Cursos", users_path, :class => "btn btn-primary", :style => "font-size:18px" %></li>
               </ul>
-
-              <ul class="nav navbar-nav">
-                <li><%= button_to "Evaluación Formativa", users_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
-              </ul>
-
-              <ul class="nav navbar-nav">
-                <li><%= button_to "Reporte", users_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
-              </ul>
-
-              <ul class="nav navbar-nav">
-                <li><%= button_to "Actividades", homeworks_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
-              </ul>
-
-              <ul class="nav navbar-nav">
-                <li><%= button_to "Configuraciones", edit_course_path(current_user.current_course_id), :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
-              </ul>
-
-            <% elsif current_page?(root_path) %> <!-- 2.1)CREAR/EDITAR ARBOL/ETC. -->
-
+            <% else %>
               <ul class="nav navbar-nav">
                 <li ><%= button_to "Mis Cursos", users_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
               </ul>
-
+            <% end %>
+            <% if @ef_visible %> <!-- BOTON EVALUACION FORMATIVA -->
               <ul class="nav navbar-nav">
                 <li><%= button_to "Evaluación Formativa", users_path, :class => "btn btn-primary", :style => "font-size:18px" %></li>
               </ul>
-
-              <ul class="nav navbar-nav">
-                <li><%= button_to "Reporte", users_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
-              </ul>
-
-              <ul class="nav navbar-nav">
-                <li><%= button_to "Actividades", homeworks_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
-              </ul>
-
-              <ul class="nav navbar-nav">
-                <li><%= button_to "Configuraciones", edit_course_path(current_user.current_course_id), :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
-              </ul>
-
-            <% elsif current_page?(root_path) %> <!-- 3.1)VER REPORTE -->
-
-              <ul class="nav navbar-nav">
-                <li ><%= button_to "Mis Cursos", users_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
-              </ul>
-
+            <% else %>
               <ul class="nav navbar-nav">
                 <li><%= button_to "Evaluación Formativa", users_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
               </ul>
-
+            <% end %>
+            <% if @reporte_visible %> <!-- BOTON REPORTE -->
               <ul class="nav navbar-nav">
                 <li><%= button_to "Reporte", users_path, :class => "btn btn-primary", :style => "font-size:18px" %></li>
               </ul>
-
-              <ul class="nav navbar-nav">
-                <li><%= button_to "Actividades", homeworks_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
-              </ul>
-
-              <ul class="nav navbar-nav">
-                <li><%= button_to "Configuraciones", edit_course_path(current_user.current_course_id), :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
-              </ul>
-
-            <% elsif current_page?(root_path) || current_page?(new_homework_path) %> <!-- 4.1)CREAR/REALIZAR ACTIVIDAD -->
-
-              <ul class="nav navbar-nav">
-                <li ><%= button_to "Mis Cursos", users_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
-              </ul>
-
-              <ul class="nav navbar-nav">
-                <li><%= button_to "Evaluación Formativa", users_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
-              </ul>
-
+            <% else %>
               <ul class="nav navbar-nav">
                 <li><%= button_to "Reporte", users_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
               </ul>
-
+            <% end %>
+            <% if  @actividades_visible %> <!-- BOTON ACTIVIDAD -->
               <ul class="nav navbar-nav">
                 <li><%= button_to "Actividades", homeworks_path, :class => "btn btn-primary", :style => "font-size:18px", method: :get %></li>
               </ul>
-
+            <% else %>
               <ul class="nav navbar-nav">
-                <li><%= button_to "Configuraciones", edit_course_path(current_user.current_course_id), :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+                <li><%= button_to "Actividades", homeworks_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px", method: :get %></li>
               </ul>
-
-            <% else %> <!-- 5)TODO ACTIVADO (VISTA CURSO/EVALUACION FORMATIVA/REPORTES/ACTIVIDADES/CONFIGURACIONES/ETC.) -->
-
-              <ul class="nav navbar-nav">
-                <li ><%= button_to "Mis Cursos", users_path, :class => "btn btn-primary", :style => "font-size:18px" %></li>
-              </ul>
-
-              <ul class="nav navbar-nav">
-                <li><%= button_to "Evaluación Formativa", users_path, :class => "btn btn-primary", :style => "font-size:18px" %></li>
-              </ul>
-
-              <ul class="nav navbar-nav">
-                <li><%= button_to "Reporte", users_path, :class => "btn btn-primary", :style => "font-size:18px" %></li>
-              </ul>
-
-              <ul class="nav navbar-nav">
-                <li><%= button_to "Actividades", homeworks_path, :class => "btn btn-primary", :style => "font-size:18px", method: :get %></li>
-              </ul>
-
+            <% end %>
+            <% if @Configuraciones_visible %> <!-- BOTON CONFIGURACIONES -->
               <ul class="nav navbar-nav">
                 <li><%= button_to "Configuraciones", edit_course_path(current_user.current_course_id), :class => "btn btn-primary", :style => "font-size:18px" %></li>
               </ul>
-
+            <% else %>
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Configuraciones", edit_course_path(current_user.current_course_id), :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
             <% end %>
           <% else %> <!-- ##VISTA ALUMNO## -->
-            <% if current_page?(users_path) || current_page?(new_course_path) %> <!-- VISTA MIS CURSOS -->
-
+            <% if @miscursos_visible %> <!-- BOTON MIS CURSOS -->
               <ul class="nav navbar-nav">
                 <li ><%= button_to "Mis Cursos", users_path, :class => "btn btn-primary", :style => "font-size:18px" %></li>
               </ul>
-
-            <% elsif current_page?(root_path)%> <!-- 1)REALIZAR ACTIVIDAD -->
-
+            <% else %>
               <ul class="nav navbar-nav">
                 <li ><%= button_to "Mis Cursos", users_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
               </ul>
-
+            <% end %>
+            <% if  @actividades_visible %> <!-- BOTON ACTIVIDAD -->
               <ul class="nav navbar-nav">
                 <li><%= button_to "Actividades", homeworks_path, :class => "btn btn-primary", :style => "font-size:18px", method: :get %></li>
               </ul>
-
-            <% else %> <!-- 2)VISTA CURSO -->
-
+            <% else %>
               <ul class="nav navbar-nav">
-                <li ><%= button_to "Mis Cursos", users_path, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+                <li><%= button_to "Actividades", homeworks_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px", method: :get %></li>
               </ul>
-
             <% end %>
           <% end %>
-        <% else %> <!-- NOT SIGN IN -->
         <% end %>
       </div>
 

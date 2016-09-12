@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :edit, :update, :destroy]
   before_action :set_homework
+  before_action :set_actividades_visible, only: :index
 
   # GET /questions
   # GET /questions.json
@@ -90,6 +91,26 @@ class QuestionsController < ApplicationController
 
     def set_homework
       @homework = Homework.find(params[:homework_id])
+    end
+
+    def set_miscursos_visible
+      @miscursos_visible = true
+    end
+
+    def set_ef_visible
+      @ef_visible = true
+    end
+
+    def set_reporte_visible
+      @reporte_visible = true
+    end
+
+    def set_actividades_visible
+      @actividades_visible = true
+    end
+
+    def set_configuraciones_visible
+      @Configuraciones_visible = true
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

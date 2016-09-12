@@ -2,6 +2,11 @@ class HomeworksController < ApplicationController
   before_action :set_homework, only: [:show, :edit, :update, :destroy, :change_phase, :asistencia]
   before_action :set_course
   before_action :set_unavailable
+  before_action :set_miscursos_visible, only: :index
+  before_action :set_ef_visible, only: :index
+  before_action :set_reporte_visible, only: :index
+  before_action :set_actividades_visible, only: [:index, :show, :asistencia, :edit, :new]
+  before_action :set_configuraciones_visible, only: :index
 
   # GET /homeworks
   # GET /homeworks.json
@@ -191,6 +196,26 @@ class HomeworksController < ApplicationController
           i.save
         end
       end
+    end
+
+    def set_miscursos_visible
+      @miscursos_visible = true
+    end
+
+    def set_ef_visible
+      @ef_visible = true
+    end
+
+    def set_reporte_visible
+      @reporte_visible = true
+    end
+
+    def set_actividades_visible
+      @actividades_visible = true
+    end
+
+    def set_configuraciones_visible
+      @Configuraciones_visible = true
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
