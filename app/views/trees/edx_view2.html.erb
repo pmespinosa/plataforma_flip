@@ -1,4 +1,4 @@
-<%= form_tag controller:"trees", action: "edx_view", :multipart => true, :method => :post do %>
+<%= form_tag controller:"trees", action: "edx_view", :method => :post do %>
 
   <h2>Usuario <%= @username %></h2> 
 
@@ -18,16 +18,19 @@
                 <%#= form_tag "edx_view", :method => :post do %>
                   <%= question_fields.fields_for :content_choices do |choice_fields| %>
                     <div class="input-group">
-                      <span class="input-group-addon" id="check">
-                         <%= hidden_field_tag "content_choices[#{choice_fields.object.id}][]", false %>
-                         <%= check_box_tag "content_choices[#{choice_fields.object.id}][]'", true %>
+                      <% puts "vista: se muestra el id y lugar en el arreglo de las alternativas content" %>
+                      <% puts choice_fields.object.id %>
+                      <%= hidden_field_tag "content_choices[#{choice_fields.object.id}]", :false %>
+                      <span class="input-group-addon" id="check">                         
+                         <%#= check_box_tag "content_choices[#{choice_fields.object.id}]", true %>
+                         <%= check_box_tag "content_choices[#{choice_fields.object.id}]", :true %>
                         <%#= choice_fields.check_box :right, :class => 'inline'%>
                       </span>
                       <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
                     </div>
                   <% end %>
                 <%# end %>
-             <% end %>
+            <% end %>
              <br>
           </td>
 
@@ -43,9 +46,6 @@
                   <%= question_fields.fields_for :ct_choices do |choice_fields| %>
                     <div class="input-group">
                       <span class="input-group-addon" id="check">
-                        <%= puts "que-----------" %>
-                        <%= puts choice_fields.object %>
-                        <%= puts choice_fields.object.right %>
                         <%= hidden_field_tag "ct_choices[#{choice_fields.object.id}][]", false %>
                         <%= check_box_tag "ct_choices[#{choice_fields.object.id}][]", true %>
                         <%#= choice_fields.check_box :right, :class => 'inline'%>
@@ -76,7 +76,7 @@
             <%= hidden_field_tag "state", "feedback_saw" %>
         </tr>
          
-      <% elsif state.to_S == "answered" && feedback_quality.to_s == "complex" %>          
+      <% elsif state.to_s == "answered" && feedback_quality.to_s == "complex" %>          
           <tr>
               <td style="width:50%">
                 <%= fields_for feedback_complex do |feedback_fields| %>
@@ -91,7 +91,7 @@
           </tr>
           <%= hidden_field_tag "state", "feedback_saw" %>
 
-      <% elsif state.to_S == "end"  %>          
+      <% elsif state.to_s == "end"  %>          
           <tr>
               <td style="width:50%">
                 <h4>Respuestas guardadas, Gracias!</h4>

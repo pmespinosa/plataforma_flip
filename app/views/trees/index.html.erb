@@ -18,9 +18,9 @@
         <td><%= tree.video %></td>
         <td><%= tree.iterations %></td>
         <td><%= tree.course %></td>
-        <td><%= link_to 'Show', tree %></td>
-        <td><%= link_to 'Edit', edit_tree_path(tree) %></td>
-        <td><%= link_to 'Destroy', tree, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Ver', tree %></td>
+        <td><%= link_to 'Editar', edit_tree_path(tree) %></td>
+        <td><%= link_to 'Eliminar', tree, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -28,4 +28,4 @@
 
 <br>
 
-<%= link_to 'New Tree', new_tree_path %>
+<%= link_to 'Crear árbol', new_tree_path %>
