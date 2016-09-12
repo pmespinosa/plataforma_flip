@@ -13,7 +13,7 @@ class HomeworksController < ApplicationController
   def index
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades"]
     if current_user.role?
-      @homeworks = @course.homeworks
+      @homeworks = @course.homeworks.sort_by{|e| e[:created_at]}
     else
       @homeworks = @course.homeworks.where(upload: true)
       if @homeworks[0]
@@ -50,6 +50,7 @@ class HomeworksController < ApplicationController
   end
 
   def show
+    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades", "Realizar Actividad"]
     @users = User.all.where(role:0, asistencia:true)
     @homework.upload = true
     @homework.save
