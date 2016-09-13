@@ -17,5 +17,5 @@ User.create(first_name: 'Miguel', last_name: 'Nussbaum', email: 'mn@uc.cl', role
 User.create(first_name: 'Catalina', last_name: 'Martin', email: 'cata_martin@gmail.com', role: 0, password: '123456', asistencia: false)
 User.create(first_name: 'Camila', last_name: 'Martin', email: 'cami_martin@gmail.com', role: 0, password: '123456', asistencia: false)
 User.create(first_name: 'Patricia', last_name: 'Garcia', email: 'pgh@gmail.com', role: 0, password: '123456', asistencia: false)
-Course.create(name: "Didáctica de la Lectura", description: "EDU2001-2016/2", users: User.all, course_code: 000)
-Course.create(name: "Didáctica de las Matemáticas", description: "EDU3004-2016/2", users: User.all, course_code: 0000)
+Course.create(name: "Didáctica de la Lectura", description: "EDU2001-2016/2", users: User.all, course_code: 'EDU2001-2016/1')
+Course.create(name: "Didáctica de las Matemáticas", description: "EDU3004-2016/2", users: User.all, course_code: 'EDU2022-2016/1')
