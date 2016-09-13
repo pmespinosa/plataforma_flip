@@ -1,7 +1,3 @@
-<h3>Usuario</h3>
-<p>Nombre: <%= @user.first_name if @user.first_name %> <%= @user.last_name if @user.last_name %></p>
-<p>Correo: <%= @user.email if @user.email %></p>
-
 
 <% if @user.partner_id != nil %>
 	<div style="text-align: center">
@@ -10,20 +6,20 @@
 			<% if question.phase == homework.actual_phase %>
 				<br>
 				<h3><%= question.content %></h3>
-				
+
 				<% partner = User.find_by_id(@user.partner_id) %>
 				<% p_answers = partner.answers %>
 				<% answer = p_answers.find_by_question_id(question.anterior) %>
-				
+
 				<% actual = @user.answers.find_by_question_id(question.id) %>
 				<% if actual != nil %>
-					<% if question.phase == 1 %>
+					<% if question.phase == "responder" %>
 						<h4>Respuesta: </h4>
 						<h4><em><%= actual.content %></em></h4>
 						<% if actual.image? %>
 							<p><%= image_tag actual.image.url(:large) %></p>
 						<% end %>
-					<% elsif question.phase == 2 %>
+					<% elsif question.phase == "argumentar" %>
 						<h4><%= "En base a la respuesta de %s %s, discuta y argumente su contenido:" % [partner.first_name, partner.last_name] %></h4>
 						<em><h4><%=answer.content %></h4></em>
 						<% if answer.image? %>
@@ -34,7 +30,7 @@
 						<% if actual.image? %>
 							<p><%= image_tag actual.image.url(:large) %></p>
 						<% end %>
-					<% elsif question.phase == 3 %>
+					<% elsif question.phase == "rehacer" %>
 						<% my_answers = @user.answers %>
 						<% previus = Question.find_by_id(question.anterior) %>
 						<% my_answer = my_answers.find_by_question_id(previus.anterior) %>

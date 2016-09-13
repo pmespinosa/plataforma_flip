@@ -8,16 +8,17 @@ Rails.application.routes.draw do
   devise_for :users
   resources :users
 
-  get 'courses/users/asistencia'=> 'users#asistencia'
-  post 'courses/users/asistencia'=> 'users#asistencia'
-  get 'users/students'
+  get 'homeworks/:id/studentanswer', to:"homeworks#answers"
 
-  post 'courses/:id/configuration' => 'courses#edit'
-  patch 'courses/:id/configuration'=> 'courses#edit'
+  post 'courses/new' => 'courses#agregate'
+  post 'courses/:id/edit' => 'courses#edit'
+  patch 'courses/:id/edit'=> 'courses#edit'
   get 'courses/:id/users'=> 'courses#students'
 
-  get 'courses/:id/asistencia', to:'courses#asistencia', as:"course_asistencia"
-  post 'courses/:id/asistencia' => 'courses#asistencia'
+  get 'homework/:id/asistencia', to:'homeworks#asistencia', as:"homework_asistencia"
+  post 'homework/:id/asistencia',to:'homeworks#asistencia'
+  post 'homework/:id/edit',to:'homeworks#edit'
+  get 'homework/:id/edit',to:'homeworks#edit'
   resources :courses do
     resources :users do
       resources :homeworks

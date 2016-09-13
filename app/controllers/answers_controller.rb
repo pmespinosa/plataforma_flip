@@ -1,10 +1,13 @@
 class AnswersController < ApplicationController
   before_action :set_question, :set_homework
   before_action :set_answer, only: [:edit, :destroy, :show, :update]
+  before_action :set_actividades_visible, only: :new
+  before_action :set_breadcrumbs
   before_filter :authenticate_user!
   # GET /answers
   # GET /answers.json
   def index
+    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Realizar Actividad"]
     @answer = current_user.answers.find_by_question_id(params[:question_id])
   end
 
@@ -16,11 +19,13 @@ class AnswersController < ApplicationController
 
   # GET /answer/new
   def new
+    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Realizar Actividad"]
     @answer = Answer.new
   end
 
   # GET /answer/1/edit
   def edit
+    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Realizar Actividad"]
   end
 
   # POST /answer
@@ -31,7 +36,7 @@ class AnswersController < ApplicationController
     @question.answers << @answer
     @answer.question = @question
     if @answer.save
-      redirect_to homework_questions_path(@homework), notice: 'La respuesta ha sido enviada.'
+      redirect_to homework_question_answers_path(@homework, @question)
     else
       render :new
     end
@@ -40,7 +45,7 @@ class AnswersController < ApplicationController
   def update
     respond_to do |format|
       if @answer.update(answer_params)
-        format.html { redirect_to homework_questions_path(@homework), notice: 'La respuesta ha sido actualizada.' }
+        format.html { redirect_to homework_question_answers_path(@homework, @question) }
         format.json { render :show, status: :ok, location: @homework }
       else
         format.html { render :edit }
@@ -52,7 +57,7 @@ class AnswersController < ApplicationController
   def destroy
     @answer.destroy
     respond_to do |format|
-      format.html { redirect_to homework_questions_path(@homework), notice: 'La respuesta ha sido eliminada.' }
+      format.html { redirect_to homework_questions_path(@homework) }
       format.json { head :no_content }
     end
   end
@@ -69,6 +74,30 @@ class AnswersController < ApplicationController
 
     def set_homework
       @homework = Homework.find(params[:homework_id])
+    end
+
+    def set_miscursos_visible
+      @miscursos_visible = true
+    end
+
+    def set_ef_visible
+      @ef_visible = true
+    end
+
+    def set_reporte_visible
+      @reporte_visible = true
+    end
+
+    def set_actividades_visible
+      @actividades_visible = true
+    end
+
+    def set_configuraciones_visible
+      @Configuraciones_visible = true
+    end
+
+    def set_breadcrumbs
+      @breadcrumbs = []
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

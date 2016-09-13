@@ -1,1 +1,5 @@
 <h2><%= @course.name %></h2>
+
+<% if current_user.role?%>
+  <h4><%=@course.course_code %></h4>
+<% end %>

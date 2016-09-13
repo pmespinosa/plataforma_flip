@@ -1,39 +1,33 @@
-<h1>Actividades</h1>
-
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Nombre Actividad</th>
-      <th>Pregunta Actividad</th>
-      <th></th>
-      <th></th>
-
-
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @homeworks.each do |homework| %>
-      <tr>
-        <%- if current_user.role?%>
-          <td><%= homework.name %></td>
-          <% if homework.content.length > 30%>
-            <td><%= homework.content[0,40] %>...</td>
-          <% else %>
-            <td><%= homework.content%></td>
-          <% end -%>
-          <td><%= link_to "Realizar Actividad", homework_path(homework), :class=>"btn btn-primary btn-xs", :style=>'color:white'%></td>
-          <td><%= link_to 'Eliminar', homework,:class=>"btn btn-danger btn-xs", :style=>'color:white', method: :delete, data: { confirm: '¿Estás seguro que desesas eliminar la actividad?' } %></td>
-        <% else %>
-          <td><%= link_to 'Ver Preguntas', homework_path(homework) %></td>
-        <% end -%>
-
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
 <%- if current_user.role?%>
+  <h1>Actividades</h1>
+  <br></br>
   <%= link_to 'Crear Actividad', new_homework_path, :class=>"btn btn-primary", :style=>'color:white' %>
+  <br></br>
+  <br></br>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nombre Actividad</th>
+        <th>Pregunta Actividad</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+      <% @homeworks.each do |homework| %>
+        <tr>
+            <td><%= homework.name %></td>
+            <% if homework.content.length > 30%>
+              <td><%= homework.content[0,40] %>...</td>
+            <% else %>
+              <td><%= homework.content%></td>
+            <% end -%>
+
+            <td><%= button_to "Comenzar Actividad", homework_asistencia_path(homework), class:"btn btn-primary btn-xs", style:'color:white'%></td>
+            <td><%= link_to "Ver/Editar", edit_homework_path(homework), class:"btn btn-primary btn-xs", style:'color:white'%></td>
+            <td><%= link_to 'Eliminar', homework,:class=>"btn btn-danger btn-xs", :style=>'color:white', method: :delete, data: { confirm: '¿Estás seguro que desesas eliminar la actividad?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% end %>

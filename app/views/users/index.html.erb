@@ -10,23 +10,24 @@
 <% if current_user.role? %>
   <p><%= link_to 'Crear Curso', new_course_path, :class=>"btn btn-primary", :style=>'color:white'%></p>
 <% else %>
-  <p><%= link_to 'Agregar Curso', users_path, :class=>"btn btn-primary", :style=>'color:white'%></p>
+  <p><%= link_to 'Agregar Curso', new_course_path, :class=>"btn btn-primary", :style=>'color:white'%></p>
 <% end %>
+<br></br>
+
 <% @courses.sort_by{|e| e[:name]}.each do |course| %>
-  <div class="column" >
-  <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
+<div class="row-md-6">
+  <div class="col-md-3 col-md-4">
+    <div class="thumbnail",height:"500px", width:"500px">
       <div class="caption">
-        <% if course.name.length <= 24 %>
-          <h3><%= course.name %></h3>
-          <br>
-        <% else %>
-          <h3><%= truncate(course.name, :length => 35, :omission => "...") %></h3>
-        <% end %>
-        <p><%= truncate(course.description, :length => 150, :omission => "...") %></p>
+        <h3><%= course.name %></h3>
+        <% if course.description.length < 150 %>
+          <p><%= course.description%><%= "\n\n\n\n\n"%></p>
+        <%else%>
+          <p><%= truncate(course.description, :length => 150, :omission => "...") %></p>
+        <%end%>
         <p><%= link_to 'Ingresar', course_path(course), :class=>"btn btn-primary", :style=>'color:white'%></p>
       </div>
     </div>
   </div>
-  </div>
+</div>
 <%end%>

@@ -1,22 +1,20 @@
 
-<h2><%= "Su respuesta fue enviada, ahora debe esperar para la siguiente etapa." %></h2>
-<% if current_user.partner_id != nil %>
+<% if @user.partner_id != nil %>
 	<div style="text-align: center">
-		<% homework = Homework.where(upload:true)[0]%>
-		<% homework.questions.each do |question| %>
-			<% if question.phase == homework.actual_phase %>
+		<% @homework.questions.each do |question| %>
+			<% if question.phase == @homework.actual_phase %>
 				<br>
 				<h3><%= question.content %></h3>
 
-				<% partner = User.find_by_id(current_user.partner_id) %>
+				<% partner = User.find_by_id(@user.partner_id) %>
 				<% p_answers = partner.answers %>
 				<% answer = p_answers.find_by_question_id(question.anterior) %>
 
-				<% actual = current_user.answers.find_by_question_id(question.id) %>
+				<% actual = @user.answers.find_by_question_id(question.id) %>
 				<% if actual != nil %>
 					<% if question.phase == "responder" %>
 						<h4>Respuesta: </h4>
-				    <h4><em><%= actual.content %></em></h4>
+						<h4><em><%= actual.content %></em></h4>
 						<% if actual.image? %>
 							<p><%= image_tag actual.image.url(:large) %></p>
 						<% end %>
@@ -26,17 +24,17 @@
 						<% if answer.image? %>
 							<p><%= image_tag answer.image.url(:large) %></p>
 						<% end %>
-						<h4>Argumentación de <%=current_user.first_name + " " + current_user.last_name %>: </h4>
+						<h4>Argumentación de <%=@user.first_name + " " + @user.last_name %>: </h4>
 						<h4><em><%= actual.content %></em></h4>
 						<% if actual.image? %>
 							<p><%= image_tag actual.image.url(:large) %></p>
 						<% end %>
 					<% elsif question.phase == "rehacer" %>
-						<% my_answers = current_user.answers %>
+						<% my_answers = @user.answers %>
 						<% previus = Question.find_by_id(question.anterior) %>
 						<% my_answer = my_answers.find_by_question_id(previus.anterior) %>
 						<br>
-						<h4>Primera respuesta de <%=current_user.first_name + " " + current_user.last_name%> :</h4>
+						<h4>Primera respuesta de <%=@user.first_name + " " + @user.last_name%> :</h4>
 						<em><h4><%="\"" + my_answer.content + "\""%></h4></em>
 						<% if my_answer.image? %>
 							<p><%= image_tag my_answer.image.url(:large) %></p>
@@ -48,7 +46,7 @@
 							<p><%= image_tag answer.image.url(:large) %></p>
 						<% end %>
 						<br>
-						<h4>Respuesta final de <%= current_user.first_name + " " + current_user.last_name%> :</h4>
+						<h4>Respuesta final de <%= @user.first_name + " " + @user.last_name%> :</h4>
 				        <em><h4><%=actual.content %></h4></em>
 				        <% if actual.image?%>
 				        	<p><%= image_tag actual.image.url(:large) %></p>
@@ -57,13 +55,6 @@
 				<%end%>
 			<%end%>
 		<%end%>
-    <br></br>
-        <%= form_tag controller:"homeworks", method:"get" do %>
-          <%= fields_for 'actualizar', homework do |p| %>
-            <%= submit_tag "Editar Respuesta", name: 'actualizar', class: "btn btn-primary", action:"editar"%>
-            <%= submit_tag "Actualizar", name: 'actualizar', class: "btn btn-primary", action:"actualizar"%>
-          <%end%>
-        <%end%>
-    <br></br>
+		<%= link_to 'Volver',homework_path(@homework),  :class=>"btn btn-primary", :style=>'color:white' %>
 	</div>
 <%end%>

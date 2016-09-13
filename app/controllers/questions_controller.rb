@@ -1,10 +1,12 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :edit, :update, :destroy]
   before_action :set_homework
+  before_action :set_actividades_visible, only: :index
 
   # GET /questions
   # GET /questions.json
   def index
+    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Realizar Actividad"]
     @questions = @homework.questions
   end
 
@@ -50,7 +52,7 @@ class QuestionsController < ApplicationController
   def update
     respond_to do |format|
       if @question.update(question_params)
-        format.html { redirect_to homework_questions_path(@homework), notice: 'La pregunta fue actualizada.' }
+        format.html { redirect_to homework_questions_path(@homework) }
         format.json { render :show, status: :ok, location: @question }
       else
         format.html { render :edit }
@@ -75,7 +77,7 @@ class QuestionsController < ApplicationController
     siguiente.destroy
     siguiente2.destroy
     respond_to do |format|
-      format.html { redirect_to [@homework,@question], notice: 'La pregunta fue removida.' }
+      format.html { redirect_to [@homework,@question] }
       format.json { render :show, status: :ok, location: @question }
     end
   end
@@ -90,6 +92,26 @@ class QuestionsController < ApplicationController
 
     def set_homework
       @homework = Homework.find(params[:homework_id])
+    end
+
+    def set_miscursos_visible
+      @miscursos_visible = true
+    end
+
+    def set_ef_visible
+      @ef_visible = true
+    end
+
+    def set_reporte_visible
+      @reporte_visible = true
+    end
+
+    def set_actividades_visible
+      @actividades_visible = true
+    end
+
+    def set_configuraciones_visible
+      @Configuraciones_visible = true
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
