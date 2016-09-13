@@ -82,6 +82,7 @@ class HomeworksController < ApplicationController
   end
 
   def answers
+    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades", "Realizar Actividad", "Respuesta Alumno"]
     @user = User.find_by_id(params["homework"]["user"])
     @homework = Homework.where(id:params["homework"]["homework"].to_i)[0]
     render 'studentanswer'
@@ -253,6 +254,12 @@ class HomeworksController < ApplicationController
 
     def set_breadcrumbs
       @breadcrumbs = []
+    end
+
+    def image_up
+      if Homework.find(params[:id]).image?
+        @h_image = true
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
