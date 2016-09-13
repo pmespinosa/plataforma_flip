@@ -1,0 +1,2 @@
+class InitialComplexFeedback < Feedback
+end

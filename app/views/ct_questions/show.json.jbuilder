@@ -1,0 +1,1 @@
+json.partial! "ct_questions/ct_question", ct_question: @ct_question

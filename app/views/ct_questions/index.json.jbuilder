@@ -1,0 +1,1 @@
+json.array! @ct_questions, partial: 'ct_questions/ct_question', as: :ct_question
