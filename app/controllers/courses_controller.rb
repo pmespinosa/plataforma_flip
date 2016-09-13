@@ -57,7 +57,7 @@ class CoursesController < ApplicationController
     @course = Course.new(course_params)
     respond_to do |format|
       if @course.save
-        @course.course_code = (current_user.id.to_s + @course.id.to_s).to_i
+        @course.course_code = @course.description.to_s + current_user.id.to_s + @course.id.to_s
         if @course.save
           format.html { redirect_to users_path}
           format.json { render :show, status: :created, location: @course }
