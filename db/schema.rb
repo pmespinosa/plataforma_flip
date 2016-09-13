@@ -11,7 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160707190528) do
+
+ActiveRecord::Schema.define(version: 20160907042920) do
+
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +32,35 @@ ActiveRecord::Schema.define(version: 20160707190528) do
 
   add_index "answers", ["user_id", "question_id"], name: "index_answers_on_user_id_and_question_id", using: :btree
 
+  create_table "content_choices", force: :cascade do |t|
+    t.text     "text"
+    t.boolean  "right"
+    t.integer  "content_question_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "content_choices", ["content_question_id"], name: "index_content_choices_on_content_question_id", using: :btree
+
+  create_table "content_questions", force: :cascade do |t|
+    t.text     "question"
+    t.integer  "tree_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "type"
+  end
+
+  add_index "content_questions", ["tree_id"], name: "index_content_questions_on_tree_id", using: :btree
+
+  create_table "contents", force: :cascade do |t|
+    t.string   "text"
+    t.integer  "tree_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "contents", ["tree_id"], name: "index_contents_on_tree_id", using: :btree
+
   create_table "courses", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
@@ -38,6 +69,7 @@ ActiveRecord::Schema.define(version: 20160707190528) do
     t.datetime "updated_at",  null: false
   end
 
+
   create_table "courses_users", id: false, force: :cascade do |t|
     t.integer "course_id"
     t.integer "user_id"
@@ -45,14 +77,66 @@ ActiveRecord::Schema.define(version: 20160707190528) do
 
   add_index "courses_users", ["course_id", "user_id"], name: "index_courses_users_on_course_id_and_user_id", using: :btree
 
+  create_table "ct_choices", force: :cascade do |t|
+    t.text     "text"
+    t.boolean  "right"
+    t.integer  "ct_question_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "ct_choices", ["ct_question_id"], name: "index_ct_choices_on_ct_question_id", using: :btree
+
+  create_table "ct_habilities", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "ct_questions", force: :cascade do |t|
+    t.text     "question"
+    t.integer  "tree_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "type"
+  end
+
+  add_index "ct_questions", ["tree_id"], name: "index_ct_questions_on_tree_id", using: :btree
+
+  create_table "ct_subhabilities", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "ct_hability_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "ct_subhabilities", ["ct_hability_id"], name: "index_ct_subhabilities_on_ct_hability_id", using: :btree
+
+  create_table "feedbacks", force: :cascade do |t|
+    t.text     "text"
+    t.integer  "tree_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "type"
+  end
+
+  add_index "feedbacks", ["tree_id"], name: "index_feedbacks_on_tree_id", using: :btree
+
+
   create_table "homeworks", force: :cascade do |t|
     t.text     "name"
     t.text     "content"
     t.integer  "actual_phase"
     t.boolean  "upload"
     t.integer  "course_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   create_table "homeworks_questions", id: false, force: :cascade do |t|
@@ -76,6 +160,16 @@ ActiveRecord::Schema.define(version: 20160707190528) do
     t.datetime "updated_at", null: false
     t.integer  "anterior"
   end
+
+  create_table "trees", force: :cascade do |t|
+    t.string   "video"
+    t.integer  "iterations"
+    t.integer  "course_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "trees", ["course_id"], name: "index_trees_on_course_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
@@ -101,11 +195,21 @@ ActiveRecord::Schema.define(version: 20160707190528) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+
   create_table "users_courses", id: false, force: :cascade do |t|
     t.integer "user_id"
     t.integer "course_id"
   end
 
   add_index "users_courses", ["user_id", "course_id"], name: "index_users_courses_on_user_id_and_course_id", using: :btree
+
+  add_foreign_key "content_choices", "content_questions"
+  add_foreign_key "content_questions", "trees"
+  add_foreign_key "contents", "trees"
+  add_foreign_key "ct_choices", "ct_questions"
+  add_foreign_key "ct_questions", "trees"
+  add_foreign_key "ct_subhabilities", "ct_habilities"
+  add_foreign_key "feedbacks", "trees"
+  add_foreign_key "trees", "courses"
 
 end

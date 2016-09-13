@@ -1,24 +1,56 @@
 Rails.application.routes.draw do
 
+
+
+  resources :content_choices
+  resources :ct_choices
+  #resources :trees
+  resources :ct_subhabilities
+
+
+
+
+
   # resources :questions do
   #   resources :homeworks
   #end
+
+  get 'users/asistencia'
+  post 'users/asistencia'
+  get 'users/configuration'
+  post 'users/configuration'
+  patch 'users/configuration'
+  get 'users/students'
+  #post 'courses/:id' => 'courses#show'
+  post '/courses/:course_id/trees/:id' => 'trees#edx_view'
+
+  resources :courses do
+    resources :trees do
+      resources :ct_questions do
+        resources :ct_habilities
+      end
+      resources :content_questions
+      resources :feedbacks
+      resources :contents
+    end
+  end
+
 
   resources :home
   devise_for :users
   resources :users
 
-  get 'courses/users/asistencia'=> 'users#asistencia'
-  post 'courses/users/asistencia'=> 'users#asistencia'
-  get 'users/students'
+  get 'homeworks/:id/studentanswer', to:"homeworks#answers"
 
   post 'courses/new' => 'courses#agregate'
-  post 'courses/:id/configuration' => 'courses#edit'
-  patch 'courses/:id/configuration'=> 'courses#edit'
+  post 'courses/:id/edit' => 'courses#edit'
+  patch 'courses/:id/edit'=> 'courses#edit'
   get 'courses/:id/users'=> 'courses#students'
 
-  get 'courses/:id/asistencia', to:'courses#asistencia', as:"course_asistencia"
-  post 'courses/:id/asistencia' => 'courses#asistencia'
+  get 'homework/:id/asistencia', to:'homeworks#asistencia', as:"homework_asistencia"
+  post 'homework/:id/asistencia',to:'homeworks#asistencia'
+  post 'homework/:id/edit',to:'homeworks#edit'
+  get 'homework/:id/edit',to:'homeworks#edit'
   resources :courses do
     resources :users do
       resources :homeworks

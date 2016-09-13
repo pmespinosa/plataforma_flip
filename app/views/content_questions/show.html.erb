@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Question:</strong>
+  <%= @content_question.question %>
+</p>
+
+<p>
+  <strong>Tree:</strong>
+  <%= @content_question.tree %>
+</p>
+
+<%= link_to 'Edit', edit_content_question_path(@content_question) %> |
+<%= link_to 'Back', content_questions_path %>

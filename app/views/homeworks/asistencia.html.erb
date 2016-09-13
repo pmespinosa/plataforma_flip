@@ -8,7 +8,7 @@
 	</div>
 
 </div>
-<%= form_tag controller:"courses", action:"asistencia", method:"post" do %>
+<%= form_tag controller:"homeworks", action:"asistencia", method:"post" do %>
   <table class="table table-striped">
       <thead>
         <tr>
@@ -33,7 +33,7 @@
       </tbody>
   </table>
   <div class="actions" style="text-align: center">
-    <%= submit_tag "Guardar Asistencia", :class=>"btn btn-primary"%>
+    <%= submit_tag "Guardar Asistencia", class:"btn btn-primary"%>
   </div>
 <% end %>
 <%- end %>

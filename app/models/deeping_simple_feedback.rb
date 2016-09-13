@@ -1,0 +1,2 @@
+class DeepingSimpleFeedback < Feedback
+end
