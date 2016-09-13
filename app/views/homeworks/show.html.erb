@@ -26,6 +26,7 @@
                     <%= submit_tag "Discusión", name: 'discussion', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px"%>
                   <% else%>
                     <%= submit_tag "Argumentar", name: 'next', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px"%>
+                    <%= submit_tag "Discusión", name: 'discussion', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px", disabled:"disabled"%>
                   <%end%>
                 </div>
               <% elsif @homework.actual_phase == "argumentar" && current_user.role?%>
@@ -35,12 +36,15 @@
                     <%= submit_tag "Discusión", name: 'discussion', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px"%>
                   <% else%>
                     <%= submit_tag "Rehacer", name: 'next', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px"%>
+                    <%= submit_tag "Discusión", name: 'discussion', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px", disabled:"disabled"%>
                   <% end%>
                 </div>
               <% elsif @homework.actual_phase == "rehacer" && current_user.role?%>
                 <div class="actions" style="text-align: center">
                   <% if @homework.upload == true%>
                     <%= submit_tag "Discusión", name: 'discussion', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px"%>
+                  <% else%>
+                    <%= submit_tag "Discusión", name: 'discussion', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px", disabled:"disabled"%>
                   <% end%>
                 </div>
               <%end%>

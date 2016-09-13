@@ -2,6 +2,7 @@ class HomeworksController < ApplicationController
   before_action :set_homework, only: [:show, :edit, :update, :destroy, :change_phase, :asistencia]
   before_action :set_course
   before_action :set_unavailable
+  skip_before_action :set_unavailable, only: [:show, :change_phase]
   before_action :set_miscursos_visible, only: :index
   before_action :set_ef_visible, only: :index
   before_action :set_reporte_visible, only: :index
@@ -224,6 +225,7 @@ class HomeworksController < ApplicationController
       if current_user.role?
         for i in @course.homeworks
           i.upload = false
+          i.actual_phase = "responder"
           i.save
         end
       end
