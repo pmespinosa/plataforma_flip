@@ -5,7 +5,6 @@ class HomeworksController < ApplicationController
   skip_before_action :set_unavailable, only: [:show, :change_phase]
   before_action :set_miscursos_visible, only: :index
   before_action :set_ef_visible, only: :index
-  before_action :set_reporte_visible, only: :index
   before_action :set_actividades_visible, only: [:index, :show, :asistencia, :edit, :new]
   before_action :set_configuraciones_visible, only: :index
   before_action :set_breadcrumbs
