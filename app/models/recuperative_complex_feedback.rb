@@ -1,0 +1,2 @@
+class RecuperativeComplexFeedback < Feedback
+end

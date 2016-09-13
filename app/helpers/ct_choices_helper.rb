@@ -1,0 +1,2 @@
+module CtChoicesHelper
+end

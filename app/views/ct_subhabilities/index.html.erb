@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Ct Subhabilities</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Ct hability</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ct_subhabilities.each do |ct_subhability| %>
+      <tr>
+        <td><%= ct_subhability.name %></td>
+        <td><%= ct_subhability.description %></td>
+        <td><%= ct_subhability.ct_hability %></td>
+        <td><%= link_to 'Show', ct_subhability %></td>
+        <td><%= link_to 'Edit', edit_ct_subhability_path(ct_subhability) %></td>
+        <td><%= link_to 'Destroy', ct_subhability, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Ct subhability', new_ct_subhability_path %>

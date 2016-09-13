@@ -1,8 +1,40 @@
 Rails.application.routes.draw do
 
+
+
+  resources :content_choices
+  resources :ct_choices
+  #resources :trees
+  resources :ct_subhabilities
+
+
+
+
+
   # resources :questions do
   #   resources :homeworks
   #end
+
+  get 'users/asistencia'
+  post 'users/asistencia'
+  get 'users/configuration'
+  post 'users/configuration'
+  patch 'users/configuration'
+  get 'users/students'
+  #post 'courses/:id' => 'courses#show'
+  post '/courses/:course_id/trees/:id' => 'trees#edx_view'
+
+  resources :courses do
+    resources :trees do
+      resources :ct_questions do
+        resources :ct_habilities
+      end
+      resources :content_questions
+      resources :feedbacks
+      resources :contents
+    end
+  end
+
 
   resources :home
   devise_for :users

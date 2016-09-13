@@ -1,0 +1,1 @@
+json.partial! "ct_subhabilities/ct_subhability", ct_subhability: @ct_subhability

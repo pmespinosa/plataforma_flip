@@ -14,4 +14,5 @@ class HomeController < ApplicationController
   def set_breadcrumbs
     @breadcrumbs = []
   end
+
 end

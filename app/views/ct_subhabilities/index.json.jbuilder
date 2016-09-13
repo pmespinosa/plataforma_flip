@@ -1,0 +1,1 @@
+json.array! @ct_subhabilities, partial: 'ct_subhabilities/ct_subhability', as: :ct_subhability

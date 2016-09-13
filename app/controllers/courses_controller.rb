@@ -1,4 +1,5 @@
 class CoursesController < ApplicationController
+
   before_action :set_course, only: [:asistencia, :students, :show, :edit, :update, :destroy]
   before_action :set_miscursos_visible, only: [:new, :show, :edit]
   before_action :set_ef_visible, only: [:show, :edit]
