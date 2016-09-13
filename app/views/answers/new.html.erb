@@ -1,6 +1,9 @@
 <div style="text-align: center">
 	<% if @homework.upload %>
 	<h3><%= @homework.content %></h3>
+	<% if @homework.image? %>
+		<p><%= image_tag @homework.image.url(:large) %></p>
+	<% end %>
 
 
 	<% partner = User.find_by_id(current_user.partner_id) %>

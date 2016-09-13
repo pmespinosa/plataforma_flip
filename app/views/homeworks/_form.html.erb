@@ -28,12 +28,25 @@
         <div class="col-xs-6">
           <%= f.text_area :content, cols: 40, rows: 5, id:"ac_content", class:"form-control", placeholder: 'Ingrese pregunta de la actividad' %>
           <br>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="ac_content" class="col-sm-9 control-label">Imagen</label>
+      <div class="col-sm-offset-4">
+        <div class="col-xs-6">
           <%= f.file_field :image, id:"i_homework"%>
           <br>
         </div>
       </div>
     </div>
 
+    <% if current_page?(edit_homework_path(@homework.id)) %>
+      <% if @homework.image? %>
+    		<p><%= image_tag @homework.image.url(:medium) %></p>
+    	<% end %>
+    <% end %>
 
 
     <div class="form-group">

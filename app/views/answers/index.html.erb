@@ -6,6 +6,9 @@
 			<% if question.phase == @homework.actual_phase %>
 				<br>
 				<h3><%= question.content %></h3>
+				<% if @homework.image? %>
+					<p><%= image_tag @homework.image.url(:medium) %></p>
+				<% end %>
 
 				<% partner = User.find_by_id(current_user.partner_id) %>
 				<% p_answers = partner.answers %>
@@ -17,18 +20,18 @@
 						<h4>Respuesta: </h4>
 				    <h4><em><%= actual.content %></em></h4>
 						<% if actual.image? %>
-							<p><%= image_tag actual.image.url(:large) %></p>
+							<p><%= image_tag actual.image.url(:medium) %></p>
 						<% end %>
 					<% elsif question.phase == "argumentar" %>
 						<h4><%= "En base a la respuesta de %s %s, discuta y argumente su contenido:" % [partner.first_name, partner.last_name] %></h4>
 						<em><h4><%=answer.content %></h4></em>
 						<% if answer.image? %>
-							<p><%= image_tag answer.image.url(:large) %></p>
+							<p><%= image_tag answer.image.url(:medium) %></p>
 						<% end %>
 						<h4>Argumentación de <%=current_user.first_name + " " + current_user.last_name %>: </h4>
 						<h4><em><%= actual.content %></em></h4>
 						<% if actual.image? %>
-							<p><%= image_tag actual.image.url(:large) %></p>
+							<p><%= image_tag actual.image.url(:medium) %></p>
 						<% end %>
 					<% elsif question.phase == "rehacer" %>
 						<% my_answers = current_user.answers %>
@@ -38,19 +41,19 @@
 						<h4>Primera respuesta de <%=current_user.first_name + " " + current_user.last_name%> :</h4>
 						<em><h4><%="\"" + my_answer.content + "\""%></h4></em>
 						<% if my_answer.image? %>
-							<p><%= image_tag my_answer.image.url(:large) %></p>
+							<p><%= image_tag my_answer.image.url(:medium) %></p>
 						<% end %>
 						<br>
 						<h4>Argumentación de <%= partner.first_name + " " + partner.last_name%> :</h4>
 						<em><h4><%=answer.content %></h4></em>
 						<% if answer.image? %>
-							<p><%= image_tag answer.image.url(:large) %></p>
+							<p><%= image_tag answer.image.url(:medium) %></p>
 						<% end %>
 						<br>
 						<h4>Respuesta final de <%= current_user.first_name + " " + current_user.last_name%> :</h4>
 				        <em><h4><%=actual.content %></h4></em>
 				        <% if actual.image?%>
-				        	<p><%= image_tag actual.image.url(:large) %></p>
+				        	<p><%= image_tag actual.image.url(:medium) %></p>
 				        <%end%>
 					<%end%>
 				<%end%>
