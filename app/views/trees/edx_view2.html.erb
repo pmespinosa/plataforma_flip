@@ -1,6 +1,6 @@
 <%= form_tag controller:"trees", action: "edx_view", :method => :post do %>
 
-  <h2>Usuario <%= @username %></h2> 
+  <h4>Usuario <%= @username %></h4> 
 
   <br>
      
@@ -100,32 +100,20 @@
           <%= hidden_field_tag "state", "end" %>
       <% end %>
 
-
   </table>
 
-   <%# if answer == false %>
-    <%#= hidden_field_tag "answer", true %>
-   <%# else %>
-    <%#= hidden_field_tag "answer", false %>
-   <%# end %>
-    <%= hidden_field_tag "type", type %>
-
-  <%# if type == "initial" %>
-    <%#= hidden_field_tag "type", "recuperative" %>
-  <%# elsif type == "recuperative" %>
-    <%#= hidden_field_tag "type", "deeping" %>
-  <%# elsif type == "deeping" %>
-    <%#= hidden_field_tag "type", "final" %>
-  <%# end %>
-
-
+  <%= hidden_field_tag "type", type %>
   <%= hidden_field_tag "course_id", @course.id %>
   <%= hidden_field_tag "id", @tree.id %>
 
 
    <%#= link_to 'Revisar', [@course, @tree, {:type =>'recuperative'}], method: :post, :class => "btn btn-default" %>
    <%#= link_to 'Revisar2', :action => "decide" , :course_id => @course.id, :id => @tree.id, :type =>'recuperative', method: :post, :class => "btn btn-default" %>
+   <%if  state.to_s != "end"  %>  
     <%= submit_tag "Continuar", class: "btn btn-default" %>
-    <br>
+   <% else %>
+    <%= link_to "Finalizar", eval_form_path(@course.id), class: "btn btn-default" %>
+   <% end %> 
+   <br></br>
 
 <% end %>
