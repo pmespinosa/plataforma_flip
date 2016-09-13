@@ -16,11 +16,20 @@
             <% end %>
             <% if @ef_visible %> <!-- BOTON EVALUACION FORMATIVA -->
               <ul class="nav navbar-nav">
-                <li><%= button_to "Evaluación Formativa", eval_form_path(current_user.current_course_id), :class => "btn btn-primary", :style => "font-size:18px" %></li>
+                <li><%= button_to "Evaluación Formativa", users_path, :class => "btn btn-primary", :style => "font-size:18px" %></li>
               </ul>
             <% else %>
               <ul class="nav navbar-nav">
-                <li><%= button_to "Evaluación Formativa", eval_form_path(current_user.current_course_id), :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+                <li><%= button_to "Evaluación Formativa", users_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+            <% end %>
+            <% if @reporte_visible %> <!-- BOTON REPORTE -->
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Reporte", users_path, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+            <% else %>
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Reporte", users_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
               </ul>
             <% end %>
             <% if  @actividades_visible %> <!-- BOTON ACTIVIDAD -->

@@ -1,12 +1,11 @@
 class CoursesController < ApplicationController
 
-  before_action :set_course, only: [:asistencia, :students, :show, :edit, :update, :destroy, :eval_form]
-  before_action :set_miscursos_visible, only: [:show, :eval_form]
-  before_action :set_ef_visible, only: [:show, :eval_form]
-  before_action :set_actividades_visible, only: [:show, :eval_form]
-  before_action :set_configuraciones_visible, only: [:show, :eval_form]
-  before_action :set_breadcrumbs
-
+  before_action :set_course, only: [:asistencia, :students, :show, :edit, :update, :destroy]
+  before_action :set_miscursos_visible, only: [:new, :show, :edit]
+  before_action :set_ef_visible, only: [:show, :edit]
+  before_action :set_reporte_visible, only: [:show, :edit]
+  before_action :set_actividades_visible, only: [:show, :edit]
+  before_action :set_configuraciones_visible, only: [:show, :edit]
 
   def index
     @course = Course.find(params[:id])
@@ -74,11 +73,6 @@ class CoursesController < ApplicationController
     current_user.save
   end
 
-  def eval_form
-    @breadcrumbs = ["Mis Cursos", @course.name, "Evaluación Formativa"]
-    render "eval_form"
-  end
-
   def students
     @users = @course.users
   end
@@ -129,9 +123,5 @@ class CoursesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def course_params
       params.require(:course).permit(:name, :description)
-    end
-
-    def set_breadcrumbs
-      @breadcrumbs = []
     end
 end

@@ -1,9 +1,7 @@
 class TreesController < ApplicationController
   before_action :set_tree, only: [:show, :edit, :update, :destroy]
-  before_action :set_course, only: [:create, :new]
-  before_action :set_tree_edx, only: [:edx_view]
-  before_action :set_ef_visible
-  before_action :set_breadcrumbs
+   before_action :set_course, only: [:create, :new]
+   before_action :set_tree_edx, only: [:edx_view]
    
 
   def edx_view 
@@ -243,7 +241,7 @@ class TreesController < ApplicationController
 
   # GET /trees/new
   def new
-    @breadcrumbs = ["Mis Cursos", @course.name, "Evaluación Formativa", "Nueva evaluación de video"]
+    
     @tree = Tree.new
   
     @tree.build_content
@@ -283,7 +281,6 @@ class TreesController < ApplicationController
 
   # GET /trees/1/edit
   def edit
-    @breadcrumbs = ["Mis Cursos", @course.name, "Evaluación Formativa", "Editar evaluación de video"]
     @tree.build_content if @tree.content.nil?
     @tree.build_initial_content_question if @tree.initial_content_question.nil?
     @tree.build_initial_ct_question if @tree.initial_ct_question.nil?
@@ -392,12 +389,8 @@ class TreesController < ApplicationController
       params.require(:tree).permit(:question, :tree_id, content_choices_attributes: [:text, :right])
     end
 
-    def set_ef_visible
-      @ef_visible = true
-    end
+  
 
-    def set_breadcrumbs
-      @breadcrumbs = []
-    end
+    
 
 end
