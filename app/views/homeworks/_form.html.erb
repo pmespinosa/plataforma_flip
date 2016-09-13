@@ -42,12 +42,15 @@
       </div>
     </div>
 
-    <% if current_page?(edit_homework_path(@homework.id)) %>
-      <% if @homework.image? %>
-    		<p><%= image_tag @homework.image.url(:medium) %></p>
-    	<% end %>
-    <% end %>
-
+    <div class="form-group">
+      <% if current_page?(edit_homework_path(@homework.id)) %>
+        <% if @homework.image? %>
+          <label for="ac_content" class="col-sm-9 control-label">Imagen Subida</label>
+          <br>
+      		<p><%= image_tag @homework.image.url(:medium) %></p>
+      	<% end %>
+      <% end %>
+    </div>
 
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-8">
