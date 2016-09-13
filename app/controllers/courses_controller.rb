@@ -114,6 +114,10 @@ class CoursesController < ApplicationController
       @ef_visible = true
     end
 
+    def set_reporte_visible
+      @reporte_visible = true
+    end
+
     def set_actividades_visible
       @actividades_visible = true
     end
