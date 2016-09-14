@@ -1,10 +1,10 @@
 class CoursesController < ApplicationController
 
   before_action :set_course, only: [:asistencia, :students, :show, :edit, :update, :destroy, :eval_form]
-  before_action :set_miscursos_visible, only: [:show, :eval_form]
-  before_action :set_ef_visible, only: [:show, :eval_form]
-  before_action :set_actividades_visible, only: [:show, :eval_form]
-  before_action :set_configuraciones_visible, only: [:show, :eval_form]
+  before_action :set_miscursos_visible, only: [:show, :edit, :new, :eval_form]
+  before_action :set_ef_visible, only: [:show, :edit, :eval_form]
+  before_action :set_actividades_visible, only: [:show, :edit, :eval_form]
+  before_action :set_configuraciones_visible, only: [:show, :edit, :eval_form]
   before_action :set_breadcrumbs
 
 
@@ -57,7 +57,7 @@ class CoursesController < ApplicationController
     @course = Course.new(course_params)
     respond_to do |format|
       if @course.save
-        @course.course_code = (current_user.id.to_s + @course.id.to_s).to_i
+        @course.course_code = @course.description.to_s + current_user.id.to_s + @course.id.to_s
         if @course.save
           format.html { redirect_to users_path}
           format.json { render :show, status: :created, location: @course }
@@ -112,6 +112,10 @@ class CoursesController < ApplicationController
 
     def set_ef_visible
       @ef_visible = true
+    end
+
+    def set_reporte_visible
+      @reporte_visible = true
     end
 
     def set_actividades_visible
