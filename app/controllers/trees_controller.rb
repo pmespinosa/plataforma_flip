@@ -18,9 +18,9 @@ class TreesController < ApplicationController
 
       if params[:state].to_s == "no_saw"
 
-        render "edx_view2", :locals => {:content_question => @tree.initial_content_question, :ct_question => @tree.initial_ct_question,
+        render "edx_view", :locals => {:content_question => @tree.initial_content_question, :ct_question => @tree.initial_ct_question,
         :feedback_simple=> @tree.initial_simple_feedback, :feedback_complex => @tree.initial_complex_feedback,
-        :type => "initial", :state => "no_saw", :feedback_quality => "none"}
+        :type => "initial", :state => "no_saw", :feedback_quality => "none", :n => 0}
 
 
 
@@ -76,25 +76,25 @@ class TreesController < ApplicationController
 
           if @correct_ct == true && @correct_content == true
             #puts "entre al correcto------------"
-            render "edx_view2", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
+            render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
             :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
-            :type => "deeping", :state =>"no_saw", :feedback_quality => "none"}
+            :type => "deeping", :state =>"no_saw", :feedback_quality => "none", :n => 0}
 
           elsif @correct_content == true && @correct_ct == false
-            render "edx_view2", :locals => {:content_question => @tree.initial_content_question, :ct_question => @tree.initial_ct_question,
+            render "edx_view", :locals => {:content_question => @tree.initial_content_question, :ct_question => @tree.initial_ct_question,
             :feedback_simple=> @tree.initial_simple_feedback, :feedback_complex => @tree.initial_complex_feedback,
-             :type => "initial", :state =>"answered", :feedback_quality => "simple"}
+             :type => "initial", :state =>"answered", :feedback_quality => "simple", :n => 0}
 
           else
-            render "edx_view2", :locals => {:content_question => @tree.initial_content_question, :ct_question => @tree.initial_ct_question,
+            render "edx_view", :locals => {:content_question => @tree.initial_content_question, :ct_question => @tree.initial_ct_question,
             :feedback_simple=> @tree.initial_simple_feedback, :feedback_complex => @tree.initial_complex_feedback,
-             :type => "initial", :state => "answered", :feedback_quality => "complex"}
+             :type => "initial", :state => "answered", :feedback_quality => "complex", :n => 0}
           end
 
       elsif params[:state].to_s == "feedback_saw"
-          render "edx_view2", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question,
+          render "edx_view", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question,
               :feedback_simple=> @tree.recuperative_simple_feedback, :feedback_complex => @tree.recuperative_complex_feedback,
-              :type => "recuperative", :state => "no_saw", :feedback_quality => "none"}
+              :type => "recuperative", :state => "no_saw", :feedback_quality => "none", :n => 0}
       end
 
     elsif params[:type] == "recuperative"
@@ -136,26 +136,34 @@ class TreesController < ApplicationController
         end
 
           if @correct_ct == true && @correct_content == true
-            render "edx_view2", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
+            render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
             :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
-            :type => "deeping", :state =>"no_saw", :feedback_quality => "none"}
+            :type => "deeping", :state =>"no_saw", :feedback_quality => "none", :n => 0}
 
           elsif @correct_content == true && @correct_ct == false
-            render "edx_view2", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question,
+            render "edx_view", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question,
             :feedback_simple=> @tree.recuperative_simple_feedback, :feedback_complex => @tree.recuperative_complex_feedback,
-             :type => "deeping", :state =>"answered", :feedback_quality => "simple"}
+             :type => "recuperative", :state =>"answered", :feedback_quality => "simple", :n => params[:n].to_i}
 
           else
-            render "edx_view2", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question,
+            render "edx_view", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question,
             :feedback_simple=> @tree.recuperative_simple_feedback, :feedback_complex => @tree.recuperative_complex_feedback,
-             :type => "deeping", :state =>"answered", :feedback_quality => "complex"}
+             :type => "recuperative", :state =>"answered", :feedback_quality => "complex", :n => params[:n].to_i}
           end
 
 
       elsif params[:state].to_s == "feedback_saw"
-          render "edx_view2", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question,
+
+        if params[:n].to_i < 2
+          render "edx_view", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question,
               :feedback_simple=> @tree.recuperative_simple_feedback, :feedback_complex => @tree.recuperative_complex_feedback,
-              :type => "deeping", :state => "end", :feedback_quality => "none"}
+              :type => "recuperative", :state => "no_saw", :feedback_quality => "none", :n => params[:n].to_i}
+        else
+          render "edx_view", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question,
+              :feedback_simple=> @tree.recuperative_simple_feedback, :feedback_complex => @tree.recuperative_complex_feedback,
+              :type => "deeping", :state => "end", :feedback_quality => "none", :n => 2}
+        end
+
       end
 
 
@@ -198,26 +206,33 @@ class TreesController < ApplicationController
         end
 
           if @correct_ct == true && @correct_content == true
-            render "edx_view2", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
+            render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
               :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
-              :type => "recuperative", :state => "end", :feedback_quality => "none"}
+              :type => "deeping", :state => "end", :feedback_quality => "none", :n => 2}
 
           elsif @correct_content == true && @correct_ct == false
-            render "edx_view2", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
+            render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
             :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
-             :type => "recuperative", :state =>"answered", :feedback_quality => "simple"}
+             :type => "deeping", :state =>"answered", :feedback_quality => "simple", :n => params[:n].to_i}
 
           else
-            render "edx_view2", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
+            render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
             :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
-             :type => "recuperative", :state =>"answered", :feedback_quality => "complex"}
+             :type => "deeping", :state =>"answered", :feedback_quality => "complex", :n => params[:n].to_i}
           end
 
 
       elsif params[:state].to_s == "feedback_saw"
-          render "edx_view2", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
+        if params[:n].to_i < 2
+          render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
+            :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
+            :type => "deeping", :state =>"no_saw", :feedback_quality => "none", :n => params[:n].to_i}
+
+        else
+          render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
               :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
-              :type => "recuperative", :state => "end", :feedback_quality => "none"}
+              :type => "deeping", :state => "end", :feedback_quality => "none", :n => 2}
+        end
 
       end
     end

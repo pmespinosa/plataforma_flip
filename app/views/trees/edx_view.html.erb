@@ -1,89 +1,122 @@
-<%= simple_form_for([@course,@tree]) do |f| %>
-  <% if @tree.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@tree.errors.count, "error") %> prohibited this tree from being saved:</h2>
+<%= form_tag controller:"trees", action: "edx_view", :method => :post do %>
 
-      <ul>
-      <% @tree.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+  <h4>Usuario <%= @username %></h4> 
+
+  <br>
+     
+
+  <table class="table table-hover" style="width:100%">
+      <% if state.to_s == "no_saw" %>
+        <tr>
+          <td style="width:50%">
+            
+            <%= fields_for content_question do |question_fields| %>
+                <div class="input-group">
+                  <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
+                </div>
+                <br>
+                <%#= form_tag "edx_view", :method => :post do %>
+                  <%= question_fields.fields_for :content_choices do |choice_fields| %>
+                    <div class="input-group">
+                      <% puts "vista: se muestra el id y lugar en el arreglo de las alternativas content" %>
+                      <% puts choice_fields.object.id %>
+                      <%= hidden_field_tag "content_choices[#{choice_fields.object.id}]", :false %>
+                      <span class="input-group-addon" id="check">                         
+                         <%#= check_box_tag "content_choices[#{choice_fields.object.id}]", true %>
+                         <%= check_box_tag "content_choices[#{choice_fields.object.id}]", :true %>
+                        <%#= choice_fields.check_box :right, :class => 'inline'%>
+                      </span>
+                      <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                    </div>
+                  <% end %>
+                <%# end %>
+            <% end %>
+             <br>
+          </td>
+
+          <td style="width:50%">
+
+            
+            <%= fields_for ct_question do |question_fields| %>
+                <div class="input-group">
+                <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
+                </div>
+                <br>
+                <%#= form_tag "edx_view", :method => :post do %>
+                  <%= question_fields.fields_for :ct_choices do |choice_fields| %>
+                    <div class="input-group">
+                    <%= hidden_field_tag "ct_choices[#{choice_fields.object.id}]", :false %>
+                      <span class="input-group-addon" id="check">
+                        <%= check_box_tag "ct_choices[#{choice_fields.object.id}]", :true %>
+                      </span>
+                      <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                    </div>
+                  <% end %>
+                 <%# end %>
+                <br>
+                <%= hidden_field_tag "state", "answered" %>
+                <%= hidden_field_tag "n", n %>
+             <% end %>
+             <br>
+          </td>
+        </tr>
+      <% elsif state.to_s == "answered" && feedback_quality.to_s == "simple" %>
+        <tr>
+            <td style="width:50%">
+              
+              <%= fields_for feedback_simple do |feedback_fields| %>
+                  <div class="input-group">
+                    <%= feedback_fields.text_area :text, :readonly => true, size: "60x5",:class=>"form-control" %>
+                  </div>
+                  <br>
+                  
+               <% end %>
+               <br>
+            </td>
+            <%= hidden_field_tag "state", "feedback_saw" %>
+            <%= hidden_field_tag "n", (n.to_i+1) %>
+        </tr>
+         
+      <% elsif state.to_s == "answered" && feedback_quality.to_s == "complex" %>          
+          <tr>
+              <td style="width:50%">
+                <%= fields_for feedback_complex do |feedback_fields| %>
+                    <div class="input-group">
+                      <%= feedback_fields.text_area :text, :readonly => true, size: "60x5",:class=>"form-control" %>
+                    </div>
+                    <br>
+                    
+                 <% end %>
+                
+              </td>
+          </tr>
+          <%= hidden_field_tag "state", "feedback_saw" %>
+          <%= hidden_field_tag "n", (n.to_i+1) %>
+
+      <% elsif state.to_s == "end"  %>          
+          <tr>
+              <td style="width:50%">
+                <h4>Respuestas guardadas, Gracias!</h4>
+                
+              </td>
+          </tr>
+          <%= hidden_field_tag "state", "end" %>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
 
-</br>
-<h2>Usuario conectado: <%= @username %></h2> 
+  </table>
 
-
+  <%= hidden_field_tag "type", type %>
+  <%= hidden_field_tag "course_id", @course.id %>
+  <%= hidden_field_tag "id", @tree.id %>
 
 
-      <!--div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">@</span>
-        <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
-      </div-->
-<div class="input-group">
-  <div class="input-group-addon">Contenido</div>
-  <div class="form-control"><%= @tree.content.text %></div>
-</div>
-
-
-<br>
-   
-
-<table style="width:100%">
-    <tr>
-      <td style="width:50%">
-
-        <h5>Pregunta inicial de contenido (1.1)</h5>
-         <%= f.fields_for :initial_content_question do |question_fields| %>
-            <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
-
-          <br>
-            <%= @tree.initial_content_question.content_choices.each do |choice| %>
-
-             <%= f.fields_for :content_choices do |choice_fields| %>
-            <div class="input-group">
-              <span class="input-group-addon" id="check">
-                <%= choice_fields.check_box :right, :class => 'inline'%>
-              </span>
-              <%= choice_fields.label :text, :readonly => true, :class => "form-control" %>
-            </div>
-            <% end %>
-            <br>
-          <% end %>
-
-         <% end %>
-        <br>
-      </td>
-
-
-      <td>
-        <h5>Pregunta inicial de pensamiento crítico (1.1)</h5>
-         <%= f.fields_for :initial_ct_question do |question_fields| %>
-            <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
-
-          <br>
-            <%= @tree.initial_ct_question.ct_choices.each do |choice| %>
-
-             <%= f.fields_for :ct_choices do |choice_fields| %>
-            <div class="input-group">
-              <span class="input-group-addon" id="check">
-                <%= choice_fields.check_box :right, :class => 'inline'%>
-              </span>
-              <%= choice_fields.label :text, :readonly => true, :class => "form-control" %>
-            </div>
-            <% end %>
-            <br>
-          <% end %>
-          hola
-         <% end %>
-        <br>
-      </td>
-       
-    </tr>
-</table>
-
-<br>
- <button type="button" class="btn btn-default">Contiuar</button>
+   <%#= link_to 'Revisar', [@course, @tree, {:type =>'recuperative'}], method: :post, :class => "btn btn-default" %>
+   <%#= link_to 'Revisar2', :action => "decide" , :course_id => @course.id, :id => @tree.id, :type =>'recuperative', method: :post, :class => "btn btn-default" %>
+   <%if  state.to_s != "end"  %>  
+    <%= submit_tag "Continuar", class: "btn btn-default" %>
+   <% else %>
+    <%= link_to "Finalizar", eval_form_path(@course.id), class: "btn btn-default" %>
+   <% end %> 
+   <br></br>
 
 <% end %>
