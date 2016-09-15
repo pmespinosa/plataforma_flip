@@ -1,7 +1,7 @@
 <h2><%= "Su respuesta fue enviada, ahora debe esperar para la siguiente etapa." %></h2>
 <% if current_user.partner_id != nil %>
 	<div style="text-align: center">
-		<% @homework = Homework.where(upload:true)[0]%>
+		<% @homework = Homework.where(id:params["homework_id"])[0]%>
 		<% @homework.questions.each do |question| %>
 			<% if question.phase == @homework.actual_phase %>
 				<br>
@@ -62,8 +62,12 @@
     <br></br>
         <%= form_tag controller:"homeworks", method:"get" do %>
           <%= fields_for 'actualizar', @homework do |p| %>
-            <%= submit_tag "Editar Respuesta", name: 'tag_in_index', class: "btn btn-primary", action:"show", style:"height:35px; width:130px"%>
-            <%= submit_tag "Actualizar", name: 'tag_in_index', class: "btn btn-primary", action:"actualizar", style:"height:35px; width:130px"%>
+						<%= p.hidden_field  :homework, value:@homework.id, class:"form-control" %>
+						<%= p.hidden_field  :phase, value:@homework.actual_phase, class:"form-control" %>
+						<% if @homework.upload%>
+            	<%= submit_tag "Editar Respuesta", name: 'tag_in_index', class: "btn btn-primary", action:"show", style:"height:35px; width:130px"%>
+						<%end%>
+						<%= submit_tag "Actualizar", name: 'tag_in_index', id:@homework.id, class: "btn btn-primary", action:"actualizar", style:"height:35px; width:130px"%>
           <%end%>
         <%end%>
     <br></br>

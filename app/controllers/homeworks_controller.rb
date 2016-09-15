@@ -89,17 +89,21 @@ class HomeworksController < ApplicationController
 
   def create
     if params["tag_in_index"]
-      @homework = Homework.where(upload:true)[0]
+      @homework = Homework.where(id:params["actualizar"]["homework"])[0]
       for q in @homework.questions
         if q.phase == @homework.actual_phase
           question = q
         end
       end
-      if params["tag_in_index"] == "Editar Respuesta"
+      puts @homework.actual_phase
+      puts question.phase
+      if params["tag_in_index"] == "Editar Respuesta" && @homework.upload
         redirect_to homeworks_path
       elsif params["tag_in_index"] == "Actualizar" && current_user.answers.find_by_question_id([question.id]) == nil
         redirect_to new_homework_question_answer_path(@homework, question)
       else
+        puts params
+        puts "esto es el else"
         redirect_to homework_question_answers_path(@homework, question)
       end
     else
