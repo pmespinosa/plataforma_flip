@@ -95,8 +95,6 @@ class HomeworksController < ApplicationController
           question = q
         end
       end
-      puts @homework.actual_phase
-      puts question.phase
       if params["tag_in_index"] == "Editar Respuesta" && @homework.upload
         redirect_to homeworks_path
       elsif params["tag_in_index"] == "Actualizar" && current_user.answers.find_by_question_id([question.id]) == nil
