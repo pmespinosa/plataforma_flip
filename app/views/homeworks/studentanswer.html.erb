@@ -1,6 +1,9 @@
 
 <% if @user.partner_id != nil %>
 	<div style="text-align: center">
+		<div style="text-align:left">
+			<%= button_to 'Volver',homework_path(@homework),  :class=>"btn btn-primary", :style=>'color:white' %>
+		</div>
 		<% @homework.questions.each do |question| %>
 			<% if question.phase == @homework.actual_phase %>
 				<br>
@@ -55,6 +58,6 @@
 				<%end%>
 			<%end%>
 		<%end%>
-		<%= button_to 'Volver',homework_path(@homework),  :class=>"btn btn-primary", :style=>'color:white' %>
+
 	</div>
 <%end%>
