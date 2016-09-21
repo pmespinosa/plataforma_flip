@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160912230048) do
+ActiveRecord::Schema.define(version: 20160920153021) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -157,6 +157,20 @@ ActiveRecord::Schema.define(version: 20160912230048) do
     t.integer  "anterior"
   end
 
+  create_table "reports", force: :cascade do |t|
+    t.integer  "course_id"
+    t.float    "interpretation_sc"
+    t.float    "analysis_sc"
+    t.float    "evaluation_sc"
+    t.float    "inference_sc"
+    t.float    "explanation_sc"
+    t.float    "selfregulation_sc"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "reports", ["course_id"], name: "index_reports_on_course_id", using: :btree
+
   create_table "trees", force: :cascade do |t|
     t.string   "video"
     t.integer  "iterations"
@@ -166,6 +180,23 @@ ActiveRecord::Schema.define(version: 20160912230048) do
   end
 
   add_index "trees", ["course_id"], name: "index_trees_on_course_id", using: :btree
+
+  create_table "user_tree_performances", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "tree_id"
+    t.float    "content_sc"
+    t.float    "interpretation_sc"
+    t.float    "analysis_sc"
+    t.float    "evaluation_sc"
+    t.float    "inference_sc"
+    t.float    "explanation_sc"
+    t.float    "selfregulation_sc"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "user_tree_performances", ["tree_id"], name: "index_user_tree_performances_on_tree_id", using: :btree
+  add_index "user_tree_performances", ["user_id"], name: "index_user_tree_performances_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
@@ -205,5 +236,8 @@ ActiveRecord::Schema.define(version: 20160912230048) do
   add_foreign_key "ct_questions", "trees"
   add_foreign_key "ct_subhabilities", "ct_habilities"
   add_foreign_key "feedbacks", "trees"
+  add_foreign_key "reports", "courses"
   add_foreign_key "trees", "courses"
+  add_foreign_key "user_tree_performances", "trees"
+  add_foreign_key "user_tree_performances", "users"
 end

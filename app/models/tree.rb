@@ -19,6 +19,8 @@ class Tree < ActiveRecord::Base
   has_one :deeping_simple_feedback, :class_name => "DeepingSimpleFeedback", :dependent => :destroy
   has_one :deeping_complex_feedback, :class_name => "DeepingComplexFeedback", :dependent => :destroy
 
+  has_many :user_tree_performances, :dependent => :destroy
+
 
   accepts_nested_attributes_for :content, :reject_if => lambda { |a| a[:text].blank? }, :allow_destroy => true
   #accepts_nested_attributes_for :content_questions, :reject_if => lambda { |a| a[:question].blank? }, :allow_destroy => true

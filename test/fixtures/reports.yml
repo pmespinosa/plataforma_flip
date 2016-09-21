@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  course_id: 
+  interpretation_sc: 1.5
+  analysis_sc: 1.5
+  evaluation_sc: 1.5
+  inference_sc: 1.5
+  explanation_sc: 1.5
+  selfregulation_sc: 1.5
+
+two:
+  course_id: 
+  interpretation_sc: 1.5
+  analysis_sc: 1.5
+  evaluation_sc: 1.5
+  inference_sc: 1.5
+  explanation_sc: 1.5
+  selfregulation_sc: 1.5

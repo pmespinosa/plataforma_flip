@@ -6,10 +6,9 @@
      
 
   <table class="table table-hover" style="width:100%">
-      <% if state.to_s == "no_saw" %>
+      <% if state.to_s == "not_seen" %>
         <tr>
-          <td style="width:50%">
-            
+          <td style="width:50%">            
             <%= fields_for content_question do |question_fields| %>
                 <div class="input-group">
                   <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
@@ -73,7 +72,7 @@
                <% end %>
                <br>
             </td>
-            <%= hidden_field_tag "state", "feedback_saw" %>
+            <%= hidden_field_tag "state", "feedback_seen" %>
             <%= hidden_field_tag "n", (n.to_i+1) %>
         </tr>
          
@@ -90,7 +89,7 @@
                 
               </td>
           </tr>
-          <%= hidden_field_tag "state", "feedback_saw" %>
+          <%= hidden_field_tag "state", "feedback_seen" %>
           <%= hidden_field_tag "n", (n.to_i+1) %>
 
       <% elsif state.to_s == "end"  %>          

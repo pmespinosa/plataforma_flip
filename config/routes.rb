@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
 
 
+  resources :reports
   resources :content_choices
   resources :ct_choices
   #resources :trees
@@ -39,6 +40,7 @@ Rails.application.routes.draw do
   resources :home
   devise_for :users
   resources :users
+  resources :reports
 
   get 'homeworks/:id/studentanswer', to:"homeworks#answers"
 
@@ -48,12 +50,15 @@ Rails.application.routes.draw do
   get 'courses/:id/users'=> 'courses#students'
   post 'courses/:id/eval_form', to:'courses#eval_form', as: "eval_form"
   get 'courses/:id/eval_form', to:'courses#eval_form'
+  #post 'courses/:id/reports/new', to:'courses#reports', as: "reports"
+  #get 'courses/:id/reports/new', to:'courses#reports'
 
   get 'homework/:id/asistencia', to:'homeworks#asistencia', as:"homework_asistencia"
   post 'homework/:id/asistencia',to:'homeworks#asistencia'
   post 'homework/:id/edit',to:'homeworks#edit'
   get 'homework/:id/edit',to:'homeworks#edit'
   resources :courses do
+    resources :reports
     resources :users do
       resources :homeworks
     end

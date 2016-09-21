@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Course:</strong>
+  <%= @report.course %>
+</p>
+
+<p>
+  <strong>Interpretation sc:</strong>
+  <%= @report.interpretation_sc %>
+</p>
+
+<p>
+  <strong>Analysis sc:</strong>
+  <%= @report.analysis_sc %>
+</p>
+
+<p>
+  <strong>Evaluation sc:</strong>
+  <%= @report.evaluation_sc %>
+</p>
+
+<p>
+  <strong>Inference sc:</strong>
+  <%= @report.inference_sc %>
+</p>
+
+<p>
+  <strong>Explanation sc:</strong>
+  <%= @report.explanation_sc %>
+</p>
+
+<p>
+  <strong>Selfregulation sc:</strong>
+  <%= @report.selfregulation_sc %>
+</p>
+
+<%= link_to 'Edit', edit_report_path(@report) %> |
+<%= link_to 'Back', reports_path %>
