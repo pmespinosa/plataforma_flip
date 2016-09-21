@@ -31,18 +31,42 @@
 <table class="table table-hover" style="width:100%">
 <tbody>
     <tr>
-      <td style="padding:40px 15px 40px 0px;">
-      <%= f.simple_fields_for :initial_content_question do |builder| %>
-        <label for="basic-url">Pregunta inicial de contenido (1.1)</label>
-        <%= render "content_question_fields", :f => builder %>
-      <% end %>
+      <td class="coltree" style="padding:40px 15px 40px 0px;">
+        <%= f.simple_fields_for :initial_content_question do |builder| %>
+          <label for="basic-url">Pregunta inicial de contenido (1.1)</label>
+          <%= render "content_question_fields", :f => builder %>
+        <% end %>
       </td>
-      <td style="padding:40px 0px 40px 15px;">
-      <%= f.simple_fields_for :initial_ct_question do |builder| %>
-         <label for="basic-url">Pregunta inicial de pensamiento crítico (1.1)</label>
-         <%= render "ct_question_fields", :f => builder %>
-      <% end %>
-      </td>
+      <td class="coltree" style="padding:40px 0px 40px 15px;">
+        <%= f.simple_fields_for :initial_ct_question do |builder| %>
+           <label for="basic-url">Pregunta inicial de pensamiento crítico (1.1)</label>
+           <%= render "ct_question_fields", :f => builder %>
+        <% end %>
+        
+        <br>
+          <div align="right" class="btn-group divtd" data-toggle="buttons">
+            <label class="btn btn-default btnpc">
+              <input type="checkbox"> Interpretación
+            </label>
+            <label class="btn btn-default btnpc">
+              <input type="checkbox"> Análisis
+            </label>
+            <label class="btn btn-default btnpc">
+              <input type="checkbox"> Evaluación
+            </label>
+          </div>
+          <div class="btn-group divtd" data-toggle="buttons">
+            <label class="btn btn-default btnpc">
+              <input type="checkbox"> Inferencia
+            </label>
+            <label class="btn btn-default btnpc">
+              <input type="checkbox"> Explicación
+            </label>
+            <label class="btn btn-default btnpc">
+              <input type="checkbox"> Metacognición
+            </label>
+          </div>
+        </td>
       <br>
     </tr>
 
@@ -78,6 +102,29 @@
         <label for="basic-url">Pregunta recuperativa de pensamiento crítico (1.2)</label>
         <%= render "ct_question_fields", :f => builder %>
       <% end %>
+      <br>
+      <div align="right" class="btn-group divtd" data-toggle="buttons">
+            <label class="btn btn-default btnpc">
+              <input type="checkbox"> Interpretación
+            </label>
+            <label class="btn btn-default btnpc">
+              <input type="checkbox"> Análisis
+            </label>
+            <label class="btn btn-default btnpc">
+              <input type="checkbox"> Evaluación
+            </label>
+          </div>
+          <div class="btn-group divtd" data-toggle="buttons">
+            <label class="btn btn-default btnpc">
+              <input type="checkbox"> Inferencia
+            </label>
+            <label class="btn btn-default btnpc">
+              <input type="checkbox"> Explicación
+            </label>
+            <label class="btn btn-default btnpc">
+              <input type="checkbox"> Metacognición
+            </label>
+          </div>
       </td>
       <br>
     </tr>
@@ -114,6 +161,29 @@
         <label for="basic-url">Pregunta de profundización de pensamiento crítico (2.0)</label>
         <%= render "ct_question_fields", :f => builder %>
       <% end %>
+      <br>
+      <div align="right" class="btn-group divtd" data-toggle="buttons">
+            <label class="btn btn-default btnpc">
+              <input type="checkbox"> Interpretación
+            </label>
+            <label class="btn btn-default btnpc">
+              <input type="checkbox"> Análisis
+            </label>
+            <label class="btn btn-default btnpc">
+              <input type="checkbox"> Evaluación
+            </label>
+          </div>
+          <div class="btn-group divtd" data-toggle="buttons">
+            <label class="btn btn-default btnpc">
+              <input type="checkbox"> Inferencia
+            </label>
+            <label class="btn btn-default btnpc">
+              <input type="checkbox"> Explicación
+            </label>
+            <label class="btn btn-default btnpc">
+              <input type="checkbox"> Metacognición
+            </label>
+        </div>
       </td>
       <br>
     </tr>

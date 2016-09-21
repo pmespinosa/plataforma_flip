@@ -307,6 +307,8 @@
     <%= submit_tag "Pasar a pregunta de profundización", class: "btn btn-default" %>
    <%elsif state.to_s == "answered" && type.to_s == "initial"  %>  
     <%= submit_tag "Pasar a pregunta recuperativa", class: "btn btn-default" %>
+   <%elsif state.to_s == "answered" && type.to_s == "recuperative" && feedback_quality.to_s == "none" %>
+    <%= submit_tag "Pasar a pregunta de profundización", class: "btn btn-default" %>
    <%elsif state.to_s == "answered" && type.to_s == "recuperative" && n.to_i == 0 %>  
     <%= submit_tag "Intentar otra vez", class: "btn btn-default" %>
    <%elsif state.to_s == "answered" && type.to_s == "recuperative" && n.to_i == 1 %>   
