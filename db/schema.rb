@@ -18,8 +18,13 @@ ActiveRecord::Schema.define(version: 20160912230048) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "question_id"
-    t.text     "content"
+    t.integer  "homework_id"
+    t.integer  "phase"
+    t.text     "responder"
+    t.text     "argumentar"
+    t.text     "rehacer"
+    t.text     "evaluar"
+    t.text     "final"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.string   "image_file_name"
@@ -28,7 +33,7 @@ ActiveRecord::Schema.define(version: 20160912230048) do
     t.datetime "image_updated_at"
   end
 
-  add_index "answers", ["user_id", "question_id"], name: "index_answers_on_user_id_and_question_id", using: :btree
+  add_index "answers", ["user_id", "homework_id"], name: "index_answers_on_user_id_and_homework_id", using: :btree
 
   create_table "content_choices", force: :cascade do |t|
     t.text     "text"
@@ -135,27 +140,12 @@ ActiveRecord::Schema.define(version: 20160912230048) do
     t.datetime "image_updated_at"
   end
 
-  create_table "homeworks_questions", id: false, force: :cascade do |t|
-    t.integer "homework_id"
-    t.integer "question_id"
-  end
-
-  add_index "homeworks_questions", ["homework_id", "question_id"], name: "index_homeworks_questions_on_homework_id_and_question_id", using: :btree
-
   create_table "homeworks_users", id: false, force: :cascade do |t|
     t.integer "homework_id"
     t.integer "user_id"
   end
 
   add_index "homeworks_users", ["homework_id", "user_id"], name: "index_homeworks_users_on_homework_id_and_user_id", using: :btree
-
-  create_table "questions", force: :cascade do |t|
-    t.integer  "phase"
-    t.string   "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "anterior"
-  end
 
   create_table "trees", force: :cascade do |t|
     t.string   "video"

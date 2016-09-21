@@ -61,9 +61,7 @@ Rails.application.routes.draw do
 
   post  'homeworks/:id' => 'homeworks#change_phase'
   resources :homeworks do
-    resources :questions do
-      resources :answers
-    end
+    resources :answers
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

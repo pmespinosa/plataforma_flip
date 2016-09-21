@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :set_question, :set_homework
+  before_action :set_homework
   before_action :set_answer, only: [:edit, :destroy, :show, :update]
   before_action :set_actividades_visible, only: :new
   before_action :set_breadcrumbs
@@ -8,13 +8,20 @@ class AnswersController < ApplicationController
   # GET /answers.json
   def index
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Realizar Actividad"]
-    @answer = current_user.answers.find_by_question_id(params[:question_id])
+    @answer = current_user.answers.find_by_homework_id(params[:homework_id])
   end
 
   # GET /answer/1
   # GET /answer/1.json
   def show
-    @answer = current_user.answers.find_by_question_id(params[:question_id])
+    answer = current_user.answers.find_by_homework_id(params[:homework_id])
+    if @homework.actual_phase == "responder"
+      @answer = answer.responder
+    elsif @homework.actual_phase == "argumentar"
+      @answer = answer.argumentar
+    elsif @homework.actual_phase == "rehacer"
+      @answer = answer.rehacer
+    end
   end
 
   # GET /answer/new
@@ -33,10 +40,10 @@ class AnswersController < ApplicationController
   def create
     @answer = Answer.new(answer_params)
     current_user.answers << @answer
-    @question.answers << @answer
-    @answer.question = @question
+    @homework.answers << @answer
+    @answer.homework = @homework
     if @answer.save
-      redirect_to homework_question_answers_path(@homework, @question)
+      redirect_to homework_answers_path(@homework)
     else
       render :new
     end
@@ -45,7 +52,7 @@ class AnswersController < ApplicationController
   def update
     respond_to do |format|
       if @answer.update(answer_params)
-        format.html { redirect_to homework_question_answers_path(@homework, @question) }
+        format.html { redirect_to homework_answers_path(@homework) }
         format.json { render :show, status: :ok, location: @homework }
       else
         format.html { render :edit }
@@ -66,10 +73,6 @@ class AnswersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_answer
       @answer = Answer.find(params[:id])
-    end
-
-    def set_question
-      @question = Question.find(params[:question_id])
     end
 
     def set_homework

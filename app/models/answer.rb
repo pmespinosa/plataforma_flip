@@ -18,7 +18,6 @@ class Answer < ActiveRecord::Base
 
   def set_default_actual_phase
     self.phase ||= :responder
-    self.upload ||= false
   end
 
   belongs_to :user
