@@ -229,6 +229,59 @@
           </td>
         </tr>
 
+      <% elsif state.to_s == "answered" && feedback_quality.to_s == "none" %>  
+
+      <tr>
+          <td style="width:50%">            
+            <%= fields_for content_question do |question_fields| %>
+                <div class="input-group">
+                  <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
+                </div>
+                  <br>
+                  <%#= form_tag "edx_view", :method => :post do %>
+                  <%= question_fields.fields_for :content_choices do |choice_fields| %>                    
+                    <% if choice_fields.object.right %>  
+                      <div class="form-group has-success has-feedback">
+                        <label class="control-label" for="inputSuccess2"><%= choice_fields.object.text%><span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span></label>                        
+                      </div>
+                    <% else %>
+                      <div class="form-group has-error has-feedback">
+                        <label class="control-label"><%= choice_fields.object.text%><span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span></label> 
+                      </div>                    
+                    <% end %>
+                  <% end %>
+            <% end %>
+             <br>
+          </td>
+
+          <td style="width:50%">
+
+            
+            <%= fields_for ct_question do |question_fields| %>
+                <div class="input-group">
+                  <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
+                </div>
+                  <br>
+                  <%#= form_tag "edx_view", :method => :post do %>
+                  <%= question_fields.fields_for :ct_choices do |choice_fields| %>
+                    <% if choice_fields.object.right %>  
+                      <div class="form-group has-success has-feedback">
+                        <label class="control-label" for="inputSuccess2"><%= choice_fields.object.text%><span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span></label>                        
+                      </div>
+                    <% else %>
+                      <div class="form-group has-error has-feedback">
+                        <label class="control-label"><%= choice_fields.object.text%><span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span></label> 
+                      </div>
+                    <% end %>
+                  <% end %>
+                <br>
+             <% end %>
+             <br>
+          </td>
+          <%= hidden_field_tag "state", "answered" %>
+          <%= hidden_field_tag "n", n %>
+        </tr>
+
       <% elsif state.to_s == "end"  %>          
           <tr>
               <td style="width:50%">
@@ -248,8 +301,20 @@
 
    <%#= link_to 'Revisar', [@course, @tree, {:type =>'recuperative'}], method: :post, :class => "btn btn-default" %>
    <%#= link_to 'Revisar2', :action => "decide" , :course_id => @course.id, :id => @tree.id, :type =>'recuperative', method: :post, :class => "btn btn-default" %>
-   <%if  state.to_s != "end"  %>  
-    <%= submit_tag "Continuar", class: "btn btn-default" %>
+   <%if  state.to_s == "not_seen" %>
+    <%= submit_tag "Confirmar", class: "btn btn-default" %>
+   <%elsif state.to_s == "answered" && type.to_s == "initial" && feedback_quality.to_s == "none"  %>  
+    <%= submit_tag "Pasar a pregunta de profundización", class: "btn btn-default" %>
+   <%elsif state.to_s == "answered" && type.to_s == "initial"  %>  
+    <%= submit_tag "Pasar a pregunta recuperativa", class: "btn btn-default" %>
+   <%elsif state.to_s == "answered" && type.to_s == "recuperative" && n.to_i == 0 %>  
+    <%= submit_tag "Intentar otra vez", class: "btn btn-default" %>
+   <%elsif state.to_s == "answered" && type.to_s == "recuperative" && n.to_i == 1 %>   
+    <%= submit_tag "Pasar a pregunta de profundización", class: "btn btn-default" %>
+   <%elsif state.to_s == "answered" && type.to_s == "deeping" && n.to_i == 0 %>   
+    <%= submit_tag "Intentar otra vez", class: "btn btn-default" %>
+   <%elsif state.to_s == "answered" && type.to_s == "recuperative" && n.to_i == 1 %>   
+    <%= submit_tag "Terminar", class: "btn btn-default" %>
    <% else %>
     <%= link_to "Finalizar", eval_form_path(@course.id), class: "btn btn-default" %>
    <% end %> 
