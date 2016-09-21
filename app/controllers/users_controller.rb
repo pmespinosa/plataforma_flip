@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades", "Asistencia", "Realizar Actividad", "Respuesta Alumno"]
+    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Asistencia", "Realizar Actividad", "Respuesta Alumno"]
     @user = User.find(params[:id])
     unless current_user.profesor?
       unless @user == current_user

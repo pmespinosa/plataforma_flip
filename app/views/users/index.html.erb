@@ -21,7 +21,7 @@
       <div class="caption">
         <h3><%= course.name %></h3>
         <% if course.description.length < 150 %>
-          <p><%= course.description%><%= "\n\n\n\n\n"%></p>
+          <p><b>Código: </b><%= + course.course_code%></p>
         <%else%>
           <p><%= truncate(course.description, :length => 150, :omission => "...") %></p>
         <%end%>

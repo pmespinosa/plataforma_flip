@@ -1,6 +1,11 @@
 
 <% if @user.partner_id != nil %>
 	<div style="text-align: center">
+		<div style="text-align:left">
+			<h1>Respuesta</h1>
+			<br>
+			<%= button_to 'Volver',homework_path(@homework),  :class=>"btn btn-primary", :style=>'color:white' %>
+		</div>
 		<% @homework.questions.each do |question| %>
 			<% if question.phase == @homework.actual_phase %>
 				<br>
@@ -16,18 +21,18 @@
 						<h4>Respuesta: </h4>
 						<h4><em><%= actual.content %></em></h4>
 						<% if actual.image? %>
-							<p><%= image_tag actual.image.url(:large) %></p>
+							<p><%= image_tag actual.image.url(:medium) %></p>
 						<% end %>
 					<% elsif question.phase == "argumentar" %>
 						<h4><%= "En base a la respuesta de %s %s, discuta y argumente su contenido:" % [partner.first_name, partner.last_name] %></h4>
 						<em><h4><%=answer.content %></h4></em>
 						<% if answer.image? %>
-							<p><%= image_tag answer.image.url(:large) %></p>
+							<p><%= image_tag answer.image.url(:medium) %></p>
 						<% end %>
 						<h4>Argumentación de <%=@user.first_name + " " + @user.last_name %>: </h4>
 						<h4><em><%= actual.content %></em></h4>
 						<% if actual.image? %>
-							<p><%= image_tag actual.image.url(:large) %></p>
+							<p><%= image_tag actual.image.url(:medium) %></p>
 						<% end %>
 					<% elsif question.phase == "rehacer" %>
 						<% my_answers = @user.answers %>
@@ -37,24 +42,24 @@
 						<h4>Primera respuesta de <%=@user.first_name + " " + @user.last_name%> :</h4>
 						<em><h4><%="\"" + my_answer.content + "\""%></h4></em>
 						<% if my_answer.image? %>
-							<p><%= image_tag my_answer.image.url(:large) %></p>
+							<p><%= image_tag my_answer.image.url(:medium) %></p>
 						<% end %>
 						<br>
 						<h4>Argumentación de <%= partner.first_name + " " + partner.last_name%> :</h4>
 						<em><h4><%=answer.content %></h4></em>
 						<% if answer.image? %>
-							<p><%= image_tag answer.image.url(:large) %></p>
+							<p><%= image_tag answer.image.url(:medium) %></p>
 						<% end %>
 						<br>
 						<h4>Respuesta final de <%= @user.first_name + " " + @user.last_name%> :</h4>
 				        <em><h4><%=actual.content %></h4></em>
 				        <% if actual.image?%>
-				        	<p><%= image_tag actual.image.url(:large) %></p>
+				        	<p><%= image_tag actual.image.url(:medium) %></p>
 				        <%end%>
 					<%end%>
 				<%end%>
 			<%end%>
 		<%end%>
-		<%= link_to 'Volver',homework_path(@homework),  :class=>"btn btn-primary", :style=>'color:white' %>
+
 	</div>
 <%end%>

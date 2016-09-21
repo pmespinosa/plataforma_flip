@@ -2,19 +2,25 @@ class HomeworksController < ApplicationController
   before_action :set_homework, only: [:show, :edit, :update, :destroy, :change_phase, :asistencia]
   before_action :set_course
   before_action :set_unavailable
-  skip_before_action :set_unavailable, only: [:show, :change_phase]
+  skip_before_action :set_unavailable, only: [:show, :change_phase, :answers]
   before_action :set_miscursos_visible, only: :index
   before_action :set_ef_visible, only: :index
-  before_action :set_reporte_visible, only: :index
-  before_action :set_actividades_visible, only: [:index, :show, :asistencia, :edit, :new]
+  before_action :set_actividades_visible, only: [:index, :show, :asistencia, :edit, :new, :answers]
   before_action :set_configuraciones_visible, only: :index
   before_action :set_breadcrumbs
 
   # GET /homeworks
   # GET /homeworks.json
   def index
-    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades"]
+    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas"]
     if current_user.role?
+      if current_user.role?
+        for i in @course.homeworks
+          i.upload = false
+          i.actual_phase = "responder"
+          i.save
+        end
+      end
       @homeworks = @course.homeworks.sort_by{|e| e[:created_at]}
     else
       @homeworks = @course.homeworks.where(upload: true)
@@ -51,7 +57,7 @@ class HomeworksController < ApplicationController
   end
 
   def show
-    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades", "Realizar Actividad"]
+    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Realizar Actividad"]
     @users = User.all.where(role:0, asistencia:true)
     @homework.save
     if current_user.role?
@@ -73,16 +79,16 @@ class HomeworksController < ApplicationController
   end
 
   def new
-    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades", "Crear Actividad"]
+    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Crear Actividad"]
     @homework = Homework.new
   end
 
   def edit
-    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades", "Editar Actividad"]
+    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Editar Actividad"]
   end
 
   def answers
-    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades", "Realizar Actividad", "Respuesta Alumno"]
+    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Realizar Actividad", "Respuesta Alumno"]
     @user = User.find_by_id(params["homework"]["user"])
     @homework = Homework.where(id:params["homework"]["homework"].to_i)[0]
     render 'studentanswer'
@@ -90,17 +96,19 @@ class HomeworksController < ApplicationController
 
   def create
     if params["tag_in_index"]
-      @homework = Homework.where(upload:true)[0]
+      @homework = Homework.where(id:params["actualizar"]["homework"])[0]
       for q in @homework.questions
         if q.phase == @homework.actual_phase
           question = q
         end
       end
-      if params["tag_in_index"] == "Editar Respuesta"
+      if params["tag_in_index"] == "Editar Respuesta" && @homework.upload
         redirect_to homeworks_path
       elsif params["tag_in_index"] == "Actualizar" && current_user.answers.find_by_question_id([question.id]) == nil
         redirect_to new_homework_question_answer_path(@homework, question)
       else
+        puts params
+        puts "esto es el else"
         redirect_to homework_question_answers_path(@homework, question)
       end
     else
@@ -148,7 +156,7 @@ class HomeworksController < ApplicationController
   end
 
   def asistencia
-    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades", "Asistencia"]
+    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Asistencia"]
     @users = Course.find_by_id(current_user.current_course_id).users
     libres = []
     if params["asistentes"] != nil
@@ -226,7 +234,7 @@ class HomeworksController < ApplicationController
       if current_user.role?
         for i in @course.homeworks
           i.upload = false
-          i.actual_phase = "responder"
+          #i.actual_phase = "responder"
           i.save
         end
       end
