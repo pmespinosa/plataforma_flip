@@ -1,6 +1,6 @@
 class Homework < ActiveRecord::Base
 
-  enum actual_phase: [:responder, :argumentar, :rehacer]
+  enum actual_phase: [:responder, :argumentar, :rehacer, :evaluar, :final]
   after_initialize :set_default_actual_phase, :if => :new_record?
 
   def set_default_actual_phase
@@ -9,8 +9,6 @@ class Homework < ActiveRecord::Base
   end
 
   has_and_belongs_to_many :users
-  has_and_belongs_to_many :questions
-  has_many :key_words
   has_many :answers
   belongs_to :course
   has_attached_file :image, styles: {medium: "800x800>"}
