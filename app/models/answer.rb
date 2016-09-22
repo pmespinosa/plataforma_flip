@@ -22,6 +22,10 @@ class Answer < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :homework
-  has_attached_file :image, styles: {medium: "800x800>"}
-  validates_attachment_content_type :image, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
+  has_attached_file :image_responder, styles: {medium: "800x800>"}
+  has_attached_file :image_argumentar, styles: {medium: "800x800>"}
+  has_attached_file :image_rehacer, styles: {medium: "800x800>"}
+  validates_attachment_content_type :image_responder, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
+  validates_attachment_content_type :image_argumentar, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
+  validates_attachment_content_type :image_rehacer, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
 end

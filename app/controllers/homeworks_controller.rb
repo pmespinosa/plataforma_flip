@@ -81,8 +81,11 @@ class HomeworksController < ApplicationController
 
   def answers
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Realizar Actividad", "Respuesta Alumno"]
-    @user = User.find_by_id(params["homework"]["user"])
     @homework = Homework.where(id:params["homework"]["homework"].to_i)[0]
+    @user = User.find_by_id(params["homework"]["user"])
+    @partner = User.find_by_id(@user.partner_id)
+    @partner_answer = @partner.answers.find_by_homework_id(@homework.id)
+    @answer = @user.answers.find_by_homework_id(@homework.id)
     render 'studentanswer'
   end
 
@@ -91,10 +94,18 @@ class HomeworksController < ApplicationController
       @homework = Homework.where(id:params["actualizar"]["homework"])[0]
       if params["tag_in_index"] == "Editar Respuesta" && @homework.upload
         redirect_to homeworks_path
-      elsif params["tag_in_index"] == "Actualizar" && current_user.answers.find_by_homework_id([@homework.id]) == nil
-        redirect_to new_homework_answer_path(@homework)
+      elsif params["tag_in_index"] == "Actualizar" && @homework.upload
+        if current_user.answers.find_by_homework_id([@homework.id]).responder == nil && @homework.actual_phase == "responder"
+          redirect_to new_homework_answer_path(@homework)
+        elsif current_user.answers.find_by_homework_id([@homework.id]).argumentar == nil && @homework.actual_phase == "argumentar"
+          redirect_to homeworks_path
+        elsif current_user.answers.find_by_homework_id([@homework.id]).rehacer == nil && @homework.actual_phase == "rehacer"
+          redirect_to homeworks_path
+        else
+          redirect_to homework_answers_path(@homework)
+        end
       else
-        redirect_to homework_answers_path(@homework)
+        redirect_to homeworks_path(@homework)
       end
     else
       @homework = Homework.new(homework_params)

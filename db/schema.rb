@@ -25,12 +25,20 @@ ActiveRecord::Schema.define(version: 20160912230048) do
     t.text     "rehacer"
     t.text     "evaluar"
     t.text     "final"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.string   "image_responder_file_name"
+    t.string   "image_responder_content_type"
+    t.integer  "image_responder_file_size"
+    t.datetime "image_responder_updated_at"
+    t.string   "image_argumentar_file_name"
+    t.string   "image_argumentar_content_type"
+    t.integer  "image_argumentar_file_size"
+    t.datetime "image_argumentar_updated_at"
+    t.string   "image_rehacer_file_name"
+    t.string   "image_rehacer_content_type"
+    t.integer  "image_rehacer_file_size"
+    t.datetime "image_rehacer_updated_at"
   end
 
   add_index "answers", ["user_id", "homework_id"], name: "index_answers_on_user_id_and_homework_id", using: :btree

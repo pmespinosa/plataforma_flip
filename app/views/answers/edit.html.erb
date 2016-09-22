@@ -5,36 +5,35 @@
 			<p><%= image_tag @homework.image.url(:medium) %></p>
 		<% end %>
 
-		<% partner = User.find_by_id(current_user.partner_id) %>
-		<% partner_answer = partner.answers.find_by_homework_id(@homework.id) %>
-
-		<% if (@homework.actual_phase == "responder" || partner_answer != nil)%>
-			<% if @homework.actual_phase == "argumentar" && answer != nil%>
-					<h4><%= "En base a la respuesta de %s %s, discuta y argumente su contenido:" % [partner.first_name, partner.last_name] %></h4>
-						<em><h4><%= "\"" + partner_answer.responder + "\"" %></h4></em>
-					<% if partner_answer.image? %>
-						<p><%= image_tag partner_answer.image.url(:medium) %></p>
-					<% end %>
-			<% elsif @homework.actual_phase == "rehacer" && partner_answer != nil%>
-				<% my_answer = current_user.answers.find_by_homework_id(@homework.id)%>
-				<br>
-				<h4><%= "Su primera respuesta: \n"  %></h4>
-				<em><h4><%="\"" + my_answer.responder + "\""%></h4></em>
-				<% if my_answer.image? %>
-					<p><%= image_tag my_answer.image.url(:medium) %></p>
-				<% end %>
-				<br>
-				<h4><%= "Feedback y argumentación de %s %s: \n" % [partner.first_name, partner.last_name] %></h4>
-				<em><h4><%=partner_answer.argumentar %></h4></em>
-				<% if partner_answer.image? %>
-					<p><%= image_tag partner_answer.image.url(:medium) %></p>
-				<% end %>
-				<br>
-				<h3><%= "En base al feedback y argumentación de su compañero, reestructure nuevamente su respuesta:" %></h3>
-		<% end%>
+		<% if @homework.actual_phase == "argumentar"%>
+			<br>
+			<h4><%= "En base a la siguiente respuesta discuta y argumente su contenido:" %></h4>
+			<% if @partner_answer.responder != nil%>
+				<em><h4><%= "\"" + @partner_answer.responder + "\"" %></h4></em>
+			<% end %>
+			<% if @partner_answer.image_responder? %>
+				<p><%= image_tag @partner_answer.image_responder.url(:medium) %></p>
+			<% end %>
+		<% elsif @homework.actual_phase == "rehacer"%>
+			<br>
+			<h4><%= "Su primera respuesta: \n"  %></h4>
+			<% if @answer.responder != nil %>
+				<em><h4><%="\"" + @answer.responder + "\""%></h4></em>
+			<% end %>
+			<% if @answer.image_responder? %>
+				<p><%= image_tag @answer.image_responder.url(:medium) %></p>
+			<% end %>
+			<br>
+			<h4><%= "Argumentación: \n"%></h4>
+			<% if @partner_answer.argumentar != nil %>
+				<em><h4><%=@partner_answer.argumentar %></h4></em>
+			<% end %>
+			<% if @partner_answer.image_argumentar? %>
+				<p><%= image_tag @partner_answer.image_argumentar.url(:medium) %></p>
+			<% end %>
+			<br>
+			<h3><%= "En base a la argumentación de su compañero, reestructure nuevamente su respuesta:" %></h3>
+		<% end %>
 		<%= render 'form' %>
-	<% else %>
-		<h4><%= "FORMULARIO NO DISPONIBLE" %></h4>
 	<%end%>
-<%end%>
 </div>

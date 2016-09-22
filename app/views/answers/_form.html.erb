@@ -1,6 +1,6 @@
 
 <div style="text-align: center">
-    <%= form_for([@homework, @question, @answer], html: { multipart: true }) do |f| %>
+    <%= form_for([@homework, @answer], html: { multipart: true }) do |f| %>
       <% if @answer.errors.any? %>
         <div id="error_explanation">
           <h2><%= pluralize(@answer.errors.count, "error") %> prohibited this answer from being saved:</h2>
@@ -18,7 +18,13 @@
             <label for="question" class="col-sm-9 control-label">Respuesta</label>
             <div class="col-sm-offset-4">
               <div class="col-xs-6">
-                <%= f.text_area :responder, cols: 40, rows: 5, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
+                <% if @homework.actual_phase == "responder"%>
+                  <%= f.text_area :responder, cols: 40, rows: 5, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
+                <% elsif @homework.actual_phase == "argumentar"%>
+                  <%= f.text_area :argumentar, cols: 40, rows: 5, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
+                <% elsif @homework.actual_phase == "rehacer"%>
+                  <%= f.text_area :rehacer, cols: 40, rows: 5, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
+                <% end %>
                 <br>
               </div>
             </div>
@@ -28,7 +34,13 @@
             <label for="question" class="col-sm-9 control-label">Imagen</label>
             <div class="col-sm-offset-4">
               <div class="col-xs-6">
-                <%= f.file_field :image, id:"i_answer"%>
+                <% if @homework.actual_phase == "responder"%>
+                  <%= f.file_field :image_responder, id:"i_answer"%>
+                <% elsif @homework.actual_phase == "argumentar"%>
+                  <%= f.file_field :image_argumentar, id:"i_answer"%>
+                <% elsif @homework.actual_phase == "rehacer"%>
+                  <%= f.file_field :image_rehacer, id:"i_answer"%>
+                <% end %>
                 <br>
               </div>
             </div>
