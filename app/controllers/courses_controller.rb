@@ -84,11 +84,8 @@ class CoursesController < ApplicationController
   end
 
   def remove_from_course
-    puts 'Estoy pasando por el met'
     user = User.all.where(id:params['id'])[0]
     objt = UserCourse.all.where(user_id: user.id)
-    puts objt
-    puts "esto es obj"
     course = Course.find(current_user.current_course_id)
     user.courses.destroy(course)
     user.save

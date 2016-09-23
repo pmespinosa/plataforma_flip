@@ -136,8 +136,6 @@ class HomeworksController < ApplicationController
     end
   end
 
-  # DELETE /homeworks/1
-  # DELETE /homeworks/1.json
   def destroy
     @homework.destroy
     respond_to do |format|
@@ -261,7 +259,6 @@ class HomeworksController < ApplicationController
       end
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def homework_params
       params.require(:homework).permit(:name, :content, :actual_phase, :upload, :courses, :image)
     end
