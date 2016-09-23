@@ -38,10 +38,12 @@ class AnswersController < ApplicationController
   end
 
   def create
-    @answer = Answer.new(answer_params)
-    current_user.answers << @answer
-    @homework.answers << @answer
-    @answer.homework = @homework
+    if @homework.upload
+      @answer = Answer.new(answer_params)
+      current_user.answers << @answer
+      @homework.answers << @answer
+      @answer.homework = @homework
+    end
     if @answer.save
       redirect_to homework_answers_path(@homework)
     else
@@ -50,17 +52,19 @@ class AnswersController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      puts params
-      puts "aqui estan"
-      @answer.update(answer_params)
-      if @answer.save
-        format.html { redirect_to homework_answers_path(@homework) }
-        format.json { render :show, status: :ok, location: @homework }
-      else
-        format.html { render :edit }
-        format.json { render json: @homework.errors, status: :unprocessable_entity }
+    if @homework.upload
+      respond_to do |format|
+        @answer.update(answer_params)
+        if @answer.save
+          format.html { redirect_to homework_answers_path(@homework) }
+          format.json { render :show, status: :ok, location: @homework }
+        else
+          format.html { render :edit }
+          format.json { render json: @homework.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to homework_answers_path(@homework)
     end
   end
 

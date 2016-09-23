@@ -14,18 +14,21 @@ class HomeworksController < ApplicationController
   def index
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas"]
     if current_user.role?
-      if current_user.role?
-        for i in @course.homeworks
-          i.upload = false
-          i.actual_phase = "responder"
-          i.save
-        end
+      for i in @course.homeworks
+        i.current = false
+        i.upload = false
+        i.actual_phase = "responder"
+        i.save
       end
       @homeworks = @course.homeworks.sort_by{|e| e[:created_at]}
     else
-      @homeworks = @course.homeworks.where(upload: true)
-      if @homeworks[0]
-        redirect_to homework_path(@homeworks[0])
+      @homework = @course.homeworks.where(current: true)[0]
+      if @homework
+        if current_user.answers.find_by_homework_id(@homework.id) != nil
+          redirect_to homework_answers_path(@homework)
+        elsif @homework.upload == true
+          redirect_to homework_path(@homework)
+        end
       end
     end
   end
@@ -105,7 +108,7 @@ class HomeworksController < ApplicationController
           redirect_to homework_answers_path(@homework)
         end
       else
-        redirect_to homeworks_path(@homework)
+        redirect_to homework_answers_path(@homework)
       end
     else
       @homework = Homework.new(homework_params)
@@ -203,6 +206,7 @@ class HomeworksController < ApplicationController
           end
         end
         @homework.upload = true
+        @homework.current = true
         @homework.save
         redirect_to homework_path(@homework)
       end
@@ -259,6 +263,6 @@ class HomeworksController < ApplicationController
     end
 
     def homework_params
-      params.require(:homework).permit(:name, :content, :actual_phase, :upload, :courses, :image)
+      params.require(:homework).permit(:name, :content, :actual_phase, :upload, :courses, :image, :current)
     end
 end

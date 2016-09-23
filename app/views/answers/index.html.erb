@@ -1,4 +1,4 @@
-<h2><%= "Su respuesta fue enviada, ahora debe esperar para la siguiente etapa." %></h2>
+<h2><%= "Debe esperar para la siguiente etapa." %></h2>
 <% @homework = Homework.where(id:params["homework_id"])[0]%>
 <div style="text-align: center">
 	<br>
@@ -6,7 +6,7 @@
 	<% if @homework.image? %>
 		<p><%= image_tag @homework.image.url(:medium) %></p>
 	<% end %>
-	<% if @homework.actual_phase == "responder" %>
+	<% if @homework.actual_phase == "responder" && @answer != nil %>
 		<h4>Respuesta:</h4>
 		<% if @answer.responder != nil %>
 	  	<h4><em><%= @answer.responder %></em></h4>
@@ -14,7 +14,7 @@
 		<% if @answer.image_responder? %>
 			<p><%= image_tag @answer.image_responder.url(:medium) %></p>
 		<% end %>
-	<% elsif @homework.actual_phase == "argumentar" %>
+	<% elsif @homework.actual_phase == "argumentar" && @partner_answer != nil && @answer != nil %>
 		<br>
 		<h4><%= "En base a la siguiente respuesta discuta y argumente su contenido:" %></h4>
 		<% if @partner_answer.responder != nil %>
@@ -30,7 +30,7 @@
 		<% if @answer.image_argumentar? %>
 			<p><%= image_tag @answer.image_argumentar.url(:medium) %></p>
 		<% end %>
-	<% elsif @homework.actual_phase == "rehacer" %>
+	<% elsif @homework.actual_phase == "rehacer" && @partner_answer != nil && @answer != nil %>
 		<br>
 		<h4>Primera respuesta:</h4>
 		<% if @answer.responder != nil %>

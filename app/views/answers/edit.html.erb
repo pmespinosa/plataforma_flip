@@ -5,7 +5,7 @@
 			<p><%= image_tag @homework.image.url(:medium) %></p>
 		<% end %>
 
-		<% if @homework.actual_phase == "argumentar"%>
+		<% if @homework.actual_phase == "argumentar" && @partner_answer != nil && @answer != nil %>
 			<br>
 			<h4><%= "En base a la siguiente respuesta discuta y argumente su contenido:" %></h4>
 			<% if @partner_answer.responder != nil%>
@@ -14,7 +14,7 @@
 			<% if @partner_answer.image_responder? %>
 				<p><%= image_tag @partner_answer.image_responder.url(:medium) %></p>
 			<% end %>
-		<% elsif @homework.actual_phase == "rehacer"%>
+		<% elsif @homework.actual_phase == "rehacer" && @partner_answer != nil && @answer != nil %>
 			<br>
 			<h4><%= "Su primera respuesta: \n"  %></h4>
 			<% if @answer.responder != nil %>
