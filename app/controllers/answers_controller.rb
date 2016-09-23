@@ -4,19 +4,14 @@ class AnswersController < ApplicationController
   before_action :set_actividades_visible, only: :new
   before_action :set_breadcrumbs
   before_filter :authenticate_user!
-  # GET /answers
-  # GET /answers.json
+
   def index
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Realizar Actividad"]
     @partner = User.find_by_id(current_user.partner_id)
     @partner_answer = @partner.answers.find_by_homework_id(@homework.id)
     @answer = current_user.answers.find_by_homework_id(@homework.id)
-    puts @partner_answer
-    puts "esto es"
   end
 
-  # GET /answer/1
-  # GET /answer/1.json
   def show
     answer = current_user.answers.find_by_homework_id(params[:homework_id])
     if @homework.actual_phase == "responder"
@@ -28,7 +23,6 @@ class AnswersController < ApplicationController
     end
   end
 
-  # GET /answer/new
   def new
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Realizar Actividad"]
     @answer = Answer.new
@@ -36,7 +30,6 @@ class AnswersController < ApplicationController
     @partner_answer = @partner.answers.find_by_homework_id(@homework.id)
   end
 
-  # GET /answer/1/edit
   def edit
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Realizar Actividad"]
     @partner = User.find_by_id(current_user.partner_id)
@@ -44,8 +37,6 @@ class AnswersController < ApplicationController
     @answer = current_user.answers.find_by_homework_id(@homework.id)
   end
 
-  # POST /answer
-  # POST /answer.json
   def create
     @answer = Answer.new(answer_params)
     current_user.answers << @answer
