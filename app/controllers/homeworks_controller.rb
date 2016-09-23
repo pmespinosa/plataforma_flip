@@ -60,19 +60,11 @@ class HomeworksController < ApplicationController
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Realizar Actividad"]
     @users = User.all.where(role:0, asistencia:true)
     @homework.save
-    if current_user.role?
-      @questions = Question.all
-    else
-      questions = @homework.questions
-      for q in @homework.questions
-        if q.phase == @homework.actual_phase
-          question = q
-        end
-      end
-      if current_user.answers.find_by_question_id([question.id])
-        redirect_to edit_homework_question_answer_path(@homework, question, current_user.answers.find_by_question_id(question.id))
+    if !current_user.role?
+      if current_user.answers.find_by_homework_id([@homework.id])
+        redirect_to edit_homework_answer_path(@homework, current_user.answers.find_by_homework_id(@homework.id))
       else
-        redirect_to new_homework_question_answer_path(@homework, question)
+        redirect_to new_homework_answer_path(@homework)
       end
       @answers = Answer.all
     end
@@ -89,27 +81,31 @@ class HomeworksController < ApplicationController
 
   def answers
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Realizar Actividad", "Respuesta Alumno"]
-    @user = User.find_by_id(params["homework"]["user"])
     @homework = Homework.where(id:params["homework"]["homework"].to_i)[0]
+    @user = User.find_by_id(params["homework"]["user"])
+    @partner = User.find_by_id(@user.partner_id)
+    @partner_answer = @partner.answers.find_by_homework_id(@homework.id)
+    @answer = @user.answers.find_by_homework_id(@homework.id)
     render 'studentanswer'
   end
 
   def create
     if params["tag_in_index"]
       @homework = Homework.where(id:params["actualizar"]["homework"])[0]
-      for q in @homework.questions
-        if q.phase == @homework.actual_phase
-          question = q
-        end
-      end
       if params["tag_in_index"] == "Editar Respuesta" && @homework.upload
         redirect_to homeworks_path
-      elsif params["tag_in_index"] == "Actualizar" && current_user.answers.find_by_question_id([question.id]) == nil
-        redirect_to new_homework_question_answer_path(@homework, question)
+      elsif params["tag_in_index"] == "Actualizar" && @homework.upload
+        if current_user.answers.find_by_homework_id([@homework.id]).responder == nil && @homework.actual_phase == "responder"
+          redirect_to new_homework_answer_path(@homework)
+        elsif current_user.answers.find_by_homework_id([@homework.id]).argumentar == nil && @homework.actual_phase == "argumentar"
+          redirect_to homeworks_path
+        elsif current_user.answers.find_by_homework_id([@homework.id]).rehacer == nil && @homework.actual_phase == "rehacer"
+          redirect_to homeworks_path
+        else
+          redirect_to homework_answers_path(@homework)
+        end
       else
-        puts params
-        puts "esto es el else"
-        redirect_to homework_question_answers_path(@homework, question)
+        redirect_to homeworks_path(@homework)
       end
     else
       @homework = Homework.new(homework_params)
@@ -125,15 +121,10 @@ class HomeworksController < ApplicationController
       end
       @homework.course_id = current_user.current_course_id
       @homework.save
-      QuestionsController.new.create(@homework)
     end
   end
 
   def update
-    for question in @homework.questions
-      question.update(content:@homework.content)
-      question.save
-    end
     respond_to do |format|
       if @homework.update(homework_params)
         format.html { redirect_to homeworks_path } # REDIRECT TO INDEX

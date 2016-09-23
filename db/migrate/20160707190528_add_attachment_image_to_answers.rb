@@ -1,7 +1,10 @@
 class AddAttachmentImageToAnswers < ActiveRecord::Migration
   def self.up
     change_table :answers do |t|
-      t.attachment :image
+      t.attachment :image_responder
+      t.attachment :image_argumentar
+      t.attachment :image_rehacer
+    
     end
   end
 

@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :set_question, :set_homework
+  before_action :set_homework
   before_action :set_answer, only: [:edit, :destroy, :show, :update]
   before_action :set_actividades_visible, only: :new
   before_action :set_breadcrumbs
@@ -8,24 +8,40 @@ class AnswersController < ApplicationController
   # GET /answers.json
   def index
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Realizar Actividad"]
-    @answer = current_user.answers.find_by_question_id(params[:question_id])
+    @partner = User.find_by_id(current_user.partner_id)
+    @partner_answer = @partner.answers.find_by_homework_id(@homework.id)
+    @answer = current_user.answers.find_by_homework_id(@homework.id)
+    puts @partner_answer
+    puts "esto es"
   end
 
   # GET /answer/1
   # GET /answer/1.json
   def show
-    @answer = current_user.answers.find_by_question_id(params[:question_id])
+    answer = current_user.answers.find_by_homework_id(params[:homework_id])
+    if @homework.actual_phase == "responder"
+      @answer = answer.responder
+    elsif @homework.actual_phase == "argumentar"
+      @answer = answer.argumentar
+    elsif @homework.actual_phase == "rehacer"
+      @answer = answer.rehacer
+    end
   end
 
   # GET /answer/new
   def new
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Realizar Actividad"]
     @answer = Answer.new
+    @partner = User.find_by_id(current_user.partner_id)
+    @partner_answer = @partner.answers.find_by_homework_id(@homework.id)
   end
 
   # GET /answer/1/edit
   def edit
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Realizar Actividad"]
+    @partner = User.find_by_id(current_user.partner_id)
+    @partner_answer = @partner.answers.find_by_homework_id(@homework.id)
+    @answer = current_user.answers.find_by_homework_id(@homework.id)
   end
 
   # POST /answer
@@ -33,10 +49,10 @@ class AnswersController < ApplicationController
   def create
     @answer = Answer.new(answer_params)
     current_user.answers << @answer
-    @question.answers << @answer
-    @answer.question = @question
+    @homework.answers << @answer
+    @answer.homework = @homework
     if @answer.save
-      redirect_to homework_question_answers_path(@homework, @question)
+      redirect_to homework_answers_path(@homework)
     else
       render :new
     end
@@ -44,8 +60,11 @@ class AnswersController < ApplicationController
 
   def update
     respond_to do |format|
-      if @answer.update(answer_params)
-        format.html { redirect_to homework_question_answers_path(@homework, @question) }
+      puts params
+      puts "aqui estan"
+      @answer.update(answer_params)
+      if @answer.save
+        format.html { redirect_to homework_answers_path(@homework) }
         format.json { render :show, status: :ok, location: @homework }
       else
         format.html { render :edit }
@@ -66,10 +85,6 @@ class AnswersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_answer
       @answer = Answer.find(params[:id])
-    end
-
-    def set_question
-      @question = Question.find(params[:question_id])
     end
 
     def set_homework
@@ -102,7 +117,7 @@ class AnswersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def answer_params
-      params.require(:answer).permit(:phase, :upload, :content, :image)
+      params.require(:answer).permit(:phase, :upload, :responder, :argumentar, :rehacer, :image_responder, :image_argumentar, :image_rehacer)
     end
 
 end
