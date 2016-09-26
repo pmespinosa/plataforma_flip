@@ -10,6 +10,15 @@ class AnswersController < ApplicationController
     @partner = User.find_by_id(current_user.partner_id)
     @partner_answer = @partner.answers.find_by_homework_id(@homework.id)
     @answer = current_user.answers.find_by_homework_id(@homework.id)
+    if @homework.upload == true && @answer == nil
+      redirect_to new_homework_answer_path(@homework)
+    elsif @homework.upload == true && @answer != nil
+      if @homework.actual_phase == "argumentar" && @answer.argumentar == nil
+        redirect_to edit_homework_answer_path(@homework, @answer)
+      elsif @homework.actual_phase == "rehacer" && @answer.rehacer == nil
+        redirect_to edit_homework_answer_path(@homework, @answer)
+      end
+    end
   end
 
   def show
@@ -44,11 +53,7 @@ class AnswersController < ApplicationController
       @homework.answers << @answer
       @answer.homework = @homework
     end
-    if @answer.save
-      redirect_to homework_answers_path(@homework)
-    else
-      render :new
-    end
+    redirect_to homework_answers_path(@homework)
   end
 
   def update

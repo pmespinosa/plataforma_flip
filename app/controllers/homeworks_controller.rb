@@ -12,8 +12,8 @@ class HomeworksController < ApplicationController
   # GET /homeworks
   # GET /homeworks.json
   def index
-    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas"]
     if current_user.role?
+      @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas"]
       for i in @course.homeworks
         i.current = false
         i.upload = false
@@ -24,10 +24,19 @@ class HomeworksController < ApplicationController
     else
       @homework = @course.homeworks.where(current: true)[0]
       if @homework
-        if current_user.answers.find_by_homework_id(@homework.id) != nil
+        answers = current_user.answers.find_by_homework_id([@homework.id])
+        if @homework.upload == false
           redirect_to homework_answers_path(@homework)
-        elsif @homework.upload == true
-          redirect_to homework_path(@homework)
+        elsif @homework.upload == true && answers == nil
+          redirect_to new_homework_answer_path(@homework)
+        elsif @homework.upload == true && answers != nil
+          if @homework.actual_phase == "argumentar" && answers.argumentar == nil
+            redirect_to edit_homework_answer_path(@homework, answers)
+          elsif @homework.actual_phase == "rehacer" && answers.rehacer == nil
+            redirect_to edit_homework_answer_path(@homework, answers)
+          else
+            redirect_to homework_answers_path(@homework)
+          end
         end
       end
     end
@@ -97,16 +106,6 @@ class HomeworksController < ApplicationController
       @homework = Homework.where(id:params["actualizar"]["homework"])[0]
       if params["tag_in_index"] == "Editar Respuesta" && @homework.upload
         redirect_to homeworks_path
-      elsif params["tag_in_index"] == "Actualizar" && @homework.upload
-        if current_user.answers.find_by_homework_id([@homework.id]).responder == nil && @homework.actual_phase == "responder"
-          redirect_to new_homework_answer_path(@homework)
-        elsif current_user.answers.find_by_homework_id([@homework.id]).argumentar == nil && @homework.actual_phase == "argumentar"
-          redirect_to homeworks_path
-        elsif current_user.answers.find_by_homework_id([@homework.id]).rehacer == nil && @homework.actual_phase == "rehacer"
-          redirect_to homeworks_path
-        else
-          redirect_to homework_answers_path(@homework)
-        end
       else
         redirect_to homework_answers_path(@homework)
       end
