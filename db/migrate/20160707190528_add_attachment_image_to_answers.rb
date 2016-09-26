@@ -4,7 +4,9 @@ class AddAttachmentImageToAnswers < ActiveRecord::Migration
       t.attachment :image_responder
       t.attachment :image_argumentar
       t.attachment :image_rehacer
-    
+      t.attachment :image_evaluar
+      t.attachment :image_final
+
     end
   end
 

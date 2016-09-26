@@ -39,6 +39,14 @@ ActiveRecord::Schema.define(version: 20160912230048) do
     t.string   "image_rehacer_content_type"
     t.integer  "image_rehacer_file_size"
     t.datetime "image_rehacer_updated_at"
+    t.string   "image_evaluar_file_name"
+    t.string   "image_evaluar_content_type"
+    t.integer  "image_evaluar_file_size"
+    t.datetime "image_evaluar_updated_at"
+    t.string   "image_final_file_name"
+    t.string   "image_final_content_type"
+    t.integer  "image_final_file_size"
+    t.datetime "image_final_updated_at"
   end
 
   add_index "answers", ["user_id", "homework_id"], name: "index_answers_on_user_id_and_homework_id", using: :btree
@@ -173,15 +181,16 @@ ActiveRecord::Schema.define(version: 20160912230048) do
     t.boolean  "asistencia"
     t.integer  "partner_id"
     t.integer  "current_course_id",      default: 0
-    t.datetime "last_asistencia"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.datetime "last_asistencia",        default: '2016-01-01 12:00:00'
+    t.integer  "last_homework"
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
+    t.string   "email",                  default: "",                    null: false
+    t.string   "encrypted_password",     default: "",                    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,                     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"

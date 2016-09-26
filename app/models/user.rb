@@ -32,6 +32,8 @@ class User < ActiveRecord::Base
     self.role ||= :alumno
   end
 
+
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_and_belongs_to_many :activities

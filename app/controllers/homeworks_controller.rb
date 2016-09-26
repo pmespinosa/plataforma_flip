@@ -49,6 +49,12 @@ class HomeworksController < ApplicationController
         elsif @homework.actual_phase == "argumentar"
           @homework.actual_phase = "rehacer"
           @homework.upload = true
+        elsif @homework.actual_phase == "rehacer"
+          @homework.actual_phase = "evaluar"
+          @homework.upload = true
+        elsif @homework.actual_phase == "evaluar"
+          @homework.actual_phase = "final"
+          @homework.upload = true
         end
       elsif params[:previous]
         if @homework.actual_phase == "argumentar"
@@ -56,6 +62,12 @@ class HomeworksController < ApplicationController
           @homework.upload = true
         elsif @homework.actual_phase == "rehacer"
           @homework.actual_phase = "argumentar"
+          @homework.upload = true
+        elsif @homework.actual_phase == "evaluar"
+          @homework.actual_phase = "rehacer"
+          @homework.upload = true
+        elsif @homework.actual_phase == "final"
+          @homework.actual_phase = "evaluar"
           @homework.upload = true
         end
       elsif params[:discussion]
@@ -70,6 +82,15 @@ class HomeworksController < ApplicationController
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Realizar Actividad"]
     @users = User.all.where(role:0, asistencia:true)
     @homework.save
+    if @homework.actual_phase == "responder"
+      @siguiente = "Argumentar"
+    elsif @homework.actual_phase == "argumentar"
+      @siguiente = "Rehacer"
+    elsif @homework.actual_phase == "rehacer"
+      @siguiente = "Evaluar"
+    elsif @homework.actual_phase == "evaluar"
+      @siguiente = "Final"
+    end
     if !current_user.role?
       redirect_to homework_answers_path(@homework)
     end
@@ -98,7 +119,6 @@ class HomeworksController < ApplicationController
   end
 
   def create
-    puts "paso por el create"
     if params["tag_in_index"]
       @homework = Homework.where(id:params["actualizar"]["homework"])[0]
       answers = current_user.answers.find_by_homework_id([@homework.id])
@@ -148,8 +168,9 @@ class HomeworksController < ApplicationController
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Asistencia"]
     @users = Course.find_by_id(current_user.current_course_id).users
     @@libres = []
-    if -(current_user.last_asistencia - DateTime.now).to_i > 1800
+    if -(current_user.last_asistencia - DateTime.now).to_i > 1800 || @homework.id != current_user.last_homework
       if params["asistentes"] != nil
+        current_user.last_homework = @homework.id
         current_user.last_asistencia = DateTime.now
         current_user.save
         params["asistentes"].each do |p|

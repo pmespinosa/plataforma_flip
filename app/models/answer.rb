@@ -25,7 +25,11 @@ class Answer < ActiveRecord::Base
   has_attached_file :image_responder, styles: {medium: "800x800>"}
   has_attached_file :image_argumentar, styles: {medium: "800x800>"}
   has_attached_file :image_rehacer, styles: {medium: "800x800>"}
+  has_attached_file :image_evaluar, styles: {medium: "800x800>"}
+  has_attached_file :image_final, styles: {medium: "800x800>"}
   validates_attachment_content_type :image_responder, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
   validates_attachment_content_type :image_argumentar, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
   validates_attachment_content_type :image_rehacer, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
+  validates_attachment_content_type :image_evaluar, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
+  validates_attachment_content_type :image_final, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
 end
