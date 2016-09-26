@@ -180,6 +180,8 @@ ActiveRecord::Schema.define(version: 20160912230048) do
     t.integer  "role"
     t.boolean  "asistencia"
     t.integer  "partner_id"
+    t.integer  "corrector"
+    t.integer  "corregido"
     t.integer  "current_course_id",      default: 0
     t.datetime "last_asistencia",        default: '2016-01-01 12:00:00'
     t.integer  "last_homework"

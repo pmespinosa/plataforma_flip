@@ -7,12 +7,13 @@ class AnswersController < ApplicationController
 
   def index
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Realizar Actividad"]
-    @partner = User.find_by_id(current_user.partner_id)
-    if @partner.partner_id != current_user.id && @homework.actual_phase == "rehacer"
-      @partner = User.find_by_id(@partner.partner_id)
-    end
-    @partner_answer = @partner.answers.find_by_homework_id(@homework.id)
+    @corregido = User.find_by_id(current_user.corregido)
+    @corrector = User.find_by_id(current_user.corrector)
+    @partner_answer = @corregido.answers.find_by_homework_id(@homework.id)
+    @feedback = @corrector.answers.find_by_homework_id(@homework.id)
     @answer = current_user.answers.find_by_homework_id(@homework.id)
+    puts "llego al index"
+    puts @answer.argumentar
     if @homework.upload == true && @answer == nil
       redirect_to new_homework_answer_path(@homework)
     elsif @homework.upload == true && @answer != nil
@@ -38,18 +39,22 @@ class AnswersController < ApplicationController
   def new
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Realizar Actividad"]
     @answer = Answer.new
-    @partner = User.find_by_id(current_user.partner_id)
-    @partner_answer = @partner.answers.find_by_homework_id(@homework.id)
   end
 
   def edit
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Realizar Actividad"]
-    @partner = User.find_by_id(current_user.partner_id)
-    if @partner.partner_id != current_user.id && @homework.actual_phase == "rehacer"
-      @partner = User.find_by_id(@partner.partner_id)
+    @corregido = User.find_by_id(current_user.corregido)
+    @corrector = User.find_by_id(current_user.corrector)
+    if @homework.actual_phase == "argumentar" || @homework.actual_phase == "evaluar"
+      @my_answer = @corregido.answers.find_by_homework_id(@homework.id)
+      @partner_answer = current_user.answers.find_by_homework_id(@homework.id)
+    elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "final"
+      @my_answer = current_user.answers.find_by_homework_id(@homework.id)
+      @partner_answer = @corrector.answers.find_by_homework_id(@homework.id)
+    else
+      @my_answer = current_user.answers.find_by_homework_id(@homework.id)
+      @partner_answer = @corregido.answers.find_by_homework_id(@homework.id)
     end
-    @partner_answer = @partner.answers.find_by_homework_id(@homework.id)
-    @answer = current_user.answers.find_by_homework_id(@homework.id)
   end
 
   def create
@@ -67,7 +72,7 @@ class AnswersController < ApplicationController
       respond_to do |format|
         @answer.update(answer_params)
         if @answer.save
-          format.html { redirect_to homework_answers_path(@homework) }
+          format.html { redirect_to homework_answers_path}
           format.json { render :show, status: :ok, location: @homework }
         else
           format.html { render :edit }
@@ -75,7 +80,7 @@ class AnswersController < ApplicationController
         end
       end
     else
-      redirect_to homework_answers_path(@homework)
+      redirect_to homework_answers_path
     end
   end
 

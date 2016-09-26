@@ -1,39 +1,52 @@
-<div style="text-align: center">
+<div style="text-align: left">
 	<% if @homework.upload %>
 		<h3><%= @homework.content %></h3>
 		<% if @homework.image? %>
 			<p><%= image_tag @homework.image.url(:medium) %></p>
 		<% end %>
-
-		<% if @homework.actual_phase == "argumentar" && @partner_answer != nil && @answer != nil %>
+		<% if @partner_answer != nil && @my_answer != nil %>
 			<br>
-			<h4><%= "En base a la siguiente respuesta discuta y argumente su contenido:" %></h4>
-			<% if @partner_answer.responder != nil%>
-				<em><h4><%= "\"" + @partner_answer.responder + "\"" %></h4></em>
-			<% end %>
-			<% if @partner_answer.image_responder? %>
-				<p><%= image_tag @partner_answer.image_responder.url(:medium) %></p>
-			<% end %>
-		<% elsif @homework.actual_phase == "rehacer" && @partner_answer != nil && @answer != nil %>
-			<br>
-			<h4><%= "Su primera respuesta: \n"  %></h4>
-			<% if @answer.responder != nil %>
-				<em><h4><%="\"" + @answer.responder + "\""%></h4></em>
-			<% end %>
-			<% if @answer.image_responder? %>
-				<p><%= image_tag @answer.image_responder.url(:medium) %></p>
-			<% end %>
-			<br>
-			<h4><%= "Argumentación: \n"%></h4>
-			<% if @partner_answer.argumentar != nil %>
-				<em><h4><%=@partner_answer.argumentar %></h4></em>
-			<% end %>
-			<% if @partner_answer.image_argumentar? %>
-				<p><%= image_tag @partner_answer.image_argumentar.url(:medium) %></p>
-			<% end %>
-			<br>
-			<h3><%= "En base a la argumentación de su compañero, reestructure nuevamente su respuesta:" %></h3>
-		<% end %>
+			<% if @homework.actual_phase != "responder" %>
+				<h4><%= "Respuesta: \n"  %></h4>
+				<% if @my_answer.responder != nil %>
+					<em><h4><%="\"" + @my_answer.responder + "\""%></h4></em>
+				<% end %>
+				<% if @my_answer.image_responder? %>
+					<p><%= image_tag @my_answer.image_responder.url(:medium) %></p>
+				<% end %>
+				<br>
+				<% if @homework.actual_phase != "argumentar" %>
+					<h4><%= "Argumentación: \n"%></h4>
+					<% if @partner_answer.argumentar != nil %>
+						<em><h4><%=@partner_answer.argumentar %></h4></em>
+					<% end %>
+					<% if @partner_answer.image_argumentar? %>
+						<p><%= image_tag @partner_answer.image_argumentar.url(:medium) %></p>
+					<% end %>
+					<br>
+					<% if @homework.actual_phase != "rehacer" %>
+						<h4><%= "Refacción: \n"  %></h4>
+						<% if @my_answer.rehacer != nil %>
+							<em><h4><%="\"" + @my_answer.rehacer + "\""%></h4></em>
+						<% end %>
+						<% if @my_answer.image_rehacer? %>
+							<p><%= image_tag @my_answer.image_rehacer.url(:medium) %></p>
+						<% end %>
+						<br>
+						<% if @homework.actual_phase != "evaluar" %>
+							<h4><%= "Evaluación: \n"%></h4>
+							<% if @partner_answer.evaluar != nil %>
+								<em><h4><%=@partner_answer.evaluar %></h4></em>
+							<% end %>
+							<% if @partner_answer.image_evaluar? %>
+								<p><%= image_tag @partner_answer.image_evaluar.url(:medium) %></p>
+							<% end %>
+						<% end %>
+					<% end %>
+				<%end%>
+			<%end%>
+		<%end%>
+		<br>
 		<%= render 'form' %>
 	<%end%>
 </div>

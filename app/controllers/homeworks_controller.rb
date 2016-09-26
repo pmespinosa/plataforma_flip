@@ -110,7 +110,7 @@ class HomeworksController < ApplicationController
     @homework = Homework.where(id:params["homework"]["homework"].to_i)[0]
     @user = User.find_by_id(params["homework"]["user"])
     @partner = User.find_by_id(@user.partner_id)
-    if @partner.partner_id != current_user.id && @homework.actual_phase == "rehacer"
+    if @partner.partner_id != current_user.id && (@homework.actual_phase == "rehacer" || @homework.actual_phase == "final")
       @partner = User.find_by_id(@partner.partner_id)
     end
     @partner_answer = @partner.answers.find_by_homework_id(@homework.id)
@@ -175,16 +175,18 @@ class HomeworksController < ApplicationController
         current_user.save
         params["asistentes"].each do |p|
           asistente = User.find_by_id(p[0])
-          asistente.partner_id = nil
           asistente.asistencia = p[1]['asistencia']
           if asistente.asistencia
             @@libres.append(asistente)
           end
           asistente.save
         end
-        generate_partner
+        generate_partner_2
       end
     else
+      @homework.upload = true
+      @homework.current = true
+      @homework.save
       redirect_to homework_path(@homework)
     end
   end
@@ -239,6 +241,35 @@ class HomeworksController < ApplicationController
       @homework.save
       redirect_to homework_path(@homework)
     end
+  end
+
+  def generate_partner_2
+    i = rand(@@libres.length)
+    cabeza = @@libres[i]
+    anterior = @@libres[i]
+    @@libres.delete_at(i)
+    while @@libres.length > 1
+      i = rand(@@libres.length)
+      actual = @@libres[i]
+      actual.corrector = anterior.id
+      anterior.corregido = actual.id
+      anterior.save
+      anterior = actual
+      @@libres.delete_at(i)
+    end
+    actual = @@libres[0]
+    actual.corrector = anterior.id
+    anterior.corregido = actual.id
+    cabeza.corrector = actual.id
+    actual.corregido = cabeza.id
+    anterior.save
+    actual.save
+    cabeza.save
+    @@libres.delete_at(0)
+    @homework.upload = true
+    @homework.current = true
+    @homework.save
+    redirect_to homework_path(@homework)
   end
 
   private
