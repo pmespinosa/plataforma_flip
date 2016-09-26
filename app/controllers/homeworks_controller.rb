@@ -9,8 +9,6 @@ class HomeworksController < ApplicationController
   before_action :set_configuraciones_visible, only: :index
   before_action :set_breadcrumbs
 
-  # GET /homeworks
-  # GET /homeworks.json
   def index
     if current_user.role?
       @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas"]
@@ -73,12 +71,7 @@ class HomeworksController < ApplicationController
     @users = User.all.where(role:0, asistencia:true)
     @homework.save
     if !current_user.role?
-      if current_user.answers.find_by_homework_id([@homework.id])
-        redirect_to edit_homework_answer_path(@homework, current_user.answers.find_by_homework_id(@homework.id))
-      else
-        redirect_to new_homework_answer_path(@homework)
-      end
-      @answers = Answer.all
+      redirect_to homework_answers_path(@homework)
     end
   end
 
@@ -102,28 +95,19 @@ class HomeworksController < ApplicationController
   end
 
   def create
-    if params["tag_in_index"]
-      @homework = Homework.where(id:params["actualizar"]["homework"])[0]
-      if params["tag_in_index"] == "Editar Respuesta" && @homework.upload
-        redirect_to homeworks_path
+    @homework = Homework.new(homework_params)
+    @course.homeworks << @homework
+    respond_to do |format|
+      if @homework.save
+        format.html { redirect_to homeworks_path, notice: 'La actividad ha sido creada.' }
+        format.json { render :show, status: :created, location: @homework }
       else
-        redirect_to homework_answers_path(@homework)
+        format.html { render :new }
+        format.json { render json: @homework.errors, status: :unprocessable_entity }
       end
-    else
-      @homework = Homework.new(homework_params)
-      @course.homeworks << @homework
-      respond_to do |format|
-        if @homework.save
-          format.html { redirect_to homeworks_path, notice: 'La actividad ha sido creada.' }
-          format.json { render :show, status: :created, location: @homework }
-        else
-          format.html { render :new }
-          format.json { render json: @homework.errors, status: :unprocessable_entity }
-        end
-      end
-      @homework.course_id = current_user.current_course_id
-      @homework.save
     end
+    @homework.course_id = current_user.current_course_id
+    @homework.save
   end
 
   def update
@@ -149,66 +133,76 @@ class HomeworksController < ApplicationController
   def asistencia
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Asistencia"]
     @users = Course.find_by_id(current_user.current_course_id).users
-    libres = []
-    if params["asistentes"] != nil
-      params["asistentes"].each do |p|
-        asistente = User.find_by_id(p[0])
-        asistente.partner_id = nil
-        asistente.asistencia = p[1]['asistencia']
-        if asistente.asistencia
-          libres.append(asistente)
+    @@libres = []
+    if -(current_user.last_asistencia - DateTime.now).to_i > 1800
+      if params["asistentes"] != nil
+        current_user.last_asistencia = DateTime.now
+        current_user.save
+        params["asistentes"].each do |p|
+          asistente = User.find_by_id(p[0])
+          asistente.partner_id = nil
+          asistente.asistencia = p[1]['asistencia']
+          if asistente.asistencia
+            @@libres.append(asistente)
+          end
+          asistente.save
         end
-        asistente.save
+        generate_partner
       end
-      if libres.length > 1
-        if libres.length % 2 != 0
-          while true do
-            i1 = rand(libres.length)
-            i2 = rand(libres.length)
-            i3 = rand(libres.length)
-            if i1 != i2 && i1 != i3 && i2 != i3
-              orden = [i1, i2, i3].sort
-              break
-            end
-          end
-          p1 = libres[i1]
-          p2 = libres[i2]
-          p3 = libres[i3]
-          p1.partner_id = p2.id
-          p2.partner_id = p3.id
-          p3.partner_id = p1.id
-          p1.save
-          p2.save
-          p3.save
-          libres.delete_at(orden.pop)
-          libres.delete_at(orden.pop)
-          libres.delete_at(orden.pop)
-        end
-        for i in 1..(libres.length/2)
-          i1 = rand(libres.length)
-          p1 = libres[i1]
-          i2 = rand(libres.length)
-          while i2 == i1 do
-            i2 = rand(libres.length)
-          end
-          p2 = libres[i2]
-          p1.partner_id = p2.id
-          p2.partner_id = p1.id
-          p1.save
-          p2.save
-          if i1 > i2
-            libres.delete_at(i1)
-            libres.delete_at(i2)
-          else
-            libres.delete_at(i2)
-            libres.delete_at(i1)
+    else
+      redirect_to homework_path(@homework)
+    end
+  end
+
+  def generate_partner
+    if @@libres.length > 1
+      if @@libres.length % 2 != 0
+        while true do
+          i1 = rand(@@libres.length)
+          i2 = rand(@@libres.length)
+          i3 = rand(@@libres.length)
+          if i1 != i2 && i1 != i3 && i2 != i3
+            orden = [i1, i2, i3].sort
+            break
           end
         end
-        @homework.upload = true
-        @homework.current = true
-        @homework.save
-        redirect_to homework_path(@homework)
+        p1 = @@libres[i1]
+        p2 = @@libres[i2]
+        p3 = @@libres[i3]
+        p1.partner_id = p2.id
+        p2.partner_id = p3.id
+        p3.partner_id = p1.id
+        p1.save
+        p2.save
+        p3.save
+        @@libres.delete_at(orden.pop)
+        @@libres.delete_at(orden.pop)
+        @@libres.delete_at(orden.pop)
       end
+      for i in 1..(@@libres.length/2)
+        i1 = rand(@@libres.length)
+        p1 = @@libres[i1]
+        i2 = rand(@@libres.length)
+        while i2 == i1 do
+          i2 = rand(@@libres.length)
+        end
+        p2 = @@libres[i2]
+        p1.partner_id = p2.id
+        p2.partner_id = p1.id
+        p1.save
+        p2.save
+        if i1 > i2
+          @@libres.delete_at(i1)
+          @@libres.delete_at(i2)
+        else
+          @@libres.delete_at(i2)
+          @@libres.delete_at(i1)
+        end
+      end
+      @homework.upload = true
+      @homework.current = true
+      @homework.save
+      redirect_to homework_path(@homework)
     end
   end
 
