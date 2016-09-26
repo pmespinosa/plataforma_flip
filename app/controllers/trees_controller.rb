@@ -23,9 +23,7 @@ class TreesController < ApplicationController
     else
       @ct_choices = nil
     end
-
-    
-
+  
     if params[:type].to_s == "initial"
 
 
@@ -51,8 +49,6 @@ class TreesController < ApplicationController
               end
 
               }
-
-
 
             @tree.initial_content_question.content_choices.each do |choice|
 
@@ -203,8 +199,8 @@ class TreesController < ApplicationController
       if params[:state].to_s == "answered"
 
         if params[:content_choices] && params[:ct_choices]
-             @correct_content= true
-             @correct_ct= true
+             @correct_content = true
+             @correct_ct = true
 
              @tree.deeping_content_question.content_choices.each do |choice|
 
@@ -279,6 +275,18 @@ class TreesController < ApplicationController
     end
   end
 
+
+  def addCtHability name, question
+
+    if question.to_s == "initial"
+
+    elsif question.to_s == "recuperative"
+
+    elsif  question.to_s == "deeping"
+        puts "pabloooooooooooooooooooooooooooooooooooooooooooooooo" + name.to_s
+    end
+
+  end
 
 
   def change_initial
@@ -365,9 +373,75 @@ class TreesController < ApplicationController
     #@course = Course.find(:course_id)
     @tree = @course.trees.new(tree_params)
 
+   
+    if params[:initialCT]
+      params[:initialCT].each do |hability|
+        if hability.to_s == "interpretation"
+          @tree.initial_ct_question.ct_habilities << CtHability.find_by(name: "Interpretación")
+        elsif hability.to_s == "analysis"
+          @tree.initial_ct_question.ct_habilities << CtHability.find_by(name: "Análisis")
+        elsif hability.to_s == "evaluation"
+          @tree.initial_ct_question.ct_habilities << CtHability.find_by(name: "Evaluación")
+        elsif hability.to_s == "inference"
+          @tree.initial_ct_question.ct_habilities << CtHability.find_by(name: "Inferencia")
+        elsif hability.to_s == "explanation"
+          @tree.initial_ct_question.ct_habilities << CtHability.find_by(name: "Explicación")
+        elsif hability.to_s == "selfregulation"
+          @tree.initial_ct_question.ct_habilities << CtHability.find_by(name: "Autoregulación")
+        end
+      end
+    end
+
+    if params[:recuperativeCT]
+      params[:recuperativeCT].each do |hability|
+        if hability.to_s == "interpretation"
+          @tree.recuperative_ct_question.ct_habilities << CtHability.find_by_name("Interpretación")
+        elsif hability.to_s == "analysis"
+          @tree.recuperative_ct_question.ct_habilities << CtHability.find_by_name("Análisis")
+        elsif hability.to_s == "evaluation"
+          @tree.recuperative_ct_question.ct_habilities << CtHability.find_by_name("Evaluación")
+        elsif hability.to_s == "inference"
+          @tree.recuperative_ct_question.ct_habilities << CtHability.find_by_name("Inferencia")
+        elsif hability.to_s == "explanation"
+          @tree.recuperative_ct_question.ct_habilities << CtHability.find_by_name("Explicación")
+        elsif hability.to_s == "selfregulation"
+          @tree.recuperative_ct_question.ct_habilities << CtHability.find_by_name("Autoregulación")
+        end
+      end
+    end
+
+    if params[:deepingCT]
+      params[:deepingCT].each do |hability|
+        if hability.to_s == "interpretation"
+          @tree.deeping_ct_question.ct_habilities << CtHability.find_by_name("Interpretación")
+        elsif hability.to_s == "analysis"
+          @tree.deeping_ct_question.ct_habilities << CtHability.find_by_name("Análisis")
+        elsif hability.to_s == "evaluation"
+          @tree.deeping_ct_question.ct_habilities << CtHability.find_by_name("Evaluación")
+        elsif hability.to_s == "inference"
+          @tree.deeping_ct_question.ct_habilities << CtHability.find_by_name("Inferencia")
+        elsif hability.to_s == "explanation"
+          @tree.deeping_ct_question.ct_habilities << CtHability.find_by_name("Explicación")
+        elsif hability.to_s == "selfregulation"
+          @tree.deeping_ct_question.ct_habilities << CtHability.find_by_name("Autoregulación")
+        end
+      end
+    end
+
+
     respond_to do |format|
       if @tree.save
-        puts "acaa si------"
+        #puts "cooooooooooooooosicossssssssa"
+
+        #@tree.initial_ct_question.ct_habilities.each do |hability|
+         # puts hability.name
+        #end
+        #@tree.recuperative_ct_question.ct_habilities.each do |hability|
+         # puts hability.name
+        #end 
+        #@tree.recuperative_ct_question.ct_habilities.each do |hability|
+         # puts hability.name
+        #end   
         #puts :course_id
         format.html { redirect_to @course, notice: 'Tree was successfully created.' }
         format.json { render :show, status: :created, location: @tree }
@@ -404,6 +478,7 @@ class TreesController < ApplicationController
   end
 
   private
+  
     # Use callbacks to share common setup or constraints between actions.
     def set_tree
       @course = Course.find(params[:course_id])
@@ -426,17 +501,17 @@ class TreesController < ApplicationController
     def tree_params
       params.require(:tree).permit(:video, content_attributes: [:id, :text],
         initial_content_question_attributes: [:id, :question, :_destroy, content_choices_attributes: [:id, :text, :right, :content_question_id, :_destroy]],
-        initial_ct_question_attributes: [:id, :question, :_destroy, ct_choices_attributes: [:id, :text, :right, :ct_question_id, :_destroy]],
+        initial_ct_question_attributes: [:id, :question, :ct_habilities, :_destroy, ct_choices_attributes: [:id, :text, :right, :ct_question_id, :_destroy]],
         recuperative_content_question_attributes: [:id, :question, :_destroy, content_choices_attributes: [:id, :text, :right, :content_question_id, :_destroy]],
-        recuperative_ct_question_attributes: [:id, :question, :_destroy, ct_choices_attributes: [:id, :text, :right, :ct_question_id, :_destroy]],
+        recuperative_ct_question_attributes: [:id, :question, :ct_habilities, :_destroy, ct_choices_attributes: [:id, :text, :right, :ct_question_id, :_destroy]],
         deeping_content_question_attributes: [:id, :question, :_destroy, content_choices_attributes: [:id, :text, :right, :content_question_id, :_destroy]],
-        deeping_ct_question_attributes: [:id, :question, :_destroy, ct_choices_attributes: [:id, :text, :right, :ct_question_id, :_destroy]],
+        deeping_ct_question_attributes: [:id, :question, :ct_habilities, :_destroy, ct_choices_attributes: [:id, :text, :right, :ct_question_id, :_destroy]],
         initial_simple_feedback_attributes: [:id, :text, :_destroy],
         initial_complex_feedback_attributes: [:id, :text, :_destroy],
         recuperative_simple_feedback_attributes: [:id, :text, :_destroy],
         recuperative_complex_feedback_attributes: [:id, :text, :_destroy],
         deeping_simple_feedback_attributes: [:id, :text, :_destroy],
-        deeping_complex_feedback_attributes: [:id, :text, :_destroy],
+        deeping_complex_feedback_attributes: [:id, :text, :_destroy]
         )
     end
 
