@@ -42,11 +42,12 @@ Rails.application.routes.draw do
     end
   end
 
+  post 'homeworks/:id/answers/:id/edit' => 'homeworks#edit'
   post  'homeworks/:id' => 'homeworks#change_phase'
   resources :homeworks do
     resources :answers
   end
-  
+
   root 'home#home'
 
 end

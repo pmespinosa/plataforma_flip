@@ -8,6 +8,9 @@ class AnswersController < ApplicationController
   def index
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Realizar Actividad"]
     @partner = User.find_by_id(current_user.partner_id)
+    if @partner.partner_id != current_user.id && @homework.actual_phase == "rehacer"
+      @partner = User.find_by_id(@partner.partner_id)
+    end
     @partner_answer = @partner.answers.find_by_homework_id(@homework.id)
     @answer = current_user.answers.find_by_homework_id(@homework.id)
     if @homework.upload == true && @answer == nil
@@ -42,6 +45,9 @@ class AnswersController < ApplicationController
   def edit
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Realizar Actividad"]
     @partner = User.find_by_id(current_user.partner_id)
+    if @partner.partner_id != current_user.id && @homework.actual_phase == "rehacer"
+      @partner = User.find_by_id(@partner.partner_id)
+    end
     @partner_answer = @partner.answers.find_by_homework_id(@homework.id)
     @answer = current_user.answers.find_by_homework_id(@homework.id)
   end

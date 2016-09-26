@@ -89,25 +89,39 @@ class HomeworksController < ApplicationController
     @homework = Homework.where(id:params["homework"]["homework"].to_i)[0]
     @user = User.find_by_id(params["homework"]["user"])
     @partner = User.find_by_id(@user.partner_id)
+    if @partner.partner_id != current_user.id && @homework.actual_phase == "rehacer"
+      @partner = User.find_by_id(@partner.partner_id)
+    end
     @partner_answer = @partner.answers.find_by_homework_id(@homework.id)
     @answer = @user.answers.find_by_homework_id(@homework.id)
     render 'studentanswer'
   end
 
   def create
-    @homework = Homework.new(homework_params)
-    @course.homeworks << @homework
-    respond_to do |format|
-      if @homework.save
-        format.html { redirect_to homeworks_path, notice: 'La actividad ha sido creada.' }
-        format.json { render :show, status: :created, location: @homework }
+    puts "paso por el create"
+    if params["tag_in_index"]
+      @homework = Homework.where(id:params["actualizar"]["homework"])[0]
+      answers = current_user.answers.find_by_homework_id([@homework.id])
+      if params["tag_in_index"] == "Editar Respuesta" && @homework.upload
+        redirect_to edit_homework_answer_path(@homework, answers)
       else
-        format.html { render :new }
-        format.json { render json: @homework.errors, status: :unprocessable_entity }
+        redirect_to homework_answers_path(@homework)
       end
+    else
+      @homework = Homework.new(homework_params)
+      @course.homeworks << @homework
+      respond_to do |format|
+        if @homework.save
+          format.html { redirect_to homeworks_path, notice: 'La actividad ha sido creada.' }
+          format.json { render :show, status: :created, location: @homework }
+        else
+          format.html { render :new }
+          format.json { render json: @homework.errors, status: :unprocessable_entity }
+        end
+      end
+      @homework.course_id = current_user.current_course_id
+      @homework.save
     end
-    @homework.course_id = current_user.current_course_id
-    @homework.save
   end
 
   def update
