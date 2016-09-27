@@ -32,6 +32,10 @@ class HomeworksController < ApplicationController
             redirect_to edit_homework_answer_path(@homework, answers)
           elsif @homework.actual_phase == "rehacer" && answers.rehacer == nil
             redirect_to edit_homework_answer_path(@homework, answers)
+          elsif @homework.actual_phase == "evaluar" && answers.evaluar == nil
+            redirect_to edit_homework_answer_path(@homework, answers)
+          elsif @homework.actual_phase == "final" && answers.final == nil
+            redirect_to edit_homework_answer_path(@homework, answers)
           else
             redirect_to homework_answers_path(@homework)
           end
@@ -109,12 +113,18 @@ class HomeworksController < ApplicationController
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Realizar Actividad", "Respuesta Alumno"]
     @homework = Homework.where(id:params["homework"]["homework"].to_i)[0]
     @user = User.find_by_id(params["homework"]["user"])
-    @partner = User.find_by_id(@user.partner_id)
-    if @partner.partner_id != current_user.id && (@homework.actual_phase == "rehacer" || @homework.actual_phase == "final")
-      @partner = User.find_by_id(@partner.partner_id)
+    @corregido = User.find_by_id(@user.corregido)
+    @corrector = User.find_by_id(@user.corrector)
+    if @homework.actual_phase == "argumentar" || @homework.actual_phase == "evaluar"
+      @my_answer = @corregido.answers.find_by_homework_id(@homework.id)
+      @partner_answer = @user.answers.find_by_homework_id(@homework.id)
+    elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "final"
+      @my_answer = @user.answers.find_by_homework_id(@homework.id)
+      @partner_answer = @corrector.answers.find_by_homework_id(@homework.id)
+    else
+      @my_answer = @user.answers.find_by_homework_id(@homework.id)
+      @partner_answer = @corregido.answers.find_by_homework_id(@homework.id)
     end
-    @partner_answer = @partner.answers.find_by_homework_id(@homework.id)
-    @answer = @user.answers.find_by_homework_id(@homework.id)
     render 'studentanswer'
   end
 

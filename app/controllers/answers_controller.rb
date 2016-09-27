@@ -9,17 +9,27 @@ class AnswersController < ApplicationController
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Realizar Actividad"]
     @corregido = User.find_by_id(current_user.corregido)
     @corrector = User.find_by_id(current_user.corrector)
-    @partner_answer = @corregido.answers.find_by_homework_id(@homework.id)
-    @feedback = @corrector.answers.find_by_homework_id(@homework.id)
+    if @homework.actual_phase == "argumentar" || @homework.actual_phase == "evaluar"
+      @my_answer = @corregido.answers.find_by_homework_id(@homework.id)
+      @partner_answer = current_user.answers.find_by_homework_id(@homework.id)
+    elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "final"
+      @my_answer = current_user.answers.find_by_homework_id(@homework.id)
+      @partner_answer = @corrector.answers.find_by_homework_id(@homework.id)
+    else
+      @my_answer = current_user.answers.find_by_homework_id(@homework.id)
+      @partner_answer = @corregido.answers.find_by_homework_id(@homework.id)
+    end
     @answer = current_user.answers.find_by_homework_id(@homework.id)
-    puts "llego al index"
-    puts @answer.argumentar
     if @homework.upload == true && @answer == nil
       redirect_to new_homework_answer_path(@homework)
     elsif @homework.upload == true && @answer != nil
       if @homework.actual_phase == "argumentar" && @answer.argumentar == nil
         redirect_to edit_homework_answer_path(@homework, @answer)
       elsif @homework.actual_phase == "rehacer" && @answer.rehacer == nil
+        redirect_to edit_homework_answer_path(@homework, @answer)
+      elsif @homework.actual_phase == "evaluar" && @answer.evaluar == nil
+        redirect_to edit_homework_answer_path(@homework, @answer)
+      elsif @homework.actual_phase == "final" && @answer.final == nil
         redirect_to edit_homework_answer_path(@homework, @answer)
       end
     end

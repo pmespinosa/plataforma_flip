@@ -1,5 +1,5 @@
 <h1><%= @homework.name %></h1>
-<h4>Etapa: <%= @homework.actual_phase %></h4>
+<h2>Etapa: <%= @homework.actual_phase %></h2>
 <h3><b>Pregunta:</b> <%= @homework.content%></h3>
 <%= form_tag controller:"homeworks", action:"change_phase", method:"post" do %>
   <% if @homework.actual_phase == "responder"%> <!-- AQUI VA LA FASE NO ACTIVA -->
