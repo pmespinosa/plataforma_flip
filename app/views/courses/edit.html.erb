@@ -19,9 +19,10 @@
                   <td style="text-align:left"><%= user.first_name %></td>
 									<td><%= p.select(:role, User.roles.keys.map {|role| [role.titleize,role]}) %></td>
 									<td>
-										<%= button_to("Remover", course_path(user), :class => 'btn btn-xs btn-danger',
-										:data => { :confirm => "¿Está seguro que desea eliminar el ususario?" },
-										:method => :remove_from_course) unless user == current_user %>
+										<% if user != current_user %>
+											<%= submit_tag "Remover", name:user.id, :class => 'btn btn-xs btn-danger',
+											data: { confirm: "¿Está seguro que desea eliminar el ususario?" }%>
+										<% end %>
 									</td>
                 </div>
               </tr>
@@ -30,6 +31,6 @@
       </tbody>
   </table>
   <div class="actions" style="text-align: center">
-    <%= submit_tag "Guardar Cambios", :class=>"btn btn-primary"%>
+    <%= submit_tag "Guardar Cambios", name:"save", :class=>"btn btn-primary"%>
   </div>
 <% end %>

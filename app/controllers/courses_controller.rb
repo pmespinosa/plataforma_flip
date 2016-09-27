@@ -31,15 +31,21 @@ class CoursesController < ApplicationController
   def edit
     @breadcrumbs = ["Mis Cursos", @course.name, "Configuraciones"]
     @course = Course.find(params[:id])
-    if params["roles"] != nil
-      params["roles"].each do |p|
-        user = User.find_by_id(p[0])
-        user.role = p[1]["role"]
-        user.save
-      end
-      redirect_to course_path(current_user.current_course_id)
-    end
     @users = @course.users
+    if params.index("Remover")
+      user = User.find_by_id(params.index("Remover"))
+      user.courses.destroy(@course)
+      puts "veamos si encuentra"
+    else
+      if params["roles"] != nil
+        params["roles"].each do |p|
+          user = User.find_by_id(p[0])
+          user.role = p[1]["role"]
+          user.save
+        end
+        redirect_to course_path(current_user.current_course_id)
+      end
+    end
   end
 
   def agregate
