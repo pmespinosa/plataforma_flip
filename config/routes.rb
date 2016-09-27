@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :registers
   resources :home
   devise_for :users
   resources :users

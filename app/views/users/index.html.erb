@@ -25,7 +25,7 @@
         <%else%>
           <p><%= truncate(course.description, :length => 150, :omission => "...") %></p>
         <%end%>
-        <p><%= link_to 'Ingresar', course_path(course), :class=>"btn btn-primary", :style=>'color:white'%></p>
+        <p><%= link_to 'Ingresar', course_path(course, "Ingresar"), :class=>"btn btn-primary", :style=>'color:white'%></p>
       </div>
     </div>
   </div>

@@ -21,6 +21,13 @@ class CoursesController < ApplicationController
     if !current_user.role?
       redirect_to homeworks_path
     end
+    if params['format']
+      if params['format']["Ingresar"]
+        data = Register.new(button_id:4, user_id:current_user.id)
+      elsif params['format']["Guardar Cambios"]
+        data = Register.new(button_id:7, user_id:current_user.id)
+      end
+    end
   end
 
   def new
@@ -35,7 +42,6 @@ class CoursesController < ApplicationController
     if params.index("Remover")
       user = User.find_by_id(params.index("Remover"))
       user.courses.destroy(@course)
-      puts "veamos si encuentra"
     else
       if params["roles"] != nil
         params["roles"].each do |p|
@@ -43,7 +49,7 @@ class CoursesController < ApplicationController
           user.role = p[1]["role"]
           user.save
         end
-        redirect_to course_path(current_user.current_course_id)
+        redirect_to course_path(current_user.current_course_id, "Guardar Cambios")
       end
     end
   end
@@ -89,14 +95,6 @@ class CoursesController < ApplicationController
     @users = @course.users
   end
 
-  def remove_from_course
-    user = User.all.where(id:params['id'])[0]
-    objt = UserCourse.all.where(user_id: user.id)
-    course = Course.find(current_user.current_course_id)
-    user.courses.destroy(course)
-    user.save
-  end
-
   def update
   end
 
@@ -131,7 +129,7 @@ class CoursesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def course_params
-      params.require(:course).permit(:name, :description)
+      params.require(:course).permit(:name, :description, :button)
     end
 
     def set_breadcrumbs
