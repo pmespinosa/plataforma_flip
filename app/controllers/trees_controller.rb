@@ -310,25 +310,17 @@ class TreesController < ApplicationController
     @tree.build_initial_ct_question
     4.times { @tree.initial_ct_question.ct_choices.build }
     6.times { @tree.initial_ct_question.ct_habilities.build }
-
     
-
-
-
-    #@recuperative_content_question = @tree.content_questions.build(:header => "recuperative_content_question")
     @tree.build_recuperative_content_question
     4.times { @tree.recuperative_content_question.content_choices.build }
 
-    #@recuperative_ct_question = @tree.ct_questions.build(:header => "recuperative_ct_question")
     @tree.build_recuperative_ct_question
     4.times { @tree.recuperative_ct_question.ct_choices.build }
     6.times { @tree.recuperative_ct_question.ct_habilities.build }
 
-    #@deeping_content_question = @tree.content_questions.build(:header => "deeping_content_question")
     @tree.build_deeping_content_question
     4.times { @tree.deeping_content_question.content_choices.build }
 
-    #@deeping_ct_question = @tree.ct_questions.build(:header => "deeping_ct_question")
     @tree.build_deeping_ct_question
     4.times { @tree.deeping_ct_question.ct_choices.build }
     6.times { @tree.deeping_ct_question.ct_habilities.build }
@@ -371,61 +363,6 @@ class TreesController < ApplicationController
     #@course = Course.find(:course_id)
     @tree = @course.trees.new(tree_params)
 
-   
-    #if params[:initialCT]
-      #params[:initialCT].each do |hability|
-        #if hability.to_s == "interpretation"
-         # @tree.initial_ct_question.ct_habilities << CtHability.find_by(name: "Interpretación")
-        #elsif hability.to_s == "analysis"
-         # @tree.initial_ct_question.ct_habilities << CtHability.find_by(name: "Análisis")
-        #elsif hability.to_s == "evaluation"
-         # @tree.initial_ct_question.ct_habilities << CtHability.find_by(name: "Evaluación")
-        #elsif hability.to_s == "inference"
-         # @tree.initial_ct_question.ct_habilities << CtHability.find_by(name: "Inferencia")
-        #elsif hability.to_s == "explanation"
-         # @tree.initial_ct_question.ct_habilities << CtHability.find_by(name: "Explicación")
-        #elsif hability.to_s == "selfregulation"
-       #   @tree.initial_ct_question.ct_habilities << CtHability.find_by(name: "Autoregulación")
-      #  end
-     # end
-    #end
-
-    #if params[:recuperativeCT]
-      #params[:recuperativeCT].each do |hability|
-        #if hability.to_s == "interpretation"
-         # @tree.recuperative_ct_question.ct_habilities << CtHability.find_by_name("Interpretación")
-        #elsif hability.to_s == "analysis"
-         # @tree.recuperative_ct_question.ct_habilities << CtHability.find_by_name("Análisis")
-        #elsif hability.to_s == "evaluation"
-         # @tree.recuperative_ct_question.ct_habilities << CtHability.find_by_name("Evaluación")
-        #elsif hability.to_s == "inference"
-         # @tree.recuperative_ct_question.ct_habilities << CtHability.find_by_name("Inferencia")
-        #elsif hability.to_s == "explanation"
-         # @tree.recuperative_ct_question.ct_habilities << CtHability.find_by_name("Explicación")
-        #elsif hability.to_s == "selfregulation"
-       #   @tree.recuperative_ct_question.ct_habilities << CtHability.find_by_name("Autoregulación")
-      #  end
-     # end
-    #end
-
-    #if params[:deepingCT]
-      #params[:deepingCT].each do |hability|
-        #if hability.to_s == "interpretation"
-         # @tree.deeping_ct_question.ct_habilities << CtHability.find_by_name("Interpretación")
-        #elsif hability.to_s == "analysis"
-         # @tree.deeping_ct_question.ct_habilities << CtHability.find_by_name("Análisis")
-        #elsif hability.to_s == "evaluation"
-         # @tree.deeping_ct_question.ct_habilities << CtHability.find_by_name("Evaluación")
-        #elsif hability.to_s == "inference"
-         # @tree.deeping_ct_question.ct_habilities << CtHability.find_by_name("Inferencia")
-        #elsif hability.to_s == "explanation"
-         # @tree.deeping_ct_question.ct_habilities << CtHability.find_by_name("Explicación")
-        #elsif hability.to_s == "selfregulation"
-       #   @tree.deeping_ct_question.ct_habilities << CtHability.find_by_name("Autoregulación")
-      #  end
-     # end
-    #end
-
 
     respond_to do |format|
       if @tree.save
@@ -433,6 +370,9 @@ class TreesController < ApplicationController
         puts "cooooooooooooooosicossssssssa"
         @tree.initial_ct_question.ct_habilities.each do |hab|
           puts hab.name.to_s
+          hab.ct_subhabilities.each do |subhab|
+            puts subhab.name.to_s
+          end
         end
         #puts @tree.recuperative_ct_question.ct_habilities.first.name
         #puts @tree.deeping_ct_question.ct_habilities.first.name

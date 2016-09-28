@@ -10,30 +10,67 @@
 		<%= link_to_add_association '<span class=" glyphicon glyphicon-plus-sign"></span>'.html_safe, f, :ct_choices, :class => "btn btn-default" %>
 	</div>
    	
-   	<% puts "ssssssssssssssssssssssssssssssssssssssssssssssss" %>
-  		
-  	<% i = 0 %>
-  	<%= f.fields_for :ct_habilities do |hability_fields| %>
-  	  <% if i.to_i == 0 %>
-  	  	<% hability = CtHability.find_by(:name => "Interpretación") %>
-  	  <% elsif i.to_i == 1 %>
-  	  	<% hability = CtHability.find_by(:name => "Análisis") %>
-  	  <% elsif i.to_i == 2 %>
-  	  	<% hability = CtHability.find_by(:name => "Evaluación") %>
-  	  <% elsif i.to_i == 3 %>
-		<% hability = CtHability.find_by(:name => "Inferencia") %>
-  	  <% elsif i.to_i == 4 %>
-		<% hability = CtHability.find_by(:name => "Explicación") %>
-  	  <% elsif i.to_i == 5 %>
-  	  	<% hability = CtHability.find_by(:name => "Autoregulación") %>
-  	  <% end %>
-      <%= hability_fields.hidden_field :name, :value => hability.name %>
-      <%= hability_fields.hidden_field :description, :value => hability.description %>
-      <%= hability_fields.hidden_field :ct_subhabilities, :value => hability.ct_subhabilities %>
-      <%= hability.name %>
-      <%= hability_fields.check_box :active %>
-      <% i = i.to_i + 1 %>
-    <% end %>		
+   <br>
+  	
+  	<table class="table table-bordered table-condensed">
+ 	<tbody>
+	<tr>	  
+	  	<% i = 0 %>
+	  	<%= f.fields_for :ct_habilities do |hability_fields| %>
+	  	  <% if i.to_i == 0 %>
+	  	  	<% hability = CtHability.find_by(:name => "Interpretación") %>
+	  	  <% elsif i.to_i == 1 %>
+	  	  	<% hability = CtHability.find_by(:name => "Análisis") %>
+	  	  <% elsif i.to_i == 2 %>
+	  	  	<% hability = CtHability.find_by(:name => "Evaluación") %>		  	  
+	  	  <% end %>
+	  	  <% if i.to_i < 3 %>
+		      <%= hability_fields.hidden_field :name, :value => hability.name %>
+		      <%= hability_fields.hidden_field :description, :value => hability.description %>
+		      <%= hability_fields.hidden_field :ct_subhabilities, :value => hability.ct_subhabilities.all %>
+		       <td style="padding:0px 0px 0px 0px;">	    		     		 	
+	  				<div class="panel-body">
+	  					<span class="sm"><%= hability_fields.check_box :active %></span>
+	  					<%= hability.name %>
+					    <span class="input-group-btn pull-right" id="sizing-addon3">
+					        <button class="btn btn-default" type="button" style="border: none; padding: 0;  background: none;" inline><span class="glyphicon glyphicon-info-sign"></span></button>
+					     </span>
+				     </div>
+		      	</td>
+	      <% end %>
+			<% i = i.to_i + 1 %>
+	     <% end %>
+	</tr>  
+	<tr>
+	  <% i = 0 %>
+
+		  	<%= f.fields_for :ct_habilities do |hability_fields| %>
+		  	  <% if i.to_i == 3 %>
+				<% hability = CtHability.find_by(:name => "Inferencia") %>
+		  	  <% elsif i.to_i == 4 %>
+				<% hability = CtHability.find_by(:name => "Explicación") %>
+		  	  <% elsif i.to_i == 5 %>
+		  	  	<% hability = CtHability.find_by(:name => "Autoregulación") %>
+		  	  <% end %>
+		  	  <% if i.to_i > 2 && i.to_i < 6%>
+			      <%= hability_fields.hidden_field :name, :value => hability.name %>
+			      <%= hability_fields.hidden_field :description, :value => hability.description %>
+			      <%= hability_fields.hidden_field :ct_subhabilities, :value => hability.ct_subhabilities.all %>
+			      <td style="padding:0px 0px 0px 0px;">
+		    		 <div class="panel-body">
+	  					<span class="sm"><%= hability_fields.check_box :active %></span>
+	  					<%= hability.name %>
+					    <span class="input-group-btn pull-right" id="sizing-addon3">
+					        <button class="btn btn-default" type="button" style="border: none; padding: 0;  background: none;" inline><span class="glyphicon glyphicon-info-sign"></span></button>
+					     </span>
+				     </div>
+			      </td>
+			  <% end %>
+				<% i = i.to_i + 1 %>
+		    <% end %>	  
+	</tr>
+	</tbody>
+	</table>
   
 
 </div>
