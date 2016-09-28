@@ -9,4 +9,14 @@
 	<div class='nested-fields'>
 		<%= link_to_add_association '<span class=" glyphicon glyphicon-plus-sign"></span>'.html_safe, f, :ct_choices, :class => "btn btn-default" %>
 	</div>
+   	
+   	<% puts "ssssssssssssssssssssssssssssssssssssssssssssssss" %>
+  		
+  	
+  	<%= f.fields_for :ct_habilities do |hability_fields| %>
+      <%= hability_fields.object.name %>
+      <%= hability_fields.check_box :active %>
+    <% end %>		
+  
+
 </div>

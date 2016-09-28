@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160926030044) do
+ActiveRecord::Schema.define(version: 20160927233948) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,14 +87,23 @@ ActiveRecord::Schema.define(version: 20160926030044) do
   create_table "ct_habilities", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.boolean  "active"
+    t.integer  "ct_question_id"
   end
 
-  create_table "ct_habilities_questions", id: false, force: :cascade do |t|
-    t.integer "ct_hability_id", null: false
-    t.integer "ct_question_id", null: false
+  add_index "ct_habilities", ["ct_question_id"], name: "index_ct_habilities_on_ct_question_id", using: :btree
+
+  create_table "ct_hability_questions", force: :cascade do |t|
+    t.integer  "ct_hability_id"
+    t.integer  "ct_question_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
+
+  add_index "ct_hability_questions", ["ct_hability_id"], name: "index_ct_hability_questions_on_ct_hability_id", using: :btree
+  add_index "ct_hability_questions", ["ct_question_id"], name: "index_ct_hability_questions_on_ct_question_id", using: :btree
 
   create_table "ct_questions", force: :cascade do |t|
     t.text     "question"
@@ -238,6 +247,9 @@ ActiveRecord::Schema.define(version: 20160926030044) do
   add_foreign_key "content_questions", "trees"
   add_foreign_key "contents", "trees"
   add_foreign_key "ct_choices", "ct_questions"
+  add_foreign_key "ct_habilities", "ct_questions"
+  add_foreign_key "ct_hability_questions", "ct_habilities"
+  add_foreign_key "ct_hability_questions", "ct_questions"
   add_foreign_key "ct_questions", "trees"
   add_foreign_key "ct_subhabilities", "ct_habilities"
   add_foreign_key "feedbacks", "trees"
