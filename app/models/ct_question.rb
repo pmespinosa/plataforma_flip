@@ -3,5 +3,5 @@ class CtQuestion < ActiveRecord::Base
   has_many :ct_choices, :dependent => :destroy
   has_many :ct_habilities, :dependent => :destroy
   accepts_nested_attributes_for :ct_choices, :reject_if => lambda { |a| a[:text].blank? }, :allow_destroy => true
-  accepts_nested_attributes_for :ct_habilities, :reject_if => lambda { |a| a[:text].blank? }, :allow_destroy => true
+  accepts_nested_attributes_for :ct_habilities, :reject_if => lambda { |a| a[:name].blank? }, :allow_destroy => true
 end
