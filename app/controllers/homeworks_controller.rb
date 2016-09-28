@@ -10,6 +10,12 @@ class HomeworksController < ApplicationController
   before_action :set_breadcrumbs
 
   def index
+    if params["format"]
+      if params["format"]["volver"]
+        data = Register.new(button_id:16, user_id:current_user.id)
+        data.save
+      end
+    end
     if current_user.role?
       @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas"]
       for i in @course.homeworks
@@ -49,63 +55,71 @@ class HomeworksController < ApplicationController
       if params[:next]
         if @homework.actual_phase == "responder"
           @homework.actual_phase = "argumentar"
-          @homework.upload = true
+          data = Register.new(button_id:18, user_id:current_user.id)
         elsif @homework.actual_phase == "argumentar"
           @homework.actual_phase = "rehacer"
-          @homework.upload = true
+          data = Register.new(button_id:19, user_id:current_user.id)
         elsif @homework.actual_phase == "rehacer"
           @homework.actual_phase = "evaluar"
-          @homework.upload = true
+          data = Register.new(button_id:20, user_id:current_user.id)
         elsif @homework.actual_phase == "evaluar"
           @homework.actual_phase = "final"
-          @homework.upload = true
+          data = Register.new(button_id:21, user_id:current_user.id)
         end
+        @homework.upload = true
       elsif params[:previous]
         if @homework.actual_phase == "argumentar"
           @homework.actual_phase = "responder"
-          @homework.upload = true
         elsif @homework.actual_phase == "rehacer"
           @homework.actual_phase = "argumentar"
-          @homework.upload = true
         elsif @homework.actual_phase == "evaluar"
           @homework.actual_phase = "rehacer"
-          @homework.upload = true
         elsif @homework.actual_phase == "final"
           @homework.actual_phase = "evaluar"
-          @homework.upload = true
         end
+        data = Register.new(button_id:22, user_id:current_user.id)
+        @homework.upload = true
       elsif params[:discussion]
         @homework.upload = false
+        data = Register.new(button_id:17, user_id:current_user.id)
       end
+      data.save
       @homework.save
     end
     redirect_to homework_path(@homework.id)
   end
 
   def show
+    puts params
+    puts "arriba estan los params"
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Realizar Actividad"]
     @users = User.all.where(role:0, asistencia:true)
     @homework.save
-    if @homework.actual_phase == "responder"
-      @siguiente = "Argumentar"
-    elsif @homework.actual_phase == "argumentar"
-      @siguiente = "Rehacer"
-    elsif @homework.actual_phase == "rehacer"
-      @siguiente = "Evaluar"
-    elsif @homework.actual_phase == "evaluar"
-      @siguiente = "Final"
-    end
-    if !current_user.role?
+    if current_user.role?
+      if @homework.actual_phase == "responder"
+        @siguiente = "Argumentar"
+      elsif @homework.actual_phase == "argumentar"
+        @siguiente = "Rehacer"
+      elsif @homework.actual_phase == "rehacer"
+        @siguiente = "Evaluar"
+      elsif @homework.actual_phase == "evaluar"
+        @siguiente = "Final"
+      end
+    else
       redirect_to homework_answers_path(@homework)
     end
   end
 
   def new
+    data = Register.new(button_id:9, user_id:current_user.id)
+    data.save
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Crear Actividad"]
     @homework = Homework.new
   end
 
   def edit
+    data = Register.new(button_id:12, user_id:current_user.id)
+    data.save
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Editar Actividad"]
   end
 
@@ -125,11 +139,15 @@ class HomeworksController < ApplicationController
       @my_answer = @user.answers.find_by_homework_id(@homework.id)
       @partner_answer = @corregido.answers.find_by_homework_id(@homework.id)
     end
+    data = Register.new(button_id:23, user_id:current_user.id)
+    data.save
     render 'studentanswer'
   end
 
   def create
     if params["tag_in_index"]
+      data = Register.new(button_id:26, user_id:current_user.id)
+      data.save
       @homework = Homework.where(id:params["actualizar"]["homework"])[0]
       answers = current_user.answers.find_by_homework_id([@homework.id])
       if params["tag_in_index"] == "Editar Respuesta" && @homework.upload
@@ -140,6 +158,8 @@ class HomeworksController < ApplicationController
     else
       @homework = Homework.new(homework_params)
       @course.homeworks << @homework
+      data = Register.new(button_id:10, user_id:current_user.id)
+      data.save
       respond_to do |format|
         if @homework.save
           format.html { redirect_to homeworks_path, notice: 'La actividad ha sido creada.' }
@@ -155,6 +175,8 @@ class HomeworksController < ApplicationController
   end
 
   def update
+    data = Register.new(button_id:13, user_id:current_user.id)
+    data.save
     respond_to do |format|
       if @homework.update(homework_params)
         format.html { redirect_to homeworks_path } # REDIRECT TO INDEX
@@ -167,6 +189,8 @@ class HomeworksController < ApplicationController
   end
 
   def destroy
+    data = Register.new(button_id:11, user_id:current_user.id)
+    data.save
     @homework.destroy
     respond_to do |format|
       format.html { redirect_to homeworks_url, notice: 'La actividad fue removida.' }
@@ -175,6 +199,8 @@ class HomeworksController < ApplicationController
   end
 
   def asistencia
+    data = Register.new(button_id:14, user_id:current_user.id)
+    data.save
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Asistencia"]
     @users = Course.find_by_id(current_user.current_course_id).users
     @@libres = []
@@ -193,6 +219,8 @@ class HomeworksController < ApplicationController
         end
         generate_partner_2
       end
+      data = Register.new(button_id:15, user_id:current_user.id)
+      data.save
     else
       @homework.upload = true
       @homework.current = true

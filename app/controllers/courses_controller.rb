@@ -18,19 +18,22 @@ class CoursesController < ApplicationController
     @courses = Course.all
     current_user.current_course_id = @course.id
     current_user.save
-    if !current_user.role?
-      redirect_to homeworks_path
-    end
     if params['format']
       if params['format']["Ingresar"]
         data = Register.new(button_id:4, user_id:current_user.id)
       elsif params['format']["Guardar Cambios"]
         data = Register.new(button_id:7, user_id:current_user.id)
       end
+      data.save
+    end
+    if !current_user.role?
+      redirect_to homeworks_path
     end
   end
 
   def new
+    data = Register.new(button_id:2, user_id:current_user.id)
+    data.save
     @breadcrumbs = ["Mis Cursos", "Crear Curso"]
     @course = Course.new
   end
@@ -42,6 +45,8 @@ class CoursesController < ApplicationController
     if params.index("Remover")
       user = User.find_by_id(params.index("Remover"))
       user.courses.destroy(@course)
+      data = Register.new(button_id:6, user_id:current_user.id)
+      data.save
     else
       if params["roles"] != nil
         params["roles"].each do |p|
@@ -66,6 +71,8 @@ class CoursesController < ApplicationController
   end
 
   def create
+    data = Register.new(button_id:3, user_id:current_user.id)
+    data.save
     @course = Course.new(course_params)
     respond_to do |format|
       if @course.save

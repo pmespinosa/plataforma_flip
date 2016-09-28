@@ -68,6 +68,8 @@ class AnswersController < ApplicationController
   end
 
   def create
+    data = Register.new(button_id:25, user_id:current_user.id)
+    data.save
     if @homework.upload
       @answer = Answer.new(answer_params)
       current_user.answers << @answer
@@ -78,6 +80,8 @@ class AnswersController < ApplicationController
   end
 
   def update
+    data = Register.new(button_id:25, user_id:current_user.id)
+    data.save
     if @homework.upload
       respond_to do |format|
         @answer.update(answer_params)

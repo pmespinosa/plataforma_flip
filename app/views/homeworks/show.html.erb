@@ -3,7 +3,7 @@
 <h3><b>Pregunta:</b> <%= @homework.content%></h3>
 <%= form_tag controller:"homeworks", action:"change_phase", method:"post" do %>
   <% if @homework.actual_phase == "responder"%> <!-- AQUI VA LA FASE NO ACTIVA -->
-    <%= link_to 'Volver Actividades', homeworks_path,  :class=>"btn btn-primary", :style=>'color:white' %>
+    <%= link_to 'Volver Actividades', homeworks_path("volver"),  :class=>"btn btn-primary", :style=>'color:white' %>
   <%else%>
     <%= submit_tag "Etapa Anterior", name: 'previous', class: "btn btn-primary"%>
   <% end %>
