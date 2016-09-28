@@ -145,6 +145,36 @@
       <%= f.submit "Crear Evaluación" %>
     </div>
 
+<% CtHability.all.each do |hab| %>
+  <% if hab.ct_question_id == nil %>
+          <div id='<%=hab.name%>' class="modal fade" role="dialog">
+            <div class="modal-dialog">
 
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title"><%= hab.name %></h4>
+                </div>
+                <div class="modal-body">
+                  <p><b>Descripción: </b> <%= hab.description %></p>
+                </div>                
+                <% hab.ct_subhabilities.each do |sub| %>
+                  <div class="modal-body">
+                      <p><b>Subhabilidad: </b> <%= sub.name %></p>
+                      <p><b>Descripción: </b> <%= sub.description %></p>
+                                                          
+                 </div>             
+              <% end %>
+              
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+    <% end %>
+<% end %>          
 
 <% end %>

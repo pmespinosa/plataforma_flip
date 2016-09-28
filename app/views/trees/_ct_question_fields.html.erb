@@ -33,12 +33,14 @@
 	  					<span class="sm"><%= hability_fields.check_box :active %></span>
 	  					<%= hability.name %>
 					    <span class="input-group-btn pull-right" id="sizing-addon3">
-					        <button class="btn btn-default" type="button" style="border: none; padding: 0;  background: none;" inline><span class="glyphicon glyphicon-info-sign"></span></button>
+					        <button class="btn btn-default" data-toggle="modal" data-target='#<%=hability.name%>' type="button" style="border: none; padding: 0;  background: none;" inline><span class="glyphicon glyphicon-info-sign"></span></button>
 					     </span>
-				     </div>
+				    </div>
+				     
 		      	</td>
 	      <% end %>
 			<% i = i.to_i + 1 %>
+			
 	     <% end %>
 	</tr>  
 	<tr>
@@ -56,15 +58,16 @@
 			      <%= hability_fields.hidden_field :name, :value => hability.name %>
 			      <%= hability_fields.hidden_field :description, :value => hability.description %>
 			      <%= hability_fields.hidden_field :ct_subhabilities, :value => hability.ct_subhabilities.all %>
-			      <td style="padding:0px 0px 0px 0px;">
-		    		 <div class="panel-body">
+			      <td style="padding:0px 0px 0px 0px;">	    		     		 	
+	  				<div class="panel-body">
 	  					<span class="sm"><%= hability_fields.check_box :active %></span>
 	  					<%= hability.name %>
 					    <span class="input-group-btn pull-right" id="sizing-addon3">
-					        <button class="btn btn-default" type="button" style="border: none; padding: 0;  background: none;" inline><span class="glyphicon glyphicon-info-sign"></span></button>
+					        <button class="btn btn-default" data-toggle="modal" data-target='#<%=hability.name%>' type="button" style="border: none; padding: 0;  background: none;" inline><span class="glyphicon glyphicon-info-sign"></span></button>
 					     </span>
-				     </div>
-			      </td>
+				    </div>
+				     
+		      	</td>
 			  <% end %>
 				<% i = i.to_i + 1 %>
 		    <% end %>	  
