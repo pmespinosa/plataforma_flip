@@ -10,7 +10,7 @@
 	<br>
 	<h4>Respuesta:</h4>
 	<% if @my_answer.responder != nil %>
-		<em><h4><%=@my_answer.responder%></h4></em>
+		<em><h4><%=@my_answer.responder.simpleformat%></h4></em>
 	<% end %>
 	<% if @my_answer.image_responder? %>
 		<p><%= image_tag @my_answer.image_responder.url(:medium) %></p>
@@ -26,7 +26,7 @@
 		<% end %>
 		<br>
 		<% if @homework.actual_phase != "argumentar" %>
-			<h4>Refacción:</h4>
+			<h4>Rehacer:</h4>
 			<% if @my_answer.rehacer != nil %>
 				<em><h4><%= @my_answer.rehacer %></h4></em>
 			<%end%>
