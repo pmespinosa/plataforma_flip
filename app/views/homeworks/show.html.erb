@@ -1,6 +1,7 @@
 <h1><%= @homework.name %></h1>
 <h2>Etapa: <%= @homework.actual_phase %></h2>
-<h3><b>Pregunta:</b> <%= @homework.content%></h3>
+<h3 align="justify"><b>Pregunta:</b></h3>
+<h2 align="justify"><%= simple_format(@homework.content) %></h2>
 <%= form_tag controller:"homeworks", action:"change_phase", method:"post" do %>
   <% if @homework.actual_phase == "responder"%> <!-- AQUI VA LA FASE NO ACTIVA -->
     <%= link_to 'Volver Actividades', homeworks_path("volver"),  :class=>"btn btn-primary", :style=>'color:white' %>
@@ -8,7 +9,7 @@
     <%= submit_tag "Etapa Anterior", name: 'previous', class: "btn btn-primary"%>
   <% end %>
   <div class="column">
-    <div class="col-sm-70 col-md-5">
+    <div class="col-sm-70 col-md-5" style="align:center">
       <br>
       <div class="thumbnail">
         <div class="caption">

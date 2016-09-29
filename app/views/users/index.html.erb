@@ -17,7 +17,7 @@
 <% @courses.sort_by{|e| e[:name]}.each do |course| %>
 <div class="row-md-6">
   <div class="col-md-3 col-md-4">
-    <div class="thumbnail",height:"500px", width:"500px">
+    <div class="thumbnail"style="height:200px; width:350px">
       <div class="caption">
         <h3><%= course.name %></h3>
         <% if course.description.length < 150 %>

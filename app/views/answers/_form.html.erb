@@ -18,15 +18,15 @@
             <label for="question" class="col-sm-9 control-label">Respuesta</label>
             <div class="col-xs-6">
               <% if @homework.actual_phase == "responder"%>
-                <%= f.text_area :responder, cols: 40, rows: 5, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
+                <%= f.text_area :responder, cols: 40, rows: 15, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
               <% elsif @homework.actual_phase == "argumentar"%>
-                <%= f.text_area :argumentar, cols: 40, rows: 5, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
+                <%= f.text_area :argumentar, cols: 40, rows: 15, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
               <% elsif @homework.actual_phase == "rehacer"%>
-                <%= f.text_area :rehacer, cols: 40, rows: 5, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
+                <%= f.text_area :rehacer, cols: 40, rows: 15, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
               <% elsif @homework.actual_phase == "evaluar"%>
-                <%= f.text_area :evaluar, cols: 40, rows: 5, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
+                <%= f.text_area :evaluar, cols: 40, rows: 15, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
               <% elsif @homework.actual_phase == "final"%>
-                <%= f.text_area :final, cols: 40, rows: 5, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
+                <%= f.text_area :final, cols: 40, rows: 15, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
               <% end %>
               <br>
             </div>

@@ -1,6 +1,6 @@
 <div style="text-align: left">
 	<% if @homework.upload %>
-		<h3><%= @homework.content %></h3>
+		<h3 align="justify"><%= simple_format(@homework.content) %></h3>
 		<% if @homework.image? %>
 			<p><%= image_tag @homework.image.url(:medium) %></p>
 		<% end %>

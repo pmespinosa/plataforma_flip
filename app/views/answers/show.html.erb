@@ -1,5 +1,5 @@
 <div style="text-align: center">
-	<h3><%= @homework.content %></h3>
+	<h3 align="justify"><%= simple_format(@homework.content) %></h3>
 
 	<% partner = User.find_by_id(current_user.partner_id) %>
 	<% partner_answer = partner.answers.find_by_homework_id(@homework.id) %>
@@ -8,26 +8,26 @@
 	<% if @homework.actual_phase == "responder" %>
 		<%= answer.responder %>
 		<% if answer.image? %>
-			<p><%= image_tag answer.image.url(:large) %></p>
+			<p><%= image_tag answer.image.url(:medium) %></p>
 		<% end %>
 	<% elsif @homework.actual_phase == "argumentar" %>
-		<h4><%= "En base a la respuesta de %s %s, discuta y argumente su contenido:" % [partner.first_name, partner.last_name] %></h4>
+		<h4><%= "En base a la respuesta de su compañero, discuta y argumente su contenido:" %></h4>
 		<em><h4><%=partner_answer.responder %></h4></em>
 		<% if anspartner_answerwer.image? %>
-			<p><%= image_tag partner_answer.image.url(:large) %></p>
+			<p><%= image_tag partner_answer.image.url(:medium) %></p>
 		<% end %>
 	<% elsif @homework.actual_phase == "rehacer" %>
 		<br>
 		<h4><%= "Su primera respuesta: \n"  %></h4>
 		<em><h4><%="\"" + answer.responder + "\""%></h4></em>
 		<% if answer.image? %>
-			<p><%= image_tag answer.image.url(:large) %></p>
+			<p><%= image_tag answer.image.url(:medium) %></p>
 		<% end %>
 		<br>
-		<h4><%= "Feedback y argumentación de %s %s: \n" % [partner.first_name, partner.last_name] %></h4>
+		<h4><%= "Feedback y argumentación de su compañero: \n" % [partner.first_name, partner.last_name] %></h4>
 		<em><h4><%=partner_answer.argumentar %></h4></em>
 		<% if partner_answer.image? %>
-			<p><%= image_tag partner_answer.image.url(:large) %></p>
+			<p><%= image_tag partner_answer.image.url(:medium) %></p>
 		<% end %>
 		<br>
 		<h3><%= "En base al feedback y argumentación de su compañero, reestructure nuevamente su respuesta:" %></h3>
