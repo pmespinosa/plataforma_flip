@@ -1,17 +1,17 @@
 <%= form_tag controller:"reports", action: "create", :method => :post do %>
-  <%= f.error_notification %>
+
 
 <% if current_user.role?%>
-  <h1>Nuevo Reporte</h1>
-  <br></br>
-  <br></br>
+  <br>
+  <h4>Seleccione las evaluaciones de videos con las que desea realizar el reporte:</h4>
+  <br>
 
   <table class="table table-striped">
     <thead>
       <tr>
         <th></th>
         <th>Evaluaciones de Video</th>
-        <th></th>
+        <th>Video</th>
         <th></th>
         <th></th>
         <th></th>
@@ -24,9 +24,11 @@
               <td><%= tree.content.text[0,40] %>...</td>
             <% else %>
               <td><%= tree.content.text%></td>
-            <% end %>            
+            <% end %>
+            <td><%= tree.video%></td>            
         </tr>
       <% end %>
     </tbody>
   </table>
+<% end %>
 <% end %>

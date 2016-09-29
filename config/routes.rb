@@ -50,8 +50,8 @@ Rails.application.routes.draw do
   get 'courses/:id/users'=> 'courses#students'
   post 'courses/:id/eval_form', to:'courses#eval_form', as: "eval_form"
   get 'courses/:id/eval_form', to:'courses#eval_form'
-  #post 'courses/:id/reports/new', to:'courses#reports', as: "reports"
-  #get 'courses/:id/reports/new', to:'courses#reports'
+  post 'courses/:id/reports', to:'courses#reportes', as: "reportes"
+  get 'courses/:id/reports', to:'courses#reportes'
 
   get 'homework/:id/asistencia', to:'homeworks#asistencia', as:"homework_asistencia"
   post 'homework/:id/asistencia',to:'homeworks#asistencia'

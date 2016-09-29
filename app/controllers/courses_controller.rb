@@ -1,6 +1,6 @@
 class CoursesController < ApplicationController
 
-  before_action :set_course, only: [:asistencia, :students, :show, :edit, :update, :destroy, :eval_form, :reports]
+  before_action :set_course, only: [:asistencia, :students, :show, :edit, :update, :destroy, :eval_form, :reportes]
   before_action :set_miscursos_visible, only: [:show, :edit, :new, :eval_form]
   before_action :set_ef_visible, only: [:show, :edit, :eval_form]
   before_action :set_reporte_visible, only: [:show, :edit, :eval_form]
@@ -80,7 +80,7 @@ class CoursesController < ApplicationController
     render "eval_form"
   end
 
-  def reports
+  def reportes
     @breadcrumbs = ["Mis Cursos", @course.name, "Reportes"]
     render "reports"
   end

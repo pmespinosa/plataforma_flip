@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160927233948) do
+ActiveRecord::Schema.define(version: 20160928211700) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -207,6 +207,7 @@ ActiveRecord::Schema.define(version: 20160927233948) do
     t.float    "selfregulation_sc"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.integer  "n"
   end
 
   add_index "user_tree_performances", ["tree_id"], name: "index_user_tree_performances_on_tree_id", using: :btree

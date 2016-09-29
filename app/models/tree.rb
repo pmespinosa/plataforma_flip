@@ -39,5 +39,5 @@ class Tree < ActiveRecord::Base
   accepts_nested_attributes_for :recuperative_complex_feedback, :reject_if => lambda { |a| a[:text].blank? }, :allow_destroy => true
   accepts_nested_attributes_for :deeping_simple_feedback, :reject_if => lambda { |a| a[:text].blank? }, :allow_destroy => true
   accepts_nested_attributes_for :deeping_complex_feedback, :reject_if => lambda { |a| a[:text].blank? }, :allow_destroy => true
-  
+  accepts_nested_attributes_for :user_tree_performances, :reject_if => lambda { |a| a[:user_id].blank? }, :allow_destroy => true
 end
