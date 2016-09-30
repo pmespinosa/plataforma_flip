@@ -1,0 +1,53 @@
+<%#= form_tag controller:"reports", action: "create", :method => :post do %>
+<%= simple_form_for([@course, @report]) do |f| %>
+
+
+  <% if current_user.role?%>
+    <br>
+    <h4>Seleccione las evaluaciones de videos con las que desea realizar el reporte:</h4>
+    <br>
+
+
+      <div class="input-group">
+        <%= f.label :name, 'Nombre de Reporte', :class => "input-group-addon" %>
+        <%= f.text_field :name, :class=>"form-control", :placeholder=>"Contenido del Video" %>
+      </div>
+   
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Evaluaciones de Video</th>
+          <th>Video</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @course.trees.sort_by{|e| e[:created_at]}.each do |tree| %>
+          <tr>
+              <td><%= check_box_tag "tree_ids[]", tree.id %></td>
+              <% if tree.content.text.length > 30%>
+                <td><%= tree.content.text[0,40] %>...</td>
+              <% else %>
+                <td><%= tree.content.text%></td>
+              <% end %>
+              <td><%= tree.video%></td>            
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+<%#= hidden_field_tag "course_id", @course.id %>
+
+<!--div class="actions">
+     <%#= submit_tag "Finalizar", class: "btn btn-default" %>
+</div-->
+
+<div class="actions">
+  <%= f.submit "Crear Evaluación" %>
+</div>
+
+<% end %>

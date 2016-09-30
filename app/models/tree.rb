@@ -18,6 +18,8 @@ class Tree < ActiveRecord::Base
   has_one :recuperative_complex_feedback, :class_name => "RecuperativeComplexFeedback", :dependent => :destroy
   has_one :deeping_simple_feedback, :class_name => "DeepingSimpleFeedback", :dependent => :destroy
   has_one :deeping_complex_feedback, :class_name => "DeepingComplexFeedback", :dependent => :destroy
+  has_and_belongs_to_many :reports
+  has_many :user_tree_performances, :dependent => :destroy
 
 
   accepts_nested_attributes_for :content, :reject_if => lambda { |a| a[:text].blank? }, :allow_destroy => true
@@ -37,5 +39,5 @@ class Tree < ActiveRecord::Base
   accepts_nested_attributes_for :recuperative_complex_feedback, :reject_if => lambda { |a| a[:text].blank? }, :allow_destroy => true
   accepts_nested_attributes_for :deeping_simple_feedback, :reject_if => lambda { |a| a[:text].blank? }, :allow_destroy => true
   accepts_nested_attributes_for :deeping_complex_feedback, :reject_if => lambda { |a| a[:text].blank? }, :allow_destroy => true
-  
+  accepts_nested_attributes_for :user_tree_performances, :reject_if => lambda { |a| a[:user_id].blank? }, :allow_destroy => true
 end

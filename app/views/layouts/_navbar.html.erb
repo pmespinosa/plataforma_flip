@@ -32,6 +32,15 @@
                 <li><%= button_to "Reporte", users_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px; height:50px" %></li>
               </ul>
             <% end %>
+            <% if @reporte_visible %> <!-- BOTON REPORTE -->
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Reporte", reportes_path(current_user.current_course_id), :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+            <% else %>
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Reporte", reportes_path(current_user.current_course_id), :disabled => true, :class => "btn btn-primary", :style => "font-size:18px" %></li>
+              </ul>
+            <% end %>
             <% if  @actividades_visible %> <!-- BOTON ACTIVIDAD -->
               <ul class="nav navbar-nav">
                 <li><%= button_to "Actividades Colaborativas", homeworks_path, :class => "btn btn-primary", :style => "font-size:18px; height:50px", method: :get %></li>

@@ -6,6 +6,7 @@ class HomeworksController < ApplicationController
   before_action :set_miscursos_visible, only: :index
   before_action :set_ef_visible, only: :index
   before_action :set_actividades_visible, only: [:index, :show, :asistencia, :edit, :new, :answers]
+
   before_action :set_configuraciones_visible, only: :index
   before_action :set_breadcrumbs
 
