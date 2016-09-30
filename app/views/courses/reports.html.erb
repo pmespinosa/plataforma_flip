@@ -18,13 +18,13 @@
       <% @course.reports.sort_by{|e| e[:created_at]}.each do |report| %>
         <tr>
             <%# if tree.content.text.length > 30%>
-              <td>Reporte1</td>
+              <td><%= report.name%></td>
             <%# else %>
               <td><%#= tree.content.text%></td>
             <%# end -%>
             <td><%#= link_to 'Vista previa', [@course, tree, {:type =>'initial', :state => "no_saw"}], method: :post,class:"btn btn-primary btn-xs", style:'color:white'%></td>
             <td> <%= link_to 'Ver', course_report_path(@course, report), class:"btn btn-primary btn-xs", style:'color:white'%></td>
-            <td><%#= link_to 'Eliminar', [@course, tree], method: :delete, data: { confirm: '¿Seguro que deseas eliminar el arbol?' },:class=>"btn btn-danger btn-xs", :style=>'color:white'%></td>
+            <td><%= link_to 'Eliminar', [@course, report], method: :delete, data: { confirm: '¿Seguro que deseas eliminar el reporte?' },:class=>"btn btn-danger btn-xs", :style=>'color:white'%></td>
         </tr>
       <% end %>
     </tbody>

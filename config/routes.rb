@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :ct_choices
   #resources :trees
   resources :ct_subhabilities
+  resources :reports
 
   post '/courses/:course_id/trees/:id' => 'trees#edx_view'
   get 'trees/report_values', to: 'trees#set_report_values', as: 'set_report_values'
@@ -26,10 +27,6 @@ Rails.application.routes.draw do
 
 
 
-  resources :home
-  devise_for :users
-  resources :users
-  resources :reports
 
   get 'homeworks/:id/studentanswer', to:"homeworks#answers"
 
