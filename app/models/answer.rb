@@ -13,7 +13,7 @@
 #  phase       :integer
 
 class Answer < ActiveRecord::Base
-  enum phase: [:responder, :argumentar, :rehacer, :evaluar, :final]
+  enum phase: [:responder, :argumentar, :rehacer, :responder_2, :argumentar_2, :rehacer_2]
   after_initialize :set_default_actual_phase, :if => :new_record?
 
   def set_default_actual_phase
@@ -25,11 +25,13 @@ class Answer < ActiveRecord::Base
   has_attached_file :image_responder, styles: {medium: "800x800>"}
   has_attached_file :image_argumentar, styles: {medium: "800x800>"}
   has_attached_file :image_rehacer, styles: {medium: "800x800>"}
-  has_attached_file :image_evaluar, styles: {medium: "800x800>"}
-  has_attached_file :image_final, styles: {medium: "800x800>"}
+  has_attached_file :image_responder_2, styles: {medium: "800x800>"}
+  has_attached_file :image_argumentar_2, styles: {medium: "800x800>"}
+  has_attached_file :image_rehacer_2, styles: {medium: "800x800>"}
   validates_attachment_content_type :image_responder, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
   validates_attachment_content_type :image_argumentar, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
   validates_attachment_content_type :image_rehacer, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
-  validates_attachment_content_type :image_evaluar, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
-  validates_attachment_content_type :image_final, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
+  validates_attachment_content_type :image_responder_2, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
+  validates_attachment_content_type :image_argumentar_2, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
+  validates_attachment_content_type :image_rehacer_2, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
 end
