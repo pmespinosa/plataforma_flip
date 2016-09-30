@@ -71,7 +71,7 @@
             <tr>
               <td style="padding:40px 15px 40px 0px;">
                 <%= f.simple_fields_for :initial_simple_feedback do |builder| %>
-                <%= builder.label :content, 'Feedback inicial Simple' %>
+                <%= builder.label :content, 'Feedback inicial para Argumento' %>
                  <div class='nested-fields'>
                  <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
                  </div>
@@ -79,7 +79,7 @@
               </td>
               <td style="padding:40px 15px 40px 0px;">
                 <%= f.simple_fields_for :initial_complex_feedback do |builder| %>
-                 <%= builder.label :content, 'Feedback inicial Complejo' %>
+                 <%= builder.label :content, 'Feedback inicial para Contenido' %>
                  <div class='nested-fields'>
                  <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
                  </div>
@@ -121,7 +121,7 @@
             <tr>
               <td style="padding:40px 15px 40px 0px;">
                 <%= f.simple_fields_for :recuperative_simple_feedback do |builder| %>
-                <%= builder.label :content, 'Feedback Pregunta Recuperativa (Simple)' %>
+                <%= builder.label :content, 'Feedback Pregunta Recuperativa para Argumento' %>
                  <div class='nested-fields'>
                  <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
                  </div>
@@ -129,7 +129,7 @@
               </td>
               <td style="padding:40px 15px 40px 0px;">
                 <%= f.simple_fields_for :recuperative_complex_feedback do |builder| %>
-                 <%= builder.label :content, 'Feedback Pregunta Recuperativa (Complejo)' %>
+                 <%= builder.label :content, 'Feedback Pregunta Recuperativa para Contenido' %>
                  <div class='nested-fields'>
                  <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
                  </div>
@@ -170,7 +170,7 @@
             <tr>
               <td style="padding:40px 15px 40px 0px;">
                 <%= f.simple_fields_for :deeping_simple_feedback do |builder| %>
-                <%= builder.label :content, 'Feedback Pregunta de profundización (Simple)' %>
+                <%= builder.label :content, 'Feedback Pregunta de profundización para Argumento' %>
                  <div class='nested-fields'>
                  <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
                  </div>
@@ -178,7 +178,7 @@
               </td>
               <td style="padding:40px 15px 40px 0px;">
                 <%= f.simple_fields_for :deeping_complex_feedback do |builder| %>
-                 <%= builder.label :content, 'Feedback Pregunta de profundización (Complejo)' %>
+                 <%= builder.label :content, 'Feedback Pregunta de profundización para Contenido' %>
                  <div class='nested-fields'>
                  <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
                  </div>
