@@ -97,14 +97,12 @@ class TreesController < ApplicationController
                     @performance.content_sc = @performance.content_sc + 1
                   end 
 
-                  if @performance.n.nil?
-                    puts "el n es NIL y lle di el valor 1--------------------------"
-                    @performance.n = 1
+                  if @performance.content_n.nil?
+                    @performance.content_n = 1
                   else
-                    puts "el n NO es NIL y el n es:-----------------------------------"
-                    @performance.n = @performance.n.to_i + 1
-                    puts @performance.n
-                  end   
+                    @performance.content_n = @performance.content_n.to_i + 1
+                  end 
+                    
 
                   @tree.initial_ct_question.ct_habilities.each do |hab|
                     puts "habilidades del initial ct questions------------------------"
@@ -114,25 +112,45 @@ class TreesController < ApplicationController
                         if @performance.interpretation_sc.nil?
                           @performance.interpretation_sc = 1
                         else
-                          @performance.interpretation_sc = @performance.interpretation_sc + 1
+                          @performance.interpretation_sc = @performance.interpretation_sc + 1                           
+                        end
+                        if @performance.interpretation_n.nil?
+                          @performance.interpretation_n = 1
+                        else
+                          @performance.interpretation_n = @performance.interpretation_n.to_i + 1
                         end                      
                       elsif hab.name.to_s == "Análisis"
                         if @performance.analysis_sc.nil?
                           @performance.analysis_sc = 1
                         else
-                          @performance.analysis_sc = @performance.analysis_sc + 1
+                          @performance.analysis_sc = @performance.analysis_sc + 1                           
+                        end
+                        if @performance.analysis_n.nil?
+                          @performance.analysis_n = 1
+                        else
+                          @performance.analysis_n = @performance.analysis_n.to_i + 1
                         end 
                       elsif hab.name.to_s == "Evaluación"
                         if @performance.evaluation_sc.nil?
                           @performance.evaluation_sc = 1
                         else
-                          @performance.evaluation_sc = @performance.evaluation_sc + 1
+                          @performance.evaluation_sc = @performance.evaluation_sc + 1                          
+                        end
+                        if @performance.evaluation_n.nil?
+                          @performance.evaluation_n = 1
+                        else
+                          @performance.evaluation_n = @performance.evaluation_n.to_i + 1
                         end 
                       elsif hab.name.to_s == "Inferencia"
                         if @performance.inference_sc.nil?
                           @performance.inference_sc = 1
                         else
                           @performance.inference_sc = @performance.inference_sc + 1
+                        end
+                        if @performance.inference_n.nil?
+                          @performance.inference_n = 1
+                        else
+                          @performance.inference_n = @performance.inference_n.to_i + 1
                         end 
                       elsif hab.name.to_s == "Explicación"
                         if @performance.explanation_sc.nil?
@@ -140,11 +158,21 @@ class TreesController < ApplicationController
                         else
                          @performance.explanation_sc = @performance.explanation_sc + 1
                         end
+                        if @performance.explanation_n.nil?
+                          @performance.explanation_n = 1
+                        else
+                          @performance.explanation_n = @performance.explanation_n.to_i + 1
+                        end
                       elsif hab.name.to_s == "Autoregulación"
                         if @performance.selfregulation_sc.nil?
                           @performance.selfregulation_sc = 1
                         else
                           @performance.selfregulation_sc = @performance.selfregulation_sc + 1
+                        end
+                        if @performance.selfregulation_n.nil?
+                          @performance.selfregulation_n = 1
+                        else
+                          @performance.selfregulation_n = @performance.selfregulation_n.to_i + 1
                         end 
                       end
                     end
@@ -166,12 +194,11 @@ class TreesController < ApplicationController
                   else
                     @performance.content_sc = @performance.content_sc + 1
                   end  
-
-                  if @performance.n.nil?
-                    @performance.n = 1
+                  if @performance.content_n.nil?
+                    @performance.content_n = 1
                   else
-                    @performance.n = @performance.n.to_i + 1
-                  end  
+                    @performance.content_n = @performance.content_n.to_i + 1
+                  end 
 
                   @tree.initial_ct_question.ct_habilities.each do |hab|
                     puts "habilidades del initial ct questions------------------------"
@@ -182,36 +209,66 @@ class TreesController < ApplicationController
                           @performance.interpretation_sc = 0
                         else
                           @performance.interpretation_sc = @performance.interpretation_sc
-                        end                      
+                        end
+                        if @performance.interpretation_n.nil?
+                          @performance.interpretation_n = 1
+                        else
+                          @performance.interpretation_n = @performance.interpretation_n.to_i + 1
+                        end                       
                       elsif hab.name.to_s == "Análisis"
                         if @performance.analysis_sc.nil?
                           @performance.analysis_sc = 0
                         else
                           @performance.analysis_sc = @performance.analysis_sc
+                        end
+                        if @performance.analysis_n.nil?
+                          @performance.analysis_n = 1
+                        else
+                          @performance.analysis_n = @performance.analysis_n.to_i + 1
                         end 
                       elsif hab.name.to_s == "Evaluación"
                         if @performance.evaluation_sc.nil?
                           @performance.evaluation_sc = 0
                         else
                           @performance.evaluation_sc = @performance.evaluation_sc
+                        end
+                        if @performance.evaluation_n.nil?
+                          @performance.evaluation_n = 1
+                        else
+                          @performance.evaluation_n = @performance.evaluation_n.to_i + 1
                         end 
                       elsif hab.name.to_s == "Inferencia"
                         if @performance.inference_sc.nil?
                           @performance.inference_sc = 0
                         else
                          @performance.inference_sc = @performance.inference_sc
-                        end 
+                        end
+                        if @performance.inference_n.nil?
+                          @performance.inference_n = 1
+                        else
+                          @performance.inference_n = @performance.inference_n.to_i + 1
+                        end  
                       elsif hab.name.to_s == "Explicación"
                         if @performance.explanation_sc.nil?
                           @performance.explanation_sc = 0
                         else
                           @performance.explanation_sc = @performance.explanation_sc
                         end
+                        if @performance.explanation_n.nil?
+                          @performance.explanation_n = 1
+                        else
+                          @performance.explanation_n = @performance.explanation_n.to_i + 1
+                        end
                       elsif hab.name.to_s == "Autoregulación"
                         if @performance.selfregulation_sc.nil?
                           @performance.selfregulation_sc = 0
                         else
                           @performance.selfregulation_sc = @performance.selfregulation_sc
+                        end
+                        if @performance.selfregulation_n.nil?
+                          @performance.selfregulation_n = 1
+                        else
+                          @performance.selfregulation_n = @performance.selfregulation_n.to_i + 1
                         end 
                       end
                     end
@@ -227,12 +284,11 @@ class TreesController < ApplicationController
                     @performance.content_sc = 0
                   else
                     @performance.content_sc = @performance.content_sc
-                  end  
-
-                  if @performance.n.nil?
-                    @performance.n = 1
+                  end
+                  if @performance.content_n.nil?
+                    @performance.content_n = 1
                   else
-                    @performance.n = @performance.n.to_i + 1
+                    @performance.content_n = @performance.content_n.to_i + 1
                   end  
 
                   @tree.initial_ct_question.ct_habilities.each do |hab|
@@ -245,27 +301,43 @@ class TreesController < ApplicationController
                         else
                           @performance.interpretation_sc = @performance.interpretation_sc
                         end
-                        puts "el ptje interpretacion es:---------------"
-                        puts @performance.interpretation_sc                      
+                        if @performance.interpretation_n.nil?
+                          @performance.interpretation_n = 1
+                        else
+                          @performance.interpretation_n = @performance.interpretation_n.to_i + 1
+                        end                      
                       elsif hab.name.to_s == "Análisis"
                         if @performance.analysis_sc.nil?
                           @performance.analysis_sc = 0
                         else
                          @performance.analysis_sc = @performance.analysis_sc
                         end
-                        puts "el ptje analisis es:---------------"
-                        puts @performance.analysis_sc 
+                        if @performance.analysis_n.nil?
+                          @performance.analysis_n = 1
+                        else
+                          @performance.analysis_n = @performance.analysis_n.to_i + 1
+                        end  
                       elsif hab.name.to_s == "Evaluación"
                         if @performance.evaluation_sc.nil?
                           @performance.evaluation_sc = 0
                         else
                           @performance.evaluation_sc = @performance.evaluation_sc
+                        end
+                        if @performance.evaluation_n.nil?
+                          @performance.evaluation_n = 1
+                        else
+                          @performance.evaluation_n = @performance.evaluation_n.to_i + 1
                         end 
                       elsif hab.name.to_s == "Inferencia"
                         if @performance.inference_sc.nil?
                           @performance.inference_sc = 0
                         else
                           @performance.inference_sc = @performance.inference_sc
+                        end
+                        if @performance.inference_n.nil?
+                          @performance.inference_n = 1
+                        else
+                          @performance.inference_n = @performance.inference_n.to_i + 1
                         end 
                       elsif hab.name.to_s == "Explicación"
                         if @performance.explanation_sc.nil?
@@ -273,11 +345,21 @@ class TreesController < ApplicationController
                         else
                           @performance.explanation_sc = @performance.explanation_sc
                         end
+                        if @performance.explanation_n.nil?
+                          @performance.explanation_n = 1
+                        else
+                          @performance.explanation_n = @performance.explanation_n.to_i + 1
+                        end
                       elsif hab.name.to_s == "Autoregulación"
                         if @performance.selfregulation_sc.nil?
                           @performance.selfregulation_sc = 0
                         else
                           @performance.selfregulation_sc = @performance.selfregulation_sc
+                        end
+                        if @performance.selfregulation_n.nil?
+                          @performance.selfregulation_n = 1
+                        else
+                          @performance.selfregulation_n = @performance.selfregulation_n.to_i + 1
                         end 
                       end
                     end
@@ -352,40 +434,60 @@ class TreesController < ApplicationController
                         @performance.content_sc = @performance.content_sc + 1
                       end 
 
-                      if @performance.n.nil?
-                        puts "el n es NIL y lle di el valor 1--------------------------"
-                        @performance.n = 1
+                      if @performance.content_n.nil?
+                        @performance.content_n = 1
                       else
-                        puts "el n NO es NIL y el n es:-----------------------------------"
-                        @performance.n = @performance.n.to_i + 1
-                        puts @performance.n
-                      end   
+                        @performance.content_n = @performance.content_n.to_i + 1
+                      end 
+                        
 
-                      @tree.recuperative_ct_question.ct_habilities.each do |hab|
+                      @tree.initial_ct_question.ct_habilities.each do |hab|
+                        puts "habilidades del initial ct questions------------------------"
+                        puts hab.name.to_s
                         if hab.active
                           if hab.name.to_s == "Interpretación"
                             if @performance.interpretation_sc.nil?
                               @performance.interpretation_sc = 1
                             else
-                              @performance.interpretation_sc = @performance.interpretation_sc + 1
-                            end                            
+                              @performance.interpretation_sc = @performance.interpretation_sc + 1                           
+                            end
+                            if @performance.interpretation_n.nil?
+                              @performance.interpretation_n = 1
+                            else
+                              @performance.interpretation_n = @performance.interpretation_n.to_i + 1
+                            end                      
                           elsif hab.name.to_s == "Análisis"
                             if @performance.analysis_sc.nil?
                               @performance.analysis_sc = 1
                             else
-                              @performance.analysis_sc = @performance.analysis_sc + 1
+                              @performance.analysis_sc = @performance.analysis_sc + 1                           
                             end
+                            if @performance.analysis_n.nil?
+                              @performance.analysis_n = 1
+                            else
+                              @performance.analysis_n = @performance.analysis_n.to_i + 1
+                            end 
                           elsif hab.name.to_s == "Evaluación"
                             if @performance.evaluation_sc.nil?
                               @performance.evaluation_sc = 1
                             else
-                              @performance.evaluation_sc = @performance.evaluation_sc + 1
+                              @performance.evaluation_sc = @performance.evaluation_sc + 1                          
+                            end
+                            if @performance.evaluation_n.nil?
+                              @performance.evaluation_n = 1
+                            else
+                              @performance.evaluation_n = @performance.evaluation_n.to_i + 1
                             end 
                           elsif hab.name.to_s == "Inferencia"
                             if @performance.inference_sc.nil?
                               @performance.inference_sc = 1
                             else
                               @performance.inference_sc = @performance.inference_sc + 1
+                            end
+                            if @performance.inference_n.nil?
+                              @performance.inference_n = 1
+                            else
+                              @performance.inference_n = @performance.inference_n.to_i + 1
                             end 
                           elsif hab.name.to_s == "Explicación"
                             if @performance.explanation_sc.nil?
@@ -393,11 +495,21 @@ class TreesController < ApplicationController
                             else
                              @performance.explanation_sc = @performance.explanation_sc + 1
                             end
+                            if @performance.explanation_n.nil?
+                              @performance.explanation_n = 1
+                            else
+                              @performance.explanation_n = @performance.explanation_n.to_i + 1
+                            end
                           elsif hab.name.to_s == "Autoregulación"
                             if @performance.selfregulation_sc.nil?
                               @performance.selfregulation_sc = 1
                             else
                               @performance.selfregulation_sc = @performance.selfregulation_sc + 1
+                            end
+                            if @performance.selfregulation_n.nil?
+                              @performance.selfregulation_n = 1
+                            else
+                              @performance.selfregulation_n = @performance.selfregulation_n.to_i + 1
                             end 
                           end
                         end
@@ -416,50 +528,81 @@ class TreesController < ApplicationController
                       else
                         @performance.content_sc = @performance.content_sc + 1
                       end  
-
-                      if @performance.n.nil?
-                        @performance.n = 1
+                      if @performance.content_n.nil?
+                        @performance.content_n = 1
                       else
-                        @performance.n = @performance.n.to_i + 1
-                      end  
+                        @performance.content_n = @performance.content_n.to_i + 1
+                      end 
 
-                      @tree.recuperative_ct_question.ct_habilities.each do |hab|
+                      @tree.initial_ct_question.ct_habilities.each do |hab|
+                        puts "habilidades del initial ct questions------------------------"
+                        puts hab.name.to_s
                         if hab.active
                           if hab.name.to_s == "Interpretación"
                             if @performance.interpretation_sc.nil?
                               @performance.interpretation_sc = 0
                             else
                               @performance.interpretation_sc = @performance.interpretation_sc
-                            end                      
+                            end
+                            if @performance.interpretation_n.nil?
+                              @performance.interpretation_n = 1
+                            else
+                              @performance.interpretation_n = @performance.interpretation_n.to_i + 1
+                            end                       
                           elsif hab.name.to_s == "Análisis"
                             if @performance.analysis_sc.nil?
                               @performance.analysis_sc = 0
                             else
                               @performance.analysis_sc = @performance.analysis_sc
+                            end
+                            if @performance.analysis_n.nil?
+                              @performance.analysis_n = 1
+                            else
+                              @performance.analysis_n = @performance.analysis_n.to_i + 1
                             end 
                           elsif hab.name.to_s == "Evaluación"
                             if @performance.evaluation_sc.nil?
                               @performance.evaluation_sc = 0
                             else
                               @performance.evaluation_sc = @performance.evaluation_sc
+                            end
+                            if @performance.evaluation_n.nil?
+                              @performance.evaluation_n = 1
+                            else
+                              @performance.evaluation_n = @performance.evaluation_n.to_i + 1
                             end 
                           elsif hab.name.to_s == "Inferencia"
                             if @performance.inference_sc.nil?
                               @performance.inference_sc = 0
                             else
                              @performance.inference_sc = @performance.inference_sc
-                            end 
+                            end
+                            if @performance.inference_n.nil?
+                              @performance.inference_n = 1
+                            else
+                              @performance.inference_n = @performance.inference_n.to_i + 1
+                            end  
                           elsif hab.name.to_s == "Explicación"
                             if @performance.explanation_sc.nil?
                               @performance.explanation_sc = 0
                             else
                               @performance.explanation_sc = @performance.explanation_sc
                             end
+                            if @performance.explanation_n.nil?
+                              @performance.explanation_n = 1
+                            else
+                              @performance.explanation_n = @performance.explanation_n.to_i + 1
+                            end
                           elsif hab.name.to_s == "Autoregulación"
                             if @performance.selfregulation_sc.nil?
                               @performance.selfregulation_sc = 0
                             else
                               @performance.selfregulation_sc = @performance.selfregulation_sc
+                            end
+                            if @performance.selfregulation_n.nil?
+                              @performance.selfregulation_n = 1
+                            else
+                              @performance.selfregulation_n = @performance.selfregulation_n.to_i + 1
                             end 
                           end
                         end
@@ -473,44 +616,64 @@ class TreesController < ApplicationController
                   else
 
                     if @performance
-
                       if @performance.content_sc.nil?
                         @performance.content_sc = 0
                       else
                         @performance.content_sc = @performance.content_sc
-                      end  
-
-                      if @performance.n.nil?
-                        @performance.n = 1
+                      end
+                      if @performance.content_n.nil?
+                        @performance.content_n = 1
                       else
-                        @performance.n = @performance.n.to_i + 1
+                        @performance.content_n = @performance.content_n.to_i + 1
                       end  
 
-                      @tree.recuperative_ct_question.ct_habilities.each do |hab|
+                      @tree.initial_ct_question.ct_habilities.each do |hab|
                         if hab.active
+                          puts "habilidades del initial ct questions------------------------"
+                          puts hab.name.to_s
                           if hab.name.to_s == "Interpretación"
                             if@performance.interpretation_sc.nil?
                               @performance.interpretation_sc = 0
                             else
                               @performance.interpretation_sc = @performance.interpretation_sc
+                            end
+                            if @performance.interpretation_n.nil?
+                              @performance.interpretation_n = 1
+                            else
+                              @performance.interpretation_n = @performance.interpretation_n.to_i + 1
                             end                      
                           elsif hab.name.to_s == "Análisis"
                             if @performance.analysis_sc.nil?
                               @performance.analysis_sc = 0
                             else
                              @performance.analysis_sc = @performance.analysis_sc
-                            end 
+                            end
+                            if @performance.analysis_n.nil?
+                              @performance.analysis_n = 1
+                            else
+                              @performance.analysis_n = @performance.analysis_n.to_i + 1
+                            end  
                           elsif hab.name.to_s == "Evaluación"
                             if @performance.evaluation_sc.nil?
                               @performance.evaluation_sc = 0
                             else
                               @performance.evaluation_sc = @performance.evaluation_sc
+                            end
+                            if @performance.evaluation_n.nil?
+                              @performance.evaluation_n = 1
+                            else
+                              @performance.evaluation_n = @performance.evaluation_n.to_i + 1
                             end 
                           elsif hab.name.to_s == "Inferencia"
                             if @performance.inference_sc.nil?
                               @performance.inference_sc = 0
                             else
                               @performance.inference_sc = @performance.inference_sc
+                            end
+                            if @performance.inference_n.nil?
+                              @performance.inference_n = 1
+                            else
+                              @performance.inference_n = @performance.inference_n.to_i + 1
                             end 
                           elsif hab.name.to_s == "Explicación"
                             if @performance.explanation_sc.nil?
@@ -518,11 +681,21 @@ class TreesController < ApplicationController
                             else
                               @performance.explanation_sc = @performance.explanation_sc
                             end
+                            if @performance.explanation_n.nil?
+                              @performance.explanation_n = 1
+                            else
+                              @performance.explanation_n = @performance.explanation_n.to_i + 1
+                            end
                           elsif hab.name.to_s == "Autoregulación"
                             if @performance.selfregulation_sc.nil?
                               @performance.selfregulation_sc = 0
                             else
                               @performance.selfregulation_sc = @performance.selfregulation_sc
+                            end
+                            if @performance.selfregulation_n.nil?
+                              @performance.selfregulation_n = 1
+                            else
+                              @performance.selfregulation_n = @performance.selfregulation_n.to_i + 1
                             end 
                           end
                         end
@@ -599,64 +772,94 @@ class TreesController < ApplicationController
               if @correct_ct == true && @correct_content == true
 
                 if @performance
-                      if @performance.content_sc.nil?
-                        @performance.content_sc = 1
-                        puts "le di el valor de 1 ------------------"
-                      else
-                        @performance.content_sc = @performance.content_sc + 1
-                      end 
+                  if @performance.content_sc.nil?
+                    @performance.content_sc = 1
+                    puts "le di el valor de 1 ------------------"
+                  else
+                    @performance.content_sc = @performance.content_sc + 1
+                  end 
 
-                      if @performance.n.nil?
-                        puts "el n es NIL y lle di el valor 1--------------------------"
-                        @performance.n = 1
-                      else
-                        puts "el n NO es NIL y el n es:-----------------------------------"
-                        @performance.n = @performance.n.to_i + 1
-                        puts @performance.n
-                      end   
+                  if @performance.content_n.nil?
+                    @performance.content_n = 1
+                  else
+                    @performance.content_n = @performance.content_n.to_i + 1
+                  end 
+                    
 
-                      @tree.deeping_ct_question.ct_habilities.each do |hab|
-                        if hab.active
-                          if hab.name.to_s == "Interpretación"
-                            if @performance.interpretation_sc.nil?
-                              @performance.interpretation_sc = 1
-                            else
-                              @performance.interpretation_sc = @performance.interpretation_sc + 1
-                            end                      
-                          elsif hab.name.to_s == "Análisis"
-                            if @performance.analysis_sc.nil?
-                              @performance.analysis_sc = 1
-                            else
-                              @performance.analysis_sc = @performance.analysis_sc + 1
-                            end 
-                          elsif hab.name.to_s == "Evaluación"
-                            if @performance.evaluation_sc.nil?
-                              @performance.evaluation_sc = 1
-                            else
-                              @performance.evaluation_sc = @performance.evaluation_sc + 1
-                            end 
-                          elsif hab.name.to_s == "Inferencia"
-                            if @performance.inference_sc.nil?
-                              @performance.inference_sc = 1
-                            else
-                              @performance.inference_sc = @performance.inference_sc + 1
-                            end 
-                          elsif hab.name.to_s == "Explicación"
-                            if @performance.explanation_sc.nil?
-                              @performance.explanation_sc = 1
-                            else
-                             @performance.explanation_sc = @performance.explanation_sc + 1
-                            end
-                          elsif hab.name.to_s == "Autoregulación"
-                            if @performance.selfregulation_sc.nil?
-                              @performance.selfregulation_sc = 1
-                            else
-                              @performance.selfregulation_sc = @performance.selfregulation_sc + 1
-                            end 
-                          end
+                  @tree.initial_ct_question.ct_habilities.each do |hab|
+                    puts "habilidades del initial ct questions------------------------"
+                    puts hab.name.to_s
+                    if hab.active
+                      if hab.name.to_s == "Interpretación"
+                        if @performance.interpretation_sc.nil?
+                          @performance.interpretation_sc = 1
+                        else
+                          @performance.interpretation_sc = @performance.interpretation_sc + 1                           
                         end
+                        if @performance.interpretation_n.nil?
+                          @performance.interpretation_n = 1
+                        else
+                          @performance.interpretation_n = @performance.interpretation_n.to_i + 1
+                        end                      
+                      elsif hab.name.to_s == "Análisis"
+                        if @performance.analysis_sc.nil?
+                          @performance.analysis_sc = 1
+                        else
+                          @performance.analysis_sc = @performance.analysis_sc + 1                           
+                        end
+                        if @performance.analysis_n.nil?
+                          @performance.analysis_n = 1
+                        else
+                          @performance.analysis_n = @performance.analysis_n.to_i + 1
+                        end 
+                      elsif hab.name.to_s == "Evaluación"
+                        if @performance.evaluation_sc.nil?
+                          @performance.evaluation_sc = 1
+                        else
+                          @performance.evaluation_sc = @performance.evaluation_sc + 1                          
+                        end
+                        if @performance.evaluation_n.nil?
+                          @performance.evaluation_n = 1
+                        else
+                          @performance.evaluation_n = @performance.evaluation_n.to_i + 1
+                        end 
+                      elsif hab.name.to_s == "Inferencia"
+                        if @performance.inference_sc.nil?
+                          @performance.inference_sc = 1
+                        else
+                          @performance.inference_sc = @performance.inference_sc + 1
+                        end
+                        if @performance.inference_n.nil?
+                          @performance.inference_n = 1
+                        else
+                          @performance.inference_n = @performance.inference_n.to_i + 1
+                        end 
+                      elsif hab.name.to_s == "Explicación"
+                        if @performance.explanation_sc.nil?
+                          @performance.explanation_sc = 1
+                        else
+                         @performance.explanation_sc = @performance.explanation_sc + 1
+                        end
+                        if @performance.explanation_n.nil?
+                          @performance.explanation_n = 1
+                        else
+                          @performance.explanation_n = @performance.explanation_n.to_i + 1
+                        end
+                      elsif hab.name.to_s == "Autoregulación"
+                        if @performance.selfregulation_sc.nil?
+                          @performance.selfregulation_sc = 1
+                        else
+                          @performance.selfregulation_sc = @performance.selfregulation_sc + 1
+                        end
+                        if @performance.selfregulation_n.nil?
+                          @performance.selfregulation_n = 1
+                        else
+                          @performance.selfregulation_n = @performance.selfregulation_n.to_i + 1
+                        end 
                       end
                     end
+                  end
+                end
                 
                 render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
                 :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
@@ -666,60 +869,91 @@ class TreesController < ApplicationController
               elsif @correct_content == true && @correct_ct == false
 
                 if @performance
-                      if @performance.content_sc.nil?
-                        @performance.content_sc = 1
-                      else
-                        @performance.content_sc = @performance.content_sc + 1
-                      end  
+                  if @performance.content_sc.nil?
+                    @performance.content_sc = 1
+                  else
+                    @performance.content_sc = @performance.content_sc + 1
+                  end  
+                  if @performance.content_n.nil?
+                    @performance.content_n = 1
+                  else
+                    @performance.content_n = @performance.content_n.to_i + 1
+                  end 
 
-                      if @performance.n.nil?
-                        @performance.n = 1
-                      else
-                        @performance.n = @performance.n.to_i + 1
-                      end  
-
-                      @tree.deeping_ct_question.ct_habilities.each do |hab|
-                        if hab.active
-                          if hab.name.to_s == "Interpretación"
-                            if @performance.interpretation_sc.nil?
-                              @performance.interpretation_sc = 0
-                            else
-                              @performance.interpretation_sc = @performance.interpretation_sc
-                            end                      
-                          elsif hab.name.to_s == "Análisis"
-                            if @performance.analysis_sc.nil?
-                              @performance.analysis_sc = 0
-                            else
-                              @performance.analysis_sc = @performance.analysis_sc
-                            end 
-                          elsif hab.name.to_s == "Evaluación"
-                            if @performance.evaluation_sc.nil?
-                              @performance.evaluation_sc = 0
-                            else
-                              @performance.evaluation_sc = @performance.evaluation_sc
-                            end 
-                          elsif hab.name.to_s == "Inferencia"
-                            if @performance.inference_sc.nil?
-                              @performance.inference_sc = 0
-                            else
-                             @performance.inference_sc = @performance.inference_sc
-                            end 
-                          elsif hab.name.to_s == "Explicación"
-                            if @performance.explanation_sc.nil?
-                              @performance.explanation_sc = 0
-                            else
-                              @performance.explanation_sc = @performance.explanation_sc
-                            end
-                          elsif hab.name.to_s == "Autoregulación"
-                            if @performance.selfregulation_sc.nil?
-                              @performance.selfregulation_sc = 0
-                            else
-                              @performance.selfregulation_sc = @performance.selfregulation_sc
-                            end 
-                          end
+                  @tree.initial_ct_question.ct_habilities.each do |hab|
+                    puts "habilidades del initial ct questions------------------------"
+                    puts hab.name.to_s
+                    if hab.active
+                      if hab.name.to_s == "Interpretación"
+                        if @performance.interpretation_sc.nil?
+                          @performance.interpretation_sc = 0
+                        else
+                          @performance.interpretation_sc = @performance.interpretation_sc
                         end
+                        if @performance.interpretation_n.nil?
+                          @performance.interpretation_n = 1
+                        else
+                          @performance.interpretation_n = @performance.interpretation_n.to_i + 1
+                        end                       
+                      elsif hab.name.to_s == "Análisis"
+                        if @performance.analysis_sc.nil?
+                          @performance.analysis_sc = 0
+                        else
+                          @performance.analysis_sc = @performance.analysis_sc
+                        end
+                        if @performance.analysis_n.nil?
+                          @performance.analysis_n = 1
+                        else
+                          @performance.analysis_n = @performance.analysis_n.to_i + 1
+                        end 
+                      elsif hab.name.to_s == "Evaluación"
+                        if @performance.evaluation_sc.nil?
+                          @performance.evaluation_sc = 0
+                        else
+                          @performance.evaluation_sc = @performance.evaluation_sc
+                        end
+                        if @performance.evaluation_n.nil?
+                          @performance.evaluation_n = 1
+                        else
+                          @performance.evaluation_n = @performance.evaluation_n.to_i + 1
+                        end 
+                      elsif hab.name.to_s == "Inferencia"
+                        if @performance.inference_sc.nil?
+                          @performance.inference_sc = 0
+                        else
+                         @performance.inference_sc = @performance.inference_sc
+                        end
+                        if @performance.inference_n.nil?
+                          @performance.inference_n = 1
+                        else
+                          @performance.inference_n = @performance.inference_n.to_i + 1
+                        end  
+                      elsif hab.name.to_s == "Explicación"
+                        if @performance.explanation_sc.nil?
+                          @performance.explanation_sc = 0
+                        else
+                          @performance.explanation_sc = @performance.explanation_sc
+                        end
+                        if @performance.explanation_n.nil?
+                          @performance.explanation_n = 1
+                        else
+                          @performance.explanation_n = @performance.explanation_n.to_i + 1
+                        end
+                      elsif hab.name.to_s == "Autoregulación"
+                        if @performance.selfregulation_sc.nil?
+                          @performance.selfregulation_sc = 0
+                        else
+                          @performance.selfregulation_sc = @performance.selfregulation_sc
+                        end
+                        if @performance.selfregulation_n.nil?
+                          @performance.selfregulation_n = 1
+                        else
+                          @performance.selfregulation_n = @performance.selfregulation_n.to_i + 1
+                        end 
                       end
                     end
+                  end
+                end
 
                 render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
                 :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
@@ -728,61 +962,92 @@ class TreesController < ApplicationController
               else
 
                 if @performance
+                  if @performance.content_sc.nil?
+                    @performance.content_sc = 0
+                  else
+                    @performance.content_sc = @performance.content_sc
+                  end
+                  if @performance.content_n.nil?
+                    @performance.content_n = 1
+                  else
+                    @performance.content_n = @performance.content_n.to_i + 1
+                  end  
 
-                      if @performance.content_sc.nil?
-                        @performance.content_sc = 0
-                      else
-                        @performance.content_sc = @performance.content_sc
-                      end  
-
-                      if @performance.n.nil?
-                        @performance.n = 1
-                      else
-                        @performance.n = @performance.n.to_i + 1
-                      end  
-
-                      @tree.deeping_ct_question.ct_habilities.each do |hab|
-                        if hab.active
-                          if hab.name.to_s == "Interpretación"
-                            if@performance.interpretation_sc.nil?
-                              @performance.interpretation_sc = 0
-                            else
-                              @performance.interpretation_sc = @performance.interpretation_sc
-                            end                      
-                          elsif hab.name.to_s == "Análisis"
-                            if @performance.analysis_sc.nil?
-                              @performance.analysis_sc = 0
-                            else
-                             @performance.analysis_sc = @performance.analysis_sc
-                            end 
-                          elsif hab.name.to_s == "Evaluación"
-                            if @performance.evaluation_sc.nil?
-                              @performance.evaluation_sc = 0
-                            else
-                              @performance.evaluation_sc = @performance.evaluation_sc
-                            end 
-                          elsif hab.name.to_s == "Inferencia"
-                            if @performance.inference_sc.nil?
-                              @performance.inference_sc = 0
-                            else
-                              @performance.inference_sc = @performance.inference_sc
-                            end 
-                          elsif hab.name.to_s == "Explicación"
-                            if @performance.explanation_sc.nil?
-                              @performance.explanation_sc = 0
-                            else
-                              @performance.explanation_sc = @performance.explanation_sc
-                            end
-                          elsif hab.name.to_s == "Autoregulación"
-                            if @performance.selfregulation_sc.nil?
-                              @performance.selfregulation_sc = 0
-                            else
-                              @performance.selfregulation_sc = @performance.selfregulation_sc
-                            end 
-                          end
+                  @tree.initial_ct_question.ct_habilities.each do |hab|
+                    if hab.active
+                      puts "habilidades del initial ct questions------------------------"
+                      puts hab.name.to_s
+                      if hab.name.to_s == "Interpretación"
+                        if@performance.interpretation_sc.nil?
+                          @performance.interpretation_sc = 0
+                        else
+                          @performance.interpretation_sc = @performance.interpretation_sc
                         end
+                        if @performance.interpretation_n.nil?
+                          @performance.interpretation_n = 1
+                        else
+                          @performance.interpretation_n = @performance.interpretation_n.to_i + 1
+                        end                      
+                      elsif hab.name.to_s == "Análisis"
+                        if @performance.analysis_sc.nil?
+                          @performance.analysis_sc = 0
+                        else
+                         @performance.analysis_sc = @performance.analysis_sc
+                        end
+                        if @performance.analysis_n.nil?
+                          @performance.analysis_n = 1
+                        else
+                          @performance.analysis_n = @performance.analysis_n.to_i + 1
+                        end  
+                      elsif hab.name.to_s == "Evaluación"
+                        if @performance.evaluation_sc.nil?
+                          @performance.evaluation_sc = 0
+                        else
+                          @performance.evaluation_sc = @performance.evaluation_sc
+                        end
+                        if @performance.evaluation_n.nil?
+                          @performance.evaluation_n = 1
+                        else
+                          @performance.evaluation_n = @performance.evaluation_n.to_i + 1
+                        end 
+                      elsif hab.name.to_s == "Inferencia"
+                        if @performance.inference_sc.nil?
+                          @performance.inference_sc = 0
+                        else
+                          @performance.inference_sc = @performance.inference_sc
+                        end
+                        if @performance.inference_n.nil?
+                          @performance.inference_n = 1
+                        else
+                          @performance.inference_n = @performance.inference_n.to_i + 1
+                        end 
+                      elsif hab.name.to_s == "Explicación"
+                        if @performance.explanation_sc.nil?
+                          @performance.explanation_sc = 0
+                        else
+                          @performance.explanation_sc = @performance.explanation_sc
+                        end
+                        if @performance.explanation_n.nil?
+                          @performance.explanation_n = 1
+                        else
+                          @performance.explanation_n = @performance.explanation_n.to_i + 1
+                        end
+                      elsif hab.name.to_s == "Autoregulación"
+                        if @performance.selfregulation_sc.nil?
+                          @performance.selfregulation_sc = 0
+                        else
+                          @performance.selfregulation_sc = @performance.selfregulation_sc
+                        end
+                        if @performance.selfregulation_n.nil?
+                          @performance.selfregulation_n = 1
+                        else
+                          @performance.selfregulation_n = @performance.selfregulation_n.to_i + 1
+                        end 
                       end
                     end
+                  end
+                end
+                  
 
                 render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
                 :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
@@ -814,8 +1079,7 @@ class TreesController < ApplicationController
 
     if @performance.nil?
     else
-      puts "javieraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-      puts @performance.n
+      
       @performance.save
       puts @performance.inspect
     end
@@ -969,95 +1233,7 @@ class TreesController < ApplicationController
     end
   end
 
-  def set_report_values
-      puts "llamaroooooooon al report valueeeeeeeeeeeeeeeeeeeeeeeee"
-      total_users_content = 0      
-      total_users_interpretation = 0
-      total_users_analysis = 0
-      total_users_evaluation = 0
-      total_users_inference = 0
-      total_users_explanation = 0
-      total_users_selfregulation = 0
-
-      @tree.user_tree_performances.each do |perfomance|        
-        if !performance.content_sc.nil?
-          total_users_content++
-          if @tree.content_sc.nil?
-            @tree.content_sc = 0
-          end
-          @tree.content_sc += performance.content_sc
-        end
-        if !performance.interpretation_sc.nil?
-          total_users_interpretation++
-          if @tree.interpretation_sc.nil?
-            @tree.interpretation_sc = 0
-          end
-          @tree.interpretation_sc += performance.interpretation_sc
-        end
-        if !performance.analysis_sc.nil?
-          total_users_analysis++
-          if @tree.analysis_sc.nil?
-            @tree.analysis_sc = 0
-          end
-          @tree.analysis_sc += performance.analysis_sc
-        end
-        if !performance.evaluation_sc.nil?
-          total_users_evaluation++
-          if @tree.evaluation_sc.nil?
-            @tree.evaluation_sc = 0
-          end
-          @tree.evaluation_sc += performance.evaluation_sc
-        end
-        if !performance.inference_sc.nil?
-          total_users_inference++
-          if @tree.inference_sc.nil?
-            @tree.inference_sc = 0
-          end
-          @tree.inference_sc += performance.inference_sc
-        end
-        if !performance.explanation_sc.nil?
-          total_users_explanation++
-          if @tree.explanation_sc.nil?
-            @tree.explanation_sc = 0
-          end
-          @tree.explanation_sc += performance.explanation_sc
-        end
-        if !performance.selfregulation_sc.nil?
-          total_users_selfregulation++
-          if @tree.selfregulation_sc.nil?
-            @tree.selfregulation_sc = 0
-          end
-          @tree.selfregulation_sc += performance.selfregulation_sc
-        end
-      end
-
-      if !@tree.content_sc.nil?
-        @tree.content_sc = @tree.content_sc/total_users_content
-      end
-      if !@tree.interpretation_sc.nil?
-        @tree.interpretation_sc = @tree.interpretation_sc/total_users_interpretation
-      end
-      if !@tree.analysis_sc.nil?
-         @tree.analysis_sc = @tree.analysis_sc/total_users_analysis
-      end
-      if !@tree.evaluation_sc.nil?
-        @tree.evaluation_sc = @tree.evaluation_sc/total_users_evaluation
-      end
-      if !@tree.inference_sc.nil?
-        @tree.inference_sc = @tree.inference_sc/total_users_inference
-      end
-      if  !@tree.explanation_sc.nil?
-        @tree.explanation_sc = @tree.explanation_sc/total_users_explanation
-      end
-      if !@tree.selfregulation_sc.nil?     
-        @tree.selfregulation_sc = @tree.selfregulation_sc/total_users_explanation
-      end
-
-      @tree.save
-      puts "arbooooooooooool editadooooooooooooo"
-      puts @tree.inspect
-
-  end
+  
 
   private
   

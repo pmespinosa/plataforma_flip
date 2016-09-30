@@ -213,49 +213,49 @@ class ReportsController < ApplicationController
           if tree.content_sc.nil?
             tree.content_sc = 0
           end
-          tree.content_sc += performance.content_sc
+          tree.content_sc += (performance.content_sc/performance.content_n)
         end
         if !performance.interpretation_sc.nil?
           total_users_interpretation = total_users_interpretation + 1
           if tree.interpretation_sc.nil?
             tree.interpretation_sc = 0
           end
-          tree.interpretation_sc += performance.interpretation_sc
+          tree.interpretation_sc += (performance.interpretation_sc/performance.interpretation_n)
         end
         if !performance.analysis_sc.nil?
           total_users_analysis = total_users_analysis + 1
           if tree.analysis_sc.nil?
             tree.analysis_sc = 0
           end
-          tree.analysis_sc += performance.analysis_sc
+          tree.analysis_sc += (performance.analysis_sc/performance.analysis_n)
         end
         if !performance.evaluation_sc.nil?
           total_users_evaluation = total_users_evaluation + 1
           if tree.evaluation_sc.nil?
             tree.evaluation_sc = 0
           end
-          tree.evaluation_sc += performance.evaluation_sc
+          tree.evaluation_sc += (performance.evaluation_sc/performance.evaluation_n)
         end
         if !performance.inference_sc.nil?
           total_users_inference = total_users_inference + 1
           if tree.inference_sc.nil?
             tree.inference_sc = 0
           end
-          tree.inference_sc += performance.inference_sc
+          tree.inference_sc += (performance.inference_sc/performance.inference_n)
         end
         if !performance.explanation_sc.nil?
           total_users_explanation = total_users_explanation + 1
           if tree.explanation_sc.nil?
             tree.explanation_sc = 0
           end
-          tree.explanation_sc += performance.explanation_sc
+          tree.explanation_sc += (performance.explanation_sc/performance.explanation_n)
         end
         if !performance.selfregulation_sc.nil?
           total_users_selfregulation = total_users_selfregulation + 1
           if tree.selfregulation_sc.nil?
             tree.selfregulation_sc = 0
           end
-          tree.selfregulation_sc += performance.selfregulation_sc
+          tree.selfregulation_sc += (performance.selfregulation_sc/performance.selfregulation_n)
         end
       end
 
