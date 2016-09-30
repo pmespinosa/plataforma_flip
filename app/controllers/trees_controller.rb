@@ -1,5 +1,5 @@
 class TreesController < ApplicationController
-  before_action :set_tree, only: [:show, :edit, :update, :destroy]
+  before_action :set_tree, only: [:show, :edit, :update, :destroy, :set_report_values]
   before_action :set_course, only: [:create, :new]
   before_action :set_tree_edx, only: [:edx_view]
   before_action :set_ef_visible
@@ -969,6 +969,93 @@ class TreesController < ApplicationController
     end
   end
 
+  def set_report_values
+      total_users_content = 0      
+      total_users_interpretation = 0
+      total_users_analysis = 0
+      total_users_evaluation = 0
+      total_users_inference = 0
+      total_users_explanation = 0
+      total_users_selfregulation = 0
+
+      @tree.user_tree_performances.each do |perfomance|        
+        if !performance.content_sc.nil?
+          total_users_content++
+          if @tree.content_sc.nil?
+            @tree.content_sc = 0
+          end
+          @tree.content_sc += performance.content_sc
+        end
+        if !performance.interpretation_sc.nil?
+          total_users_interpretation++
+          if @tree.interpretation_sc.nil?
+            @tree.interpretation_sc = 0
+          end
+          @tree.interpretation_sc += performance.interpretation_sc
+        end
+        if !performance.analysis_sc.nil?
+          total_users_analysis++
+          if @tree.analysis_sc.nil?
+            @tree.analysis_sc = 0
+          end
+          @tree.analysis_sc += performance.analysis_sc
+        end
+        if !performance.evaluation_sc.nil?
+          total_users_evaluation++
+          if @tree.evaluation_sc.nil?
+            @tree.evaluation_sc = 0
+          end
+          @tree.evaluation_sc += performance.evaluation_sc
+        end
+        if !performance.inference_sc.nil?
+          total_users_inference++
+          if @tree.inference_sc.nil?
+            @tree.inference_sc = 0
+          end
+          @tree.inference_sc += performance.inference_sc
+        end
+        if !performance.explanation_sc.nil?
+          total_users_explanation++
+          if @tree.explanation_sc.nil?
+            @tree.explanation_sc = 0
+          end
+          @tree.explanation_sc += performance.explanation_sc
+        end
+        if !performance.selfregulation_sc.nil?
+          total_users_selfregulation++
+          if @tree.selfregulation_sc.nil?
+            @tree.selfregulation_sc = 0
+          end
+          @tree.selfregulation_sc += performance.selfregulation_sc
+        end
+      end
+
+      if !@tree.content_sc.nil?
+        @tree.content_sc = @tree.content_sc/total_users_content
+      end
+      if !@tree.interpretation_sc.nil?
+        @tree.interpretation_sc = @tree.interpretation_sc/total_users_interpretation
+      end
+      if !@tree.analysis_sc.nil?
+         @tree.analysis_sc = @tree.analysis_sc/total_users_analysis
+      end
+      if !@tree.evaluation_sc.nil?
+        @tree.evaluation_sc = @tree.evaluation_sc/total_users_evaluation
+      end
+      if !@tree.inference_sc.nil?
+        @tree.inference_sc = @tree.inference_sc/total_users_inference
+      end
+      if  !@tree.explanation_sc.nil?
+        @tree.explanation_sc = @tree.explanation_sc/total_users_explanation
+      end
+      if !@tree.selfregulation_sc.nil?     
+        @tree.selfregulation_sc = @tree.selfregulation_sc/total_users_explanation
+      end
+
+      @tree.save
+
+    end
+
   private
   
     # Use callbacks to share common setup or constraints between actions.
@@ -1031,5 +1118,7 @@ class TreesController < ApplicationController
     def set_user_tree_performance
       @performance = Course.find(params[:tree_id => @tree.id, :user_id => current.user.id])
     end
+
+
 
 end

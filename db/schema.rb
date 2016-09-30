@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160928211700) do
+ActiveRecord::Schema.define(version: 20160930024119) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -181,6 +181,8 @@ ActiveRecord::Schema.define(version: 20160928211700) do
     t.float    "selfregulation_sc"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.float    "content_sc"
+    t.string   "name"
   end
 
   add_index "reports", ["course_id"], name: "index_reports_on_course_id", using: :btree
@@ -189,8 +191,15 @@ ActiveRecord::Schema.define(version: 20160928211700) do
     t.string   "video"
     t.integer  "iterations"
     t.integer  "course_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.float    "content_sc"
+    t.float    "interpretation_sc"
+    t.float    "analysis_sc"
+    t.float    "evaluation_sc"
+    t.float    "inference_sc"
+    t.float    "explanation_sc"
+    t.float    "selfregulation_sc"
   end
 
   add_index "trees", ["course_id"], name: "index_trees_on_course_id", using: :btree

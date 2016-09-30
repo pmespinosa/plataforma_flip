@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
 
 
-  resources :reports
+  #resources :reports
   resources :content_choices
   resources :ct_choices
   #resources :trees
@@ -50,8 +50,8 @@ Rails.application.routes.draw do
   get 'courses/:id/users'=> 'courses#students'
   post 'courses/:id/eval_form', to:'courses#eval_form', as: "eval_form"
   get 'courses/:id/eval_form', to:'courses#eval_form'
-  post 'courses/:id/reports', to:'courses#reportes', as: "reportes"
-  get 'courses/:id/reports', to:'courses#reportes'
+  post 'courses/:id/reportes', to:'courses#reportes', as: "reportes"
+  get 'courses/:id/reportes', to:'courses#reportes'
 
   get 'homework/:id/asistencia', to:'homeworks#asistencia', as:"homework_asistencia"
   post 'homework/:id/asistencia',to:'homeworks#asistencia'
