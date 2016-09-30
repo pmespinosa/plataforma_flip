@@ -1,7 +1,7 @@
 class TreesController < ApplicationController
-  before_action :set_tree, only: [:show, :edit, :update, :destroy, :set_report_values]
+  before_action :set_tree, only: [:show, :edit, :update, :destroy]
   before_action :set_course, only: [:create, :new]
-  before_action :set_tree_edx, only: [:edx_view]
+  before_action :set_tree_edx, only: [:edx_view, :set_report_values]
   before_action :set_ef_visible
   before_action :set_breadcrumbs
 
@@ -970,6 +970,7 @@ class TreesController < ApplicationController
   end
 
   def set_report_values
+      puts "llamaroooooooon al report valueeeeeeeeeeeeeeeeeeeeeeeee"
       total_users_content = 0      
       total_users_interpretation = 0
       total_users_analysis = 0
@@ -1053,8 +1054,10 @@ class TreesController < ApplicationController
       end
 
       @tree.save
+      puts "arbooooooooooool editadooooooooooooo"
+      puts @tree.inspect
 
-    end
+  end
 
   private
   

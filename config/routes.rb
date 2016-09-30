@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   get 'users/students'
   #post 'courses/:id' => 'courses#show'
   post '/courses/:course_id/trees/:id' => 'trees#edx_view'
+  get 'trees/report_values', to: 'trees#set_report_values', as: 'set_report_values'
 
   resources :courses do
     resources :trees do
@@ -33,6 +34,7 @@ Rails.application.routes.draw do
       resources :content_questions
       resources :feedbacks
       resources :contents
+      
     end
   end
 

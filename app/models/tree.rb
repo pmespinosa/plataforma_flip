@@ -18,7 +18,7 @@ class Tree < ActiveRecord::Base
   has_one :recuperative_complex_feedback, :class_name => "RecuperativeComplexFeedback", :dependent => :destroy
   has_one :deeping_simple_feedback, :class_name => "DeepingSimpleFeedback", :dependent => :destroy
   has_one :deeping_complex_feedback, :class_name => "DeepingComplexFeedback", :dependent => :destroy
-
+  has_and_belongs_to_many :reports
   has_many :user_tree_performances, :dependent => :destroy
 
 

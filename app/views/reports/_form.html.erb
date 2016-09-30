@@ -28,7 +28,7 @@
       <tbody>
         <% @course.trees.sort_by{|e| e[:created_at]}.each do |tree| %>
           <tr>
-              <td><%= check_box_tag "tree_ids[#{tree.id}]", tree.id %></td>
+              <td><%= check_box_tag "tree_ids[]", tree.id %></td>
               <% if tree.content.text.length > 30%>
                 <td><%= tree.content.text[0,40] %>...</td>
               <% else %>
