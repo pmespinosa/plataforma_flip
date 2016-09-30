@@ -1,9 +1,13 @@
 <p id="notice"><%= notice %></p>
 
 
-<table class="table table-bordered">
+<br>
+<div class="panel panel-info">
+  <div class="panel-heading"><h3>Promedio de rendimiento de evaluaciones</h3></div>
 
-    <thead class="primary">
+<table class="table table-bordered table-active">
+
+    <thead class="thead-primary">        
         <th>Contenido/Habilidad de PC</th>
         <th>Contenido</th>
         <th>Interpretar</th>
@@ -18,34 +22,139 @@
       <% @report.trees.each do |tree| %>
           
           <tr>
-            
-              <td><%=tree.content.text %></td>
-              <td><%=tree.content_sc %></td>
-            <td><%= tree.interpretation_sc %></td>
-            <td><%= tree.analysis_sc %></td>
-            <td><%= tree.evaluation_sc %></td>
-            <td><%= tree.inference_sc %></td>
-            <td><%= tree.explanation_sc %></td>
-            <td><%= tree.selfregulation_sc %></td>
+              <td><b><%=tree.content.text %></b></td>
+              <td><% if tree.content_sc %>
+                      <%=tree.content_sc.round(2) %></td>
+                  <%else%>
+                      <%= "N/O" %>
+                  <% end %>
+              </td>
+              <td><% if tree.interpretation_sc %>
+                      <%=tree.interpretation_sc.round(2) %></td>
+                  <%else%>
+                      <%= "N/O" %>
+                  <% end %>
+              </td>
+              <td><% if tree.analysis_sc %>
+                      <%=tree.analysis_sc.round(2) %></td>
+                  <%else%>
+                      <%= "N/O" %>
+                  <% end %>
+              </td>
+              <td><% if tree.evaluation_sc %>
+                      <%=tree.evaluation_sc.round(2) %></td>
+                  <%else%>
+                      <%= "N/O" %>
+                  <% end %>
+              </td>
+              <td><% if tree.inference_sc %>
+                      <%=tree.inference_sc.round(2) %></td>
+                  <%else%>
+                      <%= "N/O" %>
+                  <% end %>
+              </td>
+              <td><% if tree.explanation_sc %>
+                      <%=tree.explanation_sc.round(2) %></td>
+                  <%else%>
+                      <%= "N/O" %>
+                  <% end %>
+              </td>
+              <td><% if tree.selfregulation_sc %>
+                      <%=tree.selfregulation_sc.round(2) %></td>
+                  <%else%>
+                      <%= "N/O" %>
+                  <% end %>
+              </td>
           </tr>
 
       <% end %>
 
-          <tr>
-            <td>Total Habilidad PC</td>
-            <td><%= @report.content_sc %></td>
-            <td><%= @report.interpretation_sc %></td>
-            <td><%= @report.analysis_sc %></td>
-            <td><%= @report.evaluation_sc %></td>
-            <td><%= @report.inference_sc %></td>
-            <td><%= @report.explanation_sc %></td>
-            <td><%= @report.selfregulation_sc %></td>
+          <tr class="table-active">
+            <td><b>Total Habilidad PC</b></td>
+            <td><% if @report.content_sc %>
+                      <%=@report.content_sc.round(2) %></td>
+                  <%else%>
+                      <%= "N/O" %>
+                  <% end %>
+              </td>
+              <td><% if @report.interpretation_sc %>
+                      <%=@report.interpretation_sc.round(2) %></td>
+                  <%else%>
+                      <%= "N/O" %>
+                  <% end %>
+              </td>
+              <td><% if @report.analysis_sc %>
+                      <%=@report.analysis_sc.round(2) %></td>
+                  <%else%>
+                      <%= "N/O" %>
+                  <% end %>
+              </td>
+              <td><% if @report.evaluation_sc %>
+                      <%=@report.evaluation_sc.round(2) %></td>
+                  <%else%>
+                      <%= "N/O" %>
+                  <% end %>
+              </td>
+              <td><% if @report.inference_sc %>
+                      <%=@report.inference_sc.round(2) %></td>
+                  <%else%>
+                      <%= "N/O" %>
+                  <% end %>
+              </td>
+              <td><% if @report.explanation_sc %>
+                      <%=@report.explanation_sc.round(2) %></td>
+                  <%else%>
+                      <%= "N/O" %>
+                  <% end %>
+              </td>
+              <td><% if @report.selfregulation_sc %>
+                      <%=@report.selfregulation_sc.round(2) %></td>
+                  <%else%>
+                      <%= "N/O" %>
+                  <% end %>
+              </td>
           </tr>
       
     </tbody>
 
 </table>
+</div>
 
+<br><br>
+
+<h3> </h3>
+
+<div class="panel panel-success">
+  <div class="panel-heading"> <h3>Recomendación para clase</h3></div>
+
+<table class="table table-bordered">
+
+    <thead class="thead-inverse">        
+        <th>Contenido/Habilidad de PC</th>
+        <th>Interpretar</th>
+        <th>Análisis</th>
+        <th>Evaluación</th>
+        <th>Inferencia</th>
+        <th>Explicación</th>
+        <th>Autoregulación</th>
+    </thead>
+    <tbody>
+          <% @report.trees.each do |tree| %>
+          
+          <tr>
+              <td><b><%=tree.content.text %></b></td>
+              <td>X</td>
+              <td>X</td>
+              <td>X</td>
+              <td>X</td>
+              <td>X</td>
+              <td>X</td>
+          </tr>
+
+      <% end %>
+    </tbody>
+</table>
+</div>
 
 <%= link_to 'Edit', edit_report_path(@report) %> |
 <%= link_to 'Back', reports_path %>
