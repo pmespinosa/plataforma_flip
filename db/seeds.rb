@@ -55,16 +55,11 @@ validating, or correcting either one's reasoning or one's results.")
 
 
 
-#interpretation.ct_subhabilities.create(name: 'Categorización', description: "-To apprehend or appropriately formulate categories, distinctions, or frameworks
-#for understanding, describing or characterizing information.\n
-#-To describe experiences, situations, beliefs, events, etc. so that they take on
-#comprehensible meanings in terms of appropriate categorizations, distinctions, or
-#frameworks.")
-interpretation.ct_subhabilities.create(name: 'Categorización', description: "-Formular categorías, distinciones, o marcos
-para comprender, describir o caracterizar información. \ n
--Describir experiencias, situaciones, creencias, eventos, etc. para que tomen en
-significados comprensibles en términos de adecuada categorizaciones, distinciones o
-marcos. ")
+interpretation.ct_subhabilities.create(name: 'Categorización', description: "-To apprehend or appropriately formulate categories, distinctions, or frameworks
+for understanding, describing or characterizing information.\n
+-To describe experiences, situations, beliefs, events, etc. so that they take on
+comprehensible meanings in terms of appropriate categorizations, distinctions, or
+frameworks.")
 
 interpretation.ct_subhabilities.create(name: "Decodificar significado", description: "To detect, attend to, and describe the informational content, affective purport,
 directive functions, intentions, motives, purposes, social significance, values, views, rules,
