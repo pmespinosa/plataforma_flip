@@ -21,9 +21,13 @@ User.create(first_name: 'Guillermo', last_name: 'Ibacache', email: 'gaibacache@u
 Course.create(name: "Didáctica de la Lectura", description: "EDU2001-2016/2", users: User.all, course_code: 'EDU2001-2016/1')
 Course.create(name: "Didáctica de las Matemáticas", description: "EDU3004-2016/2", users: User.all, course_code: 'EDU2022-2016/1')
 
-interpretation = CtHability.create(name: 'Interpretación', description: "To comprehend and express the meaning or significance of a wide
-variety of experiences, situations, data, events, judgments, conventions, beliefs, rules,
-procedures or criteria.")
+#interpretation = CtHability.create(name: 'Interpretación', description: "To comprehend and express the meaning or significance of a wide
+#variety of experiences, situations, data, events, judgments, conventions, beliefs, rules,
+#procedures or criteria.")
+
+interpretation = CtHability.create(name: 'Interpretación', description: "Complender y expresar el significado de una amplia 
+	variedad de experiencias, situaciones, datos, eventos, juicios de valor, convenciones, creencias, reglas y
+procedimiento de critierios.")
 
 analysis = CtHability.create(name: 'Análisis', description: "To identify the intended and actual inferential relationships among
 statements, questions, concepts, descriptions or other forms of representation intended to
@@ -51,11 +55,16 @@ validating, or correcting either one's reasoning or one's results.")
 
 
 
-interpretation.ct_subhabilities.create(name: 'Categorización', description: "-To apprehend or appropriately formulate categories, distinctions, or frameworks
-for understanding, describing or characterizing information.\n
--To describe experiences, situations, beliefs, events, etc. so that they take on
-comprehensible meanings in terms of appropriate categorizations, distinctions, or
-frameworks.")
+#interpretation.ct_subhabilities.create(name: 'Categorización', description: "-To apprehend or appropriately formulate categories, distinctions, or frameworks
+#for understanding, describing or characterizing information.\n
+#-To describe experiences, situations, beliefs, events, etc. so that they take on
+#comprehensible meanings in terms of appropriate categorizations, distinctions, or
+#frameworks.")
+interpretation.ct_subhabilities.create(name: 'Categorización', description: "-Formular categorías, distinciones, o marcos
+para comprender, describir o caracterizar información. \ n
+-Describir experiencias, situaciones, creencias, eventos, etc. para que tomen en
+significados comprensibles en términos de adecuada categorizaciones, distinciones o
+marcos. ")
 
 interpretation.ct_subhabilities.create(name: "Decodificar significado", description: "To detect, attend to, and describe the informational content, affective purport,
 directive functions, intentions, motives, purposes, social significance, values, views, rules,
