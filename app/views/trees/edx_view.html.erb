@@ -64,7 +64,7 @@
                 <br>
                 <%= hidden_field_tag "state", "answered" %>
                 <%= hidden_field_tag "n", n %>
-             <% end %>
+            <% end %>
              <br>
           </td>
         </tr>
@@ -169,7 +169,7 @@
           <%= hidden_field_tag "state", "feedback_seen" %>
           <%= hidden_field_tag "n", (n.to_i+1) %>
 
-          <tr>
+        <tr>
           <td style="width:50%">            
             <%= fields_for content_question do |question_fields| %>
                 <div class="input-group">
@@ -230,7 +230,7 @@
 
       <% elsif state.to_s == "answered" && feedback_quality.to_s == "none" %>  
 
-      <tr>
+        <tr>
           <td style="width:50%">            
             <%= fields_for content_question do |question_fields| %>
                 <div class="input-group">
