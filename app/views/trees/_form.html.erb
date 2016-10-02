@@ -40,7 +40,7 @@
 <%= image_tag("home.png", size: '50', :class => "scrollToTop", :style => 'position: fixed; bottom: 0; right: 0; margin-bottom: 50px; margin-right: 50px;') %>
 
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-  <div class="panel panel-default">
+  <div class="panel panel-success">
     <div class="panel-heading" role="tab" id="headingOne">
       <h4 class="panel-title">
         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -71,7 +71,7 @@
             <tr>
               <td style="padding:40px 15px 40px 0px;">
                 <%= f.simple_fields_for :initial_simple_feedback do |builder| %>
-                <%= builder.label :content, 'Feedback inicial para Argumento' %>
+                <label for="basic-url"> Feedback inicial para Argumento</label>
                  <div class='nested-fields'>
                  <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
                  </div>
@@ -79,7 +79,7 @@
               </td>
               <td style="padding:40px 15px 40px 0px;">
                 <%= f.simple_fields_for :initial_complex_feedback do |builder| %>
-                 <%= builder.label :content, 'Feedback inicial para Contenido' %>
+                 <label for="basic-url">Feedback inicial para Contenido </label>
                  <div class='nested-fields'>
                  <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
                  </div>
@@ -91,7 +91,7 @@
       </div>
     </div>
   </div>
-  <div class="panel panel-default">
+  <div class="panel panel-warning">
     <div class="panel-heading" role="tab" id="headingTwo">
       <h4 class="panel-title">
         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -121,7 +121,7 @@
             <tr>
               <td style="padding:40px 15px 40px 0px;">
                 <%= f.simple_fields_for :recuperative_simple_feedback do |builder| %>
-                <%= builder.label :content, 'Feedback Pregunta Recuperativa para Argumento' %>
+                <label for="basic-url">Feedback Pregunta Recuperativa para Argumento</label>
                  <div class='nested-fields'>
                  <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
                  </div>
@@ -129,7 +129,7 @@
               </td>
               <td style="padding:40px 15px 40px 0px;">
                 <%= f.simple_fields_for :recuperative_complex_feedback do |builder| %>
-                 <%= builder.label :content, 'Feedback Pregunta Recuperativa para Contenido' %>
+                 <label for="basic-url">Feedback Pregunta Recuperativa para Contenido</label>
                  <div class='nested-fields'>
                  <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
                  </div>
@@ -141,7 +141,7 @@
       </div>
     </div>
   </div>
-  <div class="panel panel-default">
+  <div class="panel panel-success">
     <div class="panel-heading" role="tab" id="headingThree">
       <h4 class="panel-title">
         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
@@ -170,15 +170,14 @@
             <tr>
               <td style="padding:40px 15px 40px 0px;">
                 <%= f.simple_fields_for :deeping_simple_feedback do |builder| %>
-                <%= builder.label :content, 'Feedback Pregunta de profundización para Argumento' %>
-                 <div class='nested-fields'>
+                <label for="basic-url">Feedback Pregunta de profundización para Argumento</label>       <div class='nested-fields'>
                  <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
                  </div>
                 <% end %>
               </td>
               <td style="padding:40px 15px 40px 0px;">
                 <%= f.simple_fields_for :deeping_complex_feedback do |builder| %>
-                 <%= builder.label :content, 'Feedback Pregunta de profundización para Contenido' %>
+                 <label for="basic-url">Feedback Pregunta de profundización para Contenido</label>
                  <div class='nested-fields'>
                  <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
                  </div>
