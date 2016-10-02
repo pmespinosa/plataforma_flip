@@ -9,10 +9,10 @@ class AnswersController < ApplicationController
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Realizar Actividad"]
     @corregido = User.find_by_id(current_user.corregido)
     @corrector = User.find_by_id(current_user.corrector)
-    if @homework.actual_phase == "argumentar" || @homework.actual_phase == "evaluar"
+    if @homework.actual_phase == "argumentar" || @homework.actual_phase == "argumentar_2"
       @my_answer = @corregido.answers.find_by_homework_id(@homework.id)
       @partner_answer = current_user.answers.find_by_homework_id(@homework.id)
-    elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "final"
+    elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "rehacer_2"
       @my_answer = current_user.answers.find_by_homework_id(@homework.id)
       @partner_answer = @corrector.answers.find_by_homework_id(@homework.id)
     else
@@ -27,23 +27,17 @@ class AnswersController < ApplicationController
         redirect_to edit_homework_answer_path(@homework, @answer)
       elsif @homework.actual_phase == "rehacer" && @answer.rehacer == nil
         redirect_to edit_homework_answer_path(@homework, @answer)
-      elsif @homework.actual_phase == "evaluar" && @answer.evaluar == nil
+      elsif @homework.actual_phase == "responder_2" && @answer.responder_2 == nil
         redirect_to edit_homework_answer_path(@homework, @answer)
-      elsif @homework.actual_phase == "final" && @answer.final == nil
+      elsif @homework.actual_phase == "argumentar_2" && @answer.argumentar_2 == nil
+        redirect_to edit_homework_answer_path(@homework, @answer)
+      elsif @homework.actual_phase == "rehacer_2" && @answer.rehacer_2 == nil
         redirect_to edit_homework_answer_path(@homework, @answer)
       end
     end
   end
 
   def show
-    answer = current_user.answers.find_by_homework_id(params[:homework_id])
-    if @homework.actual_phase == "responder"
-      @answer = answer.responder
-    elsif @homework.actual_phase == "argumentar"
-      @answer = answer.argumentar
-    elsif @homework.actual_phase == "rehacer"
-      @answer = answer.rehacer
-    end
   end
 
   def new
