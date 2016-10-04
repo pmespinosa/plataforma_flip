@@ -74,7 +74,7 @@
       <% elsif state.to_s == "answered" && feedback_quality.to_s == "simple" %>
 
         <tr>
-          <h4> Has tenido un error. Revisa el siguiente feedback.</h4>     
+          <h4><b>Has tenido un error. Revisa el siguiente feedback.</b></h4>     
         </tr>
 
         <tr>
@@ -91,10 +91,16 @@
             <%= hidden_field_tag "n", (n.to_i+1) %>
         </tr>
         <!-- inicio pregunta en feedback -->
+        <td>
+          <%if n.to_i == 0 && type.to_s != "initial" %>
+            <b> A continuación, tendrás información sobre las opciones que seleccionaste. Consideralo y vuelve a responder la pregunta </b>
+          <% else %>
+            <b> A continuación, podrás ver las opciones correctas </b>
+          <% end %>
+        </td>
+        <td></td>  
         <tr>
-            <h4> A continuación, tendrás información sobre las opciones que seleccionaste. Consideralo y vuelve a responder la pregunta </h4>      
-        </tr>
-        <tr>
+          
           <td style="width:50%">            
             <%= fields_for content_question do |question_fields| %>
                 <div class="input-group">
@@ -228,7 +234,7 @@
       <% elsif state.to_s == "answered" && feedback_quality.to_s == "complex" %> 
 
           <tr>
-            <h4> Has tenido un error. Revisa el siguiente feedback. </h4>      
+            <h4><b> Has tenido un error. Revisa el siguiente feedback. </b></h4>      
           </tr>         
           <tr>
               <td style="width:50%">
@@ -244,10 +250,16 @@
           </tr>
           <%= hidden_field_tag "state", "feedback_seen" %>
           <%= hidden_field_tag "n", (n.to_i+1) %>
+          <td>
+            <%if n.to_i == 0 && type.to_s != "initial" %>
+              <b> A continuación, tendrás información sobre las opciones que seleccionaste. Consideralo y vuelve a responder la pregunta </b>
+            <% else %>
+                  <b> A continuación, podrás ver las opciones correctas </b>
+            <% end %>
+          </td>
+          <td></td>
           <tr>
-            <h4> A continuación, tendrás información sobre las opciones que seleccionaste. Consideralo y vuelve a responder la pregunta </h4>      
-          </tr>
-          <tr>
+
             <td style="width:50%">            
               <%= fields_for content_question do |question_fields| %>
                   <div class="input-group">
@@ -379,7 +391,7 @@
           </tr>
 
       <% elsif state.to_s == "answered" && feedback_quality.to_s == "none" %>  
-        <h4>A continuación se te presentan las respuestas finales</h4>
+        <h4>Muy bien!</h4>
         <tr>
           <td style="width:50%">            
             <%= fields_for content_question do |question_fields| %>
