@@ -49,10 +49,10 @@ class AnswersController < ApplicationController
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Realizar Actividad"]
     @corregido = User.find_by_id(current_user.corregido)
     @corrector = User.find_by_id(current_user.corrector)
-    if @homework.actual_phase == "argumentar" || @homework.actual_phase == "evaluar"
+    if @homework.actual_phase == "argumentar" || @homework.actual_phase == "argumentar_2"
       @my_answer = @corregido.answers.find_by_homework_id(@homework.id)
       @partner_answer = current_user.answers.find_by_homework_id(@homework.id)
-    elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "final"
+    elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "rehacer_2"
       @my_answer = current_user.answers.find_by_homework_id(@homework.id)
       @partner_answer = @corrector.answers.find_by_homework_id(@homework.id)
     else
@@ -138,7 +138,7 @@ class AnswersController < ApplicationController
     def answer_params
       params.require(:answer).permit(:phase, :upload, :responder, :argumentar,
        :rehacer, :evaluar, :final, :image_responder, :image_argumentar,
-        :image_rehacer, :image_evaluar, :image_final)
+        :image_rehacer, :image_responder_2, :image_argumentar_2, :image_rehacer_2)
     end
 
 end

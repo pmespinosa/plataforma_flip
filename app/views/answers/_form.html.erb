@@ -13,9 +13,16 @@
       <% end %>
 
       <form class="form-horizontal">
-
+          <% @actual_phase = ""%>
+          <% if ["responder", "responder_2"].include? @homework.actual_phase%>
+            <% @actual_phase = "Responder" %>
+          <% elsif ["argumentar", "argumentar_2"].include? @homework.actual_phase%>
+            <% @actual_phase = "Argumentar" %>
+          <% elsif ["rehacer", "rehacer_2"].include? @homework.actual_phase%>
+            <% @actual_phase = "Rehacer" %>
+          <% end %>
           <div class="form-group">
-            <label for="question" class="col-sm-9 control-label">Respuesta</label>
+            <label for="question" class="col-sm-9 control-label" style="font-size:25px"><%= @actual_phase %></label>
             <div class="col-xs-6">
               <% if @homework.actual_phase == "responder"%>
                 <%= f.text_area :responder, cols: 40, rows: 15, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
@@ -23,17 +30,19 @@
                 <%= f.text_area :argumentar, cols: 40, rows: 15, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
               <% elsif @homework.actual_phase == "rehacer"%>
                 <%= f.text_area :rehacer, cols: 40, rows: 15, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
-              <% elsif @homework.actual_phase == "evaluar"%>
-                <%= f.text_area :evaluar, cols: 40, rows: 15, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
-              <% elsif @homework.actual_phase == "final"%>
-                <%= f.text_area :final, cols: 40, rows: 15, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
+              <% elsif @homework.actual_phase == "responder_2"%>
+                <%= f.text_area :responder_2, cols: 40, rows: 15, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
+              <% elsif @homework.actual_phase == "argumentar_2"%>
+                <%= f.text_area :argumentar_2, cols: 40, rows: 15, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
+              <% elsif @homework.actual_phase == "rehacer_2"%>
+                <%= f.text_area :rehacer_2, cols: 40, rows: 15, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
               <% end %>
               <br>
             </div>
           </div>
 
           <div class="form-group">
-            <label for="question" class="col-sm-9 control-label">Imagen</label>
+            <label for="question" class="col-sm-9 control-label" style="font-size:25px">Imagen</label>
             <div class="col-xs-6">
               <% if @homework.actual_phase == "responder"%>
                 <%= f.file_field :image_responder, id:"i_answer"%>
@@ -41,10 +50,12 @@
                 <%= f.file_field :image_argumentar, id:"i_answer"%>
               <% elsif @homework.actual_phase == "rehacer"%>
                 <%= f.file_field :image_rehacer, id:"i_answer"%>
-              <% elsif @homework.actual_phase == "evaluar"%>
-                <%= f.file_field :image_evaluar, id:"i_answer"%>
-              <% elsif @homework.actual_phase == "final"%>
-                <%= f.file_field :image_final, id:"i_answer"%>
+              <% elsif @homework.actual_phase == "responder_2"%>
+                <%= f.file_field :image_responder_2, id:"i_answer"%>
+              <% elsif @homework.actual_phase == "argumentar_2"%>
+                <%= f.file_field :image_argumentar_2, id:"i_answer"%>
+              <% elsif @homework.actual_phase == "rehacer_2"%>
+                <%= f.file_field :image_rehacer_2, id:"i_answer"%>
               <% end %>
               <br>
             </div>

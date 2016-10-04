@@ -61,10 +61,13 @@ class HomeworksController < ApplicationController
           @homework.actual_phase = "rehacer"
           data = Register.new(button_id:19, user_id:current_user.id)
         elsif @homework.actual_phase == "rehacer"
-          @homework.actual_phase = "evaluar"
+          @homework.actual_phase = "responder_2"
           data = Register.new(button_id:20, user_id:current_user.id)
-        elsif @homework.actual_phase == "evaluar"
-          @homework.actual_phase = "final"
+        elsif @homework.actual_phase == "responder_2"
+          @homework.actual_phase = "argumentar_2"
+          data = Register.new(button_id:21, user_id:current_user.id)
+        elsif @homework.actual_phase == "argumentar_2"
+          @homework.actual_phase = "rehacer_2"
           data = Register.new(button_id:21, user_id:current_user.id)
         end
         @homework.upload = true
@@ -73,10 +76,12 @@ class HomeworksController < ApplicationController
           @homework.actual_phase = "responder"
         elsif @homework.actual_phase == "rehacer"
           @homework.actual_phase = "argumentar"
-        elsif @homework.actual_phase == "evaluar"
+        elsif @homework.actual_phase == "responder_2"
           @homework.actual_phase = "rehacer"
-        elsif @homework.actual_phase == "final"
-          @homework.actual_phase = "evaluar"
+        elsif @homework.actual_phase == "argumentar_2"
+          @homework.actual_phase = "responder_2"
+        elsif @homework.actual_phase == "rehacer_2"
+          @homework.actual_phase = "argumentar_2"
         end
         data = Register.new(button_id:22, user_id:current_user.id)
         @homework.upload = true
@@ -96,15 +101,31 @@ class HomeworksController < ApplicationController
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Realizar Actividad"]
     @users = User.all.where(role:0, asistencia:true)
     @homework.save
+    @ciclo = ""
     if current_user.role?
       if @homework.actual_phase == "responder"
+        @ciclo = "Ciclo 1"
+        @etapa = "Responder"
         @siguiente = "Argumentar"
       elsif @homework.actual_phase == "argumentar"
+        @ciclo = "Ciclo 1"
+        @etapa = "Argumentar"
         @siguiente = "Rehacer"
       elsif @homework.actual_phase == "rehacer"
-        @siguiente = "Evaluar"
-      elsif @homework.actual_phase == "evaluar"
-        @siguiente = "Final"
+        @ciclo = "Ciclo 1"
+        @etapa = "Rehacer"
+        @siguiente = "Responder"
+      elsif @homework.actual_phase == "responder_2"
+        @ciclo = "Ciclo 2"
+        @etapa = "Responder"
+        @siguiente = "Argumentar"
+      elsif @homework.actual_phase == "argumentar_2"
+        @ciclo = "Ciclo 2"
+        @etapa = "Argumentar"
+        @siguiente = "Rehacer"
+      elsif @homework.actual_phase == "rehacer_2"
+        @ciclo = "Ciclo 2"
+        @etapa = "Rehacer"
       end
     else
       redirect_to homework_answers_path(@homework)
@@ -125,15 +146,39 @@ class HomeworksController < ApplicationController
   end
 
   def answers
+    @ciclo = ""
+    @etapa = ""
+
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Realizar Actividad", "Respuesta Alumno"]
     @homework = Homework.where(id:params["homework"]["homework"].to_i)[0]
+
+    if @homework.actual_phase == "responder"
+      @ciclo = "Ciclo 1"
+      @etapa = "Responder"
+    elsif @homework.actual_phase == "argumentar"
+      @ciclo = "Ciclo 1"
+      @etapa = "Argumentar"
+    elsif @homework.actual_phase == "rehacer"
+      @ciclo = "Ciclo 1"
+      @etapa = "Rehacer"
+    elsif @homework.actual_phase == "responder_2"
+      @ciclo = "Ciclo 2"
+      @etapa = "Responder"
+    elsif @homework.actual_phase == "argumentar_2"
+      @ciclo = "Ciclo 2"
+      @etapa = "Argumentar"
+    elsif @homework.actual_phase == "rehacer_2"
+      @ciclo = "Ciclo 2"
+      @etapa = "Rehacer"
+    end
+
     @user = User.find_by_id(params["homework"]["user"])
     @corregido = User.find_by_id(@user.corregido)
     @corrector = User.find_by_id(@user.corrector)
-    if @homework.actual_phase == "argumentar" || @homework.actual_phase == "evaluar"
+    if @homework.actual_phase == "argumentar" || @homework.actual_phase == "argumentar_2"
       @my_answer = @corregido.answers.find_by_homework_id(@homework.id)
       @partner_answer = @user.answers.find_by_homework_id(@homework.id)
-    elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "final"
+    elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "rehacer_2"
       @my_answer = @user.answers.find_by_homework_id(@homework.id)
       @partner_answer = @corrector.answers.find_by_homework_id(@homework.id)
     else
