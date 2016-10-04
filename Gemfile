@@ -32,7 +32,7 @@ gem 'cancancan'
 # Annotate
 gem 'annotate'
 # Hirb
-gem 'hirb'
+gem 'hirb', "~> 0.7.3"
 # Bootstrap
 gem 'bootstrap-sass', '~> 3.3.6'
 # Use Paperclip
