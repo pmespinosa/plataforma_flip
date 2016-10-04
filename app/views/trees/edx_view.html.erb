@@ -21,7 +21,7 @@
           <td style="width:50%">            
             <%= fields_for content_question do |question_fields| %>
                 <div class="input-group">
-                  <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
+                  <%= question_fields.text_area :question, :readonly => true, size: "65x10",:class=>"form-control" %>
                 </div>
                 <br>
                 <%#= form_tag "edx_view", :method => :post do %>
@@ -49,7 +49,7 @@
             
             <%= fields_for ct_question do |question_fields| %>
                 <div class="input-group">
-                <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
+                <%= question_fields.text_area :question, :readonly => true, size: "65x10",:class=>"form-control" %>
                 </div>
                 <br>
                 <%#= form_tag "edx_view", :method => :post do %>
@@ -74,7 +74,7 @@
       <% elsif state.to_s == "answered" && feedback_quality.to_s == "simple" %>
 
         <tr>
-          <h4> Feedback por error en argumento </h4>      
+          <h4> Has tenido un error. Revisa el siguiente feedback.</h4>     
         </tr>
 
         <tr>
@@ -82,11 +82,9 @@
               
               <%= fields_for feedback_simple do |feedback_fields| %>
                   <div class="input-group">
-                    <%= feedback_fields.text_area :text, :readonly => true, size: "60x5",:class=>"form-control" %>
+                    <%= feedback_fields.text_area :text, :readonly => true, size: "65x5",:class=>"form-control" %>
                   </div>
-                  <br>
-                  
-               <% end %>
+              <% end %>
                <br>
             </td>
             <%= hidden_field_tag "state", "feedback_seen" %>
@@ -94,10 +92,13 @@
         </tr>
         <!-- inicio pregunta en feedback -->
         <tr>
+            <h4> A continuación, tendrás información sobre las opciones que seleccionaste. Consideralo y vuelve a responder la pregunta </h4>      
+        </tr>
+        <tr>
           <td style="width:50%">            
             <%= fields_for content_question do |question_fields| %>
                 <div class="input-group">
-                  <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
+                  <%= question_fields.text_area :question, :readonly => true, size: "65x10",:class=>"form-control" %>
                 </div>
                   <br>
                   <%#= form_tag "edx_view", :method => :post do %>
@@ -162,7 +163,7 @@
             
             <%= fields_for ct_question do |question_fields| %>
                 <div class="input-group">
-                  <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
+                  <%= question_fields.text_area :question, :readonly => true, size: "65x10",:class=>"form-control" %>
                 </div>
                   <br>
                   <%#= form_tag "edx_view", :method => :post do %>
@@ -227,13 +228,13 @@
       <% elsif state.to_s == "answered" && feedback_quality.to_s == "complex" %> 
 
           <tr>
-            <h4> Feedback por error en contenido y/o argumento </h4>      
+            <h4> Has tenido un error. Revisa el siguiente feedback. </h4>      
           </tr>         
           <tr>
               <td style="width:50%">
                 <%= fields_for feedback_complex do |feedback_fields| %>
                     <div class="input-group">
-                      <%= feedback_fields.text_area :text, :readonly => true, size: "60x5",:class=>"form-control" %>
+                      <%= feedback_fields.text_area :text, :readonly => true, size: "65x5",:class=>"form-control" %>
                     </div>
                     <br>
                     
@@ -243,12 +244,14 @@
           </tr>
           <%= hidden_field_tag "state", "feedback_seen" %>
           <%= hidden_field_tag "n", (n.to_i+1) %>
-
+          <tr>
+            <h4> A continuación, tendrás información sobre las opciones que seleccionaste. Consideralo y vuelve a responder la pregunta </h4>      
+          </tr>
           <tr>
             <td style="width:50%">            
               <%= fields_for content_question do |question_fields| %>
                   <div class="input-group">
-                    <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
+                    <%= question_fields.text_area :question, :readonly => true, size: "65x10",:class=>"form-control" %>
                   </div>
                     <br>
                     <%#= form_tag "edx_view", :method => :post do %>
@@ -313,7 +316,7 @@
               
               <%= fields_for ct_question do |question_fields| %>
                   <div class="input-group">
-                    <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
+                    <%= question_fields.text_area :question, :readonly => true, size: "65x10",:class=>"form-control" %>
                   </div>
                     <br>
                     <%#= form_tag "edx_view", :method => :post do %>
@@ -376,12 +379,12 @@
           </tr>
 
       <% elsif state.to_s == "answered" && feedback_quality.to_s == "none" %>  
-        <h4>Las respuestas correctas de la pregunta era:</h4>
+        <h4>A continuación se te presentan las respuestas finales</h4>
         <tr>
           <td style="width:50%">            
             <%= fields_for content_question do |question_fields| %>
                 <div class="input-group">
-                  <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
+                  <%= question_fields.text_area :question, :readonly => true, size: "65x10",:class=>"form-control" %>
                 </div>
                   <br>
                   <%#= form_tag "edx_view", :method => :post do %>
@@ -432,7 +435,7 @@
             
             <%= fields_for ct_question do |question_fields| %>
                 <div class="input-group">
-                  <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
+                  <%= question_fields.text_area :question, :readonly => true, size: "65x10",:class=>"form-control" %>
                 </div>
                   <br>
                   <%#= form_tag "edx_view", :method => :post do %>
@@ -518,7 +521,7 @@
    <%elsif state.to_s == "answered" && type.to_s == "recuperative" && n.to_i == 1 %>   
     <%= submit_tag "Pasar a pregunta de profundización", class: "btn btn-default" %>
    <% else %>
-    <%= link_to "Finalizar", eval_form_path(@course.id), class: "btn btn-default" %>
+    <%= link_to "Finalizar evaluación", eval_form_path(@course.id), class: "btn btn-default" %>
    <% end %> 
    <br></br>
 
