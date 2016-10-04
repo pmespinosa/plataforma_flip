@@ -1087,7 +1087,8 @@ class TreesController < ApplicationController
         render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
                   :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
                   :type => "deeping", :state => "end", :feedback_quality => "none", :n => 2, :content_choices => params[:content_choices], :ct_choices => params[:ct_choices]}
-
+          #var win = window.open("about:blank", "_self");
+          #win.close();
       end
 
       elsif params[:state].to_s == "feedback_seen"
@@ -1100,6 +1101,9 @@ class TreesController < ApplicationController
           render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
               :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
               :type => "deeping", :state => "end", :feedback_quality => "none", :n => 2, :content_choices => params[:content_choices], :ct_choices => params[:ct_choices]}
+
+          #var win = window.open("about:blank", "_self");
+          #win.close();
         end
 
       end

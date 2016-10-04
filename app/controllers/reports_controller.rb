@@ -122,6 +122,31 @@ class ReportsController < ApplicationController
     end
 
     @report.save
+
+
+    # aca se hace la recomendación
+    group1 = []
+    group2 = []
+    group3 = []
+
+    quanty = (@report.trees.size / 3.0).ceil
+    #rest = quanty % 3
+    in_group = 0
+    @minor_tree = nil
+    #@report.trees.sort_by{|e| [e.content_sc ? 0 : 1,e.content_sc || 0]}
+    
+    p "se van a imprimir los gruuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuupos---------"
+
+    if @report.trees.size >= 3
+      @report.trees.sort_by{|e| [e.content_sc ? 1 : 0,e.content_sc || 0]}.in_groups_of(quanty, false) do |group| 
+        p group
+        p "  "
+      end
+    end
+      
+
+
+
     
   end
 
