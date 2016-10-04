@@ -123,7 +123,7 @@
                         </div>
                       <% end %>
                       
-                        <% if type.to_s != "initial" %>
+                        <% if type.to_s != "initial" && n.to_i == 0 %>
                           <% if  content_choices[choice_fields.object.id.to_s] == "false" %>
                             <div class="input-group">
                               <span class="input-group-addon" id="check">
@@ -188,7 +188,7 @@
                       </div>
                   <% end %>
                     
-                      <% if type.to_s != "initial" %>
+                      <% if type.to_s != "initial" && n.to_i == 0 %>
                         <% if  ct_choices[choice_fields.object.id.to_s] == "false" %>
                           <div class="input-group">
                             <span class="input-group-addon" id="check">
@@ -276,7 +276,7 @@
                         </div>
                       <% end %>
                     
-                      <% if type.to_s != "initial" %>
+                      <% if type.to_s != "initial" && n.to_i == 0 %>
                         <% if  content_choices[choice_fields.object.id.to_s] == "false" %>
                           <div class="input-group">
                             <span class="input-group-addon" id="check">
@@ -341,7 +341,7 @@
                         </div>
                       <% end %>
                     
-                      <% if type.to_s != "initial" %>
+                      <% if type.to_s != "initial" && n.to_i == 0%>
                         <% if  ct_choices[choice_fields.object.id.to_s] == "false" %>
                           <div class="input-group">
                             <span class="input-group-addon" id="check">
