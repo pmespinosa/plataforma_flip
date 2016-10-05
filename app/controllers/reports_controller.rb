@@ -162,9 +162,6 @@ class ReportsController < ApplicationController
         @groups_ct_hability3 << group_ct_hability
     end
 
-
-
-
     
   end
 
@@ -329,6 +326,9 @@ class ReportsController < ApplicationController
       puts tree.inspect
 
   end
+
+
+  
 
   private
     # Use callbacks to share common setup or constraints between actions.

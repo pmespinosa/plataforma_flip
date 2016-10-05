@@ -38,6 +38,8 @@ Rails.application.routes.draw do
   get 'courses/:id/eval_form', to:'courses#eval_form'
   post 'courses/:id/reportes', to:'courses#reportes', as: "reportes"
   get 'courses/:id/reportes', to:'courses#reportes'
+  post 'courses/:id/students_report', to:'courses#students_report', as: "students_report"
+  get 'courses/:id/students_report', to:'courses#students_report'
 
   get 'homework/:id/asistencia', to:'homeworks#asistencia', as:"homework_asistencia"
   post 'homework/:id/asistencia',to:'homeworks#asistencia'
