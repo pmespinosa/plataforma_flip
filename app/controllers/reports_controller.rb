@@ -125,9 +125,7 @@ class ReportsController < ApplicationController
 
 
     # aca se hace la recomendación
-    group1 = []
-    group2 = []
-    group3 = []
+    @groups_tree = []
 
     quanty = (@report.trees.size / 3.0).ceil
     #rest = quanty % 3
@@ -138,12 +136,27 @@ class ReportsController < ApplicationController
     p "se van a imprimir los gruuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuupos---------"
 
     if @report.trees.size >= 3
-      @report.trees.sort_by{|e| [e.content_sc ? 1 : 0,e.content_sc || 0]}.in_groups_of(quanty, false) do |group| 
+      @report.trees.sort_by{|e| [e.content_sc ? 1 : 0, e.content_sc || 0]}.in_groups_of(quanty, false) do |group| 
         p group
-        p "  "
+        @groups_tree << group
       end
     end
-      
+
+    @groups_ct_hability = []
+    @ct_habilities_sc = Hash.new
+    @ct_habilities_sc["Interpretación"] = @report.interpretation_sc
+    @ct_habilities_sc["Análisis"] = @report.analysis_sc
+    @ct_habilities_sc["Evaluación"] = @report.evaluation_sc
+    @ct_habilities_sc["Inferencia"] = @report.inference_sc
+    @ct_habilities_sc["Explicación"] = @report.explanation_sc
+    @ct_habilities_sc["Autoregulación"] = @report.selfregulation_sc
+
+    puts "se van a imprimir los grupos de ct habilitiiiiiiiiiiiii---------"
+    @ct_habilities_sc.sort_by{|key, value| [value ? 1 : 0, value || 0]}.in_groups_of(2, false) do |group_ct_hability| 
+        p group_ct_hability
+        @groups_ct_hability << group_ct_hability
+    end
+
 
 
 

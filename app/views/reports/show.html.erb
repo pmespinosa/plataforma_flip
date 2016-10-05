@@ -131,7 +131,7 @@
 
     <thead class="thead-inverse">        
         <th>Contenido/Habilidad de PC</th>
-        <th>Interpretar</th>
+        <th>Interpretación</th>
         <th>Análisis</th>
         <th>Evaluación</th>
         <th>Inferencia</th>
@@ -139,18 +139,85 @@
         <th>Autoregulación</th>
     </thead>
     <tbody>
-          <% @report.trees.each do |tree| %>
-          
-          <tr>
+      <% @report.trees.each do |tree| %>
+            <% i = 0 %>
+            <tr>
               <td><b><%=tree.content.text %></b></td>
-              <td>X</td>
-              <td>X</td>
-              <td>X</td>
-              <td>X</td>
-              <td>X</td>
-              <td>X</td>
-          </tr>
-
+              <% @groups_tree.each do |group| %>
+                <% if group.include?(tree) && i == 0 %>
+                      <td>X</td>
+                      <td>X</td>
+                      <td>X</td>
+                      <td>X</td>
+                      <td>X</td>
+                      <td>X</td>                  
+                <% elsif group.include?(tree) && (i == 1 || i == 0)  %>
+                  <%# puts @groups_ct_hability[1].inspect %>
+                  <% if @groups_ct_hability[1].any?{|k, v| k == "Interpretación"} || @groups_ct_hability[0].any?{|k, v| k == "Interpretación"} %>                 
+                      <td>X</td>
+                  <% else %>
+                      <td></td>
+                  <% end %>
+                  <% if @groups_ct_hability[1].any?{|k, v| k == "Análisis"} || @groups_ct_hability[0].any?{|k, v| k == "Análisis"} %>
+                      <td>X</td>
+                  <% else %>
+                      <td></td>
+                  <% end %>
+                  <% if @groups_ct_hability[1].any?{|k, v| k == "Evaluación"} || @groups_ct_hability[0].any?{|k, v| k == "Evaluación"} %>
+                      <td>X</td>
+                  <% else %>
+                      <td></td>
+                  <% end %>
+                  <% if @groups_ct_hability[1].any?{|k, v| k == "Inferencia"} || @groups_ct_hability[0].any?{|k, v| k == "Inferencia"}%>
+                      <td>X</td>
+                  <% else %>
+                      <td></td>
+                  <% end %>
+                  <% if @groups_ct_hability[1].any?{|k, v| k == "Explicación"} || @groups_ct_hability[0].any?{|k, v| k == "Explicación"} %>
+                      <td>X</td>
+                  <% else %>
+                      <td></td>
+                  <% end %>
+                  <% if @groups_ct_hability[1].any?{|k, v| k == "Autoregulación"} || @groups_ct_hability[0].any?{|k, v| k == "Autoregulación"} %>
+                      <td>X</td>
+                  <% else %>
+                      <td></td>
+                  <% end %>
+                <% elsif group.include?(tree) && i == 2 %>
+                  <% if @groups_ct_hability[0].any?{|k, v| k == "Interpretación"} %>                 
+                    <td>X</td>
+                  <% else %>
+                    <td></td>
+                  <% end %>
+                  <% if @groups_ct_hability[0].any?{|k, v| k == "Análisis"} %>
+                    <td>X</td>
+                  <% else %>
+                    <td></td>
+                  <% end %>
+                  <% if @groups_ct_hability[0].any?{|k, v| k == "Evaluación"} %>
+                    <td>X</td>
+                  <% else %>
+                    <td></td>
+                  <% end %>
+                  <% if @groups_ct_hability[0].any?{|k, v| k == "Inferencia"} %>
+                    <td>X</td>
+                  <% else %>
+                    <td></td>
+                  <% end %>
+                  <% if @groups_ct_hability[0].any?{|k, v| k == "Explicación"} %>
+                    <td>X</td>
+                  <% else %>
+                    <td></td>
+                  <% end %>
+                  <% if @groups_ct_hability[0].any?{|k, v| k == "Autoregulación"} %>
+                    <td>X</td>
+                  <% else %>
+                    <td></td>
+                  <% end %>
+                <% end %>
+              <% i = i + 1 %>
+            <% end %>            
+            </tr>
       <% end %>
     </tbody>
 </table>
