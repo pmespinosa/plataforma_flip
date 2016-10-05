@@ -135,14 +135,14 @@ class ReportsController < ApplicationController
     
     p "se van a imprimir los gruuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuupos---------"
 
-    if @report.trees.size >= 3
-      @report.trees.sort_by{|e| [e.content_sc ? 1 : 0, e.content_sc || 0]}.in_groups_of(quanty, false) do |group| 
-        p group
-        @groups_tree << group
-      end
+    
+    @report.trees.sort_by{|e| [e.content_sc ? 1 : 0, e.content_sc || 0]}.in_groups_of(quanty, false) do |group| 
+      p group
+      @groups_tree << group
     end
 
-    @groups_ct_hability = []
+    @groups_ct_hability2 = []
+    @groups_ct_hability3 = []
     @ct_habilities_sc = Hash.new
     @ct_habilities_sc["Interpretación"] = @report.interpretation_sc
     @ct_habilities_sc["Análisis"] = @report.analysis_sc
@@ -154,7 +154,12 @@ class ReportsController < ApplicationController
     puts "se van a imprimir los grupos de ct habilitiiiiiiiiiiiii---------"
     @ct_habilities_sc.sort_by{|key, value| [value ? 1 : 0, value || 0]}.in_groups_of(2, false) do |group_ct_hability| 
         p group_ct_hability
-        @groups_ct_hability << group_ct_hability
+        @groups_ct_hability2 << group_ct_hability
+    end
+
+    @ct_habilities_sc.sort_by{|key, value| [value ? 1 : 0, value || 0]}.in_groups_of(3, false) do |group_ct_hability| 
+        p group_ct_hability
+        @groups_ct_hability3 << group_ct_hability
     end
 
 
