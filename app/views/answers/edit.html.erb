@@ -1,6 +1,6 @@
 <div style="text-align: left">
 	<% if @homework.upload %>
-		<%= simple_format(@homework.content, {style:"font-size:20px", align:"justify"}) %>
+		<%= simple_format(@homework.content, {style:"font-size:20px; line-height:1.5", align:"justify"}) %>
 		<% if @homework.image? %>
 			<p><%= image_tag @homework.image.url(:medium) %></p>
 		<% end %>
@@ -11,7 +11,7 @@
 				<% if @homework.actual_phase != "responder" %>
 					<% if @my_answer.responder != nil %>
 						<h3>Respuesta</h3>
-						<%=simple_format(@my_answer.responder, {style:"font-size:15px", align:"justify"})%>
+						<%=simple_format(@my_answer.responder, {style:"font-size:15px; line-height:1.5", align:"justify"})%>
 						<% if @my_answer.image_responder? %>
 							<p><%= image_tag @my_answer.image_responder.url(:medium) %></p>
 						<% end %>
@@ -21,7 +21,7 @@
 				<% if @homework.actual_phase != "argumentar" %>
 					<% if @partner_answer.argumentar != nil %>
 						<h3>Argumentación</h3>
-						<%=simple_format(@partner_answer.argumentar, {style:"font-size:15px", align:"justify"}) %>
+						<%=simple_format(@partner_answer.argumentar, {style:"font-size:15px; line-height:1.5", align:"justify"}) %>
 						<% if @partner_answer.image_argumentar? %>
 							<p><%= image_tag @partner_answer.image_argumentar.url(:medium) %></p>
 						<% end %>
@@ -31,7 +31,7 @@
 				<% if @homework.actual_phase != "rehacer" %>
 					<% if @my_answer.rehacer != nil %>
 						<h3>Rehacer</h3>
-						<%=simple_format(@my_answer.rehacer, {style:"font-size:15px", align:"justify"})%>
+						<%=simple_format(@my_answer.rehacer, {style:"font-size:15px; line-height:1.5", align:"justify"})%>
 						<% if @my_answer.image_rehacer? %>
 							<p><%= image_tag @my_answer.image_rehacer.url(:medium) %></p>
 						<% end %>
@@ -48,7 +48,7 @@
 					<% if @homework.actual_phase != "responder_2" %>
 					<% if @my_answer.responder_2 != nil %>
 						<h3>Respuesta</h3>
-						<%=simple_format(@my_answer.responder_2, {style:"font-size:15px", align:"justify"})%>
+						<%=simple_format(@my_answer.responder_2, {style:"font-size:15px; line-height:1.5", align:"justify"})%>
 						<% if @my_answer.image_responder_2? %>
 							<p><%= image_tag @my_answer.image_responder_2.url(:medium) %></p>
 						<% end %>
@@ -58,7 +58,7 @@
 					<% if @homework.actual_phase != "argumentar_2" %>
 						<% if @partner_answer.argumentar_2 != nil %>
 							<h3>Argumentación</h3>
-							<%=simple_format(@partner_answer.argumentar_2, {style:"font-size:15px", align:"justify"}) %>
+							<%=simple_format(@partner_answer.argumentar_2, {style:"font-size:15px; line-height:1.5", align:"justify"}) %>
 							<% if @partner_answer.image_argumentar_2? %>
 								<p><%= image_tag @partner_answer.image_argumentar_2.url(:medium) %></p>
 							<% end %>
@@ -68,7 +68,7 @@
 					<% if @homework.actual_phase != "rehacer_2" %>
 						<% if @my_answer.rehacer_2 != nil %>
 							<h3>Rehacer</h3>
-							<%=simple_format(@my_answer.rehacer_2, {style:"font-size:15px", align:"justify"})%>
+							<%=simple_format(@my_answer.rehacer_2, {style:"font-size:15px; line-height:1.5", align:"justify"})%>
 							<% if @my_answer.image_rehacer_2? %>
 								<p><%= image_tag @my_answer.image_rehacer_2.url(:medium) %></p>
 							<% end %>

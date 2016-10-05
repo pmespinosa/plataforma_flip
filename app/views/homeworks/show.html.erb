@@ -1,7 +1,7 @@
 <h1><%= @homework.name %></h1>
 <h2><%= @ciclo %> - <%= @etapa %> </h2>
 <h3 align="justify">Pregunta</h3>
-<%= simple_format(@homework.content, {style:"font-size:20px", align:"justify"}) %>
+<%= simple_format(@homework.content, {style:"font-size:20px; line-height:1.5", align:"justify"}) %>
 <%= form_tag controller:"homeworks", action:"change_phase", method:"post" do %>
   <% if @homework.actual_phase == "responder"%> <!-- AQUI VA LA FASE NO ACTIVA -->
     <%= link_to 'Volver Actividades', homeworks_path("volver"),  :class=>"btn btn-primary", :style=>'color:white' %>
