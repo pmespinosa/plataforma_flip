@@ -1,12 +1,12 @@
 class CoursesController < ApplicationController
 
 
-  before_action :set_course, only: [:asistencia, :students, :show, :edit, :update, :destroy, :eval_form, :reportes]
-  before_action :set_miscursos_visible, only: [:show, :edit, :new, :eval_form]
-  before_action :set_ef_visible, only: [:show, :edit, :eval_form]
-  before_action :set_reporte_visible, only: [:show, :edit, :eval_form]
-  before_action :set_actividades_visible, only: [:show, :edit, :eval_form]
-  before_action :set_configuraciones_visible, only: [:show, :edit, :eval_form]
+  before_action :set_course, only: [:asistencia, :students, :show, :edit, :update, :destroy, :eval_form, :reportes, :students_report, :st_report]
+  before_action :set_miscursos_visible, only: [:show, :edit, :new, :eval_form, :reportes, :students_report, :st_report]
+  before_action :set_ef_visible, only: [:show, :edit, :eval_form, :reportes]
+  before_action :set_reporte_visible, only: [:show, :edit, :eval_form, :reportes, :students_report, :st_report]
+  before_action :set_actividades_visible, only: [:show, :edit, :eval_form, :reportes]
+  before_action :set_configuraciones_visible, only: [:show, :edit, :eval_form, :reportes]
   before_action :set_breadcrumbs
 
 
@@ -103,6 +103,239 @@ class CoursesController < ApplicationController
   def reportes
     @breadcrumbs = ["Mis Cursos", @course.name, "Reportes"]
     render "reports"
+  end
+
+  def students_report
+    @breadcrumbs = ["Mis Cursos", @course.name, "Reportes", "Reportes de Alumnos"]
+    @users_sc = Hash.new
+
+    @course.users.each do |user|
+
+      content_sc = 0
+      interpretation_sc = 0
+      analysis_sc = 0
+      evaluation_sc = 0
+      inference_sc = 0
+      explanation_sc = 0
+      selfregulation_sc = 0
+      content_n = 0
+      interpretation_n = 0
+      analysis_n = 0
+      evaluation_n = 0
+      inference_n = 0
+      explanation_n = 0
+      selfregulation_n = 0
+
+      @course.trees.each do |tree|
+        performance = tree.user_tree_performances.find_by(:user_id => user.id)
+        puts "performanceeeeeeeeeeeeeee de los usariooooooooooooooooooooooo"
+        puts performance.inspect
+        if performance
+          if performance.content_sc
+          content_sc = content_sc + (performance.content_sc / performance.content_n)
+          content_n = content_n + 1
+          end
+          if performance.interpretation_sc
+          interpretation_sc = interpretation_sc + (performance.interpretation_sc / performance.interpretation_n)
+          interpretation_n = interpretation_n + 1
+          end
+          if performance.analysis_sc
+          analysis_sc = analysis_sc + (performance.analysis_sc / performance.analysis_n)
+          analysis_n = analysis_n + 1
+          end
+          if performance.evaluation_sc
+          evaluation_sc = evaluation_sc + (performance.evaluation_sc / performance.evaluation_n)
+          evaluation_n = evaluation_n + 1
+          end
+          if performance.inference_sc
+          inference_sc = inference_sc + (performance.inference_sc / performance.inference_n)
+          inference_n = inference_n + 1
+          end
+          if performance.explanation_sc
+          explanation_sc = explanation_sc + (performance.explanation_sc / performance.explanation_n)
+          explanation_n = explanation_n + 1
+          end
+          if performance.selfregulation_sc
+          selfregulation_sc = selfregulation_sc + (performance.selfregulation_sc / performance.selfregulation_n)
+          selfregulation_n = selfregulation_n + 1
+          end
+        end
+      end
+      if content_n != 0
+        content_sc = (content_sc / content_n).round(2)
+      else 
+        content_sc = nil
+      end
+      if interpretation_n != 0
+        interpretation_sc = (interpretation_sc / interpretation_n).round(2)
+      else
+        interpretation_sc = nil
+      end
+      if analysis_n != 0
+        analysis_sc = (analysis_sc / analysis_n).round(2)
+      else
+        analysis_sc = nil
+      end
+      if evaluation_n != 0
+        evaluation_sc = (evaluation_sc / evaluation_n).round(2)
+      else
+        evaluation_sc = nil
+      end
+      if inference_n != 0
+        inference_sc = (inference_sc / inference_n).round(2)
+      else
+        inference_sc = nil
+      end
+        if explanation_n != 0
+        explanation_sc = (explanation_sc / explanation_n).round(2)
+      else
+        explanation_sc = nil
+      end
+      if selfregulation_n != 0
+        selfregulation_sc = (selfregulation_sc / selfregulation_n).round(2)
+      else
+        selfregulation_sc = nil
+      end
+
+      @users_sc[user.id] = {:name => user.last_name + ", " +  user.first_name, :content_sc => content_sc, :interpretation_sc => interpretation_sc,
+        :analysis_sc => analysis_sc, :evaluation_sc => evaluation_sc, :inference_sc => inference_sc, :explanation_sc => explanation_sc, :selfregulation_sc => selfregulation_sc}
+
+       puts "un user_score es------------------------------------"
+       puts @users_sc[user.id].inspect
+       puts " " 
+
+
+    end
+
+    render 'users_report'
+
+  end
+
+  def st_report
+    @student = User.find(params[:st_id])
+    @breadcrumbs = ["Mis Cursos", @course.name, "Reportes", "Reportes de Alumnos", @student.first_name + " " + @student.last_name]
+    @student = User.find(params[:st_id])
+    @performances = Hash.new    
+    
+    content_n = 0
+    interpretation_n = 0
+    analysis_n = 0
+    evaluation_n = 0
+    inference_n = 0
+    explanation_n = 0
+    selfregulation_n = 0
+    content_m = 0
+    interpretation_m = 0
+    analysis_m = 0
+    evaluation_m = 0
+    inference_m = 0
+    explanation_m = 0
+    selfregulation_m = 0
+
+    @course.trees.each do |tree|
+      performance = UserTreePerformance.find_by(:user_id => @student.id, :tree_id => tree.id)
+      content_sc = nil
+      interpretation_sc = nil
+      analysis_sc = nil
+      evaluation_sc = nil
+      inference_sc = nil
+      explanation_sc = nil
+      selfregulation_sc = nil
+      
+      puts "holaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0"
+      puts content_m
+      puts content_n
+
+      if !performance.nil?
+          if !performance.content_sc.nil?
+            puts "holaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            puts @content_m
+            puts performance.content_sc
+            puts performance.content_n
+            content_sc = (performance.content_sc / performance.content_n).round(2)
+            content_m = content_m + (performance.content_sc / performance.content_n)
+            content_n = content_n + 1
+          end
+          if performance.interpretation_sc
+            interpretation_sc =  (performance.interpretation_sc / performance.interpretation_n).round(2)
+            interpretation_m = interpretation_m + (performance.interpretation_sc / performance.interpretation_n)
+            interpretation_n = interpretation_n + 1
+          end
+          if performance.analysis_sc
+            analysis_sc = (performance.analysis_sc / performance.analysis_n).round(2)
+            analysis_m = analysis_m + (performance.analysis_sc / performance.analysis_n)
+            analysis_n = analysis_n + 1
+          end
+          if performance.evaluation_sc
+            evaluation_sc = (performance.evaluation_sc / performance.evaluation_n).round(2)
+            evaluation_m = evaluation_m + (performance.evaluation_sc / performance.evaluation_n)
+            evaluation_n = evaluation_n + 1
+          end
+          if performance.inference_sc
+            inference_sc = (performance.inference_sc / performance.inference_n).round(2)
+            inference_m = inference_m + (performance.inference_sc / performance.inference_n)
+            inference_n = inference_n + 1
+          end
+          if performance.explanation_sc
+            explanation_sc = (performance.explanation_sc / performance.explanation_n).round(2)
+            explanation_m = explanation_m + (performance.explanation_sc / performance.explanation_n)
+            explanation_n = explanation_n + 1
+          end
+          if performance.selfregulation_sc
+            selfregulation_sc = (performance.selfregulation_sc / performance.selfregulation_n).round(2)
+            selfregulation_m = selfregulation_m + (performance.selfregulation_sc / performance.selfregulation_n)
+            selfregulation_n = selfregulation_n + 1
+          end
+          the_tree = Tree.find(tree.id)
+          @performances[tree.id] = {:content => the_tree.content.text, :content_sc => content_sc, :interpretation_sc => interpretation_sc, :analysis_sc => analysis_sc, :evaluation_sc => evaluation_sc, :inference_sc => inference_sc, :explanation_sc => explanation_sc, :selfregulation_sc => selfregulation_sc}
+      
+
+        end
+
+      end
+      
+
+      if content_n != 0
+        content_m = content_m / content_n
+      else 
+        content_m = nil
+      end
+      if interpretation_n != 0
+        interpretation_m = interpretation_m / interpretation_n
+      else
+        interpretation_m = nil
+      end
+      if analysis_n != 0
+        analysis_m = (analysis_m / analysis_n).round(2)
+      else
+        analysis_m = nil
+      end
+      if evaluation_n != 0
+        evaluation_m = (evaluation_m / evaluation_n).round(2)
+      else
+        evaluation_m = nil
+      end
+      if inference_n != 0
+        inference_m = (inference_m / inference_n).round(2)
+      else
+        inference_m = nil
+      end
+      if explanation_n != 0
+        explanation_m = (explanation_m / explanation_n).round(2)
+      else
+        explanation_m = nil
+      end
+      if selfregulation_n != 0
+        selfregulation_m = (selfregulation_m / selfregulation_n).round(2)
+      else
+        selfregulation_m = nil
+      end
+      @avarage = {:content_av => content_m, :interpretation_av => interpretation_m,
+      :analysis_av => analysis_m, :evaluation_av => evaluation_m, :inference_av => inference_m, :explanation_av => explanation_m, :selfregulation_av => selfregulation_m}
+    
+     
+    
+    render 'st_report'
   end
 
   def students

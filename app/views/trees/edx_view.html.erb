@@ -1,5 +1,5 @@
 <%= form_tag controller:"trees", action: "edx_view", :method => :post do %>
-
+  <h4>Evaluación de  <%= @tree.content.text %></h4>
   <h4>Usuario <%= @username %></h4> 
 
   <br>
@@ -21,11 +21,12 @@
           <td style="width:50%">            
             <%= fields_for content_question do |question_fields| %>
                 <div class="input-group">
-                  <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
+                  <%= question_fields.text_area :question, :readonly => true, size: "65x10",:class=>"form-control" %>
                 </div>
                 <br>
                 <%#= form_tag "edx_view", :method => :post do %>
-                  <%= question_fields.fields_for :content_choices do |choice_fields| %>
+                <% content_question.content_choices.shuffle.each do |content_choice| %>
+                  <%= question_fields.fields_for :content_choices, content_choice do |choice_fields| %>
                     <div class="input-group">
                       <% puts "vista: se muestra el id y lugar en el arreglo de las alternativas content" %>
                       <% puts choice_fields.object.id %>
@@ -38,6 +39,7 @@
                       <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
                     </div>
                   <% end %>
+                <% end %>
             <% end %>
              <br>
           </td>
@@ -47,11 +49,12 @@
             
             <%= fields_for ct_question do |question_fields| %>
                 <div class="input-group">
-                <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
+                <%= question_fields.text_area :question, :readonly => true, size: "65x10",:class=>"form-control" %>
                 </div>
                 <br>
                 <%#= form_tag "edx_view", :method => :post do %>
-                  <%= question_fields.fields_for :ct_choices do |choice_fields| %>
+                <% ct_question.ct_choices.shuffle.each do |ct_choice| %>
+                  <%= question_fields.fields_for :ct_choices, ct_choice do |choice_fields| %>
                     <div class="input-group">
                     <%= hidden_field_tag "ct_choices[#{choice_fields.object.id}]", :false %>
                       <span class="input-group-addon" id="check">
@@ -60,18 +63,18 @@
                       <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
                     </div>
                   <% end %>
-                 <%# end %>
+                 <% end %>
                 <br>
                 <%= hidden_field_tag "state", "answered" %>
                 <%= hidden_field_tag "n", n %>
-             <% end %>
+            <% end %>
              <br>
           </td>
         </tr>
       <% elsif state.to_s == "answered" && feedback_quality.to_s == "simple" %>
 
         <tr>
-          <h4> Feedback por error en argumento </h4>      
+          <h4><b>Has tenido un error. Revisa el siguiente feedback.</b></h4>     
         </tr>
 
         <tr>
@@ -79,40 +82,83 @@
               
               <%= fields_for feedback_simple do |feedback_fields| %>
                   <div class="input-group">
-                    <%= feedback_fields.text_area :text, :readonly => true, size: "60x5",:class=>"form-control" %>
+                    <%= feedback_fields.text_area :text, :readonly => true, size: "65x5",:class=>"form-control" %>
                   </div>
-                  <br>
-                  
-               <% end %>
+              <% end %>
                <br>
             </td>
             <%= hidden_field_tag "state", "feedback_seen" %>
             <%= hidden_field_tag "n", (n.to_i+1) %>
         </tr>
         <!-- inicio pregunta en feedback -->
+        <td>
+          <%if n.to_i == 0 && type.to_s != "initial" %>
+            <b> A continuación, tendrás información sobre las opciones que seleccionaste. Consideralo y vuelve a responder la pregunta </b>
+          <% else %>
+            <b> A continuación, podrás ver las opciones correctas </b>
+          <% end %>
+        </td>
+        <td></td>  
         <tr>
+          
           <td style="width:50%">            
             <%= fields_for content_question do |question_fields| %>
                 <div class="input-group">
-                  <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
+                  <%= question_fields.text_area :question, :readonly => true, size: "65x10",:class=>"form-control" %>
                 </div>
                   <br>
                   <%#= form_tag "edx_view", :method => :post do %>
-                  <%= question_fields.fields_for :content_choices do |choice_fields| %>                    
-                    <% if choice_fields.object.right && content_choices[choice_fields.object.id.to_s] == "true" %>  
-                      <div class="form-group has-success has-feedback">
-                        <label class="control-label" for="inputSuccess2"><%= choice_fields.object.text%><span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span></label>                        
-                      </div>
-                    <% elsif  choice_fields.object.right == false && content_choices[choice_fields.object.id.to_s] == "true" %>
-                      <div class="form-group has-error has-feedback">
-                        <label class="control-label"><%= choice_fields.object.text%><span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span></label> 
-                      </div>
-                    <% else %>
-                      <div class="form-group">
-                         <label class="control-label"><%= choice_fields.object.text%></label>
-                         <span></span>
-                      </div>
-                    <% end %>
+                  <% content_choices.each do |key, bool| %>
+                    <% content_choice = content_question.content_choices.find(key) %>
+                    <%= question_fields.fields_for :content_choices, content_choice do |choice_fields| %>           
+                      <% if choice_fields.object.right && content_choices[choice_fields.object.id.to_s] == "true" %>
+                        <div class="input-group has-success">
+                          <span class="input-group-addon" id="check">
+                            <%= check_box "", "", {disabled: true, checked: true} %>
+                          </span>
+                          <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                          <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                        </div>                       
+                      <% elsif  choice_fields.object.right == false && content_choices[choice_fields.object.id.to_s] == "true" %>
+                        <div class="input-group has-error">
+                          <span class="input-group-addon" id="check">
+                            <%= check_box "", "", {disabled: true, checked: true} %>
+                          </span>
+                          <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" aria-hidden="true"></span>
+                        </div>
+                      <% end %>
+                      
+                        <% if type.to_s != "initial" && n.to_i == 0 %>
+                          <% if  content_choices[choice_fields.object.id.to_s] == "false" %>
+                            <div class="input-group">
+                              <span class="input-group-addon" id="check">
+                                <%= check_box "", "", {disabled: true, checked: false} %>
+                              </span>
+                              <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                              <span></span>
+                            </div>
+                          <% end %>
+                        <% else %>
+                          <% if  choice_fields.object.right == false && content_choices[choice_fields.object.id.to_s] == "false" %>
+                            <div class="input-group has-success">
+                              <span class="input-group-addon" id="check">
+                                <%= check_box "", "", {disabled: true, checked: false} %>
+                              </span>
+                              <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                              <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                            </div>
+                          <% elsif  choice_fields.object.right == true && content_choices[choice_fields.object.id.to_s] == "false" %>
+                            <div class="input-group has-error">
+                              <span class="input-group-addon" id="check">
+                                <%= check_box "", "", {disabled: true, checked: false} %>
+                              </span>
+                              <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                              <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                            </div>
+                          <% end %>
+                        <% end %> 
+                    <% end %>                  
                   <% end %>
             <% end %>
              <br>
@@ -123,26 +169,62 @@
             
             <%= fields_for ct_question do |question_fields| %>
                 <div class="input-group">
-                  <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
+                  <%= question_fields.text_area :question, :readonly => true, size: "65x10",:class=>"form-control" %>
                 </div>
                   <br>
                   <%#= form_tag "edx_view", :method => :post do %>
-                  <%= question_fields.fields_for :ct_choices do |choice_fields| %>
+                  <% ct_choices.each do |key, bool| %>
+                    <% ct_choice = ct_question.ct_choices.find(key) %>
+                  <%= question_fields.fields_for :ct_choices, ct_choice do |choice_fields| %>
                     <% if choice_fields.object.right && ct_choices[choice_fields.object.id.to_s] == "true" %>  
-                      <div class="form-group has-success has-feedback">
-                        <label class="control-label" for="inputSuccess2"><%= choice_fields.object.text%><span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span></label>                        
-                      </div>
+                      <div class="input-group has-success">
+                        <span class="input-group-addon" id="check">
+                          <%= check_box "", "", {disabled: true, checked: true} %>
+                        </span>
+                        <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                        <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                      </div> 
                     <% elsif  choice_fields.object.right == false && ct_choices[choice_fields.object.id.to_s] == "true" %>
-                      <div class="form-group has-error has-feedback">
-                        <label class="control-label"><%= choice_fields.object.text%><span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span></label> 
+                      <div class="input-group has-error">
+                        <span class="input-group-addon" id="check">
+                          <%= check_box "", "", {disabled: true, checked: true} %>
+                        </span>
+                        <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" aria-hidden="true"></span>
                       </div>
-                    <% else %>
-                      <div>
-                         <label class="control-label"><%= choice_fields.object.text%></label>
-                         <span></span>
-                      </div>
-                    <% end %>
                   <% end %>
+                    
+                      <% if type.to_s != "initial" && n.to_i == 0 %>
+                        <% if  ct_choices[choice_fields.object.id.to_s] == "false" %>
+                          <div class="input-group">
+                            <span class="input-group-addon" id="check">
+                              <%= check_box "", "", {disabled: true, checked: false} %>
+                            </span>
+                            <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                            <span></span>
+                          </div>
+                        <% end %>
+                      <% else %>
+                        <% if  choice_fields.object.right == false && ct_choices[choice_fields.object.id.to_s] == "false" %>
+                          <div class="input-group has-success">
+                            <span class="input-group-addon" id="check">
+                              <%= check_box "", "", {disabled: true, checked: false} %>
+                            </span>
+                            <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                          </div>
+                        <% elsif  choice_fields.object.right == true && ct_choices[choice_fields.object.id.to_s] == "false" %>
+                          <div class="input-group has-error">
+                            <span class="input-group-addon" id="check">
+                              <%= check_box "", "", {disabled: true, checked: false} %>
+                            </span>
+                            <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                          </div>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  <% end %>                    
                 <br>
              <% end %>
              <br>
@@ -152,13 +234,13 @@
       <% elsif state.to_s == "answered" && feedback_quality.to_s == "complex" %> 
 
           <tr>
-            <h4> Feedback por error en contenido y/o argumento </h4>      
+            <h4><b> Has tenido un error. Revisa el siguiente feedback. </b></h4>      
           </tr>         
           <tr>
               <td style="width:50%">
                 <%= fields_for feedback_complex do |feedback_fields| %>
                     <div class="input-group">
-                      <%= feedback_fields.text_area :text, :readonly => true, size: "60x5",:class=>"form-control" %>
+                      <%= feedback_fields.text_area :text, :readonly => true, size: "65x5",:class=>"form-control" %>
                     </div>
                     <br>
                     
@@ -168,87 +250,194 @@
           </tr>
           <%= hidden_field_tag "state", "feedback_seen" %>
           <%= hidden_field_tag "n", (n.to_i+1) %>
-
-          <tr>
-          <td style="width:50%">            
-            <%= fields_for content_question do |question_fields| %>
-                <div class="input-group">
-                  <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
-                </div>
-                  <br>
-                  <%#= form_tag "edx_view", :method => :post do %>
-                  <%= question_fields.fields_for :content_choices do |choice_fields| %>                    
-                    <% if choice_fields.object.right && content_choices[choice_fields.object.id.to_s] == "true" %>  
-                      <div class="form-group has-success has-feedback">
-                        <label class="control-label" for="inputSuccess2"><%= choice_fields.object.text%><span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span></label>                        
-                      </div>
-                    <% elsif  choice_fields.object.right == false && content_choices[choice_fields.object.id.to_s] == "true" %>
-                      <div class="form-group has-error has-feedback">
-                        <label class="control-label"><%= choice_fields.object.text%><span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span></label> 
-                      </div>
-                    <% else %>
-                      <div class="form-group">
-                         <label class="control-label"><%= choice_fields.object.text%></label>
-                         <span></span>
-                      </div>
-                    <% end %>
-                  <% end %>
+          <td>
+            <%if n.to_i == 0 && type.to_s != "initial" %>
+              <b> A continuación, tendrás información sobre las opciones que seleccionaste. Consideralo y vuelve a responder la pregunta </b>
+            <% else %>
+                  <b> A continuación, podrás ver las opciones correctas </b>
             <% end %>
-             <br>
           </td>
+          <td></td>
+          <tr>
 
-          <td style="width:50%">
-
-            
-            <%= fields_for ct_question do |question_fields| %>
-                <div class="input-group">
-                  <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
-                </div>
-                  <br>
-                  <%#= form_tag "edx_view", :method => :post do %>
-                  <%= question_fields.fields_for :ct_choices do |choice_fields| %>
-                    <% if choice_fields.object.right && ct_choices[choice_fields.object.id.to_s] == "true" %>  
-                      <div class="form-group has-success has-feedback">
-                        <label class="control-label" for="inputSuccess2"><%= choice_fields.object.text%><span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span></label>                        
-                      </div>
-                    <% elsif  choice_fields.object.right == false && ct_choices[choice_fields.object.id.to_s] == "true" %>
-                      <div class="form-group has-error has-feedback">
-                        <label class="control-label"><%= choice_fields.object.text%><span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span></label> 
-                      </div>
-                    <% else %>
-                      <div>
-                         <label class="control-label"><%= choice_fields.object.text%></label>
-                         <span></span>
-                      </div>
+            <td style="width:50%">            
+              <%= fields_for content_question do |question_fields| %>
+                  <div class="input-group">
+                    <%= question_fields.text_area :question, :readonly => true, size: "65x10",:class=>"form-control" %>
+                  </div>
+                    <br>
+                    <%#= form_tag "edx_view", :method => :post do %>
+                    <% content_choices.each do |key, bool| %>
+                    <% content_choice = content_question.content_choices.find(key) %>
+                    <%= question_fields.fields_for :content_choices, content_choice do |choice_fields| %>                  
+                      <% if choice_fields.object.right && content_choices[choice_fields.object.id.to_s] == "true" %>  
+                        <div class="input-group has-success">
+                          <span class="input-group-addon" id="check">
+                            <%= check_box "", "", {disabled: true, checked: true} %>
+                          </span>
+                          <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                          <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                        </div>
+                      <% elsif  choice_fields.object.right == false && content_choices[choice_fields.object.id.to_s] == "true" %>
+                        <div class="input-group has-error">
+                          <span class="input-group-addon" id="check">
+                            <%= check_box "", "", {disabled: true, checked: true} %>
+                          </span>
+                          <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                        </div>
+                      <% end %>
+                    
+                      <% if type.to_s != "initial" && n.to_i == 0 %>
+                        <% if  content_choices[choice_fields.object.id.to_s] == "false" %>
+                          <div class="input-group">
+                            <span class="input-group-addon" id="check">
+                              <%= check_box "", "", {disabled: true, checked: false} %>
+                            </span>
+                            <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                            <span></span>
+                          </div>
+                        <% end %>
+                      <% else %>
+                        <% if  choice_fields.object.right == false && content_choices[choice_fields.object.id.to_s] == "false" %>
+                          <div class="input-group has-success">
+                            <span class="input-group-addon" id="check">
+                              <%= check_box "", "", {disabled: true, checked: false} %>
+                            </span>
+                            <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                          </div>
+                        <% elsif  choice_fields.object.right == true && content_choices[choice_fields.object.id.to_s] == "false" %>
+                          <div class="input-group has-error">
+                            <span class="input-group-addon" id="check">
+                              <%= check_box "", "", {disabled: true, checked: false} %>
+                            </span>
+                            <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                          </div>
+                        <% end %>
+                      <% end %>
                     <% end %>
                   <% end %>
-                <br>
-             <% end %>
-             <br>
-          </td>
-        </tr>
+              <% end %>
+               <br>
+            </td>
+
+            <td style="width:50%">
+
+              
+              <%= fields_for ct_question do |question_fields| %>
+                  <div class="input-group">
+                    <%= question_fields.text_area :question, :readonly => true, size: "65x10",:class=>"form-control" %>
+                  </div>
+                    <br>
+                    <%#= form_tag "edx_view", :method => :post do %>
+                    <% ct_choices.each do |key, bool| %>
+                    <% ct_choice = ct_question.ct_choices.find(key) %>
+                    <%= question_fields.fields_for :ct_choices, ct_choice do |choice_fields| %>
+                      <% if choice_fields.object.right && ct_choices[choice_fields.object.id.to_s] == "true" %>  
+                        <div class="input-group has-success">
+                          <span class="input-group-addon" id="check">
+                            <%= check_box "", "", {disabled: true, checked: true} %>
+                          </span>
+                          <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                          <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                        </div>
+                      <% elsif  choice_fields.object.right == false && ct_choices[choice_fields.object.id.to_s] == "true" %>
+                        <div class="input-group has-error">
+                          <span class="input-group-addon" id="check">
+                            <%= check_box "", "", {disabled: true, checked: true} %>
+                          </span>
+                          <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                        </div>
+                      <% end %>
+                    
+                      <% if type.to_s != "initial" && n.to_i == 0%>
+                        <% if  ct_choices[choice_fields.object.id.to_s] == "false" %>
+                          <div class="input-group">
+                            <span class="input-group-addon" id="check">
+                              <%= check_box "", "", {disabled: true, checked: false} %>
+                            </span>
+                            <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                            <span></span>
+                          </div>
+                        <% end %>
+                      <% else %>
+                        <% if  choice_fields.object.right == false && ct_choices[choice_fields.object.id.to_s] == "false" %>
+                          <div class="input-group has-success">
+                            <span class="input-group-addon" id="check">
+                              <%= check_box "", "", {disabled: true, checked: false} %>
+                            </span>
+                            <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                          </div>
+                        <% elsif  choice_fields.object.right == true && ct_choices[choice_fields.object.id.to_s] == "false" %>
+                          <div class="input-group has-error">
+                            <span class="input-group-addon" id="check">
+                              <%= check_box "", "", {disabled: true, checked: false} %>
+                            </span>
+                            <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                          </div>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                  <br>
+               <% end %>
+               <br>
+            </td>
+          </tr>
 
       <% elsif state.to_s == "answered" && feedback_quality.to_s == "none" %>  
-
-      <tr>
+        <h4>Muy bien!</h4>
+        <tr>
           <td style="width:50%">            
             <%= fields_for content_question do |question_fields| %>
                 <div class="input-group">
-                  <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
+                  <%= question_fields.text_area :question, :readonly => true, size: "65x10",:class=>"form-control" %>
                 </div>
                   <br>
                   <%#= form_tag "edx_view", :method => :post do %>
-                  <%= question_fields.fields_for :content_choices do |choice_fields| %>                    
-                    <% if choice_fields.object.right %>  
-                      <div class="form-group has-success has-feedback">
-                        <label class="control-label" for="inputSuccess2"><%= choice_fields.object.text%><span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span></label>                        
+                  <% content_choices.each do |key, bool| %>
+                    <% content_choice = content_question.content_choices.find(key) %>
+                  <%= question_fields.fields_for :content_choices, content_choice do |choice_fields| %>                    
+                    <% if choice_fields.object.right && content_choices[choice_fields.object.id.to_s] == "true" %>  
+                      <div class="input-group has-success">
+                        <span class="input-group-addon" id="check">
+                          <%= check_box "", "", {disabled: true, checked: true} %>
+                        </span>
+                        <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                        <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                       </div>
-                    <% else %>
-                      <div class="form-group has-error has-feedback">
-                        <label class="control-label"><%= choice_fields.object.text%><span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span></label> 
-                      </div>                    
+                    <% elsif  choice_fields.object.right == false && content_choices[choice_fields.object.id.to_s] == "true" %>
+                      <div class="input-group has-error">
+                        <span class="input-group-addon" id="check">
+                          <%= check_box "", "", {disabled: true, checked: true} %>
+                        </span>
+                        <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                      </div>
+                      <% elsif  choice_fields.object.right == false && content_choices[choice_fields.object.id.to_s] == "false" %>
+                      <div class="input-group has-success">
+                        <span class="input-group-addon" id="check">
+                          <%= check_box "", "", {disabled: true, checked: false} %>
+                        </span>
+                        <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                        <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                      </div>
+                    <% elsif  choice_fields.object.right == true && content_choices[choice_fields.object.id.to_s] == "false" %>
+                      <div class="input-group has-error">
+                        <span class="input-group-addon" id="check">
+                          <%= check_box "", "", {disabled: true, checked: false} %>
+                        </span>
+                        <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                      </div>
                     <% end %>
                   <% end %>
+                <% end %>
             <% end %>
              <br>
           </td>
@@ -258,21 +447,48 @@
             
             <%= fields_for ct_question do |question_fields| %>
                 <div class="input-group">
-                  <%= question_fields.text_area :question, :readonly => true, size: "60x5",:class=>"form-control" %>
+                  <%= question_fields.text_area :question, :readonly => true, size: "65x10",:class=>"form-control" %>
                 </div>
                   <br>
                   <%#= form_tag "edx_view", :method => :post do %>
-                  <%= question_fields.fields_for :ct_choices do |choice_fields| %>
-                    <% if choice_fields.object.right %>  
-                      <div class="form-group has-success has-feedback">
-                        <label class="control-label" for="inputSuccess2"><%= choice_fields.object.text%><span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span></label>                        
+                  <% ct_choices.each do |key, bool| %>
+                    <% ct_choice = ct_question.ct_choices.find(key) %> 
+                  <%= question_fields.fields_for :ct_choices, ct_choice do |choice_fields| %>
+                    <% if choice_fields.object.right && ct_choices[choice_fields.object.id.to_s] == "true" %>  
+                      <div class="input-group has-success">
+                        <span class="input-group-addon" id="check">
+                          <%= check_box "", "", {disabled: true, checked: true} %>
+                        </span>
+                        <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                        <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                       </div>
-                    <% else %>
-                      <div class="form-group has-error has-feedback">
-                        <label class="control-label"><%= choice_fields.object.text%><span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span></label> 
+                    <% elsif  choice_fields.object.right == false && ct_choices[choice_fields.object.id.to_s] == "true" %>
+                      <div class="input-group has-error">
+                        <span class="input-group-addon" id="check">
+                          <%= check_box "", "", {disabled: true, checked: true} %>
+                        </span>
+                        <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                      </div>
+                    <% elsif  choice_fields.object.right == false && ct_choices[choice_fields.object.id.to_s] == "false" %>
+                      <div class="input-group has-success">
+                        <span class="input-group-addon" id="check">
+                          <%= check_box "", "", {disabled: true, checked: false} %>
+                        </span>
+                        <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                        <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                      </div>
+                    <% elsif  choice_fields.object.right == true && ct_choices[choice_fields.object.id.to_s] == "false" %>
+                      <div class="input-group has-error">
+                        <span class="input-group-addon" id="check">
+                          <%= check_box "", "", {disabled: true, checked: false} %>
+                        </span>
+                        <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                       </div>
                     <% end %>
                   <% end %>
+                <% end %>
                 <br>
              <% end %>
              <br>
@@ -308,6 +524,8 @@
     <%= submit_tag "Pasar a pregunta recuperativa", class: "btn btn-default" %>
    <%elsif state.to_s == "answered" && type.to_s == "recuperative" && feedback_quality.to_s == "none" %>
     <%= submit_tag "Pasar a pregunta de profundización", class: "btn btn-default" %>
+   <%elsif state.to_s == "answered" && type.to_s == "deeping" && feedback_quality.to_s == "none" %>
+    <%= submit_tag "Finalizar evaluación", class: "btn btn-default" %>
    <%elsif state.to_s == "answered" && type.to_s == "recuperative" && n.to_i == 0 %>  
     <%= submit_tag "Intentar otra vez", class: "btn btn-default" %>
    <%elsif state.to_s == "answered" && type.to_s == "recuperative" && n.to_i == 1 %>   
@@ -315,10 +533,11 @@
    <%elsif state.to_s == "answered" && type.to_s == "deeping" && n.to_i == 0 %>   
     <%= submit_tag "Intentar otra vez", class: "btn btn-default" %>
    <%elsif state.to_s == "answered" && type.to_s == "recuperative" && n.to_i == 1 %>   
-    <%= submit_tag "Terminar", class: "btn btn-default" %>
+    <%= submit_tag "Pasar a pregunta de profundización", class: "btn btn-default" %>
    <% else %>
-    <%= link_to "Finalizar", eval_form_path(@course.id), class: "btn btn-default" %>
-   <% end %> 
+    <%= link_to "Finalizar evaluación", eval_form_path(@course.id), class: "btn btn-default" %>
+   <% end %>
+
    <br></br>
 
 <% end %>

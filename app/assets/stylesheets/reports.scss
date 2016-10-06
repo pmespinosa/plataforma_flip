@@ -1,3 +1,57 @@
 // Place all the styles related to the reports controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.head {
+    background-color: #5E6066;
+    color: white;
+    font-weight: bold;
+}
+
+.avarage {
+    background-color: #BDBDBD;
+    color: white;
+    font-weight: bold;
+}
+
+.content {
+    background-color: #2AA9F2;
+    color: white;
+    font-weight: bold;
+}
+
+.content2 {
+    background-color: #2AA9F2;
+    color: white;
+    font-weight: bold;
+}
+
+td {
+	font-weight: bold;
+}
+
+.badtd {
+	background-color: #FFB7B7;
+}
+
+.normaltd {
+	background-color: #FFFFB0;
+}
+
+.goodtd {
+	background-color: #A5FFBA;
+}
+
+.noobs {
+	background-color: #FFB7B7;
+}
+
+.der {
+    float: right;
+}
+
+.izq {
+    float: left;
+    
+}
+

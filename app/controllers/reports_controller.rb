@@ -1,6 +1,6 @@
 class ReportsController < ApplicationController
   before_action :set_report, only: [:show, :edit, :update, :destroy]
-  before_action :set_course, only: [:create, :new, :show]
+  before_action :set_course, only: [:create, :new, :show, :destroy]
   before_action :set_miscursos_visible, only: [:show, :edit, :new]
   before_action :set_ef_visible, only: [:show, :edit]
   before_action :set_reporte_visible, only: [:show, :edit]
@@ -17,6 +17,8 @@ class ReportsController < ApplicationController
   # GET /reports/1
   # GET /reports/1.json
   def show
+    @breadcrumbs = ["Mis Cursos", @course.name, "Reportes", @report.name]
+
     @report.content_sc = nil
     @report.interpretation_sc = nil
     @report.analysis_sc = nil
@@ -122,11 +124,52 @@ class ReportsController < ApplicationController
     end
 
     @report.save
+
+
+    # aca se hace la recomendación
+    @groups_tree = []
+
+    quanty = (@report.trees.size / 3.0).ceil
+    #rest = quanty % 3
+    in_group = 0
+    @minor_tree = nil
+    #@report.trees.sort_by{|e| [e.content_sc ? 0 : 1,e.content_sc || 0]}
+    
+    p "se van a imprimir los gruuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuupos---------"
+
+    
+    @report.trees.sort_by{|e| [e.content_sc ? 1 : 0, e.content_sc || 0]}.in_groups_of(quanty, false) do |group| 
+      p group
+      @groups_tree << group
+    end
+
+    @groups_ct_hability2 = []
+    @groups_ct_hability3 = []
+    @ct_habilities_sc = Hash.new
+    @ct_habilities_sc["Interpretación"] = @report.interpretation_sc
+    @ct_habilities_sc["Análisis"] = @report.analysis_sc
+    @ct_habilities_sc["Evaluación"] = @report.evaluation_sc
+    @ct_habilities_sc["Inferencia"] = @report.inference_sc
+    @ct_habilities_sc["Explicación"] = @report.explanation_sc
+    @ct_habilities_sc["Autoregulación"] = @report.selfregulation_sc
+
+    puts "se van a imprimir los grupos de ct habilitiiiiiiiiiiiii---------"
+    @ct_habilities_sc.sort_by{|key, value| [value ? 1 : 0, value || 0]}.in_groups_of(2, false) do |group_ct_hability| 
+        p group_ct_hability
+        @groups_ct_hability2 << group_ct_hability
+    end
+
+    @ct_habilities_sc.sort_by{|key, value| [value ? 1 : 0, value || 0]}.in_groups_of(3, false) do |group_ct_hability| 
+        p group_ct_hability
+        @groups_ct_hability3 << group_ct_hability
+    end
+
     
   end
 
   # GET /reports/new
   def new
+    @breadcrumbs = ["Mis Cursos", @course.name, "Reportes", "Nuevo Reporte"]
     @report = Report.new
 
     puts "new reporrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrt!"
@@ -135,6 +178,7 @@ class ReportsController < ApplicationController
 
   # GET /reports/1/edit
   def edit
+    @breadcrumbs = ["Mis Cursos", @course.name, "Reportes", "Editar Reporte"]
   end
 
   # POST /reports
@@ -183,7 +227,7 @@ class ReportsController < ApplicationController
   def destroy
     @report.destroy
     respond_to do |format|
-      format.html { redirect_to reports_url, notice: 'Report was successfully destroyed.' }
+      format.html { redirect_to reportes_path(@course.id), notice: 'Report was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -286,6 +330,9 @@ class ReportsController < ApplicationController
       puts tree.inspect
 
   end
+
+
+  
 
   private
     # Use callbacks to share common setup or constraints between actions.

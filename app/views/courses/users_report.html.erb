@@ -1,0 +1,65 @@
+<% if current_user.role?%>
+  <h1>Rendimiento de alumnos de <%= @course.name %></h1>
+  <br></br>
+
+  <br></br>
+  <table class="table table-striped">
+    <thead class="head">
+      <tr>
+        <th>Alumno</th>
+        <th class="tdcenter">Contenido</th>
+        <th class="tdcenter">Interpretación</th>
+        <th class="tdcenter">Análisis</th>
+        <th class="tdcenter">Evaluación</th>
+        <th class="tdcenter">Inferencia</th>
+        <th class="tdcenter">Explicación</th>
+        <th class="tdcenter">Autoregulación</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% puts "antes deeeeel usuarios inspeeect-------------------" %>
+      <% puts @users_sc.inspect %>
+      <% @users_sc.each do |key, value| %>
+        <tr>            
+            <td class="content"><%= link_to value[:name], st_report_path(@course, {:st_id => key}), :style=>'color:white'%></td>
+            <% if !value[:content_sc].nil? %>
+              <td class="tdcenter"><%= value[:content_sc] %></td>
+            <% else %>
+              <td class="tdcenter"> N/O </td>
+            <% end %>
+            <% if !value[:interpretation_sc].nil? %>
+              <td class="tdcenter"><%= value[:interpretation_sc] %></td>
+            <% else %>
+              <td class="tdcenter"> N/O </td>
+            <% end %>
+            <% if !value[:analysis_sc].nil? %>
+              <td class="tdcenter"><%= value[:analysis_sc] %></td>
+            <% else %>
+              <td class="tdcenter"> N/O </td>
+            <% end %>
+            <% if !value[:evaluation_sc].nil? %>
+              <td class="tdcenter"><%= value[:evaluation_sc] %></td>
+            <% else %>
+              <td class="tdcenter"> N/O </td>
+            <% end %>
+            <% if !value[:inference_sc].nil? %>
+              <td class="tdcenter"><%= value[:inference_sc] %></td>
+            <% else %>
+              <td class="tdcenter"> N/O </td>
+            <% end %>
+            <% if !value[:explanation_sc].nil? %>
+              <td class="tdcenter"><%= value[:explanation_sc] %></td>
+            <% else %>
+              <td class="tdcenter"> N/O </td>
+            <% end %>
+            <% if !value[:selfregulation_sc].nil? %>
+              <td class="tdcenter"><%= value[:selfregulation_sc] %></td>
+            <% else %>
+              <td class="tdcenter"> N/O </td>
+            <% end %>
+            
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
