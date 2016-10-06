@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(version: 20161006070715) do
     t.datetime "updated_at", null: false
     t.string   "type"
   end
+  
 
   add_index "ct_questions", ["tree_id"], name: "index_ct_questions_on_tree_id", using: :btree
 
