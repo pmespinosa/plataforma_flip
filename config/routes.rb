@@ -41,6 +41,9 @@ Rails.application.routes.draw do
   post 'courses/:id/students_report', to:'courses#students_report', as: "students_report"
   get 'courses/:id/students_report', to:'courses#students_report'
 
+  post 'courses/:id/st_report/:st_id', to:'courses#st_report', as: "st_report"
+  get 'courses/:id/st_report/:st_id', to:'courses#st_report'
+
   get 'homework/:id/asistencia', to:'homeworks#asistencia', as:"homework_asistencia"
   post 'homework/:id/asistencia',to:'homeworks#asistencia'
   post 'homework/:id/edit',to:'homeworks#edit'

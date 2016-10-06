@@ -1,0 +1,100 @@
+<% if current_user.role?%>
+  <h3>Rendimiento de <%= @student.first_name + " " + @student.last_name%> de <%= @course.name %></h3>
+
+  <br>
+  <table class="table table-striped">
+    <thead class="head">
+      <tr>
+        <th>Contenido</th>
+        <th class="tdcenter">Ptje. Contenido</th>
+        <th class="tdcenter">Interpretación</th>
+        <th class="tdcenter">Análisis</th>
+        <th class="tdcenter">Evaluación</th>
+        <th class="tdcenter">Inferencia</th>
+        <th class="tdcenter">Explicación</th>
+        <th class="tdcenter">Autoregulación</th>
+      </tr>
+    </thead>
+    <tbody>      
+      <% @performances.each do |key, value| %>
+        <tr>            
+            <td class="content"><%= value[:content] %></td>
+            <% if !value[:content_sc].nil? %>
+              <td class="tdcenter"><%= value[:content_sc] %></td>
+            <% else %>
+              <td class="tdcenter"> N/O </td>
+            <% end %>
+            <% if !value[:interpretation_sc].nil? %>
+              <td class="tdcenter"><%= value[:interpretation_sc] %></td>
+            <% else %>
+              <td class="tdcenter"> N/O </td>
+            <% end %>
+            <% if !value[:analysis_sc].nil? %>
+              <td class="tdcenter"><%= value[:analysis_sc] %></td>
+            <% else %>
+              <td class="tdcenter"> N/O </td>
+            <% end %>
+            <% if !value[:evaluation_sc].nil? %>
+              <td class="tdcenter"><%= value[:evaluation_sc] %></td>
+            <% else %>
+              <td class="tdcenter"> N/O </td>
+            <% end %>
+            <% if !value[:inference_sc].nil? %>
+              <td class="tdcenter"><%= value[:inference_sc] %></td>
+            <% else %>
+              <td class="tdcenter"> N/O </td>
+            <% end %>
+            <% if !value[:explanation_sc].nil? %>
+              <td class="tdcenter"><%= value[:explanation_sc] %></td>
+            <% else %>
+              <td class="tdcenter"> N/O </td>
+            <% end %>
+            <% if !value[:selfregulation_sc].nil? %>
+              <td class="tdcenter"><%= value[:selfregulation_sc] %></td>
+            <% else %>
+              <td class="tdcenter"> N/O </td>
+            <% end %>            
+        </tr>
+        
+      <% end %>
+      <tr class="head">
+          <td class="head tdcenter"> Promedio </td>
+          <% if !@avarage[:content_av].nil? %>
+            <td class="head tdcenter"><%= @avarage[:content_av].round(2) %></td>
+          <% else %>
+            <td class="head tdcenter"> N/O </td>
+          <% end %>
+          <% if !@avarage[:interpretation_av].nil? %>
+            <td class="head tdcenter"><%= @avarage[:interpretation_av].round(2) %></td>
+          <% else %>
+            <td class="head tdcenter"> N/O </td>
+          <% end %>
+          <% if !@avarage[:analysis_av].nil? %>
+            <td class="head tdcenter"><%= @avarage[:analysis_av].round(2) %></td>
+          <% else %>
+            <td class="head tdcenter"> N/O </td>
+          <% end %>
+          <% if !@avarage[:evaluation_av].nil? %>
+            <td class="head tdcenter"><%= @avarage[:evaluation_av].round(2) %></td>
+          <% else %>
+            <td class="head tdcenter"> N/O </td>
+          <% end %>
+          <% if !@avarage[:inference_av].nil? %>
+            <td class="head tdcenter"><%= @avarage[:inference_av].round(2) %></td>
+          <% else %>
+            <td class="head tdcenter"> N/O </td>
+          <% end %>
+          <% if !@avarage[:explanation_av].nil? %>
+            <td class="head tdcenter"><%= @avarage[:explanation_av].round(2) %></td>
+          <% else %>
+            <td class="head tdcenter"> N/O </td>
+          <% end %>
+          <% if !@avarage[:selfregulation_av].nil? %>
+            <td class="head tdcenter"><%= @avarage[:selfregulation_av].round(2) %></td>
+          <% else %>
+            <td class="head tdcenter"> N/O </td>
+          <% end %>
+        </tr>
+    </tbody>
+  </table>
+<% end %>
