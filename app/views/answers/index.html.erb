@@ -65,7 +65,7 @@
 						<%= simple_format(@partner_answer.argumentar_2, {style:"font-size:15px; line-height:1.5", align:"justify"})%>
 					<%end%>
 					<% if @partner_answer.image_argumentar_2?%>
-						<p><%= image_tag @partner_answer.image_final.url(:medium) %></p>
+						<p><%= image_tag @partner_answer.image_argumentar_2.url(:medium) %></p>
 					<%end%>
 				<%end%>
 				<% if @homework.actual_phase == "argumentar_2"%>

@@ -6,7 +6,7 @@ class HomeworksController < ApplicationController
   before_action :set_miscursos_visible, only: :index
   before_action :set_ef_visible, only: :index
   before_action :set_actividades_visible, only: [:index, :show, :asistencia, :edit, :new, :answers]
-
+  before_action :set_reporte_visible , only: [:index]
   before_action :set_configuraciones_visible, only: :index
   before_action :set_breadcrumbs
 
@@ -96,8 +96,6 @@ class HomeworksController < ApplicationController
   end
 
   def show
-    puts params
-    puts "arriba estan los params"
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Realizar Actividad"]
     @users = User.all.where(role:0, asistencia:true)
     @homework.save

@@ -30,8 +30,10 @@
               <% elsif current_user.role? && @homework.actual_phase == "rehacer_2"%>
                 <div class="actions" style="text-align: center">
                   <% if @homework.upload == true%>
+                    <%= submit_tag "Rehacer", name: 'discussion', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px", disabled:"disabled"%>
                     <%= submit_tag "Discusión", name: 'discussion', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px"%>
                   <% else%>
+                    <%= submit_tag "Rehacer", name: 'discussion', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px", disabled:"disabled"%>
                     <%= submit_tag "Discusión", name: 'discussion', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px", disabled:"disabled"%>
                   <% end%>
                 </div>
