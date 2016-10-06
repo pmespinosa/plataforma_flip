@@ -20,9 +20,6 @@
           <th></th>
           <th>Evaluaciones de Video</th>
           <th>Video</th>
-          <th></th>
-          <th></th>
-          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -46,8 +43,12 @@
      <%#= submit_tag "Finalizar", class: "btn btn-default" %>
 </div-->
 
-<div class="actions">
-  <%= f.submit "Crear Evaluación" %>
-</div>
+<span style="display: inline;">
+   <%= link_to 'Volver', reportes_path(@course), class:"btn btn-primary btn-lg izq" %> <%= f.submit "Confirmar", class: "btn btn-success btn-lg der" %>
+</span>
+
+<br></br>
+<br></br>
+
 
 <% end %>

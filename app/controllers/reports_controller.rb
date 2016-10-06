@@ -1,6 +1,6 @@
 class ReportsController < ApplicationController
   before_action :set_report, only: [:show, :edit, :update, :destroy]
-  before_action :set_course, only: [:create, :new, :show]
+  before_action :set_course, only: [:create, :new, :show, :destroy]
   before_action :set_miscursos_visible, only: [:show, :edit, :new]
   before_action :set_ef_visible, only: [:show, :edit]
   before_action :set_reporte_visible, only: [:show, :edit]
@@ -17,6 +17,8 @@ class ReportsController < ApplicationController
   # GET /reports/1
   # GET /reports/1.json
   def show
+    @breadcrumbs = ["Mis Cursos", @course.name, "Reportes", @report.name]
+
     @report.content_sc = nil
     @report.interpretation_sc = nil
     @report.analysis_sc = nil
@@ -167,6 +169,7 @@ class ReportsController < ApplicationController
 
   # GET /reports/new
   def new
+    @breadcrumbs = ["Mis Cursos", @course.name, "Reportes", "Nuevo Reporte"]
     @report = Report.new
 
     puts "new reporrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrt!"
@@ -175,6 +178,7 @@ class ReportsController < ApplicationController
 
   # GET /reports/1/edit
   def edit
+    @breadcrumbs = ["Mis Cursos", @course.name, "Reportes", "Editar Reporte"]
   end
 
   # POST /reports
@@ -223,7 +227,7 @@ class ReportsController < ApplicationController
   def destroy
     @report.destroy
     respond_to do |format|
-      format.html { redirect_to reports_url, notice: 'Report was successfully destroyed.' }
+      format.html { redirect_to reportes_path(@course.id), notice: 'Report was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

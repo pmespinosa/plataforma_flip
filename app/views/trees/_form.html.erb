@@ -193,10 +193,9 @@
 </div>
 
 
-    <div class="actions">
-      <%= f.submit "Confirmar" %>
-    </div>
-
+<span style="display: inline;">
+   <%= link_to 'Volver', eval_form_path(@course), class:"btn btn-primary btn-lg izq" %> <%= f.submit "Confirmar", class: "btn btn-success btn-lg der" %>
+</span>
 
 
 <% CtHability.all.each do |hab| %>

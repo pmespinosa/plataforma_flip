@@ -21,7 +21,7 @@
       <% puts @users_sc.inspect %>
       <% @users_sc.each do |key, value| %>
         <tr>            
-            <td class="content"><%= link_to value[:name], st_report_path(@course, {:st_id => key}), :class=>"btn btn-primary", :style=>'color:white'%></td>
+            <td class="content"><%= link_to value[:name], st_report_path(@course, {:st_id => key}), :style=>'color:white'%></td>
             <% if !value[:content_sc].nil? %>
               <td class="tdcenter"><%= value[:content_sc] %></td>
             <% else %>
