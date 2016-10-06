@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160930154821) do
+ActiveRecord::Schema.define(version: 20161006070715) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,9 +23,12 @@ ActiveRecord::Schema.define(version: 20160930154821) do
     t.text     "responder"
     t.text     "argumentar"
     t.text     "rehacer"
+<<<<<<< HEAD
     t.text     "responder_2"
     t.text     "argumentar_2"
     t.text     "rehacer_2"
+=======
+>>>>>>> reportes
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
     t.string   "image_responder_file_name"
@@ -52,6 +55,12 @@ ActiveRecord::Schema.define(version: 20160930154821) do
     t.string   "image_rehacer_2_content_type"
     t.integer  "image_rehacer_2_file_size"
     t.datetime "image_rehacer_2_updated_at"
+<<<<<<< HEAD
+=======
+    t.text     "responder_2"
+    t.text     "argumentar_2"
+    t.text     "rehacer_2"
+>>>>>>> reportes
   end
 
   add_index "answers", ["user_id", "homework_id"], name: "index_answers_on_user_id_and_homework_id", using: :btree
