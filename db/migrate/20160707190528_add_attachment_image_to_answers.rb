@@ -12,6 +12,11 @@ class AddAttachmentImageToAnswers < ActiveRecord::Migration
   end
 
   def self.down
-    remove_attachment :answers, :image
+    remove_attachment :answers, :image_responder
+    remove_attachment :answers, :image_argumentar
+    remove_attachment :answers, :image_rehacer
+    remove_attachment :answers, :image_responder_2
+    remove_attachment :answers, :image_argumentar_2
+    remove_attachment :answers, :image_rehacer_2
   end
 end
