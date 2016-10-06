@@ -125,6 +125,9 @@ class HomeworksController < ApplicationController
         @ciclo = "Ciclo 2"
         @etapa = "Rehacer"
       end
+      if !@homework.upload
+        @etapa = "Discusión"
+      end
     else
       redirect_to homework_answers_path(@homework)
     end
