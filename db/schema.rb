@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161006070715) do
+ActiveRecord::Schema.define(version: 20161007214349) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -243,8 +243,8 @@ ActiveRecord::Schema.define(version: 20161006070715) do
     t.float    "inference_sc"
     t.float    "explanation_sc"
     t.float    "selfregulation_sc"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
     t.integer  "content_n"
     t.integer  "interpretation_n"
     t.integer  "analysis_n"
@@ -252,6 +252,16 @@ ActiveRecord::Schema.define(version: 20161006070715) do
     t.integer  "inference_n"
     t.integer  "explanation_n"
     t.integer  "selfregulation_n"
+    t.float    "init_content"
+    t.float    "init_ct"
+    t.float    "recuperative_content1"
+    t.float    "recuperative_content2"
+    t.float    "recuperative_ct1"
+    t.float    "recuperative_ct2"
+    t.float    "deeping_content1"
+    t.float    "deeping_content2"
+    t.float    "deeping_ct1"
+    t.float    "deeping_ct2"
   end
 
   add_index "user_tree_performances", ["tree_id"], name: "index_user_tree_performances_on_tree_id", using: :btree
