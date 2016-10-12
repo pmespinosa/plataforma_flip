@@ -1,7 +1,7 @@
 
 class TreesController < ApplicationController
-  before_action :set_tree, only: [:show, :edit, :update, :destroy]
-  before_action :set_course, only: [:create, :new]
+  before_action :set_tree, only: [:show, :edit, :update, :destroy, :tree_performance]
+  before_action :set_course, only: [:create, :new, :tree_performance]
   before_action :set_tree_edx, only: [:edx_view, :set_report_values]
   before_action :set_ef_visible
   before_action :set_breadcrumbs
@@ -1380,7 +1380,54 @@ class TreesController < ApplicationController
     end
   end
 
-  
+  def user_info
+
+    tree.user_tree_performances.each do |user_performance|
+
+
+    end
+  end
+
+  def tree_performance
+
+    @breadcrumbs = ["Mis Cursos", @course.name, "Reportes", "Reportes de Alumnos"]
+    @users_sc = Hash.new
+    
+
+
+    @tree.user_tree_performances.each do |performance|
+      if performance
+          if performance.content_sc
+          content_sc = (performance.content_sc / performance.content_n)
+          end
+          if performance.interpretation_sc
+          interpretation_sc = (performance.interpretation_sc / performance.interpretation_n)
+          end
+          if performance.analysis_sc
+          analysis_sc = (performance.analysis_sc / performance.analysis_n)
+          end
+          if performance.evaluation_sc
+          evaluation_sc = (performance.evaluation_sc / performance.evaluation_n)
+          end
+          if performance.inference_sc
+          inference_sc = (performance.inference_sc / performance.inference_n)
+          end
+          if performance.explanation_sc
+          explanation_sc = (performance.explanation_sc / performance.explanation_n)
+          end
+          if performance.selfregulation_sc
+          selfregulation_sc = (performance.selfregulation_sc / performance.selfregulation_n)
+          end
+      end
+      user = User.find(performance.user_id)
+      @users_sc[user.id] = {:name => user.last_name + ", " +  user.first_name, :content_sc => content_sc, :interpretation_sc => interpretation_sc,
+        :analysis_sc => analysis_sc, :evaluation_sc => evaluation_sc, :inference_sc => inference_sc, :explanation_sc => explanation_sc, :selfregulation_sc => selfregulation_sc}
+
+    end
+
+    render 'tree_performance'
+
+  end
 
   private
   
