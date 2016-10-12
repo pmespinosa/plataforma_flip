@@ -1,5 +1,5 @@
 <% if current_user.role?%>
-  <h1>Rendimiento de alumnos de <%= @course.name %></h1>
+  <h1>Rendimiento de evaluación <%= @tree.content.text %></h1>
   <br></br>
 
   <br></br>
@@ -13,15 +13,17 @@
         <th class="tdcenter">Evaluación</th>
         <th class="tdcenter">Inferencia</th>
         <th class="tdcenter">Explicación</th>
-        <th class="tdcenter">Autoregulación</th>
+        <th class="tdcenter">Autoregulación</th>        
       </tr>
     </thead>
     <tbody>
       <% puts "antes deeeeel usuarios inspeeect-------------------" %>
       <% puts @users_sc.inspect %>
       <% @users_sc.each do |key, value| %>
-        <tr>            
-            <td class="content"><%= link_to value[:name], tree_performance_path(@course, {:tree_id => @tree.id}), :style=>'color:white'%></td>
+        <tr>          
+            <% puts "aca va el id del userr (key)---------------------------" %>
+            <% puts key %>
+            <td class="content"><%= link_to value[:name], user_tree_info_path(@course, {:course_id => @course.id, :tree_id => @tree.id, :user_id => key}), :style=>'color:white'%></td>
             <% if !value[:content_sc].nil? %>
               <td class="tdcenter"><%= value[:content_sc] %></td>
             <% else %>

@@ -1,6 +1,6 @@
 
 class TreesController < ApplicationController
-  before_action :set_tree, only: [:show, :edit, :update, :destroy, :tree_performance]
+  before_action :set_tree, only: [:show, :edit, :update, :destroy, :tree_performance, :user_info]
   before_action :set_course, only: [:create, :new, :tree_performance]
   before_action :set_tree_edx, only: [:edx_view, :set_report_values]
   before_action :set_ef_visible
@@ -31,6 +31,7 @@ class TreesController < ApplicationController
 
     if params[:type].to_s != "initial" && params[:state].to_s != "not_seen"
       seconds_in = Time.now.to_i - params[:initial_time].to_i
+      puts "entreeeeeeeeeeee cuandooooooooooooooooooooooooooooooooooooo...****************************---"
     end
   
     if params[:type].to_s == "initial"
@@ -1332,20 +1333,7 @@ class TreesController < ApplicationController
             puts subhab.name.to_s
           end
         end
-        #puts @tree.recuperative_ct_question.ct_habilities.first.name
-        #puts @tree.deeping_ct_question.ct_habilities.first.name
         
-
-        #@tree.initial_ct_question.ct_habilities.each do |hability|
-         # puts hability.name
-        #end
-        #@tree.recuperative_ct_question.ct_habilities.each do |hability|
-         # puts hability.name
-        #end 
-        #@tree.recuperative_ct_question.ct_habilities.each do |hability|
-         # puts hability.name
-        #end   
-        #puts :course_id
         format.html { redirect_to @course, notice: 'Tree was successfully created.' }
         format.json { render :show, status: :created, location: @tree }
       else
@@ -1381,11 +1369,11 @@ class TreesController < ApplicationController
   end
 
   def user_info
-
-    tree.user_tree_performances.each do |user_performance|
-
-
-    end
+    @user_performance = @tree.user_tree_performances.find_by(user_id: params[:user_id])
+    puts "aca desde controler.............-------"
+    puts params[:user_id].to_s
+    @the_user = User.find(params[:user_id])
+    render 'user_tree_performance'
   end
 
   def tree_performance
@@ -1398,25 +1386,25 @@ class TreesController < ApplicationController
     @tree.user_tree_performances.each do |performance|
       if performance
           if performance.content_sc
-          content_sc = (performance.content_sc / performance.content_n)
+          content_sc = (performance.content_sc / performance.content_n).round(2)
           end
           if performance.interpretation_sc
-          interpretation_sc = (performance.interpretation_sc / performance.interpretation_n)
+          interpretation_sc = (performance.interpretation_sc / performance.interpretation_n).round(2)
           end
           if performance.analysis_sc
-          analysis_sc = (performance.analysis_sc / performance.analysis_n)
+          analysis_sc = (performance.analysis_sc / performance.analysis_n).round(2)
           end
           if performance.evaluation_sc
-          evaluation_sc = (performance.evaluation_sc / performance.evaluation_n)
+          evaluation_sc = (performance.evaluation_sc / performance.evaluation_n).round(2)
           end
           if performance.inference_sc
-          inference_sc = (performance.inference_sc / performance.inference_n)
+          inference_sc = (performance.inference_sc / performance.inference_n).round(2)
           end
           if performance.explanation_sc
-          explanation_sc = (performance.explanation_sc / performance.explanation_n)
+          explanation_sc = (performance.explanation_sc / performance.explanation_n).round(2)
           end
           if performance.selfregulation_sc
-          selfregulation_sc = (performance.selfregulation_sc / performance.selfregulation_n)
+          selfregulation_sc = (performance.selfregulation_sc / performance.selfregulation_n).round(2)
           end
       end
       user = User.find(performance.user_id)
