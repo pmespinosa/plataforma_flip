@@ -1,7 +1,7 @@
 
 class TreesController < ApplicationController
-  before_action :set_tree, only: [:show, :edit, :update, :destroy, :tree_performance, :user_info]
-  before_action :set_course, only: [:create, :new, :tree_performance]
+  before_action :set_tree, only: [:show, :edit, :update, :destroy]
+  before_action :set_course, only: [:create, :new]
   before_action :set_tree_edx, only: [:edx_view, :set_report_values]
   before_action :set_ef_visible
   before_action :set_breadcrumbs
@@ -1369,7 +1369,10 @@ class TreesController < ApplicationController
   end
 
   def user_info
+    @course = Course.find(params[:course_id])
+    @tree = @course.trees.find(params[:tree_id])
     @user_performance = @tree.user_tree_performances.find_by(user_id: params[:user_id])
+    @breadcrumbs = ["Mis Cursos", @course.name, "Reportes", "Reportes de Alumnos"]
     puts "aca desde controler.............-------"
     puts params[:user_id].to_s
     @the_user = User.find(params[:user_id])
@@ -1378,9 +1381,12 @@ class TreesController < ApplicationController
 
   def tree_performance
 
-    @breadcrumbs = ["Mis Cursos", @course.name, "Reportes", "Reportes de Alumnos"]
-    @users_sc = Hash.new
+
     
+    @users_sc = Hash.new
+    @course = Course.find(params[:course_id])
+    @tree = @course.trees.find(params[:tree_id])
+    @breadcrumbs = ["Mis Cursos", @course.name, "Reportes", "Reportes de Alumnos"]
 
 
     @tree.user_tree_performances.each do |performance|
