@@ -42,7 +42,7 @@ class TreesController < ApplicationController
         if @tree.user_tree_performances.where(user_id: current_user.id).blank?              
           @performance = @tree.user_tree_performances.create(user_id: current_user.id)
         end
-
+        @performance.start_tree_time = Time.now
         render "edx_view", :locals => {:content_question => @tree.initial_content_question, :ct_question => @tree.initial_ct_question,
         :feedback_simple=> @tree.initial_simple_feedback, :feedback_complex => @tree.initial_complex_feedback,
         :type => "initial", :state => "not_seen", :feedback_quality => "none", :n => 0, :content_choices => @content_choices, :ct_choices => @ct_choices, :initial_time => Time.now.to_i}
@@ -401,7 +401,6 @@ class TreesController < ApplicationController
               end
 
           else
-            @performance.init_fb_time = seconds_in
             render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
                 :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
                 :type => "deeping", :state =>"not_seen", :feedback_quality => "none", :n => 0, :content_choices => @content_choices, :ct_choices => @ct_choices, :initial_time => Time.now.to_i}
@@ -418,9 +417,8 @@ class TreesController < ApplicationController
     elsif params[:type] == "recuperative"
 
       if params[:state].to_s == "answered"
-        puts "antes de verr si entra al if de contestadasassssssssssssssssssssssssssssssss----------"
+       
         if params[:content_choices] && params[:content_choices]
-                 puts "entreeeeeeeeeeeee a contestadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa----------" 
                  @correct_content= true
                  @correct_ct= true
 
@@ -459,9 +457,16 @@ class TreesController < ApplicationController
                   if @correct_ct == true && @correct_content == true
 
                     if @performance
-                      @performance.recuperative_qt_time = seconds_in
-                      @performance.recuperative_content = 1.0
-                      @performance.recuperative_ct = 1.0
+                      if params[:n].to_i < 1
+                        @performance.recuperative_qt1_time = seconds_in
+                        @performance.recuperative_content1 = 1.0
+                        @performance.recuperative_ct1 = 1.0
+                      else
+                        @performance.recuperative_qt2_time = seconds_in
+                        @performance.recuperative_content2 = 1.0
+                        @performance.recuperative_ct2 = 1.0
+                      end
+                      
 
                       if @performance.content_sc.nil?
                         @performance.content_sc = 1
@@ -559,9 +564,16 @@ class TreesController < ApplicationController
                   elsif @correct_content == true && @correct_ct == false
 
                     if @performance
-                      @performance.recuperative_qt_time = seconds_in
-                      @performance.recuperative_content = 1.0
-                      @performance.recuperative_ct = 0.0
+                      if params[:n].to_i < 1
+                        @performance.recuperative_qt1_time = seconds_in
+                        @performance.recuperative_content1 = 1.0
+                        @performance.recuperative_ct1 = 0.0
+                      else
+                        @performance.recuperative_qt2_time = seconds_in
+                        @performance.recuperative_content2 = 1.0
+                        @performance.recuperative_ct2 = 0.0
+                      end
+                                           
                   
                       if @performance.content_sc.nil?
                         @performance.content_sc = 1
@@ -662,13 +674,25 @@ class TreesController < ApplicationController
                   else
 
                     if @performance
-                      @performance.recuperative_qt_time = seconds_in
-                      @performance.recuperative_content = 0.0
-                      if @correct_ct == true
-                        @performance.recuperative_ct = 1.0
-                      else
-                        @performance.recuperative_ct = 0.0
-                      end
+                     if params[:n].to_i < 1
+                        @performance.recuperative_qt1_time = seconds_in
+                        @performance.recuperative_content1 = 0.0
+                        if @correct_ct == true
+                          @performance.recuperative_ct1 = 1.0
+                        else
+                          @performance.recuperative_ct1 = 0.0
+                        end
+                    else
+                        @performance.recuperative_qt2_time = seconds_in
+                        @performance.recuperative_content2 = 0.0
+                        if @correct_ct == true
+                          @performance.recuperative_ct2 = 1.0
+                        else
+                          @performance.recuperative_ct2 = 0.0
+                        end
+                    end
+                     
+                      
                       if @performance.content_sc.nil?
                         @performance.content_sc = 0
                       else
@@ -778,12 +802,12 @@ class TreesController < ApplicationController
       elsif params[:state].to_s == "feedback_seen"
 
         if params[:n].to_i < 2
-          @performance.recuperative_fb_time = seconds_in
+          @performance.recuperative_fb1_time = seconds_in
           render "edx_view", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question,
               :feedback_simple=> @tree.recuperative_simple_feedback, :feedback_complex => @tree.recuperative_complex_feedback,
               :type => "recuperative", :state => "not_seen", :feedback_quality => "none", :n => params[:n].to_i, :content_choices => @content_choices, :ct_choices => @ct_choices, :initial_time => Time.now.to_i}
         else
-          @performance.recuperative_fb_time = seconds_in
+          @performance.recuperative_fb2_time = seconds_in
           render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
               :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
               :type => "deeping", :state =>"not_seen", :feedback_quality => "none", :n => 0, :content_choices => @content_choices, :ct_choices => @ct_choices, :initial_time => Time.now.to_i}
@@ -835,9 +859,15 @@ class TreesController < ApplicationController
               if @correct_ct == true && @correct_content == true
 
                 if @performance
-                  @performance.deeping_qt_time = seconds_in
-                  @performance.deeping_content = 1.0                  
-                  @performance.deeping_ct = 1.0
+                  if params[:n].to_i < 1
+                    @performance.deeping_qt1_time = seconds_in
+                    @performance.deeping_content1 = 1.0                  
+                    @performance.deeping_ct1 = 1.0
+                  else
+                    @performance.deeping_qt2_time = seconds_in
+                    @performance.deeping_content2 = 1.0                  
+                    @performance.deeping_ct2 = 1.0
+                  end                  
                   
                   if @performance.content_sc.nil?
                     @performance.content_sc = 1
@@ -936,9 +966,16 @@ class TreesController < ApplicationController
               elsif @correct_content == true && @correct_ct == false
 
                 if @performance
-                  @performance.deeping_qt_time = seconds_in
-                  @performance.deeping_content = 1.0
-                  @performance.deeping_ct = 0.0
+                  if params[:n].to_i < 1
+                    @performance.deeping_qt1_time = seconds_in
+                    @performance.deeping_content1 = 1.0
+                    @performance.deeping_ct1 = 0.0
+                  else
+                    @performance.deeping_qt2_time = seconds_in
+                    @performance.deeping_content2 = 1.0
+                    @performance.deeping_ct2 = 0.0
+                  end       
+                  
                   
                   if @performance.content_sc.nil?
                     @performance.content_sc = 1
@@ -1039,13 +1076,24 @@ class TreesController < ApplicationController
               else
 
                 if @performance
-                  @performance.deeping_qt_time = seconds_in
-                  @performance.init_content = 0.0
-                  if @correct_ct == true
-                    @performance.deeping_ct = 1.0
+                  if params[:n].to_i < 1
+                    @performance.deeping_qt1_time = seconds_in
+                    @performance.deeping_content1 = 0.0
+                    if @correct_ct == true
+                      @performance.deeping_ct1 = 1.0
+                    else
+                      @performance.deeping_ct1 = 0.0
+                    end
                   else
-                    @performance.deeping_ct = 0.0
-                  end
+                    @performance.deeping_qt2_time = seconds_in
+                    @performance.deeping_content2 = 0.0
+                    if @correct_ct == true
+                      @performance.deeping_ct2 = 1.0
+                    else
+                      @performance.deeping_ct2 = 0.0
+                    end
+                  end       
+                  
 
                   if @performance.content_sc.nil?
                     @performance.content_sc = 0
@@ -1146,6 +1194,7 @@ class TreesController < ApplicationController
               end
 
       else
+        @performance.finish_tree_time = Time.now
         render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
                   :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
                   :type => "deeping", :state => "end", :feedback_quality => "none", :n => 2, :content_choices => params[:content_choices], :ct_choices => params[:ct_choices], :initial_time => Time.now.to_i}
@@ -1162,6 +1211,7 @@ class TreesController < ApplicationController
 
         else
           @performance.deeping_fb2_time = seconds_in
+          @performance.finish_tree_time = Time.now
           render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
               :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
               :type => "deeping", :state => "end", :feedback_quality => "none", :n => 2, :content_choices => params[:content_choices], :ct_choices => params[:ct_choices], :initial_time => Time.now.to_i}
