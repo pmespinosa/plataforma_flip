@@ -23,7 +23,8 @@
               <td><%= tree.content.text%></td>
             <% end -%>
             <td></td>
-            <td><%= link_to 'Vista previa', [@course, tree, {:type =>'initial', :state => "not_seen"}], method: :post,class:"btn btn-primary btn-xs", style:'color:white'%></td>
+            <% time_init = Time.now.to_i %> 
+            <td><%= link_to 'Vista previa', [@course, tree, {:type =>'initial', :state => "not_seen"}], method: :post, class:"btn btn-primary btn-xs", style:'color:white'%></td>
             <td><%= link_to 'Ver/Editar', edit_course_tree_path(@course, tree), class:"btn btn-primary btn-xs", style:'color:white'%></td>
             <td><%= link_to 'Eliminar', [@course, tree], method: :delete, data: { confirm: '¿Seguro que deseas eliminar el arbol?' },:class=>"btn btn-danger btn-xs", :style=>'color:white'%></td>
         </tr>
