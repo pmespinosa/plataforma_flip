@@ -1,7 +1,8 @@
 <% if current_user.role?%>
   <h3>Detalle de <%= @the_user.first_name + " " + @the_user.last_name%> en evaluación de <%= @tree.content.text %></h3>
-  <h4>Tiempo de inicio de arbol: <%= @user_performance.start_tree_time%></h4>
-  <h4>Tiempo de fin de arbol: <%= @user_performance.finish_tree_time%></h4>
+  <h5>Tiempo de inicio de arbol: <%= @user_performance.start_tree_time%></h5>
+  <h5>Tiempo de fin de arbol: <%= @user_performance.finish_tree_time%></h5>
+  <h5>Tiempo total de evaluación: <%= (@user_performance.finish_tree_time.to_i - @user_performance.start_tree_time.to_i) %> segundos</h5>
   <br>
   <table class="table table-striped">
     <thead class="head">

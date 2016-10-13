@@ -403,10 +403,10 @@ class TreesController < ApplicationController
               end
 
           else
-            if !@performance.init_qt_time.nil?
-              @performance.init_fb_time = seconds_in
-              puts "le doy tiempo al initial fb que es: " + seconds_in.to_s + "------------------------------ si el qt time no es nulo  "
-            end
+            #if !@performance.init_qt_time.nil?
+              #@performance.init_fb_time = seconds_in
+              #puts "le doy tiempo al initial fb que es: " + seconds_in.to_s + "------------------------------ si el qt time no es nulo  "
+            #end
             render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
                 :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
                 :type => "deeping", :state =>"not_seen", :feedback_quality => "none", :n => 0, :content_choices => @content_choices, :ct_choices => @ct_choices, :initial_time => Time.now.to_i}
@@ -720,7 +720,7 @@ class TreesController < ApplicationController
 
                       @tree.recuperative_ct_question.ct_habilities.each do |hab|
                         if hab.active
-                          puts "habilidades del recuperative ct questions------------------------"
+                          
                           puts hab.name.to_s
                           if hab.name.to_s == "Interpretación"
                             if@performance.interpretation_sc.nil?
@@ -806,11 +806,11 @@ class TreesController < ApplicationController
                   end
 
             else
-              if !@performance.recuperative_qt2_time.nil?
-                @performance.recuperative_fb2_time = seconds_in
-                puts "le doy tiempo al recuperative fb2 que es: " + seconds_in.to_s + " en el if tiempo recup_qt2 no es nul"
+              #if !@performance.recuperative_qt2_time.nil?
+                #@performance.recuperative_fb2_time = seconds_in
+                #puts "le doy tiempo al recuperative fb2 que es: " + seconds_in.to_s + " en el if tiempo recup_qt2 no es nul"
 
-              end
+              #end
               render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
                     :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
                     :type => "deeping", :state =>"not_seen", :feedback_quality => "none", :n => 0, :content_choices => @content_choices, :ct_choices => @ct_choices, :initial_time => Time.now.to_i}
@@ -1220,15 +1220,13 @@ class TreesController < ApplicationController
               end
 
       else
-        if !@performance.deeping_qt2_time.nil?
-          @performance.deeping_fb2_time = seconds_in
-          puts "le doy tiempo al deeping fb2 que es: " + seconds_in.to_s + " en el if tiempo deeping_qt2 no es nul"
-        else
-          puts "no entree al if pq el qt2_time es nil-----------------------------------"
-          puts @performance.deeping_qt2_time.to_s
-        end
-        puts "el tiempo podría ser del deeping fb2 " + seconds_in.to_s + " fuera dle if de tiempo deeping_qt2 no es nul"
+        #if !@performance.deeping_qt2_time.nil?
+         # @performance.deeping_fb2_time = seconds_in
+          #puts "le doy tiempo al deeping fb2 que es: " + seconds_in.to_s + " en el if tiempo deeping_qt2 no es nul"
+        #end
+        #puts "el tiempo podría ser del deeping fb2 " + seconds_in.to_s + " fuera dle if de tiempo deeping_qt2 no es nul"
         @performance.finish_tree_time = Time.now
+        puts "guarde el tiempo final saliendo en finalizar.................................."
         render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
                   :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
                   :type => "deeping", :state => "end", :feedback_quality => "none", :n => 2, :content_choices => params[:content_choices], :ct_choices => params[:ct_choices], :initial_time => Time.now.to_i}
@@ -1237,7 +1235,7 @@ class TreesController < ApplicationController
       end
 
       elsif params[:state].to_s == "feedback_seen"
-        puts "El n es " + params[:n].to_s + " ----------------------------------------"
+        
         if params[:n].to_i < 2
           puts "le doy tiempo al deeping fb1 que es: " + seconds_in.to_s + "------------------------------ feedbackseed "
           @performance.deeping_fb1_time = seconds_in
@@ -1249,6 +1247,7 @@ class TreesController < ApplicationController
           puts "le doy tiempo al deeping fb2 que es: " + seconds_in.to_s + "------------------------------ feedbackseen  "
           @performance.deeping_fb2_time = seconds_in
           @performance.finish_tree_time = Time.now
+          puts "guarde el tiempo final luego de ver el 2do feedback...................................."
           render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
               :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
               :type => "deeping", :state => "end", :feedback_quality => "none", :n => 2, :content_choices => params[:content_choices], :ct_choices => params[:ct_choices], :initial_time => Time.now.to_i}
