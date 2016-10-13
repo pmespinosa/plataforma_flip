@@ -56,16 +56,16 @@ class HomeworksController < ApplicationController
       if params[:next]
         if @homework.actual_phase == "responder"
           @homework.actual_phase = "argumentar"
-          data = Register.new(button_id:18, user_id:current_user.id)
+          data = Register.new(button_id:17, user_id:current_user.id)
         elsif @homework.actual_phase == "argumentar"
           @homework.actual_phase = "rehacer"
-          data = Register.new(button_id:19, user_id:current_user.id)
+          data = Register.new(button_id:18, user_id:current_user.id)
         elsif @homework.actual_phase == "rehacer"
           @homework.actual_phase = "responder_2"
-          data = Register.new(button_id:20, user_id:current_user.id)
+          data = Register.new(button_id:19, user_id:current_user.id)
         elsif @homework.actual_phase == "responder_2"
           @homework.actual_phase = "argumentar_2"
-          data = Register.new(button_id:21, user_id:current_user.id)
+          data = Register.new(button_id:20, user_id:current_user.id)
         elsif @homework.actual_phase == "argumentar_2"
           @homework.actual_phase = "rehacer_2"
           data = Register.new(button_id:21, user_id:current_user.id)
@@ -74,20 +74,36 @@ class HomeworksController < ApplicationController
       elsif params[:previous]
         if @homework.actual_phase == "argumentar"
           @homework.actual_phase = "responder"
+          data = Register.new(button_id:22, user_id:current_user.id)
         elsif @homework.actual_phase == "rehacer"
           @homework.actual_phase = "argumentar"
+          data = Register.new(button_id:23, user_id:current_user.id)
         elsif @homework.actual_phase == "responder_2"
           @homework.actual_phase = "rehacer"
+          data = Register.new(button_id:24, user_id:current_user.id)
         elsif @homework.actual_phase == "argumentar_2"
           @homework.actual_phase = "responder_2"
+          data = Register.new(button_id:25, user_id:current_user.id)
         elsif @homework.actual_phase == "rehacer_2"
           @homework.actual_phase = "argumentar_2"
+          data = Register.new(button_id:26, user_id:current_user.id)
         end
-        data = Register.new(button_id:22, user_id:current_user.id)
         @homework.upload = true
       elsif params[:discussion]
+        if @homework.actual_phase == "responder"
+          data = Register.new(button_id:27, user_id:current_user.id)
+        elsif @homework.actual_phase == "argumentar"
+          data = Register.new(button_id:28, user_id:current_user.id)
+        elsif @homework.actual_phase == "rehacer"
+          data = Register.new(button_id:29, user_id:current_user.id)
+        elsif @homework.actual_phase == "responder_2"
+          data = Register.new(button_id:30, user_id:current_user.id)
+        elsif @homework.actual_phase == "argumentar_2"
+          data = Register.new(button_id:31, user_id:current_user.id)
+        elsif @homework.actual_phase == "rehacer_2"
+          data = Register.new(button_id:32, user_id:current_user.id)
+        end
         @homework.upload = false
-        data = Register.new(button_id:17, user_id:current_user.id)
       end
       data.save
       @homework.save
@@ -96,6 +112,8 @@ class HomeworksController < ApplicationController
   end
 
   def show
+    puts params
+    puts "Veamos si aparece el tag"
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Realizar Actividad"]
     @users = User.all.where(role:0, asistencia:true)
     @homework.save
@@ -186,14 +204,14 @@ class HomeworksController < ApplicationController
       @my_answer = @user.answers.find_by_homework_id(@homework.id)
       @partner_answer = @corregido.answers.find_by_homework_id(@homework.id)
     end
-    data = Register.new(button_id:23, user_id:current_user.id)
+    data = Register.new(button_id:33, user_id:current_user.id)
     data.save
     render 'studentanswer'
   end
 
   def create
     if params["tag_in_index"]
-      data = Register.new(button_id:26, user_id:current_user.id)
+      data = Register.new(button_id:36, user_id:current_user.id)
       data.save
       @homework = Homework.where(id:params["actualizar"]["homework"])[0]
       answers = current_user.answers.find_by_homework_id([@homework.id])
@@ -264,7 +282,7 @@ class HomeworksController < ApplicationController
           end
           asistente.save
         end
-        generate_partner_2
+        generate_partner
       end
       data = Register.new(button_id:15, user_id:current_user.id)
       data.save
@@ -277,58 +295,6 @@ class HomeworksController < ApplicationController
   end
 
   def generate_partner
-    if @@libres.length > 1
-      if @@libres.length % 2 != 0
-        while true do
-          i1 = rand(@@libres.length)
-          i2 = rand(@@libres.length)
-          i3 = rand(@@libres.length)
-          if i1 != i2 && i1 != i3 && i2 != i3
-            orden = [i1, i2, i3].sort
-            break
-          end
-        end
-        p1 = @@libres[i1]
-        p2 = @@libres[i2]
-        p3 = @@libres[i3]
-        p1.partner_id = p2.id
-        p2.partner_id = p3.id
-        p3.partner_id = p1.id
-        p1.save
-        p2.save
-        p3.save
-        @@libres.delete_at(orden.pop)
-        @@libres.delete_at(orden.pop)
-        @@libres.delete_at(orden.pop)
-      end
-      for i in 1..(@@libres.length/2)
-        i1 = rand(@@libres.length)
-        p1 = @@libres[i1]
-        i2 = rand(@@libres.length)
-        while i2 == i1 do
-          i2 = rand(@@libres.length)
-        end
-        p2 = @@libres[i2]
-        p1.partner_id = p2.id
-        p2.partner_id = p1.id
-        p1.save
-        p2.save
-        if i1 > i2
-          @@libres.delete_at(i1)
-          @@libres.delete_at(i2)
-        else
-          @@libres.delete_at(i2)
-          @@libres.delete_at(i1)
-        end
-      end
-      @homework.upload = true
-      @homework.current = true
-      @homework.save
-      redirect_to homework_path(@homework)
-    end
-  end
-
-  def generate_partner_2
     i = rand(@@libres.length)
     cabeza = @@libres[i]
     anterior = @@libres[i]
@@ -370,7 +336,6 @@ class HomeworksController < ApplicationController
       if current_user.role?
         for i in @course.homeworks
           i.upload = false
-          #i.actual_phase = "responder"
           i.save
         end
       end

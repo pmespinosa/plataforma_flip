@@ -4,7 +4,7 @@
 		<h1><%= @homework.name %></h1>
 		<h2><%= @ciclo %> - <%= @etapa %></h2>
 		<br>
-		<%= button_to 'Volver',homework_path(@homework), :class=>"btn btn-primary", :style=>'color:white' %>
+		<%= button_to 'Volver',[@homework], :class=>"btn btn-primary", :style=>'color:white' %>
 		<br>
 		<%= simple_format(@homework.content, {style:"font-size:20px; line-height:1.5", align:"justify"})%>
 		<% if @homework.image? %>
