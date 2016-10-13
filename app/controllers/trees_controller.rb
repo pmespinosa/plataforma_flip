@@ -1226,6 +1226,10 @@ class TreesController < ApplicationController
         #end
         #puts "el tiempo podría ser del deeping fb2 " + seconds_in.to_s + " fuera dle if de tiempo deeping_qt2 no es nul"
         @performance.finish_tree_time = Time.now
+        learner_user = User.find(@performance.user_id)
+        if(learner_user.role != 0)
+          @performance.delete
+        end
         puts "guarde el tiempo final saliendo en finalizar.................................."
         render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
                   :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
@@ -1247,6 +1251,10 @@ class TreesController < ApplicationController
           puts "le doy tiempo al deeping fb2 que es: " + seconds_in.to_s + "------------------------------ feedbackseen  "
           @performance.deeping_fb2_time = seconds_in
           @performance.finish_tree_time = Time.now
+          learner_user = User.find(@performance.user_id)
+          if(learner_user.role != 0)
+            @performance.delete
+          end
           puts "guarde el tiempo final luego de ver el 2do feedback...................................."
           render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
               :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
@@ -1258,11 +1266,23 @@ class TreesController < ApplicationController
     end
 
 
+
+
     if @performance.nil?
     else
       
-      @performance.save
-      puts @performance.inspect
+      learner_user = User.find(@performance.user_id)
+      if(learner_user.role == 0)
+        @performance.save
+        puts @performance.inspect
+        puts "se guardoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"
+      else
+        #@performance.delete
+        puts "no se guardooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"
+      end
+
+      #@performance.save
+      #puts @performance.inspect
     end
 
   end
