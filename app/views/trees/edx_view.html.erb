@@ -533,8 +533,8 @@
     <%= submit_tag "Pasar a pregunta de profundización", class: "btn btn-default" %>
    <%elsif state.to_s == "answered" && type.to_s == "deeping" && n.to_i == 0 %>   
     <%= submit_tag "Intentar otra vez", class: "btn btn-default" %>
-   <%elsif state.to_s == "answered" && type.to_s == "recuperative" && n.to_i == 1 %>   
-    <%= submit_tag "Pasar a pregunta de profundización", class: "btn btn-default" %>
+   <%elsif state.to_s == "answered" && type.to_s == "deeping" && n.to_i == 1 %>   
+    <%= submit_tag "Finalizar evaluación", class: "btn btn-default" %>
    <% else %>
     <%= link_to "Finalizar evaluación", eval_form_path(@course.id), class: "btn btn-default" %>
    <% end %>
