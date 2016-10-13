@@ -33,6 +33,11 @@ class TreesController < ApplicationController
       seconds_in = Time.now.to_i - params[:initial_time].to_i
       #puts "entreeeeeeeeeeee cuandooooooooooooooooooooooooooooooooooooo...****************************---"
     #end
+    if @performance
+      if !@performance.finish_tree_time.nil?
+        render "viewed_tree"
+      end
+    end
   
     if params[:type].to_s == "initial"
 
