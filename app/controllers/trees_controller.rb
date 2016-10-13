@@ -1227,7 +1227,7 @@ class TreesController < ApplicationController
         #puts "el tiempo podría ser del deeping fb2 " + seconds_in.to_s + " fuera dle if de tiempo deeping_qt2 no es nul"
         @performance.finish_tree_time = Time.now
         learner_user = User.find(@performance.user_id)
-        if(learner_user.role != 0)
+        if(learner_user.role != "alumno")
           @performance.delete
         end
         puts "guarde el tiempo final saliendo en finalizar.................................."
@@ -1252,7 +1252,7 @@ class TreesController < ApplicationController
           @performance.deeping_fb2_time = seconds_in
           @performance.finish_tree_time = Time.now
           learner_user = User.find(@performance.user_id)
-          if(learner_user.role != 0)
+          if(learner_user.role != "alumno")
             @performance.delete
           end
           puts "guarde el tiempo final luego de ver el 2do feedback...................................."
@@ -1272,13 +1272,16 @@ class TreesController < ApplicationController
     else
       
       learner_user = User.find(@performance.user_id)
-      if(learner_user.role == 0)
-        @performance.save
+      puts learner_user.role
+      if(learner_user.role == "alumno")
+        @performance.save!
         puts @performance.inspect
         puts "se guardoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"
       else
         #@performance.delete
+
         puts "no se guardooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"
+        puts learner_user.inspect
       end
 
       #@performance.save
