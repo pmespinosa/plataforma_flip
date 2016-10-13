@@ -112,8 +112,6 @@ class HomeworksController < ApplicationController
   end
 
   def show
-    puts params
-    puts "Veamos si aparece el tag"
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Realizar Actividad"]
     @users = User.all.where(role:0, asistencia:true)
     @homework.save

@@ -43,7 +43,7 @@
             <% end %>
             <% if @Configuraciones_visible %> <!-- BOTON CONFIGURACIONES -->
               <ul class="nav navbar-nav">
-                <li><%= button_to "Configuraciones", edit_course_path(current_user.current_course_id), :class => "btn btn-primary", :style => "font-size:18px; height:50px" %></li>
+                <li><%= button_to "Configuraciones", edit_course_path(current_user.current_course_id, tag:"configuraciones"), :class => "btn btn-primary", :style => "font-size:18px; height:50px" %></li>
               </ul>
             <% else %>
               <ul class="nav navbar-nav">

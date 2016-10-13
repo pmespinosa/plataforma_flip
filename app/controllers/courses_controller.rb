@@ -41,6 +41,12 @@ class CoursesController < ApplicationController
   end
 
   def edit
+    if params["tag"]
+      if params["tag"] == "configuraciones"
+        data = Register.new(button_id:5, user_id:current_user.id)
+        data.save
+      end
+    end
     @breadcrumbs = ["Mis Cursos", @course.name, "Configuraciones"]
     @course = Course.find(params[:id])
     @users = @course.users
@@ -163,7 +169,7 @@ class CoursesController < ApplicationController
       end
       if content_n != 0
         content_sc = (content_sc / content_n).round(2)
-      else 
+      else
         content_sc = nil
       end
       if interpretation_n != 0
@@ -202,7 +208,7 @@ class CoursesController < ApplicationController
 
        puts "un user_score es------------------------------------"
        puts @users_sc[user.id].inspect
-       puts " " 
+       puts " "
 
 
     end
@@ -215,8 +221,8 @@ class CoursesController < ApplicationController
     @student = User.find(params[:st_id])
     @breadcrumbs = ["Mis Cursos", @course.name, "Reportes", "Reportes de Alumnos", @student.first_name + " " + @student.last_name]
     @student = User.find(params[:st_id])
-    @performances = Hash.new    
-    
+    @performances = Hash.new
+
     content_n = 0
     interpretation_n = 0
     analysis_n = 0
@@ -241,7 +247,7 @@ class CoursesController < ApplicationController
       inference_sc = nil
       explanation_sc = nil
       selfregulation_sc = nil
-      
+
       puts "holaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa0"
       puts content_m
       puts content_n
@@ -288,16 +294,16 @@ class CoursesController < ApplicationController
           end
           the_tree = Tree.find(tree.id)
           @performances[tree.id] = {:content => the_tree.content.text, :content_sc => content_sc, :interpretation_sc => interpretation_sc, :analysis_sc => analysis_sc, :evaluation_sc => evaluation_sc, :inference_sc => inference_sc, :explanation_sc => explanation_sc, :selfregulation_sc => selfregulation_sc}
-      
+
 
         end
 
       end
-      
+
 
       if content_n != 0
         content_m = content_m / content_n
-      else 
+      else
         content_m = nil
       end
       if interpretation_n != 0
@@ -332,9 +338,9 @@ class CoursesController < ApplicationController
       end
       @avarage = {:content_av => content_m, :interpretation_av => interpretation_m,
       :analysis_av => analysis_m, :evaluation_av => evaluation_m, :inference_av => inference_m, :explanation_av => explanation_m, :selfregulation_av => selfregulation_m}
-    
-     
-    
+
+
+
     render 'st_report'
   end
 
