@@ -36,6 +36,7 @@ class TreesController < ApplicationController
     if @performance
       if !@performance.finish_tree_time.nil?
         render "viewed_tree"
+        return
       end
     end
   
