@@ -1239,10 +1239,12 @@ class TreesController < ApplicationController
         #end
         #puts "el tiempo podría ser del deeping fb2 " + seconds_in.to_s + " fuera dle if de tiempo deeping_qt2 no es nul"
         @performance.finish_tree_time = Time.now
+        if @performance.start_tree_time
         @performance.total_time = Time.now - @performance.start_tree_time
+        end
         learner_user = User.find(@performance.user_id)
         if(learner_user.role != "alumno")
-          @performance.delete
+          @performance.destroy
         end
         puts "guarde el tiempo final saliendo en finalizar.................................."
         render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
@@ -1268,7 +1270,7 @@ class TreesController < ApplicationController
           @performance.total_time = Time.now - @performance.start_tree_time
           learner_user = User.find(@performance.user_id)
           if(learner_user.role != "alumno")
-            @performance.delete
+            @performance.destroy
           end
           puts "guarde el tiempo final luego de ver el 2do feedback...................................."
           render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
@@ -1485,9 +1487,10 @@ class TreesController < ApplicationController
           end
       end
       user = User.find(performance.user_id)
-      @users_sc[user.id] = {:name => user.last_name + ", " +  user.first_name, :content_sc => content_sc, :interpretation_sc => interpretation_sc,
-        :analysis_sc => analysis_sc, :evaluation_sc => evaluation_sc, :inference_sc => inference_sc, :explanation_sc => explanation_sc, :selfregulation_sc => selfregulation_sc}
-
+      if user.role == "alumno"
+        @users_sc[user.id] = {:name => user.last_name + ", " +  user.first_name, :content_sc => content_sc, :interpretation_sc => interpretation_sc,
+          :analysis_sc => analysis_sc, :evaluation_sc => evaluation_sc, :inference_sc => inference_sc, :explanation_sc => explanation_sc, :selfregulation_sc => selfregulation_sc}
+      end
     end
 
     render 'tree_performance'
