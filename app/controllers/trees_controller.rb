@@ -9,6 +9,7 @@ class TreesController < ApplicationController
 
   def edx_view
     @username = params['lis_person_sourcedid']
+    @showed_user = User.find(current_user.id)
     @performance = @tree.user_tree_performances.find_by(user_id: current_user.id)
     puts " "
     puts "aca muestro el performanceeeeeeeeeeeeeeeeeeeeeeeeeeeeee y sus datos son"
@@ -28,22 +29,40 @@ class TreesController < ApplicationController
     else
       @ct_choices = nil
     end
+
+    #if params[:type].to_s != "initial" && params[:state].to_s != "not_seen"
+      seconds_in = Time.now.to_i - params[:initial_time].to_i
+      #puts "entreeeeeeeeeeee cuandooooooooooooooooooooooooooooooooooooo...****************************---"
+    #end
+    if @performance
+      if !@performance.finish_tree_time.nil?
+        render "viewed_tree"
+        return
+      end
+    end
   
     if params[:type].to_s == "initial"
 
 
       if params[:state].to_s == "not_seen"
 
+        if @performance
+          if !@performance.finish_tree_time.nil? || !@performance.init_qt_time.nil? || !@performance.recuperative_qt1_time.nil? || !@performance.recuperative_qt2_time.nil? || !@performance.deeping_qt1_time.nil? || !@performance.deeping_qt2_time.nil?
+            render "viewed_tree"
+            return
+          end
+        end
       
         if @tree.user_tree_performances.where(user_id: current_user.id).blank?              
           @performance = @tree.user_tree_performances.create(user_id: current_user.id)
         end
-
+        @performance.start_tree_time = Time.now
         render "edx_view", :locals => {:content_question => @tree.initial_content_question, :ct_question => @tree.initial_ct_question,
         :feedback_simple=> @tree.initial_simple_feedback, :feedback_complex => @tree.initial_complex_feedback,
-        :type => "initial", :state => "not_seen", :feedback_quality => "none", :n => 0, :content_choices => @content_choices, :ct_choices => @ct_choices}
+        :type => "initial", :state => "not_seen", :feedback_quality => "none", :n => 0, :content_choices => @content_choices, :ct_choices => @ct_choices, :initial_time => Time.now.to_i}
 
       elsif params[:state].to_s == "answered"
+
 
 
         if params[:content_choices] && params[:content_choices]
@@ -93,9 +112,14 @@ class TreesController < ApplicationController
               if @correct_ct == true && @correct_content == true
 
                 if @performance
+
+                  puts "el tiempo en la pregunta inicial fue: " + seconds_in.to_s + " --------------------------------"
+                  @performance.init_qt_time = seconds_in
+                  @performance.init_content = 1.0
+                  @performance.init_ct = 1.0
+
                   if @performance.content_sc.nil?
                     @performance.content_sc = 1
-                    puts "le di el valor de 1 ------------------"
                   else
                     @performance.content_sc = @performance.content_sc + 1
                   end 
@@ -108,7 +132,6 @@ class TreesController < ApplicationController
                     
 
                   @tree.initial_ct_question.ct_habilities.each do |hab|
-                    puts "habilidades del initial ct questions------------------------"
                     puts hab.name.to_s
                     if hab.active
                       if hab.name.to_s == "Interpretación"
@@ -182,16 +205,23 @@ class TreesController < ApplicationController
                   end
                 end
                 
-                #puts "entre al correcto------------"
                 render "edx_view", :locals => {:content_question => @tree.initial_content_question, :ct_question => @tree.initial_ct_question,
                 :feedback_simple=> @tree.initial_simple_feedback, :feedback_complex => @tree.initial_complex_feedback,
-                 :type => "initial", :state =>"answered", :feedback_quality => "none", :n => 0, :content_choices => @content_choices, :ct_choices => @ct_choices}
+                 :type => "initial", :state =>"answered", :feedback_quality => "none", :n => 0, :content_choices => @content_choices, :ct_choices => @ct_choices, :initial_time => Time.now.to_i}
 
 
 
               elsif @correct_content == true && @correct_ct == false
 
+
+
                 if @performance
+
+                  puts "el tiempo en la pregunta inicial fue: " + seconds_in.to_s + " --------------------------------"
+                  @performance.init_qt_time = seconds_in
+                  @performance.init_content = 1.0
+                  @performance.init_ct = 0.0
+
                   if @performance.content_sc.nil?
                     @performance.content_sc = 1
                   else
@@ -204,7 +234,7 @@ class TreesController < ApplicationController
                   end 
 
                   @tree.initial_ct_question.ct_habilities.each do |hab|
-                    puts "habilidades del initial ct questions------------------------"
+                    
                     puts hab.name.to_s
                     if hab.active
                       if hab.name.to_s == "Interpretación"
@@ -277,12 +307,24 @@ class TreesController < ApplicationController
                     end
                   end
                 end
+
+
                 render "edx_view", :locals => {:content_question => @tree.initial_content_question, :ct_question => @tree.initial_ct_question,
                 :feedback_simple=> @tree.initial_simple_feedback, :feedback_complex => @tree.initial_complex_feedback,
-                 :type => "initial", :state =>"answered", :feedback_quality => "simple", :n => 0, :content_choices => @content_choices, :ct_choices => @ct_choices}
+                 :type => "initial", :state =>"answered", :feedback_quality => "simple", :n => 0, :content_choices => @content_choices, :ct_choices => @ct_choices, :initial_time => Time.now.to_i}
 
               else
                 if @performance
+
+                  puts "el tiempo en la pregunta inicial fue: " + seconds_in.to_s + " --------------------------------"
+                  @performance.init_qt_time = seconds_in
+                  @performance.init_content = 0.0
+                  if @correct_ct == true
+                    @performance.init_ct = 1.0
+                  else
+                    @performance.init_ct = 0.0
+                  end
+
                   if @performance.content_sc.nil?
                     @performance.content_sc = 0
                   else
@@ -296,7 +338,7 @@ class TreesController < ApplicationController
 
                   @tree.initial_ct_question.ct_habilities.each do |hab|
                     if hab.active
-                      puts "habilidades del initial ct questions------------------------"
+                      
                       puts hab.name.to_s
                       if hab.name.to_s == "Interpretación"
                         if@performance.interpretation_sc.nil?
@@ -370,29 +412,33 @@ class TreesController < ApplicationController
                 end
                 render "edx_view", :locals => {:content_question => @tree.initial_content_question, :ct_question => @tree.initial_ct_question,
                 :feedback_simple=> @tree.initial_simple_feedback, :feedback_complex => @tree.initial_complex_feedback,
-                 :type => "initial", :state => "answered", :feedback_quality => "complex", :n => 0, :content_choices => @content_choices, :ct_choices => @ct_choices}
+                 :type => "initial", :state => "answered", :feedback_quality => "complex", :n => 0, :content_choices => @content_choices, :ct_choices => @ct_choices, :initial_time => Time.now.to_i}
               end
 
           else
-
+            #if !@performance.init_qt_time.nil?
+              #@performance.init_fb_time = seconds_in
+              #puts "le doy tiempo al initial fb que es: " + seconds_in.to_s + "------------------------------ si el qt time no es nulo  "
+            #end
             render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
                 :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
-                :type => "deeping", :state =>"not_seen", :feedback_quality => "none", :n => 0, :content_choices => @content_choices, :ct_choices => @ct_choices}
+                :type => "deeping", :state =>"not_seen", :feedback_quality => "none", :n => 0, :content_choices => @content_choices, :ct_choices => @ct_choices, :initial_time => Time.now.to_i}
 
           end    
 
       elsif params[:state].to_s == "feedback_seen"
+          puts "le doy tiempo al initial fb que es: " + seconds_in.to_s + "------------------------------ feedbackseen  "
+          @performance.init_fb_time = seconds_in
           render "edx_view", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question,
               :feedback_simple=> @tree.recuperative_simple_feedback, :feedback_complex => @tree.recuperative_complex_feedback,
-              :type => "recuperative", :state => "not_seen", :feedback_quality => "none", :n => 0, :content_choices => @content_choices, :ct_choices => @ct_choices}
+              :type => "recuperative", :state => "not_seen", :feedback_quality => "none", :n => 0, :content_choices => @content_choices, :ct_choices => @ct_choices, :initial_time => Time.now.to_i}
       end
 
     elsif params[:type] == "recuperative"
 
       if params[:state].to_s == "answered"
-        puts "antes de verr si entra al if de contestadasassssssssssssssssssssssssssssssss----------"
+       
         if params[:content_choices] && params[:content_choices]
-                 puts "entreeeeeeeeeeeee a contestadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa----------" 
                  @correct_content= true
                  @correct_ct= true
 
@@ -431,6 +477,20 @@ class TreesController < ApplicationController
                   if @correct_ct == true && @correct_content == true
 
                     if @performance
+                      if params[:n].to_i < 1
+
+                        puts "el tiempo en la pregunta recuperativa 1 fue: " + seconds_in.to_s + " --------------------------------"
+                        @performance.recuperative_qt1_time = seconds_in
+                        @performance.recuperative_content1 = 1.0
+                        @performance.recuperative_ct1 = 1.0
+                      else
+                        puts "el tiempo en la pregunta recuperativa 2 fue: " + seconds_in.to_s + " --------------------------------"
+                        @performance.recuperative_qt2_time = seconds_in
+                        @performance.recuperative_content2 = 1.0
+                        @performance.recuperative_ct2 = 1.0
+                      end
+                      
+
                       if @performance.content_sc.nil?
                         @performance.content_sc = 1
                         puts "le di el valor de 1 ------------------"
@@ -522,11 +582,24 @@ class TreesController < ApplicationController
 
                     render "edx_view", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question,
                     :feedback_simple=> @tree.recuperative_simple_feedback, :feedback_complex => @tree.recuperative_complex_feedback,
-                     :type => "recuperative", :state =>"answered", :feedback_quality => "none", :n => params[:n].to_i, :content_choices => @content_choices, :ct_choices => @ct_choices}
+                     :type => "recuperative", :state =>"answered", :feedback_quality => "none", :n => params[:n].to_i, :content_choices => @content_choices, :ct_choices => @ct_choices, :initial_time => Time.now.to_i}
                     
                   elsif @correct_content == true && @correct_ct == false
 
                     if @performance
+                      if params[:n].to_i < 1
+                        puts "el tiempo en la pregunta recuperativa 1 fue: " + seconds_in.to_s + " --------------------------------"
+                        @performance.recuperative_qt1_time = seconds_in
+                        @performance.recuperative_content1 = 1.0
+                        @performance.recuperative_ct1 = 0.0
+                      else
+                        puts "el tiempo en la pregunta recuperativa 2 fue: " + seconds_in.to_s + " --------------------------------"
+                        @performance.recuperative_qt2_time = seconds_in
+                        @performance.recuperative_content2 = 1.0
+                        @performance.recuperative_ct2 = 0.0
+                      end
+                                           
+                  
                       if @performance.content_sc.nil?
                         @performance.content_sc = 1
                       else
@@ -539,7 +612,7 @@ class TreesController < ApplicationController
                       end 
 
                       @tree.recuperative_ct_question.ct_habilities.each do |hab|
-                        puts "habilidades del recuperative ct questions------------------------"
+                        
                         puts hab.name.to_s
                         if hab.active
                           if hab.name.to_s == "Interpretación"
@@ -616,7 +689,7 @@ class TreesController < ApplicationController
                     #if params[:n].to_i == 0
                     render "edx_view", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question,
                     :feedback_simple=> @tree.recuperative_simple_feedback, :feedback_complex => @tree.recuperative_complex_feedback,
-                     :type => "recuperative", :state =>"answered", :feedback_quality => "simple", :n => params[:n].to_i, :content_choices => @content_choices, :ct_choices => @ct_choices}
+                     :type => "recuperative", :state =>"answered", :feedback_quality => "simple", :n => params[:n].to_i, :content_choices => @content_choices, :ct_choices => @ct_choices, :initial_time => Time.now.to_i}
                     #else
                      #render "edx_view", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question,
                     #:feedback_simple=> @tree.recuperative_simple_feedback, :feedback_complex => @tree.recuperative_complex_feedback,
@@ -626,6 +699,27 @@ class TreesController < ApplicationController
                   else
 
                     if @performance
+                     if params[:n].to_i < 1
+                        puts "el tiempo en la pregunta recuperativa 1 fue: " + seconds_in.to_s + " --------------------------------"
+                        @performance.recuperative_qt1_time = seconds_in
+                        @performance.recuperative_content1 = 0.0
+                        if @correct_ct == true
+                          @performance.recuperative_ct1 = 1.0
+                        else
+                          @performance.recuperative_ct1 = 0.0
+                        end
+                    else
+                      puts "el tiempo en la pregunta recuperativa 2 fue: " + seconds_in.to_s + " --------------------------------"
+                        @performance.recuperative_qt2_time = seconds_in
+                        @performance.recuperative_content2 = 0.0
+                        if @correct_ct == true
+                          @performance.recuperative_ct2 = 1.0
+                        else
+                          @performance.recuperative_ct2 = 0.0
+                        end
+                    end
+                     
+                      
                       if @performance.content_sc.nil?
                         @performance.content_sc = 0
                       else
@@ -639,7 +733,7 @@ class TreesController < ApplicationController
 
                       @tree.recuperative_ct_question.ct_habilities.each do |hab|
                         if hab.active
-                          puts "habilidades del recuperative ct questions------------------------"
+                          
                           puts hab.name.to_s
                           if hab.name.to_s == "Interpretación"
                             if@performance.interpretation_sc.nil?
@@ -715,7 +809,7 @@ class TreesController < ApplicationController
                     #if params[:n].to_i == 0
                     render "edx_view", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question,
                     :feedback_simple=> @tree.recuperative_simple_feedback, :feedback_complex => @tree.recuperative_complex_feedback,
-                     :type => "recuperative", :state =>"answered", :feedback_quality => "complex", :n => params[:n].to_i, :content_choices => @content_choices, :ct_choices => @ct_choices}
+                     :type => "recuperative", :state =>"answered", :feedback_quality => "complex", :n => params[:n].to_i, :content_choices => @content_choices, :ct_choices => @ct_choices, :initial_time => Time.now.to_i}
                   
                     #else
                      #render "edx_view", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question,
@@ -725,22 +819,31 @@ class TreesController < ApplicationController
                   end
 
             else
+              #if !@performance.recuperative_qt2_time.nil?
+                #@performance.recuperative_fb2_time = seconds_in
+                #puts "le doy tiempo al recuperative fb2 que es: " + seconds_in.to_s + " en el if tiempo recup_qt2 no es nul"
+
+              #end
               render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
                     :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
-                    :type => "deeping", :state =>"not_seen", :feedback_quality => "none", :n => 0, :content_choices => @content_choices, :ct_choices => @ct_choices}
+                    :type => "deeping", :state =>"not_seen", :feedback_quality => "none", :n => 0, :content_choices => @content_choices, :ct_choices => @ct_choices, :initial_time => Time.now.to_i}
 
             end
 
       elsif params[:state].to_s == "feedback_seen"
 
         if params[:n].to_i < 2
+          puts "le doy tiempo al recuperative fb1 que es: " + seconds_in.to_s + " ------------------------------ feedbackseen  "
+          @performance.recuperative_fb1_time = seconds_in
           render "edx_view", :locals => {:content_question => @tree.recuperative_content_question, :ct_question => @tree.recuperative_ct_question,
               :feedback_simple=> @tree.recuperative_simple_feedback, :feedback_complex => @tree.recuperative_complex_feedback,
-              :type => "recuperative", :state => "not_seen", :feedback_quality => "none", :n => params[:n].to_i, :content_choices => @content_choices, :ct_choices => @ct_choices}
+              :type => "recuperative", :state => "not_seen", :feedback_quality => "none", :n => params[:n].to_i, :content_choices => @content_choices, :ct_choices => @ct_choices, :initial_time => Time.now.to_i}
         else
+          puts "le doy tiempo al recuperative fb2 que es: " + seconds_in.to_s + " ------------------------------ feedbackseen  "
+          @performance.recuperative_fb2_time = seconds_in
           render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
               :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
-              :type => "deeping", :state =>"not_seen", :feedback_quality => "none", :n => 0, :content_choices => @content_choices, :ct_choices => @ct_choices}
+              :type => "deeping", :state =>"not_seen", :feedback_quality => "none", :n => 0, :content_choices => @content_choices, :ct_choices => @ct_choices, :initial_time => Time.now.to_i}
         end
 
       end
@@ -789,9 +892,21 @@ class TreesController < ApplicationController
               if @correct_ct == true && @correct_content == true
 
                 if @performance
+                  if params[:n].to_i < 1
+                    puts "el tiempo en la pregunta deeping 1 fue: " + seconds_in.to_s + " --------------------------------"
+                    @performance.deeping_qt1_time = seconds_in
+                    @performance.deeping_content1 = 1.0                  
+                    @performance.deeping_ct1 = 1.0
+                  else
+                    puts "el tiempo en la pregunta deeping 2 fue: " + seconds_in.to_s + " --------------------------------"
+                    @performance.deeping_qt2_time = seconds_in
+                    @performance.deeping_content2 = 1.0                  
+                    @performance.deeping_ct2 = 1.0
+                  end                  
+                  
                   if @performance.content_sc.nil?
                     @performance.content_sc = 1
-                    puts "le di el valor de 1 ------------------"
+                    
                   else
                     @performance.content_sc = @performance.content_sc + 1
                   end 
@@ -804,7 +919,7 @@ class TreesController < ApplicationController
                     
 
                   @tree.deeping_ct_question.ct_habilities.each do |hab|
-                    puts "habilidades del deeping ct questions------------------------"
+                    
                     puts hab.name.to_s
                     if hab.active
                       if hab.name.to_s == "Interpretación"
@@ -880,12 +995,25 @@ class TreesController < ApplicationController
                 
                 render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
                 :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
-                 :type => "deeping", :state =>"answered", :feedback_quality => "none", :n => params[:n].to_i, :content_choices => params[:content_choices], :ct_choices => params[:ct_choices]}
+                 :type => "deeping", :state =>"answered", :feedback_quality => "none", :n => params[:n].to_i, :content_choices => params[:content_choices], :ct_choices => params[:ct_choices], :initial_time => Time.now.to_i}
 
                 
               elsif @correct_content == true && @correct_ct == false
 
                 if @performance
+                  if params[:n].to_i < 1
+                    puts "el tiempo en la pregunta deeping 1 fue: " + seconds_in.to_s + " --------------------------------"
+                    @performance.deeping_qt1_time = seconds_in
+                    @performance.deeping_content1 = 1.0
+                    @performance.deeping_ct1 = 0.0
+                  else
+                    puts "el tiempo en la pregunta deeping 2 fue: " + seconds_in.to_s + " --------------------------------"
+                    @performance.deeping_qt2_time = seconds_in
+                    @performance.deeping_content2 = 1.0
+                    @performance.deeping_ct2 = 0.0
+                  end       
+                  
+                  
                   if @performance.content_sc.nil?
                     @performance.content_sc = 1
                   else
@@ -898,7 +1026,7 @@ class TreesController < ApplicationController
                   end 
 
                   @tree.deeping_ct_question.ct_habilities.each do |hab|
-                    puts "habilidades del deeping ct questions------------------------"
+                    
                     puts hab.name.to_s
                     if hab.active
                       if hab.name.to_s == "Interpretación"
@@ -974,7 +1102,7 @@ class TreesController < ApplicationController
                #if params[:n].to_i == 0
                 render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
                 :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
-                 :type => "deeping", :state =>"answered", :feedback_quality => "simple", :n => params[:n].to_i, :content_choices => params[:content_choices], :ct_choices => params[:ct_choices]}
+                 :type => "deeping", :state =>"answered", :feedback_quality => "simple", :n => params[:n].to_i, :content_choices => params[:content_choices], :ct_choices => params[:ct_choices], :initial_time => Time.now.to_i}
                #else
                 #render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
                 #:feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
@@ -985,6 +1113,27 @@ class TreesController < ApplicationController
               else
 
                 if @performance
+                  if params[:n].to_i < 1
+                    puts "el tiempo en la pregunta deeping 1 fue: " + seconds_in.to_s + " --------------------------------"
+                    @performance.deeping_qt1_time = seconds_in
+                    @performance.deeping_content1 = 0.0
+                    if @correct_ct == true
+                      @performance.deeping_ct1 = 1.0
+                    else
+                      @performance.deeping_ct1 = 0.0
+                    end
+                  else
+                    puts "el tiempo en la pregunta deeping 2 fue: " + seconds_in.to_s + " --------------------------------"
+                    @performance.deeping_qt2_time = seconds_in
+                    @performance.deeping_content2 = 0.0
+                    if @correct_ct == true
+                      @performance.deeping_ct2 = 1.0
+                    else
+                      @performance.deeping_ct2 = 0.0
+                    end
+                  end       
+                  
+
                   if @performance.content_sc.nil?
                     @performance.content_sc = 0
                   else
@@ -998,7 +1147,7 @@ class TreesController < ApplicationController
 
                   @tree.deeping_ct_question.ct_habilities.each do |hab|
                     if hab.active
-                      puts "habilidades del deeping ct questions------------------------"
+                     
                       puts hab.name.to_s
                       if hab.name.to_s == "Interpretación"
                         if@performance.interpretation_sc.nil?
@@ -1074,7 +1223,7 @@ class TreesController < ApplicationController
                # if params[:n].to_i == 0
                   render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
                 :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
-                 :type => "deeping", :state => "answered", :feedback_quality => "complex", :n => params[:n].to_i, :content_choices => params[:content_choices], :ct_choices => params[:ct_choices]}
+                 :type => "deeping", :state => "answered", :feedback_quality => "complex", :n => params[:n].to_i, :content_choices => params[:content_choices], :ct_choices => params[:ct_choices], :initial_time => Time.now.to_i}
                 #else
                   #render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
                 #:feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
@@ -1084,37 +1233,72 @@ class TreesController < ApplicationController
               end
 
       else
+        #if !@performance.deeping_qt2_time.nil?
+         # @performance.deeping_fb2_time = seconds_in
+          #puts "le doy tiempo al deeping fb2 que es: " + seconds_in.to_s + " en el if tiempo deeping_qt2 no es nul"
+        #end
+        #puts "el tiempo podría ser del deeping fb2 " + seconds_in.to_s + " fuera dle if de tiempo deeping_qt2 no es nul"
+        @performance.finish_tree_time = Time.now
+        learner_user = User.find(@performance.user_id)
+        if(learner_user.role != "alumno")
+          @performance.delete
+        end
+        puts "guarde el tiempo final saliendo en finalizar.................................."
         render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
                   :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
-                  :type => "deeping", :state => "end", :feedback_quality => "none", :n => 2, :content_choices => params[:content_choices], :ct_choices => params[:ct_choices]}
+                  :type => "deeping", :state => "end", :feedback_quality => "none", :n => 2, :content_choices => params[:content_choices], :ct_choices => params[:ct_choices], :initial_time => Time.now.to_i}
           #var win = window.open("about:blank", "_self");
           #win.close();
       end
 
       elsif params[:state].to_s == "feedback_seen"
+        
         if params[:n].to_i < 2
+          puts "le doy tiempo al deeping fb1 que es: " + seconds_in.to_s + "------------------------------ feedbackseed "
+          @performance.deeping_fb1_time = seconds_in
           render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
             :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
-            :type => "deeping", :state =>"not_seen", :feedback_quality => "none", :n => params[:n].to_i, :content_choices => params[:content_choices], :ct_choices => params[:ct_choices]}
+            :type => "deeping", :state =>"not_seen", :feedback_quality => "none", :n => params[:n].to_i, :content_choices => params[:content_choices], :ct_choices => params[:ct_choices], :initial_time => Time.now.to_i}
 
         else
+          puts "le doy tiempo al deeping fb2 que es: " + seconds_in.to_s + "------------------------------ feedbackseen  "
+          @performance.deeping_fb2_time = seconds_in
+          @performance.finish_tree_time = Time.now
+          learner_user = User.find(@performance.user_id)
+          if(learner_user.role != "alumno")
+            @performance.delete
+          end
+          puts "guarde el tiempo final luego de ver el 2do feedback...................................."
           render "edx_view", :locals => {:content_question => @tree.deeping_content_question, :ct_question => @tree.deeping_ct_question,
               :feedback_simple=> @tree.deeping_simple_feedback, :feedback_complex => @tree.deeping_complex_feedback,
-              :type => "deeping", :state => "end", :feedback_quality => "none", :n => 2, :content_choices => params[:content_choices], :ct_choices => params[:ct_choices]}
+              :type => "deeping", :state => "end", :feedback_quality => "none", :n => 2, :content_choices => params[:content_choices], :ct_choices => params[:ct_choices], :initial_time => Time.now.to_i}
 
-          #var win = window.open("about:blank", "_self");
-          #win.close();
         end
 
       end
     end
 
 
+
+
     if @performance.nil?
     else
       
-      @performance.save
-      puts @performance.inspect
+      learner_user = User.find(@performance.user_id)
+      puts learner_user.role
+      if(learner_user.role == "alumno")
+        @performance.save!
+        puts @performance.inspect
+        puts "se guardoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"
+      else
+        #@performance.delete
+
+        puts "no se guardooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"
+        puts learner_user.inspect
+      end
+
+      #@performance.save
+      #puts @performance.inspect
     end
 
   end
@@ -1218,20 +1402,7 @@ class TreesController < ApplicationController
             puts subhab.name.to_s
           end
         end
-        #puts @tree.recuperative_ct_question.ct_habilities.first.name
-        #puts @tree.deeping_ct_question.ct_habilities.first.name
         
-
-        #@tree.initial_ct_question.ct_habilities.each do |hability|
-         # puts hability.name
-        #end
-        #@tree.recuperative_ct_question.ct_habilities.each do |hability|
-         # puts hability.name
-        #end 
-        #@tree.recuperative_ct_question.ct_habilities.each do |hability|
-         # puts hability.name
-        #end   
-        #puts :course_id
         format.html { redirect_to @course, notice: 'Tree was successfully created.' }
         format.json { render :show, status: :created, location: @tree }
       else
@@ -1266,7 +1437,60 @@ class TreesController < ApplicationController
     end
   end
 
-  
+  def user_info
+    @course = Course.find(params[:course_id])
+    @tree = @course.trees.find(params[:tree_id])
+    @user_performance = @tree.user_tree_performances.find_by(user_id: params[:user_id])
+    @breadcrumbs = ["Mis Cursos", @course.name, "Reportes", "Reportes de Alumnos"]
+    puts "aca desde controler.............-------"
+    puts params[:user_id].to_s
+    @the_user = User.find(params[:user_id])
+    render 'user_tree_performance'
+  end
+
+  def tree_performance
+
+
+    
+    @users_sc = Hash.new
+    @course = Course.find(params[:course_id])
+    @tree = @course.trees.find(params[:tree_id])
+    @breadcrumbs = ["Mis Cursos", @course.name, "Reportes", "Reportes de Alumnos"]
+
+
+    @tree.user_tree_performances.each do |performance|
+      if performance
+          if performance.content_sc
+          content_sc = (performance.content_sc / performance.content_n).round(2)
+          end
+          if performance.interpretation_sc
+          interpretation_sc = (performance.interpretation_sc / performance.interpretation_n).round(2)
+          end
+          if performance.analysis_sc
+          analysis_sc = (performance.analysis_sc / performance.analysis_n).round(2)
+          end
+          if performance.evaluation_sc
+          evaluation_sc = (performance.evaluation_sc / performance.evaluation_n).round(2)
+          end
+          if performance.inference_sc
+          inference_sc = (performance.inference_sc / performance.inference_n).round(2)
+          end
+          if performance.explanation_sc
+          explanation_sc = (performance.explanation_sc / performance.explanation_n).round(2)
+          end
+          if performance.selfregulation_sc
+          selfregulation_sc = (performance.selfregulation_sc / performance.selfregulation_n).round(2)
+          end
+      end
+      user = User.find(performance.user_id)
+      @users_sc[user.id] = {:name => user.last_name + ", " +  user.first_name, :content_sc => content_sc, :interpretation_sc => interpretation_sc,
+        :analysis_sc => analysis_sc, :evaluation_sc => evaluation_sc, :inference_sc => inference_sc, :explanation_sc => explanation_sc, :selfregulation_sc => selfregulation_sc}
+
+    end
+
+    render 'tree_performance'
+
+  end
 
   private
   

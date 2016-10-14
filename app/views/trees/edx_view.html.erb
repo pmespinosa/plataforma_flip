@@ -1,6 +1,10 @@
 <%= form_tag controller:"trees", action: "edx_view", :method => :post do %>
   <h4>Evaluación de  <%= @tree.content.text %></h4>
-  <h4>Usuario <%= @username %></h4> 
+  <h4>Usuario <%= @showed_user.first_name + " " + @showed_user.last_name  %></h4>
+  <br></br>
+  <div class="alert alert-warning" role="alert">
+    <strong>Recuerda</strong> no cerrar la evaluación de forma inapropiada si aún no la terminas, ya que no podrás volver a realizarla
+  </div>
 
   <br>
      
@@ -9,11 +13,11 @@
       <% if state.to_s == "not_seen" %>
         <tr>
           <% if type.to_s == "initial" %>
-            <h4> Pregunta inicial </h4>
+            <h4><b> Pregunta inicial <b></h4>
           <% elsif type.to_s == "recuperative" %>
-            <h4> Pregunta recuperativa </h4>
+            <h4><b> Pregunta recuperativa <b></h4>
           <% elsif type.to_s == "deeping" %>
-            <h4> Pregunta de profundización </h4>
+            <h4><b> Pregunta de profundización <b></h4>
           <% end %>
         </tr>
           
@@ -27,16 +31,14 @@
                 <%#= form_tag "edx_view", :method => :post do %>
                 <% content_question.content_choices.shuffle.each do |content_choice| %>
                   <%= question_fields.fields_for :content_choices, content_choice do |choice_fields| %>
-                    <div class="input-group">
-                      <% puts "vista: se muestra el id y lugar en el arreglo de las alternativas content" %>
-                      <% puts choice_fields.object.id %>
+                    <div class="input-group" >                      
                       <%= hidden_field_tag "content_choices[#{choice_fields.object.id}]", :false %>
                       <span class="input-group-addon" id="check">                         
                          <%#= check_box_tag "content_choices[#{choice_fields.object.id}]", true %>
                          <%= check_box_tag "content_choices[#{choice_fields.object.id}]", :true %>
                         <%#= choice_fields.check_box :right, :class => 'inline'%>
                       </span>
-                      <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                      <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
                     </div>
                   <% end %>
                 <% end %>
@@ -55,12 +57,12 @@
                 <%#= form_tag "edx_view", :method => :post do %>
                 <% ct_question.ct_choices.shuffle.each do |ct_choice| %>
                   <%= question_fields.fields_for :ct_choices, ct_choice do |choice_fields| %>
-                    <div class="input-group">
+                    <div class="input-group" >
                     <%= hidden_field_tag "ct_choices[#{choice_fields.object.id}]", :false %>
                       <span class="input-group-addon" id="check">
                         <%= check_box_tag "ct_choices[#{choice_fields.object.id}]", :true %>
                       </span>
-                      <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                      <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
                     </div>
                   <% end %>
                  <% end %>
@@ -116,7 +118,7 @@
                           <span class="input-group-addon" id="check">
                             <%= check_box "", "", {disabled: true, checked: true} %>
                           </span>
-                          <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                          <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
                           <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                         </div>                       
                       <% elsif  choice_fields.object.right == false && content_choices[choice_fields.object.id.to_s] == "true" %>
@@ -124,7 +126,7 @@
                           <span class="input-group-addon" id="check">
                             <%= check_box "", "", {disabled: true, checked: true} %>
                           </span>
-                          <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                          <%= choice_fields.text_area :text, :readonly => true, size: "65x3",:class => "form-control" %>
                           <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" aria-hidden="true"></span>
                         </div>
                       <% end %>
@@ -135,7 +137,7 @@
                               <span class="input-group-addon" id="check">
                                 <%= check_box "", "", {disabled: true, checked: false} %>
                               </span>
-                              <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                              <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
                               <span></span>
                             </div>
                           <% end %>
@@ -145,7 +147,7 @@
                               <span class="input-group-addon" id="check">
                                 <%= check_box "", "", {disabled: true, checked: false} %>
                               </span>
-                              <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                              <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
                               <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                             </div>
                           <% elsif  choice_fields.object.right == true && content_choices[choice_fields.object.id.to_s] == "false" %>
@@ -153,7 +155,7 @@
                               <span class="input-group-addon" id="check">
                                 <%= check_box "", "", {disabled: true, checked: false} %>
                               </span>
-                              <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                              <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
                               <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                             </div>
                           <% end %>
@@ -181,7 +183,7 @@
                         <span class="input-group-addon" id="check">
                           <%= check_box "", "", {disabled: true, checked: true} %>
                         </span>
-                        <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                        <%= choice_fields.text_area :text, :readonly => true, size: "65x3",:class => "form-control" %>
                         <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                       </div> 
                     <% elsif  choice_fields.object.right == false && ct_choices[choice_fields.object.id.to_s] == "true" %>
@@ -189,7 +191,7 @@
                         <span class="input-group-addon" id="check">
                           <%= check_box "", "", {disabled: true, checked: true} %>
                         </span>
-                        <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                        <%= choice_fields.text_area :text, :readonly => true, size: "65x3",:class => "form-control" %>
                         <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" aria-hidden="true"></span>
                       </div>
                   <% end %>
@@ -200,7 +202,7 @@
                             <span class="input-group-addon" id="check">
                               <%= check_box "", "", {disabled: true, checked: false} %>
                             </span>
-                            <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                            <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
                             <span></span>
                           </div>
                         <% end %>
@@ -210,7 +212,7 @@
                             <span class="input-group-addon" id="check">
                               <%= check_box "", "", {disabled: true, checked: false} %>
                             </span>
-                            <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                            <%= choice_fields.text_area :text, :readonly => true, size: "65x3",:class => "form-control" %>
                             <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                           </div>
                         <% elsif  choice_fields.object.right == true && ct_choices[choice_fields.object.id.to_s] == "false" %>
@@ -218,7 +220,7 @@
                             <span class="input-group-addon" id="check">
                               <%= check_box "", "", {disabled: true, checked: false} %>
                             </span>
-                            <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                            <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
                             <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                           </div>
                         <% end %>
@@ -275,7 +277,7 @@
                           <span class="input-group-addon" id="check">
                             <%= check_box "", "", {disabled: true, checked: true} %>
                           </span>
-                          <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                          <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
                           <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                         </div>
                       <% elsif  choice_fields.object.right == false && content_choices[choice_fields.object.id.to_s] == "true" %>
@@ -283,7 +285,7 @@
                           <span class="input-group-addon" id="check">
                             <%= check_box "", "", {disabled: true, checked: true} %>
                           </span>
-                          <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                          <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
                           <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                         </div>
                       <% end %>
@@ -294,7 +296,7 @@
                             <span class="input-group-addon" id="check">
                               <%= check_box "", "", {disabled: true, checked: false} %>
                             </span>
-                            <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                            <%= choice_fields.text_area :text, :readonly => true, size: "65x3",:class => "form-control" %>
                             <span></span>
                           </div>
                         <% end %>
@@ -304,7 +306,7 @@
                             <span class="input-group-addon" id="check">
                               <%= check_box "", "", {disabled: true, checked: false} %>
                             </span>
-                            <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                            <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
                             <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                           </div>
                         <% elsif  choice_fields.object.right == true && content_choices[choice_fields.object.id.to_s] == "false" %>
@@ -312,7 +314,7 @@
                             <span class="input-group-addon" id="check">
                               <%= check_box "", "", {disabled: true, checked: false} %>
                             </span>
-                            <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                            <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
                             <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                           </div>
                         <% end %>
@@ -340,7 +342,7 @@
                           <span class="input-group-addon" id="check">
                             <%= check_box "", "", {disabled: true, checked: true} %>
                           </span>
-                          <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                          <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
                           <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                         </div>
                       <% elsif  choice_fields.object.right == false && ct_choices[choice_fields.object.id.to_s] == "true" %>
@@ -348,7 +350,7 @@
                           <span class="input-group-addon" id="check">
                             <%= check_box "", "", {disabled: true, checked: true} %>
                           </span>
-                          <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                          <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
                           <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                         </div>
                       <% end %>
@@ -359,7 +361,7 @@
                             <span class="input-group-addon" id="check">
                               <%= check_box "", "", {disabled: true, checked: false} %>
                             </span>
-                            <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                            <%= choice_fields.text_area :text, :readonly => true, size: "65x3",:class => "form-control" %>
                             <span></span>
                           </div>
                         <% end %>
@@ -369,7 +371,7 @@
                             <span class="input-group-addon" id="check">
                               <%= check_box "", "", {disabled: true, checked: false} %>
                             </span>
-                            <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                            <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
                             <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                           </div>
                         <% elsif  choice_fields.object.right == true && ct_choices[choice_fields.object.id.to_s] == "false" %>
@@ -377,7 +379,7 @@
                             <span class="input-group-addon" id="check">
                               <%= check_box "", "", {disabled: true, checked: false} %>
                             </span>
-                            <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                            <%= choice_fields.text_area :text, :readonly => true, size: "65x3",:class => "form-control" %>
                             <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                           </div>
                         <% end %>
@@ -408,7 +410,7 @@
                         <span class="input-group-addon" id="check">
                           <%= check_box "", "", {disabled: true, checked: true} %>
                         </span>
-                        <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                        <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
                         <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                       </div>
                     <% elsif  choice_fields.object.right == false && content_choices[choice_fields.object.id.to_s] == "true" %>
@@ -416,7 +418,7 @@
                         <span class="input-group-addon" id="check">
                           <%= check_box "", "", {disabled: true, checked: true} %>
                         </span>
-                        <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                        <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
                         <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                       </div>
                       <% elsif  choice_fields.object.right == false && content_choices[choice_fields.object.id.to_s] == "false" %>
@@ -424,7 +426,7 @@
                         <span class="input-group-addon" id="check">
                           <%= check_box "", "", {disabled: true, checked: false} %>
                         </span>
-                        <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                        <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
                         <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                       </div>
                     <% elsif  choice_fields.object.right == true && content_choices[choice_fields.object.id.to_s] == "false" %>
@@ -432,7 +434,7 @@
                         <span class="input-group-addon" id="check">
                           <%= check_box "", "", {disabled: true, checked: false} %>
                         </span>
-                        <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                        <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
                         <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                       </div>
                     <% end %>
@@ -459,7 +461,7 @@
                         <span class="input-group-addon" id="check">
                           <%= check_box "", "", {disabled: true, checked: true} %>
                         </span>
-                        <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                        <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
                         <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                       </div>
                     <% elsif  choice_fields.object.right == false && ct_choices[choice_fields.object.id.to_s] == "true" %>
@@ -467,7 +469,7 @@
                         <span class="input-group-addon" id="check">
                           <%= check_box "", "", {disabled: true, checked: true} %>
                         </span>
-                        <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                        <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
                         <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                       </div>
                     <% elsif  choice_fields.object.right == false && ct_choices[choice_fields.object.id.to_s] == "false" %>
@@ -475,7 +477,7 @@
                         <span class="input-group-addon" id="check">
                           <%= check_box "", "", {disabled: true, checked: false} %>
                         </span>
-                        <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                        <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
                         <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                       </div>
                     <% elsif  choice_fields.object.right == true && ct_choices[choice_fields.object.id.to_s] == "false" %>
@@ -483,7 +485,7 @@
                         <span class="input-group-addon" id="check">
                           <%= check_box "", "", {disabled: true, checked: false} %>
                         </span>
-                        <%= choice_fields.text_field :text, :readonly => true, :class => "form-control" %>
+                        <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
                         <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                       </div>
                     <% end %>
@@ -512,6 +514,7 @@
   <%= hidden_field_tag "type", type %>
   <%= hidden_field_tag "course_id", @course.id %>
   <%= hidden_field_tag "id", @tree.id %>
+  <%= hidden_field_tag "initial_time", initial_time %>
 
 
    <%#= link_to 'Revisar', [@course, @tree, {:type =>'recuperative'}], method: :post, :class => "btn btn-default" %>
@@ -532,12 +535,13 @@
     <%= submit_tag "Pasar a pregunta de profundización", class: "btn btn-default" %>
    <%elsif state.to_s == "answered" && type.to_s == "deeping" && n.to_i == 0 %>   
     <%= submit_tag "Intentar otra vez", class: "btn btn-default" %>
-   <%elsif state.to_s == "answered" && type.to_s == "recuperative" && n.to_i == 1 %>   
-    <%= submit_tag "Pasar a pregunta de profundización", class: "btn btn-default" %>
+   <%elsif state.to_s == "answered" && type.to_s == "deeping" && n.to_i == 1 %>   
+    <%= submit_tag "Finalizar evaluación", class: "btn btn-default" %>
    <% else %>
     <%= link_to "Finalizar evaluación", eval_form_path(@course.id), class: "btn btn-default" %>
    <% end %>
-
    <br></br>
+
+   
 
 <% end %>

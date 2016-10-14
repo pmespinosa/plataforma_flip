@@ -41,6 +41,12 @@ Rails.application.routes.draw do
   post 'courses/:id/students_report', to:'courses#students_report', as: "students_report"
   get 'courses/:id/students_report', to:'courses#students_report'
 
+  post 'courses/:id/trees/:tree_id/tree_performance', to:'trees#tree_performance', as: "tree_performance"
+  get 'courses/:id/trees/:tree_id/tree_performance', to:'trees#tree_performance'
+
+  post 'courses/:id/trees/:tree_id/tree_performance/:user_id', to:'trees#user_info', as: "user_tree_info"
+  get 'courses/:id/trees/:tree_id/tree_performance/:user_id', to:'trees#user_info'
+
   post 'courses/:id/st_report/:st_id', to:'courses#st_report', as: "st_report"
   get 'courses/:id/st_report/:st_id', to:'courses#st_report'
 
