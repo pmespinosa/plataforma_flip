@@ -1,6 +1,10 @@
 <%= form_tag controller:"trees", action: "edx_view", :method => :post do %>
   <h4>Evaluación de  <%= @tree.content.text %></h4>
-  <h4>Usuario <%= @username %></h4> 
+  <h4>Usuario <%= @showed_user.first_name + " " + @showed_user.last_name  %></h4>
+  <br></br>
+  <div class="alert alert-warning" role="alert">
+    <strong>Recuerda</strong> no cerrar la evaluación de forma inapropiada si aún no la terminas, ya que no podrás volver a realizarla
+  </div>
 
   <br>
      
@@ -536,7 +540,8 @@
    <% else %>
     <%= link_to "Finalizar evaluación", eval_form_path(@course.id), class: "btn btn-default" %>
    <% end %>
-
    <br></br>
+
+   
 
 <% end %>

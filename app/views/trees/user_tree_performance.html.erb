@@ -16,106 +16,118 @@
     <tbody>      
       
       <tr>
-        <td>Pregunta de contenido</td>
-        <td>
+        <td class="tdcenter">Pregunta de contenido</td>
+        <td class="tdcenter">
           <% if @user_performance.init_content == 1.0 %>
             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-          <% else %>
+          <% elsif @user_performance.init_content == 0.0  %>
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
           <% end %>
         </td>
-        <td>
+        <td class="tdcenter">
+          i: 
           <% if @user_performance.recuperative_content1 == 1.0 %>
             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-          <% else %>
+          <% elsif @user_performance.recuperative_content1 == 0.0 %>
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
           <% end %>
+          </br>
+          ii: 
           <% if @user_performance.recuperative_content2 == 1.0 %>
             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-          <% else %>
+          <% elsif @user_performance.recuperative_content2 == 0.0 %>
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
           <% end %>
         </td>
-        <td>
+        <td class="tdcenter">
+          i: 
           <% if @user_performance.deeping_content1 == 1.0 %>
             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-          <% else %>
+          <% elsif @user_performance.deeping_content1 == 0.0 %>
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
           <% end %>
+          </br>
+          ii: 
           <% if @user_performance.deeping_content2 == 1.0 %>
             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-          <% else %>
+          <% elsif @user_performance.deeping_content2 == 0.0 %>
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
           <% end %>
         </td>
       </tr>
 
       <tr>
-        <td>Pregunta de argumentación</td>
-        <td>
+        <td class="tdcenter">Pregunta de argumentación</td>
+        <td class="tdcenter">
           <% if @user_performance.init_ct == 1.0 %>
             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-          <% else %>
+          <% elsif @user_performance.init_ct == 0.0 %>
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
           <% end %>
         </td>
-        <td>
+        <td class="tdcenter">
+          i: 
           <% if @user_performance.recuperative_ct1 == 1.0 %>
             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-          <% else %>
+          <% elsif @user_performance.recuperative_ct1 == 0.0 %>
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
           <% end %>
+          </br>
+          ii: 
           <% if @user_performance.recuperative_ct2 == 1.0 %>
             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-          <% else %>
+          <% elsif @user_performance.recuperative_ct2 == 0.0 %>
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
           <% end %>
         </td>
-        <td>
+        <td class="tdcenter">
+          i: 
           <% if @user_performance.deeping_ct1 == 1.0 %>
             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-          <% else %>
+          <% elsif @user_performance.deeping_ct1 == 0.0 %>
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
           <% end %>
+          </br>
+          ii: 
           <% if @user_performance.deeping_ct2 == 1.0 %>
             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-          <% else %>
+          <% elsif @user_performance.deeping_ct2 == 0.0 %>
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
           <% end %>
         </td>
       </tr>
 
       <tr>
-        <td>Tiempo en pregunta</td>
-        <td>
+        <td class="tdcenter">Tiempo en pregunta</td>
+        <td class="tdcenter">
             <%= @user_performance.init_qt_time %>
         </td>
-        <td>
-            <%= @user_performance.recuperative_qt1_time %>
-             /
-            <%= @user_performance.recuperative_qt2_time %>
+        <td class="tdcenter">
+          i: <%= @user_performance.recuperative_qt1_time %>
+          </br>
+          ii: <%= @user_performance.recuperative_qt2_time %>
         </td>
-        <td>
-          <%= @user_performance.deeping_qt1_time %>
-            /   
-          <%= @user_performance.deeping_qt2_time %>          
+        <td class="tdcenter">
+          i: <%= @user_performance.deeping_qt1_time %>
+          </br>               
+          ii: <%= @user_performance.deeping_qt2_time %>          
         </td>
       </tr>
 
       <tr>
-        <td>Tiempo en feedback</td>
-        <td>
+        <td class="tdcenter">Tiempo en feedback</td>
+        <td class="tdcenter">
             <%= @user_performance.init_fb_time %>
         </td>
-        <td>
-            <%= @user_performance.recuperative_fb1_time %>
-             /
-            <%= @user_performance.recuperative_fb2_time %>
+        <td class="tdcenter">
+          i: <%= @user_performance.recuperative_fb1_time %>
+          </br>
+          ii: <%= @user_performance.recuperative_fb2_time %>
         </td>
-        <td>
-          <%= @user_performance.deeping_fb1_time %>
-            /   
-          <%= @user_performance.deeping_fb2_time %>          
+        <td class="tdcenter">
+          i: <%= @user_performance.deeping_fb1_time %>
+          </br>   
+          ii: <%= @user_performance.deeping_fb2_time %>          
         </td>
       </tr>        
      

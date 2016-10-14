@@ -9,6 +9,7 @@ class TreesController < ApplicationController
 
   def edx_view
     @username = params['lis_person_sourcedid']
+    @showed_user = User.find(current_user.id)
     @performance = @tree.user_tree_performances.find_by(user_id: current_user.id)
     puts " "
     puts "aca muestro el performanceeeeeeeeeeeeeeeeeeeeeeeeeeeeee y sus datos son"
@@ -45,6 +46,12 @@ class TreesController < ApplicationController
 
       if params[:state].to_s == "not_seen"
 
+        if @performance
+          if !@performance.finish_tree_time.nil? || !@performance.init_qt_time.nil? || !@performance.recuperative_qt1_time.nil? || !@performance.recuperative_qt2_time.nil? || !@performance.deeping_qt1_time.nil? || !@performance.deeping_qt2_time.nil?
+            render "viewed_tree"
+            return
+          end
+        end
       
         if @tree.user_tree_performances.where(user_id: current_user.id).blank?              
           @performance = @tree.user_tree_performances.create(user_id: current_user.id)
