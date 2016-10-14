@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161007223820) do
+ActiveRecord::Schema.define(version: 20161014045913) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -274,6 +274,7 @@ ActiveRecord::Schema.define(version: 20161007223820) do
     t.float    "deeping_qt2_time"
     t.float    "deeping_fb1_time"
     t.float    "deeping_fb2_time"
+    t.integer  "total_time"
   end
 
   add_index "user_tree_performances", ["tree_id"], name: "index_user_tree_performances_on_tree_id", using: :btree

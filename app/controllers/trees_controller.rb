@@ -1239,6 +1239,7 @@ class TreesController < ApplicationController
         #end
         #puts "el tiempo podría ser del deeping fb2 " + seconds_in.to_s + " fuera dle if de tiempo deeping_qt2 no es nul"
         @performance.finish_tree_time = Time.now
+        @performance.total_time = Time.now - @performance.start_tree_time
         learner_user = User.find(@performance.user_id)
         if(learner_user.role != "alumno")
           @performance.delete
@@ -1264,6 +1265,7 @@ class TreesController < ApplicationController
           puts "le doy tiempo al deeping fb2 que es: " + seconds_in.to_s + "------------------------------ feedbackseen  "
           @performance.deeping_fb2_time = seconds_in
           @performance.finish_tree_time = Time.now
+          @performance.total_time = Time.now - @performance.start_tree_time
           learner_user = User.find(@performance.user_id)
           if(learner_user.role != "alumno")
             @performance.delete
