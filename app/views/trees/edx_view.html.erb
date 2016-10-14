@@ -2,9 +2,12 @@
   <h4>Evaluación de  <%= @tree.content.text %></h4>
   <h4>Usuario <%= @showed_user.first_name + " " + @showed_user.last_name  %></h4>
   <br></br>
+
+  <%if  state.to_s != "end" %>
   <div class="alert alert-warning" role="alert">
     <strong>Recuerda</strong> no cerrar la evaluación de forma inapropiada si aún no la terminas, ya que no podrás volver a realizarla
   </div>
+  <% end %>
 
   <br>
      
