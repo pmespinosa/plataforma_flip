@@ -13,7 +13,7 @@ User.create(first_name: 'Harold', last_name: 'Muller', email: 'hlmuller@uc.cl', 
 User.create(first_name: 'Pablo', last_name: 'Espinosa', email: 'pespinosa@uc.cl', role: 2, password: '123456', asistencia: false)
 User.create(first_name: 'Vicente', last_name: 'Martin', email: 'vrmartin@uc.cl', role: 2, password: '123456', asistencia: false)
 User.create(first_name: 'Guillermo', last_name: 'Ibacache', email: 'gaibacache@uc.cl', role: 0, password: '123456', asistencia: false)
-Course.create(name: "Didáctica de las Matemáticas", description: "EDU3004-2016/2", users: User.all, course_code: 'EDU2022-2016/1')
+Course.create(name: "Curso Testing", description: "TEST01-2016/2", users: User.all, course_code: 'TEST01-2016/2')
 
 #interpretation = CtHability.create(name: 'Interpretación', description: "To comprehend and express the meaning or significance of a wide
 #variety of experiences, situations, data, events, judgments, conventions, beliefs, rules,
