@@ -120,7 +120,7 @@ class ReportsController < ApplicationController
       @report.explanation_sc = @report.explanation_sc/total_trees_explanation
     end
     if !@report.selfregulation_sc.nil?     
-      @report.selfregulation_sc = @report.selfregulation_sc/total_trees_explanation
+      @report.selfregulation_sc = @report.selfregulation_sc/total_trees_selfregulation
     end
 
     @report.save
