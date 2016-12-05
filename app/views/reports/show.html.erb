@@ -2,6 +2,113 @@
 
 
 <br>
+
+<div class="panel panel-info">
+  <div class="panel-heading"><h4>Recomendación para clase</h4></div>
+
+<table class="table table-bordered">
+
+    <thead class="head">        
+        <th>Contenido / Habilidad de PC</th>
+        <th>Interpretación</th>
+        <th>Análisis</th>
+        <th>Evaluación</th>
+        <th>Inferencia</th>
+        <th>Explicación</th>
+        <th>Autoregulación</th>
+    </thead>
+    <tbody>
+      <% @report.trees.each do |tree| %>
+            <% i = 0 %>
+            <tr>
+              <td class="content2"><b><%=tree.content.text %></b></td>
+              <% @groups_tree.each do |group| %>
+                <%# if group.include?(tree) && i == 0 %>
+                <%puts "ante se coooomparar objetosssssssssssssssssssssssssss" %>
+                <% puts group[0].inspect %>
+                <% puts tree.inspect %>
+                <% puts " "  %>
+                <% if (group[0] == tree || group[1] == tree) && i == 0 %>
+                      <td class="badtd"></td>
+                      <td class="badtd"></td>
+                      <td class="badtd"></td>
+                      <td class="badtd"></td>
+                      <td class="badtd"></td>
+                      <td class="badtd"></td>                  
+                <% elsif group.include?(tree) && (i == 1 || i == 0)  %>
+                  <%# puts @groups_ct_hability[1].inspect %>
+                  <% if @groups_ct_hability3[0].any?{|k, v| k == "Interpretación"} %>                 
+                      <td class="normaltd"></td>
+                  <% else %>
+                      <td></td>
+                  <% end %>
+                  <% if @groups_ct_hability3[0].any?{|k, v| k == "Análisis"} %>
+                      <td class="normaltd"></td>
+                  <% else %>
+                      <td></td>
+                  <% end %>
+                  <% if @groups_ct_hability3[0].any?{|k, v| k == "Evaluación"} %>
+                      <td class="normaltd"></td>
+                  <% else %>
+                      <td></td>
+                  <% end %>
+                  <% if @groups_ct_hability3[0].any?{|k, v| k == "Inferencia"} %>
+                      <td class="normaltd"></td>
+                  <% else %>
+                      <td></td>
+                  <% end %>
+                  <% if @groups_ct_hability3[0].any?{|k, v| k == "Explicación"} %>
+                      <td class="normaltd"></td>
+                  <% else %>
+                      <td></td>
+                  <% end %>
+                  <% if @groups_ct_hability3[0].any?{|k, v| k == "Autoregulación"} %>
+                      <td class="normaltd"></td>
+                  <% else %>
+                      <td></td>
+                  <% end %>
+                <% elsif group.include?(tree) && i == 2 %>
+                  <% if @groups_ct_hability2[0].any?{|k, v| k == "Interpretación"} %>                 
+                    <td class="goodtd"></td>
+                  <% else %>
+                    <td></td>
+                  <% end %>
+                  <% if @groups_ct_hability2[0].any?{|k, v| k == "Análisis"} %>
+                    <td class="goodtd"></td>
+                  <% else %>
+                    <td></td>
+                  <% end %>
+                  <% if @groups_ct_hability2[0].any?{|k, v| k == "Evaluación"} %>
+                    <td class="goodtd"></td>
+                  <% else %>
+                    <td></td>
+                  <% end %>
+                  <% if @groups_ct_hability2[0].any?{|k, v| k == "Inferencia"} %>
+                    <td class="goodtd"></td>
+                  <% else %>
+                    <td></td>
+                  <% end %>
+                  <% if @groups_ct_hability2[0].any?{|k, v| k == "Explicación"} %>
+                    <td class="goodtd"></td>
+                  <% else %>
+                    <td></td>
+                  <% end %>
+                  <% if @groups_ct_hability2[0].any?{|k, v| k == "Autoregulación"} %>
+                    <td class="goodtd"></td>
+                  <% else %>
+                    <td></td>
+                  <% end %>
+                <% end %>
+              <% i = i + 1 %>
+            <% end %>            
+            </tr>
+      <% end %>
+    </tbody>
+</table>
+</div>
+
+<br><br>
+
 <div class="panel panel-info">
   <div class="panel-heading"><h4>Promedio de rendimiento de evaluaciones</h4></div>
 
@@ -114,111 +221,6 @@
 </table>
 </div>
 
-<br><br>
 
-
-<div class="panel panel-info">
-  <div class="panel-heading"><h4>Recomendación para clase</h4></div>
-
-<table class="table table-bordered">
-
-    <thead class="head">        
-        <th>Contenido / Habilidad de PC</th>
-        <th>Interpretación</th>
-        <th>Análisis</th>
-        <th>Evaluación</th>
-        <th>Inferencia</th>
-        <th>Explicación</th>
-        <th>Autoregulación</th>
-    </thead>
-    <tbody>
-      <% @report.trees.each do |tree| %>
-            <% i = 0 %>
-            <tr>
-              <td class="content2"><b><%=tree.content.text %></b></td>
-              <% @groups_tree.each do |group| %>
-                <%# if group.include?(tree) && i == 0 %>
-                <%puts "ante se coooomparar objetosssssssssssssssssssssssssss" %>
-                <% puts group[0].inspect %>
-                <% puts tree.inspect %>
-                <% puts " "  %>
-                <% if (group[0] == tree || group[1] == tree) && i == 0 %>
-                      <td class="badtd"></td>
-                      <td class="badtd"></td>
-                      <td class="badtd"></td>
-                      <td class="badtd"></td>
-                      <td class="badtd"></td>
-                      <td class="badtd"></td>                  
-                <% elsif group.include?(tree) && (i == 1 || i == 0)  %>
-                  <%# puts @groups_ct_hability[1].inspect %>
-                  <% if @groups_ct_hability3[0].any?{|k, v| k == "Interpretación"} %>                 
-                      <td class="normaltd"></td>
-                  <% else %>
-                      <td></td>
-                  <% end %>
-                  <% if @groups_ct_hability3[0].any?{|k, v| k == "Análisis"} %>
-                      <td class="normaltd"></td>
-                  <% else %>
-                      <td></td>
-                  <% end %>
-                  <% if @groups_ct_hability3[0].any?{|k, v| k == "Evaluación"} %>
-                      <td class="normaltd"></td>
-                  <% else %>
-                      <td></td>
-                  <% end %>
-                  <% if @groups_ct_hability3[0].any?{|k, v| k == "Inferencia"} %>
-                      <td class="normaltd"></td>
-                  <% else %>
-                      <td></td>
-                  <% end %>
-                  <% if @groups_ct_hability3[0].any?{|k, v| k == "Explicación"} %>
-                      <td class="normaltd"></td>
-                  <% else %>
-                      <td></td>
-                  <% end %>
-                  <% if @groups_ct_hability3[0].any?{|k, v| k == "Autoregulación"} %>
-                      <td class="normaltd"></td>
-                  <% else %>
-                      <td></td>
-                  <% end %>
-                <% elsif group.include?(tree) && i == 2 %>
-                  <% if @groups_ct_hability2[0].any?{|k, v| k == "Interpretación"} %>                 
-                    <td class="goodtd"></td>
-                  <% else %>
-                    <td></td>
-                  <% end %>
-                  <% if @groups_ct_hability2[0].any?{|k, v| k == "Análisis"} %>
-                    <td class="goodtd"></td>
-                  <% else %>
-                    <td></td>
-                  <% end %>
-                  <% if @groups_ct_hability2[0].any?{|k, v| k == "Evaluación"} %>
-                    <td class="goodtd"></td>
-                  <% else %>
-                    <td></td>
-                  <% end %>
-                  <% if @groups_ct_hability2[0].any?{|k, v| k == "Inferencia"} %>
-                    <td class="goodtd"></td>
-                  <% else %>
-                    <td></td>
-                  <% end %>
-                  <% if @groups_ct_hability2[0].any?{|k, v| k == "Explicación"} %>
-                    <td class="goodtd"></td>
-                  <% else %>
-                    <td></td>
-                  <% end %>
-                  <% if @groups_ct_hability2[0].any?{|k, v| k == "Autoregulación"} %>
-                    <td class="goodtd"></td>
-                  <% else %>
-                    <td></td>
-                  <% end %>
-                <% end %>
-              <% i = i + 1 %>
-            <% end %>            
-            </tr>
-      <% end %>
-    </tbody>
-</table>
-</div>
 
 
