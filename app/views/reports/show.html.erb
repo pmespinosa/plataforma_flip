@@ -133,37 +133,37 @@
               <% if tree.content_sc %>
                   <td><%=tree.content_sc.round(2) %></td>
               <%else%>
-                  <td class="noobs"><%= "N/O" %></td>
+                  <td></td>
               <% end %>
               <% if tree.interpretation_sc %>
                   <td><%=tree.interpretation_sc.round(2) %></td>
               <%else%>
-                  <td class="noobs"><%= "N/O" %></td>
+                  <td> </td>
               <% end %>              
               <% if tree.analysis_sc %>
                   <td><%=tree.analysis_sc.round(2) %></td>
               <%else%>
-                  <td class="noobs"><%= "N/O" %></td>
+                  <td> </td>
               <% end %>              
               <% if tree.evaluation_sc %>
                   <td><%=tree.evaluation_sc.round(2) %></td>
               <%else%>
-                  <td class="noobs"><%= "N/O" %></td>
+                  <td> </td>
               <% end %>              
               <% if tree.inference_sc %>
                   <td><%=tree.inference_sc.round(2) %></td>
               <%else%>
-                  <td class="noobs"><%= "N/O" %></td>
+                  <td> </td>
               <% end %>
               <% if tree.explanation_sc %>
                   <td><%=tree.explanation_sc.round(2) %></td>
               <%else%>
-                  <td class="noobs"><%= "N/O" %></td>
+                  <td> </td>
               <% end %>
               <% if tree.selfregulation_sc %>
                   <td><%=tree.selfregulation_sc.round(2) %></td>
               <%else%>
-                  <td class="noobs"><%= "N/O" %></td>
+                  <td> </td>
               <% end %>
           </tr>
 
@@ -175,43 +175,43 @@
                 <% if @report.content_sc %>
                       <%=@report.content_sc.round(2) %>
                 <%else%>
-                      <%= "N/O" %>
+                      <%= " " %>
                 <% end %>
               </td>
               <td><% if @report.interpretation_sc %>
                       <%=@report.interpretation_sc.round(2) %>
                   <%else%>
-                      <%= "N/O" %>
+                      <%= " " %>
                   <% end %>
               </td>
               <td><% if @report.analysis_sc %>
                       <%=@report.analysis_sc.round(2) %>
                   <%else%>
-                      <%= "N/O" %>
+                      <%= " " %>
                   <% end %>
               </td>
               <td><% if @report.evaluation_sc %>
                       <%=@report.evaluation_sc.round(2) %>
                   <%else%>
-                      <%= "N/O" %>
+                      <%= " " %>
                   <% end %>
               </td>
               <td><% if @report.inference_sc %>
                       <%=@report.inference_sc.round(2) %>
                   <%else%>
-                      <%= "N/O" %>
+                      <%= " " %>
                   <% end %>
               </td>
               <td><% if @report.explanation_sc %>
                       <%=@report.explanation_sc.round(2) %>
                   <%else%>
-                      <%= "N/O" %>
+                      <%= " " %>
                   <% end %>
               </td>
               <td><% if @report.selfregulation_sc %>
                       <%=@report.selfregulation_sc.round(2) %>
                   <%else%>
-                      <%= "N/O" %>
+                      <%= " " %>
                   <% end %>
               </td>
           </tr>
