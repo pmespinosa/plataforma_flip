@@ -8,7 +8,7 @@
 
 <table class="table table-bordered">
 
-    <thead class="head">        
+    <thead class="head">
         <th>Contenido / Habilidad de PC</th>
         <th>Interpretación</th>
         <th>Análisis</th>
@@ -34,10 +34,10 @@
                       <td class="badtd"></td>
                       <td class="badtd"></td>
                       <td class="badtd"></td>
-                      <td class="badtd"></td>                  
+                      <td class="badtd"></td>
                 <% elsif group.include?(tree) && (i == 1 || i == 0)  %>
                   <%# puts @groups_ct_hability[1].inspect %>
-                  <% if @groups_ct_hability3[0].any?{|k, v| k == "Interpretación"} %>                 
+                  <% if @groups_ct_hability3[0].any?{|k, v| k == "Interpretación"} %>
                       <td class="normaltd"></td>
                   <% else %>
                       <td></td>
@@ -68,7 +68,7 @@
                       <td></td>
                   <% end %>
                 <% elsif group.include?(tree) && i == 2 %>
-                  <% if @groups_ct_hability2[0].any?{|k, v| k == "Interpretación"} %>                 
+                  <% if @groups_ct_hability2[0].any?{|k, v| k == "Interpretación"} %>
                     <td class="goodtd"></td>
                   <% else %>
                     <td></td>
@@ -100,7 +100,7 @@
                   <% end %>
                 <% end %>
               <% i = i + 1 %>
-            <% end %>            
+            <% end %>
             </tr>
       <% end %>
     </tbody>
@@ -114,7 +114,7 @@
 
 <table class="table table-bordered">
 
-    <thead class="head">        
+    <thead class="head">
         <th>Contenido / Habilidad de PC</th>
         <th class="content">Contenido</th>
         <th>Interpretar</th>
@@ -123,11 +123,12 @@
         <th>Inferencia</th>
         <th>Explicación</th>
         <th>Autoregulación</th>
+        <th class="content">N</th>
     </thead>
     <tbody>
-
+      <%= contador = 0 %>
       <% @report.trees.each do |tree| %>
-          
+
           <tr>
               <td class="content"><%= tree.content.text %></td>
               <% if tree.content_sc %>
@@ -139,17 +140,17 @@
                   <td><%=tree.interpretation_sc.round(2) %></td>
               <%else%>
                   <td> </td>
-              <% end %>              
+              <% end %>
               <% if tree.analysis_sc %>
                   <td><%=tree.analysis_sc.round(2) %></td>
               <%else%>
                   <td> </td>
-              <% end %>              
+              <% end %>
               <% if tree.evaluation_sc %>
                   <td><%=tree.evaluation_sc.round(2) %></td>
               <%else%>
                   <td> </td>
-              <% end %>              
+              <% end %>
               <% if tree.inference_sc %>
                   <td><%=tree.inference_sc.round(2) %></td>
               <%else%>
@@ -165,6 +166,8 @@
               <%else%>
                   <td> </td>
               <% end %>
+              <td class="content">  <%= @n_total[contador] %></td>
+              <%= contador += 1 %>
           </tr>
 
       <% end %>
@@ -215,12 +218,8 @@
                   <% end %>
               </td>
           </tr>
-      
+
     </tbody>
 
 </table>
 </div>
-
-
-
-
