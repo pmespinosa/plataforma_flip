@@ -7,17 +7,28 @@
   <div class="panel-heading"><h4>Recomendación para clase</h4></div>
 
 <table class="table table-bordered">
+  <thead class="head">
+    <th class="badtd"></th>
+    <th style="text-align: left;">Mal rendimiento</th>
+    <th class="normaltd"></th>
+    <th style="text-align: left;">Rendimiento regular</th>
+    <th class="goodtd"></th>
+    <th style="text-align: left;">Buen rendimiento</th>
+</table>
+<br>
 
-    <thead class="head">
-        <th>Contenido / Habilidad de PC</th>
-        <th>Interpretación</th>
-        <th>Análisis</th>
-        <th>Evaluación</th>
-        <th>Inferencia</th>
-        <th>Explicación</th>
-        <th>Autoregulación</th>
-    </thead>
-    <tbody>
+    <table class="table table-bordered">
+
+      <thead class="head">
+          <th>Contenido / Habilidad de PC</th>
+          <th>Interpretación</th>
+          <th>Análisis</th>
+          <th>Evaluación</th>
+          <th>Inferencia</th>
+          <th>Explicación</th>
+          <th>Autoregulación</th>
+      </thead>
+      <tbody>
       <% @report.trees.each do |tree| %>
             <% i = 0 %>
             <tr>
@@ -124,9 +135,9 @@
         <th>Explicación</th>
         <th>Autoregulación</th>
         <th class="content">N</th>
-    </thead>
+    </thea
+    <% contador = 0 %>
     <tbody>
-      <%= contador = 0 %>
       <% @report.trees.each do |tree| %>
 
           <tr>
@@ -167,7 +178,7 @@
                   <td> </td>
               <% end %>
               <td class="content">  <%= @n_total[contador] %></td>
-              <%= contador += 1 %>
+              <% contador += 1 %>
           </tr>
 
       <% end %>
