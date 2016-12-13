@@ -1,0 +1,2 @@
+class DeepingContentQuestion < ContentQuestion
+end

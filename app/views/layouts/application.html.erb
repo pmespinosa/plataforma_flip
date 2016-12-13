@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>MagisterApp</title>
+  <title>Didáctica UC</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -9,11 +9,11 @@
 <body>
 
 <%= render '/layouts/navbar' %>
-
-
+<% if user_signed_in? %>
+  <%= render '/layouts/breadcrumbs' %>
+<% end %>
 <div class="container">
   <main role="main">
-    <%= render 'layouts/messages' %>
     <%= yield %>
   </main>
 </div>

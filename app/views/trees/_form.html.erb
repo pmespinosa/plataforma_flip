@@ -1,0 +1,234 @@
+<%= simple_form_for([@course,@tree]) do |f| %>
+  <% if @tree.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tree.errors.count, "error") %> prohibited this tree from being saved:</h2>
+
+      <ul>
+      <% @tree.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+    <br>
+
+    <%= f.fields_for :content do |content_fields| %>
+      <div class="input-group">
+        <%= content_fields.label :content, 'Contenido', :class => "input-group-addon" %>
+        <%= content_fields.text_field :text, :class=>"form-control", :placeholder=>"Contenido del Video" %>
+      </div>
+    <% end %>
+    <br>
+
+    <div class="input-group">
+      <%= f.label :video, 'Video', :class => "input-group-addon"%>
+      <%= f.text_field :video, :class=>"form-control", :placeholder=>"URL de Video asociado" %>
+    </div>
+
+<br>
+<%= image_tag("diagrama.png",  :style => "position: absolute") %>
+<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="display: block; height: 280px; width: 700px; z-index: 1; position: relative; ">
+</a>
+<br>
+<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree" style="display:inline-block; height: 470px; width: 350px; z-index: 1; position: relative; ">
+</a>
+<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" style="display: inline-block; height: 470px; width: 350px; z-index: 1; position: relative; ">
+</a>
+<br>
+<%= image_tag("home.png", size: '50', :class => "scrollToTop", :style => 'position: fixed; bottom: 0; right: 0; margin-bottom: 50px; margin-right: 50px;') %>
+
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-success">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Pregunta Inicial
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+        <table class="table table-hover" style="width:100%">
+        <tbody>
+            <tr>
+              <td style="padding:40px 15px 40px 0px;">
+              <%= f.simple_fields_for :initial_content_question do |builder| %>
+                <label for="basic-url">Pregunta inicial de contenido (1.1)</label>
+                <%= render "content_question_fields", :f => builder %>
+              <% end %>
+              </td>
+              <td style="padding:40px 0px 40px 15px;">
+              <%= f.simple_fields_for :initial_ct_question do |builder| %>
+                 <label for="basic-url">Pregunta inicial de pensamiento crítico (1.1)</label>
+                 <%= render "ct_question_fields", :f => builder %>
+              <% end %>
+              </td>
+              <br>
+            </tr>
+
+            <tr>
+              <td style="padding:40px 15px 40px 0px;">
+                <%= f.simple_fields_for :initial_complex_feedback do |builder| %>
+                 <label for="basic-url">Feedback inicial para Contenido </label>
+                 <div class='nested-fields'>
+                 <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
+                 </div>
+                <% end %>
+              </td>
+              <td style="padding:40px 15px 40px 0px;">
+                <%= f.simple_fields_for :initial_simple_feedback do |builder| %>
+                 <label for="basic-url"> Feedback inicial para Argumento</label>
+                 <div class='nested-fields'>
+                 <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
+                 </div>
+                <% end %>
+              </td>
+              <br>
+            </tr>
+          </table>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-warning">
+    <div class="panel-heading" role="tab" id="headingTwo">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Pregunta Recuperativa
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="panel-body">
+        <table class="table table-hover" style="width:100%">
+        <tbody>
+            <tr>
+              <td style="padding:40px 15px 40px 0px;">
+              <%= f.simple_fields_for :recuperative_content_question do |builder| %>
+                <label for="basic-url">Pregunta recuperativa de contenido (1.2)</label>
+                <%= render "content_question_fields", :f => builder %>
+              <% end %>
+              </td>
+              <td style="padding:40px 0px 40px 15px;">
+              <%= f.simple_fields_for :recuperative_ct_question do |builder| %>
+                <label for="basic-url">Pregunta recuperativa de pensamiento crítico (1.2)</label>
+                <%= render "ct_question_fields", :f => builder %>
+              <% end %>
+              </td>
+              <br>
+            </tr>
+            <tr>
+              <td style="padding:40px 15px 40px 0px;">
+                <%= f.simple_fields_for :recuperative_complex_feedback do |builder| %>
+                 <label for="basic-url">Feedback Pregunta Recuperativa para Contenido</label>
+                 <div class='nested-fields'>
+                 <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
+                 </div>
+                <% end %>
+              </td>
+              <td style="padding:40px 15px 40px 0px;">
+                <%= f.simple_fields_for :recuperative_simple_feedback do |builder| %>
+                 <label for="basic-url">Feedback Pregunta Recuperativa para Argumento</label>
+                 <div class='nested-fields'>
+                 <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
+                 </div>
+                <% end %>                
+              </td>
+              <br>
+            </tr>
+          </table>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-success">
+    <div class="panel-heading" role="tab" id="headingThree">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Pregunta de Profundización
+        </a>
+      </h4>
+    </div>
+    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+      <div class="panel-body">
+        <table class="table table-hover" style="width:100%">
+            <tr>
+              <td style="padding:40px 15px 40px 0px;">
+              <%= f.simple_fields_for :deeping_content_question do |builder| %>
+                <label for="basic-url">Pregunta de profundización de contenido (2.0)</label>
+                <%= render "content_question_fields", :f => builder %>
+              <% end %>
+              </td>
+              <td style="padding:40px 0px 40px 15px;">
+              <%= f.simple_fields_for :deeping_ct_question do |builder| %>
+                <label for="basic-url">Pregunta de profundización de pensamiento crítico (2.0)</label>
+                <%= render "ct_question_fields", :f => builder %>
+              <% end %>
+              </td>
+              <br>
+            </tr>
+            <tr>
+              <td style="padding:40px 15px 40px 0px;">
+                <%= f.simple_fields_for :deeping_complex_feedback do |builder| %>
+                 <label for="basic-url">Feedback Pregunta de profundización para Contenido</label>
+                 <div class='nested-fields'>
+                 <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
+                 </div>
+                <% end %>
+              </td>
+              <td style="padding:40px 15px 40px 0px;">
+                <%= f.simple_fields_for :deeping_simple_feedback do |builder| %>
+                 <label for="basic-url">Feedback Pregunta de profundización para Argumento</label>       <div class='nested-fields'>
+                 <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
+                 </div>
+                <% end %>                
+              </td>
+              <br>
+            </tr>
+        <tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<span style="display: inline;">
+   <%= link_to 'Volver', eval_form_path(@course), class:"btn btn-primary btn-lg izq" %> <%= f.submit "Confirmar", class: "btn btn-success btn-lg der" %>
+</span>
+
+
+<% CtHability.all.each do |hab| %>
+  <% if hab.ct_question_id == nil %>
+          <div id='<%=hab.name%>' class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title"><%= hab.name %></h4>
+                </div>
+                <div class="modal-body">
+                  <p><b>Descripción: </b> <%= simple_format(hab.description) %></p>
+                </div>                
+                <% hab.ct_subhabilities.each do |sub| %>
+                  <div class="modal-body">
+                      <p><b>Subhabilidad: </b> <%= sub.name %></p>
+                      <p><b>Descripción: </b> <%= simple_format(sub.description) %></p>
+                                                          
+                 </div>             
+              <% end %>
+              
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+    <% end %>
+<% end %>      
+
+
+<% end %>

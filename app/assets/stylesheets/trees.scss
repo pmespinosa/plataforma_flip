@@ -1,0 +1,50 @@
+// Place all the styles related to the trees controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.input-group-addon:not(#check) {
+    min-width: 120px;
+    text-align:left;
+    font-weight: bold;
+}
+
+.form-control {
+	resize: none;
+}
+
+.red {
+    color: red;
+}
+.btnpc{
+    height:30px;
+    width:140px;
+}
+.coltree{
+    width:400px;
+}
+.divtd{
+    margin: auto; 
+}
+
+a:hover{
+  //background-color: rgba(0, 10, 180, 0.1);
+  background-color: transparent;
+}
+.panel-heading{
+  //background-color: green !important ;
+}
+
+.der {
+    float: right;
+}
+
+.izq {
+    float: left;
+    
+}
+
+.tdcenter {
+  font-weight: bold;
+    text-align:center; 
+    vertical-align:middle;
+}

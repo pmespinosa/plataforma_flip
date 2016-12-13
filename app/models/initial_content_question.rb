@@ -1,0 +1,2 @@
+class InitialContentQuestion < ContentQuestion
+end

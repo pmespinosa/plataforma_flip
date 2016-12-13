@@ -32,7 +32,7 @@ gem 'cancancan'
 # Annotate
 gem 'annotate'
 # Hirb
-gem 'hirb'
+gem 'hirb', "~> 0.7.3"
 # Bootstrap
 gem 'bootstrap-sass', '~> 3.3.6'
 # Use Paperclip
@@ -42,6 +42,12 @@ gem "paperclip", "~> 5.0.0"
 
 # Use Unicorn as the app server
 # gem 'unicorn'
+
+gem "cocoon"
+
+gem 'time_difference'
+
+gem 'simple_form'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

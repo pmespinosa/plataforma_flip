@@ -1,25 +1,105 @@
-<p id="notice"><%= notice %></p>
+<h2>Debe esperar para la siguiente etapa.</h2>
+<% @homework = Homework.where(id:params["homework_id"])[0]%>
+<div style="text-align:left">
+	<br>
+	<%=simple_format(@homework.content, {style:"font-size:20px; line-height:1.5", align:"justify"})%>
+	<% if @homework.image? %>
+		<p><%= image_tag @homework.image.url(:medium) %></p>
+	<% end %>
 
-<h1><%= @homework.name %></h1>
+	<br>
+	<h2>Ciclo 1</h2>
+	<br>
+	<% if @my_answer.responder != nil %>
+		<div class="thumbnail">
+		<h3>Respuesta</h3>
+		<%=simple_format(@my_answer.responder, {style:"font-size:15px; line-height:1.5", align:"justify"})%>
+		<% if @my_answer.image_responder? %>
+			<p><%= image_tag @my_answer.image_responder.url(:medium) %></p>
+		<% end %>
+		<% if @homework.actual_phase == "responder"%>
+			</div>
+		<% end %>
+		<br>
+	<% end %>
+	<% if @homework.actual_phase != "responder" %>
+		<% if @partner_answer.argumentar != nil %>
+			<h3>Argumentación</h3>
+			<%= simple_format(@partner_answer.argumentar, style:"font-size:15px; line-height:1.5", align:"justify") %>
+			<% if @partner_answer.image_argumentar? %>
+				<p><%= image_tag @partner_answer.image_argumentar.url(:medium) %></p>
+			<% end %>
+		<% end %>
+		<% if @homework.actual_phase == "argumentar"%>
+			</div>
+		<% end %>
+		<br>
+		<% if @homework.actual_phase != "argumentar" %>
+			<% if @my_answer.rehacer != nil %>
+				<h3>Rehacer</h3>
+				<%= simple_format(@my_answer.rehacer, {style:"font-size:15px; line-height:1.5", align:"justify"})%>
+			<%end%>
+			<% if @my_answer.image_rehacer?%>
+				<p><%= image_tag @my_answer.image_rehacer.url(:medium) %></p>
+			<%end%>
+		</div>
+			<br>
+			<% if @homework.actual_phase != "rehacer" %>
+				<h2>Ciclo 2</h2>
+				<br>
+				<% if @my_answer.responder_2 != nil %>
+					<div class="thumbnail">
+					<h3>Respuesta</h3>
+					<%= simple_format(@my_answer.responder_2, {style:"font-size:15px; line-height:1.5", align:"justify"})%>
+				<%end%>
+				<% if @my_answer.image_responder_2?%>
+					<p><%= image_tag @my_answer.image_responder_2.url(:medium) %></p>
+				<%end%>
+				<% if @homework.actual_phase == "responder_2"%>
+					</div>
+				<% end %>
+				<br>
+				<% if @homework.actual_phase != "responder_2" %>
+					<% if @partner_answer.argumentar_2 != nil %>
+						<h3>Argumentar</h3>
+						<%= simple_format(@partner_answer.argumentar_2, {style:"font-size:15px; line-height:1.5", align:"justify"})%>
+					<%end%>
+					<% if @partner_answer.image_argumentar_2?%>
+						<p><%= image_tag @partner_answer.image_argumentar_2.url(:medium) %></p>
+					<%end%>
+				<%end%>
+				<% if @homework.actual_phase == "argumentar_2"%>
+					</div>
+				<% end %>
+				<br>
+				<% if @homework.actual_phase != "argumentar_2" %>
+					<% if @my_answer.rehacer_2 != nil %>
+						<h3>Rehacer</h3>
+						<%= simple_format(@my_answer.rehacer_2, {style:"font-size:15px; line-height:1.5", align:"justify"})%>
+					<%end%>
+					<% if @my_answer.image_rehacer_2?%>
+						<p><%= image_tag @my_answer.image_rehacer_2.url(:medium) %></p>
+					<%end%>
+					</div>
+				<%end%>
+			<%end%>
+		<%end%>
+	<%end%>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Contenido</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% if !@answer.nil? %>
-        <tr>
-          <td><%= @answer.content %></td>
-            <td><%= link_to 'Ver', homework_question_answer_path(@homework, @question, @answer) %></td>
-            <td><%= link_to 'Editar', edit_homework_question_answer_path(@homework, @question, @answer) %></td>
-            <td><%= link_to 'Eliminar', homework_question_answer_path(@homework, @question, @answer), method: :delete, data: { confirm: '¿Estas Seguro?' } %></td>
-          </tr>
-      <% end %>
-  </tbody>
-</table>
+  <br></br>
+	<%= form_tag controller:"homeworks", method:"get" do %>
+    <%= fields_for 'actualizar', @homework do |p| %>
+			<%= p.hidden_field  :homework, value:@homework.id, class:"form-control" %>
+			<%= p.hidden_field  :phase, value:@homework.actual_phase, class:"form-control" %>
+			<% if @homework.upload%>
+      	<%= submit_tag "Editar Respuesta", name: 'tag_in_index', class: "btn btn-primary", action:"show", style:"height:35px; width:130px"%>
+				<meta http-equiv="refresh" content="15" />
+			<%else%>
+				<meta http-equiv="refresh" content="15" />
+			<%end%>
+		<%end%>
+  <%end%>
 
-<br>
+  <br></br>
+</div>

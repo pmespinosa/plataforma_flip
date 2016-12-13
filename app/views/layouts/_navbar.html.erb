@@ -1,71 +1,85 @@
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse" style="background-color:#337AB7">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
 
       <div class="navbar-header">
-        <% if user_signed_in? %>
-          <a class="navbar-brand" href="/users">Inicio</a>
-          <% else %>
-          <a class="navbar-brand" href="/">Inicio</a>
+        <% if user_signed_in? %> <!-- SIGN IN -->
+          <% if current_user.role? %> <!-- ##VISTA PROFESOR## -->
+            <% if @miscursos_visible %> <!-- BOTON MIS CURSOS -->
+              <ul class="nav navbar-nav">
+                <li ><%= button_to "Mis Cursos", users_path, :class => "btn btn-primary", :style => "font-size:18px; height:50px" %></li>
+              </ul>
+            <% else %>
+              <ul class="nav navbar-nav">
+                <li ><%= button_to "Mis Cursos", users_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px; height:50px" %></li>
+              </ul>
+            <% end %>
+            <% if @ef_visible %> <!-- BOTON EVALUACION FORMATIVA -->
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Evaluación Formativa", eval_form_path(current_user.current_course_id), :class => "btn btn-primary", :style => "font-size:18px; height:50px" %></li>
+              </ul>
+            <% else %>
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Evaluación Formativa", eval_form_path(current_user.current_course_id), :disabled => true, :class => "btn btn-primary", :style => "font-size:18px; height:50px" %></li>
+              </ul>
+            <% end %>
+            <% if @reporte_visible %> <!-- BOTON REPORTE -->
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Reportes", reportes_path(current_user.current_course_id), :class => "btn btn-primary", :style => "font-size:18px; height:50px" %></li>
+              </ul>
+            <% else %>
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Reportes", reportes_path(current_user.current_course_id), :disabled => true, :class => "btn btn-primary", :style => "font-size:18px; height:50px" %></li>
+              </ul>
+            <% end %>
+            <% if  @actividades_visible %> <!-- BOTON ACTIVIDAD -->
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Actividades Colaborativas", homeworks_path, :class => "btn btn-primary", :style => "font-size:18px; height:50px", method: :get %></li>
+              </ul>
+            <% else %>
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Actividades Colaborativas", homeworks_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px; height:50px", method: :get %></li>
+              </ul>
+            <% end %>
+            <% if @Configuraciones_visible %> <!-- BOTON CONFIGURACIONES -->
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Configuraciones", edit_course_path(current_user.current_course_id, tag:"configuraciones"), :class => "btn btn-primary", :style => "font-size:18px; height:50px" %></li>
+              </ul>
+            <% else %>
+              <ul class="nav navbar-nav">
+                <li><%= button_to "Configuraciones", edit_course_path(current_user.current_course_id), :disabled => true, :class => "btn btn-primary", :style => "font-size:18px; height:50px" %></li>
+              </ul>
+            <% end %>
+          <% else %> <!-- ##VISTA ALUMNO## -->
+            <% if @miscursos_visible %> <!-- BOTON MIS CURSOS -->
+              <ul class="nav navbar-nav">
+                <li ><%= button_to "Mis Cursos", users_path, :class => "btn btn-primary", :style => "font-size:18px; height:50px" %></li>
+              </ul>
+            <% else %>
+              <ul class="nav navbar-nav">
+                <li ><%= button_to "Mis Cursos", users_path, :disabled => true, :class => "btn btn-primary", :style => "font-size:18px; height:50px" %></li>
+              </ul>
+            <% end %>
+          <% end %>
         <% end %>
       </div>
 
-      <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <% if user_signed_in? %>
-
-          <ul class="nav navbar-nav">
-            <!--<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>-->
-            <!--<li><a href="#">Link</a></li>-->
-            <%- if current_user.role?%>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Actividades <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-
-                  <% Homework.all.each_with_index do |homework, i| %>
-                    <li><%= link_to "#{homework.name}" ,homework_questions_path(homework) %></li>
-                  <% end %>
-                  <li role="separator" class="divider"></li>
-                  <li><%= link_to 'Crear Actividad', new_homework_path %></li>
-                  <li role="separator" class="divider"></li>
-                  <li><%= link_to 'Todas', homeworks_path %></li>
-                </ul>
-              </li>
-            <% else %>
-              <li><%= link_to 'Actividades', homeworks_path %></li>
-            <% end -%>
-          </ul>
-
-          <% if current_user.role? %>
-            <ul class="nav navbar-nav">
-              <li><%= link_to "Alumnos",  users_students_path%></li>
-            </ul>
-
-            <ul class="nav navbar-nav">
-              <li><%= link_to "Asistencia",  users_asistencia_path%></li>
-            </ul>
-
-            <ul class="nav navbar-nav">
-              <li><%= link_to "Configuraciones",  users_configuration_path%></li>
-            </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <% if user_signed_in? %>
+            <li class="dropdown">
+              <a href="/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="font-size:18px; color:white">
+                <%= current_user.email.to_s %> <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li><%= link_to 'Cerrar Sesión', destroy_user_session_path, method: :delete, :style => "font-size:18px; height:50px" %></li>
+              </ul>
+            </li>
 
           <% end %>
-        <% end %>
-      
-
-      <ul class="nav navbar-nav navbar-right">
-        <% if user_signed_in? %>
-          <li class="dropdown">
-            <a href="/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-              <%= current_user.email.to_s %> <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu">
-              <li><%= link_to 'Cerrar Sesión', destroy_user_session_path, method: :delete %></li>
-            </ul>
-          </li>
-
-        <% end %>
-      </ul>
-    </div><!-- /.navbar-collapse -->
+        </ul>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>

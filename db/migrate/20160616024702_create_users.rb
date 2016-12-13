@@ -6,6 +6,11 @@ class CreateUsers < ActiveRecord::Migration
       t.integer "role"
       t.boolean "asistencia"
       t.integer "partner_id"
+      t.integer "corrector"
+      t.integer "corregido"
+      t.integer "current_course_id", :default => 0 #agregue default para eliminar nil
+      t.datetime "last_asistencia", :default => "2016-01-01 12:00:00.000000"
+      t.integer "last_homework"
       t.timestamps null: false
     end
   end
