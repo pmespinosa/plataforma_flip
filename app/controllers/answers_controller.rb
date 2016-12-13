@@ -4,6 +4,8 @@ class AnswersController < ApplicationController
   before_action :set_actividades_visible, only: :new
   before_action :set_breadcrumbs
   before_filter :authenticate_user!
+  before_action :set_color
+  require "prawn"
 
   def index
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Realizar Actividad"]
@@ -97,6 +99,12 @@ class AnswersController < ApplicationController
     respond_to do |format|
       format.html { redirect_to homework_questions_path(@homework) }
       format.json { head :no_content }
+    end
+  end
+
+  def generate_pdf
+    Prawn::Document.generate("hello.pdf") do
+      text "Hello World!"
     end
   end
 

@@ -9,6 +9,7 @@ class HomeworksController < ApplicationController
   before_action :set_reporte_visible , only: [:index]
   before_action :set_configuraciones_visible, only: :index
   before_action :set_breadcrumbs
+  before_action :set_color
 
   def index
     if params["format"]

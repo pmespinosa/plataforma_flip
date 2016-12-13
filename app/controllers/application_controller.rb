@@ -4,7 +4,6 @@ class ApplicationController < ActionController::Base
   #protect_from_forgery with: :exception
   protect_from_forgery with: :reset_session
   before_action :configure_permitted_parameters, if: :devise_controller?
-
   before_action :signin_edx
 
   def configure_permitted_parameters
@@ -30,4 +29,25 @@ class ApplicationController < ActionController::Base
       sign_in user if user
     end
   end
+
+  def set_color
+    if @homework
+      if @homework.actual_phase == 'responder'
+        @color = 'green'
+      elsif @homework.actual_phase == 'argumentar'
+        @color = 'yellow'
+      elsif @homework.actual_phase == 'rehacer'
+        @color = 'magenta'
+      elsif @homework.actual_phase == 'responder_2'
+        @color = 'brown'
+      elsif @homework.actual_phase == 'argumentar_2'
+        @color = 'sky'
+      elsif @homework.actual_phase == 'rehacer_2'
+        @color = 'red'
+      end
+    else
+      @color = 'blue'
+    end
+  end
+
 end
