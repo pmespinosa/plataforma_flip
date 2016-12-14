@@ -4,24 +4,24 @@
 <br>
 
 <div class="panel panel-info">
-  <div class="panel-heading"><h4>Recomendación para clase</h4></div>
+  <div class="panel-heading"><h4>Recomendación para la clase</h4></div>
 
 <table class="table table-bordered">
-  <thead class="head">
+  <thead class="head" style="background-color: white">
     <th class="badtd"></th>
-    <th style="text-align: left;">Mal rendimiento</th>
+    <th style="text-align: left; color:#5E6066;">Prioridad alta</th>
     <th class="normaltd"></th>
-    <th style="text-align: left;">Rendimiento regular</th>
+    <th style="text-align: left; color:#5E6066;">Prioridad media</th>
     <th class="goodtd"></th>
-    <th style="text-align: left;">Buen rendimiento</th>
+    <th style="text-align: left; color:#5E6066;">Prioridad baja</th>
+    <th ></th>
+    <th style="text-align: left; color:#5E6066;">Logrado</th>
 </table>
-<br>
-
     <table class="table table-bordered">
 
       <thead class="head">
-          <th>Contenido / Habilidad de PC</th>
-          <th>Interpretación</th>
+          <th>Contenido / Habilidad de Pensamiento Crítico</th>
+          <th>Interpretar</th>
           <th>Análisis</th>
           <th>Evaluación</th>
           <th>Inferencia</th>
@@ -32,8 +32,10 @@
       <% @report.trees.each do |tree| %>
             <% i = 0 %>
             <tr>
-              <td class="content2"><b><%=tree.content.text %></b></td>
+              <td class="content2" ><b><%=tree.content.text %> </b></td>
+
               <% @groups_tree.each do |group| %>
+
                 <%# if group.include?(tree) && i == 0 %>
                 <%puts "ante se coooomparar objetosssssssssssssssssssssssssss" %>
                 <% puts group[0].inspect %>
@@ -127,7 +129,7 @@
 
     <thead class="head">
         <th>Contenido / Habilidad de PC</th>
-        <th class="content">Contenido</th>
+        <th >Contenido</th>
         <th>Interpretar</th>
         <th>Análisis</th>
         <th>Evaluación</th>
@@ -140,8 +142,8 @@
     <tbody>
       <% @report.trees.each do |tree| %>
 
-          <tr>
-              <td class="content"><%= tree.content.text %></td>
+          <tr style="background-color: white">
+              <td class="content" ><%= tree.content.text %></td>
               <% if tree.content_sc %>
                   <td><%=tree.content_sc.round(2) %></td>
               <%else%>
@@ -185,7 +187,7 @@
 
           <tr class="head">
               <td>Promedio</td>
-              <td class="content">
+              <td style="color:white">
                 <% if @report.content_sc %>
                       <%=@report.content_sc.round(2) %>
                 <%else%>
