@@ -5,16 +5,15 @@ class AnswersController < ApplicationController
   before_action :set_breadcrumbs
   before_filter :authenticate_user!
   before_action :set_color
-  require "prawn"
 
   def index
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Realizar Actividad"]
     @corregido = User.find_by_id(current_user.corregido)
     @corrector = User.find_by_id(current_user.corrector)
-    if @homework.actual_phase == "argumentar" || @homework.actual_phase == "argumentar_2"
+    if @homework.actual_phase == "argumentar" || @homework.actual_phase == "evaluar"
       @my_answer = @corregido.answers.find_by_homework_id(@homework.id)
       @partner_answer = current_user.answers.find_by_homework_id(@homework.id)
-    elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "rehacer_2"
+    elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "final"
       @my_answer = current_user.answers.find_by_homework_id(@homework.id)
       @partner_answer = @corrector.answers.find_by_homework_id(@homework.id)
     else
@@ -29,11 +28,9 @@ class AnswersController < ApplicationController
         redirect_to edit_homework_answer_path(@homework, @answer)
       elsif @homework.actual_phase == "rehacer" && @answer.rehacer == nil
         redirect_to edit_homework_answer_path(@homework, @answer)
-      elsif @homework.actual_phase == "responder_2" && @answer.responder_2 == nil
+      elsif @homework.actual_phase == "evaluar" && @answer.evaluar == nil
         redirect_to edit_homework_answer_path(@homework, @answer)
-      elsif @homework.actual_phase == "argumentar_2" && @answer.argumentar_2 == nil
-        redirect_to edit_homework_answer_path(@homework, @answer)
-      elsif @homework.actual_phase == "rehacer_2" && @answer.rehacer_2 == nil
+      elsif @homework.actual_phase == "final" && @answer.final == nil
         redirect_to edit_homework_answer_path(@homework, @answer)
       end
     end
@@ -51,10 +48,10 @@ class AnswersController < ApplicationController
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Realizar Actividad"]
     @corregido = User.find_by_id(current_user.corregido)
     @corrector = User.find_by_id(current_user.corrector)
-    if @homework.actual_phase == "argumentar" || @homework.actual_phase == "argumentar_2"
+    if @homework.actual_phase == "argumentar" || @homework.actual_phase == "evaluar"
       @my_answer = @corregido.answers.find_by_homework_id(@homework.id)
       @partner_answer = current_user.answers.find_by_homework_id(@homework.id)
-    elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "rehacer_2"
+    elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "final"
       @my_answer = current_user.answers.find_by_homework_id(@homework.id)
       @partner_answer = @corrector.answers.find_by_homework_id(@homework.id)
     else
@@ -103,7 +100,20 @@ class AnswersController < ApplicationController
   end
 
   def generate_pdf
-    Prawn::Document.generate("hello.pdf") do
+    @corregido = User.find_by_id(current_user.corregido)
+    @corrector = User.find_by_id(current_user.corrector)
+    if @homework.actual_phase == "argumentar" || @homework.actual_phase == "argumentar_2"
+      @my_answer = @corregido.answers.find_by_homework_id(@homework.id)
+      @partner_answer = current_user.answers.find_by_homework_id(@homework.id)
+    elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "rehacer_2"
+      @my_answer = current_user.answers.find_by_homework_id(@homework.id)
+      @partner_answer = @corrector.answers.find_by_homework_id(@homework.id)
+    else
+      @my_answer = current_user.answers.find_by_homework_id(@homework.id)
+      @partner_answer = @corregido.answers.find_by_homework_id(@homework.id)
+    end
+    require "prawn"
+    Prawn::Document.generate(@homework.id.to_s + "_" + current_user.first_name + "_" + current_user.last_name + ".pdf") do
       text "Hello World!"
     end
   end
@@ -145,8 +155,8 @@ class AnswersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def answer_params
       params.require(:answer).permit(:phase, :upload, :responder, :argumentar,
-       :rehacer, :responder_2, :argumentar_2, :rehacer_2, :image_responder, :image_argumentar,
-        :image_rehacer, :image_responder_2, :image_argumentar_2, :image_rehacer_2)
+       :rehacer, :evaluar, :final, :image_responder, :image_argumentar,
+        :image_rehacer, :image_evaluar, :image_final)
     end
 
 end

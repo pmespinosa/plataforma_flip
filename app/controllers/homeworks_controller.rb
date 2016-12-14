@@ -62,14 +62,11 @@ class HomeworksController < ApplicationController
           @homework.actual_phase = "rehacer"
           data = Register.new(button_id:18, user_id:current_user.id)
         elsif @homework.actual_phase == "rehacer"
-          @homework.actual_phase = "responder_2"
+          @homework.actual_phase = "evaluar"
           data = Register.new(button_id:19, user_id:current_user.id)
-        elsif @homework.actual_phase == "responder_2"
-          @homework.actual_phase = "argumentar_2"
+        elsif @homework.actual_phase == "evaluar"
+          @homework.actual_phase = "final"
           data = Register.new(button_id:20, user_id:current_user.id)
-        elsif @homework.actual_phase == "argumentar_2"
-          @homework.actual_phase = "rehacer_2"
-          data = Register.new(button_id:21, user_id:current_user.id)
         end
         @homework.upload = true
       elsif params[:previous]
@@ -79,15 +76,12 @@ class HomeworksController < ApplicationController
         elsif @homework.actual_phase == "rehacer"
           @homework.actual_phase = "argumentar"
           data = Register.new(button_id:23, user_id:current_user.id)
-        elsif @homework.actual_phase == "responder_2"
+        elsif @homework.actual_phase == "evaluar"
           @homework.actual_phase = "rehacer"
           data = Register.new(button_id:24, user_id:current_user.id)
-        elsif @homework.actual_phase == "argumentar_2"
-          @homework.actual_phase = "responder_2"
+        elsif @homework.actual_phase == "final"
+          @homework.actual_phase = "evaluar"
           data = Register.new(button_id:25, user_id:current_user.id)
-        elsif @homework.actual_phase == "rehacer_2"
-          @homework.actual_phase = "argumentar_2"
-          data = Register.new(button_id:26, user_id:current_user.id)
         end
         @homework.upload = true
       elsif params[:discussion]
@@ -97,12 +91,10 @@ class HomeworksController < ApplicationController
           data = Register.new(button_id:28, user_id:current_user.id)
         elsif @homework.actual_phase == "rehacer"
           data = Register.new(button_id:29, user_id:current_user.id)
-        elsif @homework.actual_phase == "responder_2"
+        elsif @homework.actual_phase == "evaluar"
           data = Register.new(button_id:30, user_id:current_user.id)
-        elsif @homework.actual_phase == "argumentar_2"
+        elsif @homework.actual_phase == "final"
           data = Register.new(button_id:31, user_id:current_user.id)
-        elsif @homework.actual_phase == "rehacer_2"
-          data = Register.new(button_id:32, user_id:current_user.id)
         end
         @homework.upload = false
       end
@@ -119,28 +111,19 @@ class HomeworksController < ApplicationController
     @ciclo = ""
     if current_user.role?
       if @homework.actual_phase == "responder"
-        @ciclo = "Ciclo 1"
         @etapa = "Responder"
         @siguiente = "Argumentar"
       elsif @homework.actual_phase == "argumentar"
-        @ciclo = "Ciclo 1"
         @etapa = "Argumentar"
         @siguiente = "Rehacer"
       elsif @homework.actual_phase == "rehacer"
-        @ciclo = "Ciclo 1"
         @etapa = "Rehacer"
-        @siguiente = "Responder"
-      elsif @homework.actual_phase == "responder_2"
-        @ciclo = "Ciclo 2"
-        @etapa = "Responder"
-        @siguiente = "Argumentar"
-      elsif @homework.actual_phase == "argumentar_2"
-        @ciclo = "Ciclo 2"
-        @etapa = "Argumentar"
-        @siguiente = "Rehacer"
-      elsif @homework.actual_phase == "rehacer_2"
-        @ciclo = "Ciclo 2"
-        @etapa = "Rehacer"
+        @siguiente = "Evaluar"
+      elsif @homework.actual_phase == "evaluar"
+        @etapa = "Evaluar"
+        @siguiente = "Final"
+      elsif @homework.actual_phase == "final"
+        @etapa = "Integración"
       end
       if !@homework.upload
         @etapa = "Discusión"
@@ -164,39 +147,30 @@ class HomeworksController < ApplicationController
   end
 
   def answers
-    @ciclo = ""
     @etapa = ""
 
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Realizar Actividad", "Respuesta Alumno"]
     @homework = Homework.where(id:params["homework"]["homework"].to_i)[0]
 
     if @homework.actual_phase == "responder"
-      @ciclo = "Ciclo 1"
       @etapa = "Responder"
     elsif @homework.actual_phase == "argumentar"
-      @ciclo = "Ciclo 1"
       @etapa = "Argumentar"
     elsif @homework.actual_phase == "rehacer"
-      @ciclo = "Ciclo 1"
       @etapa = "Rehacer"
-    elsif @homework.actual_phase == "responder_2"
-      @ciclo = "Ciclo 2"
-      @etapa = "Responder"
-    elsif @homework.actual_phase == "argumentar_2"
-      @ciclo = "Ciclo 2"
-      @etapa = "Argumentar"
-    elsif @homework.actual_phase == "rehacer_2"
-      @ciclo = "Ciclo 2"
-      @etapa = "Rehacer"
+    elsif @homework.actual_phase == "evaluar"
+      @etapa = "Evaluar"
+    elsif @homework.actual_phase == "final"
+      @etapa = "Final"
     end
 
     @user = User.find_by_id(params["homework"]["user"])
     @corregido = User.find_by_id(@user.corregido)
     @corrector = User.find_by_id(@user.corrector)
-    if @homework.actual_phase == "argumentar" || @homework.actual_phase == "argumentar_2"
+    if @homework.actual_phase == "argumentar" || @homework.actual_phase == "evaluar"
       @my_answer = @corregido.answers.find_by_homework_id(@homework.id)
       @partner_answer = @user.answers.find_by_homework_id(@homework.id)
-    elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "rehacer_2"
+    elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "final"
       @my_answer = @user.answers.find_by_homework_id(@homework.id)
       @partner_answer = @corrector.answers.find_by_homework_id(@homework.id)
     else

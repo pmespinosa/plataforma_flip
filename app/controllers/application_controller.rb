@@ -38,12 +38,12 @@ class ApplicationController < ActionController::Base
         @color = 'yellow'
       elsif @homework.actual_phase == 'rehacer'
         @color = 'magenta'
-      elsif @homework.actual_phase == 'responder_2'
+      elsif @homework.actual_phase == 'evaluar'
         @color = 'brown'
-      elsif @homework.actual_phase == 'argumentar_2'
-        @color = 'sky'
-      elsif @homework.actual_phase == 'rehacer_2'
+      elsif @homework.actual_phase == 'final'
         @color = 'red'
+      elsif @homework.actual_phase == 'rehacer_2'
+        @color = 'sky'
       end
     else
       @color = 'blue'

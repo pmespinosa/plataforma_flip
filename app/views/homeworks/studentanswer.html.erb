@@ -2,7 +2,7 @@
 <div style="text-align: left">
 	<div style="text-align:left">
 		<h1><%= @homework.name %></h1>
-		<h2><%= @ciclo %> - <%= @etapa %></h2>
+		<h2>Etapa: <%= @etapa %></h2>
 		<br>
 		<%= button_to 'Volver',[@homework], :class=>"btn btn-primary", :style=>'color:white' %>
 		<br>
@@ -13,7 +13,6 @@
 	</div>
 	<br>
 	<% if @my_answer != nil || @partner_answer != nil %>
-		<h2>Ciclo 1</h2>
 		<% if @my_answer.responder != nil %>
 			<div class="thumbnail">
 			<h3>Respuesta</h3>
@@ -43,7 +42,6 @@
 					</div>
 					<br>
 					<% if @homework.actual_phase != "rehacer" %>
-						<h2>Ciclo 2</h2>
 						<% if @partner_answer.responder_2 != nil %>
 							<div class="thumbnail">
 							<h3>Respuesta</h3>

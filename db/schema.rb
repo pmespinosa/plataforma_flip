@@ -23,11 +23,10 @@ ActiveRecord::Schema.define(version: 20161014045749) do
     t.text     "responder"
     t.text     "argumentar"
     t.text     "rehacer"
-    t.text     "responder_2"
-    t.text     "argumentar_2"
-    t.text     "rehacer_2"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.text     "evaluar"
+    t.text     "final"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.string   "image_responder_file_name"
     t.string   "image_responder_content_type"
     t.integer  "image_responder_file_size"
@@ -40,18 +39,14 @@ ActiveRecord::Schema.define(version: 20161014045749) do
     t.string   "image_rehacer_content_type"
     t.integer  "image_rehacer_file_size"
     t.datetime "image_rehacer_updated_at"
-    t.string   "image_responder_2_file_name"
-    t.string   "image_responder_2_content_type"
-    t.integer  "image_responder_2_file_size"
-    t.datetime "image_responder_2_updated_at"
-    t.string   "image_argumentar_2_file_name"
-    t.string   "image_argumentar_2_content_type"
-    t.integer  "image_argumentar_2_file_size"
-    t.datetime "image_argumentar_2_updated_at"
-    t.string   "image_rehacer_2_file_name"
-    t.string   "image_rehacer_2_content_type"
-    t.integer  "image_rehacer_2_file_size"
-    t.datetime "image_rehacer_2_updated_at"
+    t.string   "image_evaluar_file_name"
+    t.string   "image_evaluar_content_type"
+    t.integer  "image_evaluar_file_size"
+    t.datetime "image_evaluar_updated_at"
+    t.string   "image_final_file_name"
+    t.string   "image_final_content_type"
+    t.integer  "image_final_file_size"
+    t.datetime "image_final_updated_at"
   end
 
   add_index "answers", ["user_id", "homework_id"], name: "index_answers_on_user_id_and_homework_id", using: :btree
