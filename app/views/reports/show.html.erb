@@ -3,8 +3,30 @@
 
 <br>
 
+<!-- Modal -->
+<div class="modal fade" id="criterios" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Criterio para evaluar</h4>
+      </div>
+      <div class="modal-body">
+        1. ... <br>
+        2. ... <br>
+        3. ... <br>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Continuar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div class="panel panel-info">
-  <div class="panel-heading"><h4>Recomendación para la clase</h4></div>
+  <div class="panel-heading"><h4>Recomendación para la clase
+    <button type="button" data-toggle="modal" data-target="#criterios">  Criterio utilizado</h4></div>
 
 
 <table class="table table-bordered">
@@ -38,10 +60,6 @@
             <tr>
               <td class="content2" ><b data-toggle="modal" data-target="#modal<%= contador %>"><%=tree.content.text %> </b></td>
 
-
-
-
-
               <!-- Modal -->
               <div class="modal fade" id="modal<%= contador %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
@@ -67,17 +85,6 @@
                   </div>
                 </div>
               </div>
-
-
-
-
-
-
-
-
-
-
-
 
               <% @groups_tree.each do |group| %>
 
@@ -164,22 +171,6 @@
     </tbody>
 </table>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
