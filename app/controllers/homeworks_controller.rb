@@ -42,7 +42,7 @@ class HomeworksController < ApplicationController
             redirect_to edit_homework_answer_path(@homework, answers)
           elsif @homework.actual_phase == "evaluar" && answers.evaluar == nil
             redirect_to edit_homework_answer_path(@homework, answers)
-          elsif @homework.actual_phase == "final" && answers.final == nil
+          elsif @homework.actual_phase == "integrar" && answers.integrar == nil
             redirect_to edit_homework_answer_path(@homework, answers)
           else
             redirect_to homework_answers_path(@homework)
@@ -65,7 +65,7 @@ class HomeworksController < ApplicationController
           @homework.actual_phase = "evaluar"
           data = Register.new(button_id:19, user_id:current_user.id)
         elsif @homework.actual_phase == "evaluar"
-          @homework.actual_phase = "final"
+          @homework.actual_phase = "integrar"
           data = Register.new(button_id:20, user_id:current_user.id)
         end
         @homework.upload = true
@@ -79,7 +79,7 @@ class HomeworksController < ApplicationController
         elsif @homework.actual_phase == "evaluar"
           @homework.actual_phase = "rehacer"
           data = Register.new(button_id:24, user_id:current_user.id)
-        elsif @homework.actual_phase == "final"
+        elsif @homework.actual_phase == "integrar"
           @homework.actual_phase = "evaluar"
           data = Register.new(button_id:25, user_id:current_user.id)
         end
@@ -93,7 +93,7 @@ class HomeworksController < ApplicationController
           data = Register.new(button_id:29, user_id:current_user.id)
         elsif @homework.actual_phase == "evaluar"
           data = Register.new(button_id:30, user_id:current_user.id)
-        elsif @homework.actual_phase == "final"
+        elsif @homework.actual_phase == "integrar"
           data = Register.new(button_id:31, user_id:current_user.id)
         end
         @homework.upload = false
@@ -121,9 +121,9 @@ class HomeworksController < ApplicationController
         @siguiente = "Evaluar"
       elsif @homework.actual_phase == "evaluar"
         @etapa = "Evaluar"
-        @siguiente = "Final"
-      elsif @homework.actual_phase == "final"
-        @etapa = "Integración"
+        @siguiente = "Integrar"
+      elsif @homework.actual_phase == "integrar"
+        @etapa = "Integrar"
       end
       if !@homework.upload
         @etapa = "Discusión"
@@ -160,8 +160,8 @@ class HomeworksController < ApplicationController
       @etapa = "Rehacer"
     elsif @homework.actual_phase == "evaluar"
       @etapa = "Evaluar"
-    elsif @homework.actual_phase == "final"
-      @etapa = "Final"
+    elsif @homework.actual_phase == "integrar"
+      @etapa = "Integrar"
     end
 
     @user = User.find_by_id(params["homework"]["user"])
@@ -170,7 +170,7 @@ class HomeworksController < ApplicationController
     if @homework.actual_phase == "argumentar" || @homework.actual_phase == "evaluar"
       @my_answer = @corregido.answers.find_by_homework_id(@homework.id)
       @partner_answer = @user.answers.find_by_homework_id(@homework.id)
-    elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "final"
+    elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "integrar"
       @my_answer = @user.answers.find_by_homework_id(@homework.id)
       @partner_answer = @corrector.answers.find_by_homework_id(@homework.id)
     else
@@ -227,6 +227,7 @@ class HomeworksController < ApplicationController
   end
 
   def destroy
+    puts "pasa por aca"
     data = Register.new(button_id:11, user_id:current_user.id)
     data.save
     @homework.destroy

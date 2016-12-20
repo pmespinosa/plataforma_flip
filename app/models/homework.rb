@@ -1,6 +1,6 @@
 class Homework < ActiveRecord::Base
 
-  enum actual_phase: [:responder, :argumentar, :rehacer, :evaluar, :final]
+  enum actual_phase: [:responder, :argumentar, :rehacer, :evaluar, :integrar]
   after_initialize :set_default_actual_phase, :if => :new_record?
 
   def set_default_actual_phase

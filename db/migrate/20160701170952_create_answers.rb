@@ -8,7 +8,7 @@ class CreateAnswers < ActiveRecord::Migration
       t.text "argumentar"
       t.text "rehacer"
       t.text "evaluar"
-      t.text "final"
+      t.text "integrar"
       t.timestamps null: false
     end
     add_index :answers, ["user_id", "homework_id"]

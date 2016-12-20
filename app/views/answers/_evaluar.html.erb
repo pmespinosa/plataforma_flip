@@ -1,0 +1,19 @@
+<% if @partner_answer.evaluar != nil %>
+  <h3>Evaluación</h3>
+  <%= simple_format(@partner_answer.evaluar, {style:"font-size:15px; line-height:1.5", align:"justify"})%>
+<% end %>
+<% if @partner_answer.image_evaluar? %>
+  <button data-toggle="modal" data-target=".bs-evaluar-modal-lg">
+    <%= image_tag @partner_answer.image_evaluar.url(:medium), style: "height: 100px; width: 100px" %>
+  </button>
+
+  <div class="modal fade bs-evaluar-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <p><%= image_tag @partner_answer.image_evaluar.url(:medium) %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

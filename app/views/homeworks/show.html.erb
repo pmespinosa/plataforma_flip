@@ -1,3 +1,5 @@
+
+
 <h1><%= @homework.name %></h1>
 <h2>Etapa: <%= @etapa %> </h2>
 <h3 align="justify">Pregunta</h3>
@@ -17,7 +19,7 @@
           <br></br>
             <%= fields_for 'phase', @homework do |p| %>
               <%= p.hidden_field  :phase, value:@homework.actual_phase, class:"form-control" %>
-              <% if current_user.role? && @homework.actual_phase != "final"%>
+              <% if current_user.role? && @homework.actual_phase != "integrar"%>
                 <div class="actions" style="text-align: center">
                   <% if @homework.upload == true %>
                     <%= submit_tag @siguiente, name: 'next', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px"%>
@@ -27,7 +29,7 @@
                     <%= submit_tag "Discusión", name: 'discussion', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px", disabled:"disabled"%>
                   <%end%>
                 </div>
-                <% elsif current_user.role? && @homework.actual_phase == "final"%>
+                <% elsif current_user.role? && @homework.actual_phase == "integrar"%>
                   <div class="actions" style="text-align: center">
                     <% if @homework.upload == true%>
                       <%= submit_tag "Fin Actividad", name: 'discussion', class: "btn btn-primary", style:"height:75px; width:150px; font-size:20px", disabled:"disabled"%>

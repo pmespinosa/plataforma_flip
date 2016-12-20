@@ -1,0 +1,19 @@
+<% if @my_answer.rehacer != nil %>
+  <h3>Refacción</h3>
+    <%= simple_format(@my_answer.rehacer, {style:"font-size:15px; line-height:1.5", align:"justify"})%>
+    <% if @my_answer.image_rehacer?%>
+      <button data-toggle="modal" data-target=".bs-rehacer-modal-lg">
+        <%= image_tag @my_answer.image_rehacer.url(:medium), style: "height: 100px; width: 100px" %>
+      </button>
+
+      <div class="modal fade bs-rehacer-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <p><%= image_tag @my_answer.image_rehacer.url(:medium) %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    <%end%>
+<% end %>

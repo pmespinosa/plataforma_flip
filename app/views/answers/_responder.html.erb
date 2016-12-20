@@ -1,0 +1,20 @@
+<% if @my_answer.responder != nil %>
+  <h3>Respuesta</h3>
+  <%= simple_format(@my_answer.responder, {style:"font-size:15px; line-height:1.5", align:"justify"})%>
+  <% if @my_answer.image_responder? %>
+
+  <button data-toggle="modal" data-target=".bs-responder-modal-lg">
+    <%= image_tag @my_answer.image_responder.url(:medium), style: "height: 100px; width: 100px" %>
+  </button>
+
+  <div class="modal fade bs-responder-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <p><%= image_tag @my_answer.image_responder.url(:medium) %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>
+<% end %>

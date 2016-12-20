@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
         @color = 'magenta'
       elsif @homework.actual_phase == 'evaluar'
         @color = 'brown'
-      elsif @homework.actual_phase == 'final'
+      elsif @homework.actual_phase == 'integrar'
         @color = 'red'
       elsif @homework.actual_phase == 'rehacer_2'
         @color = 'sky'

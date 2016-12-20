@@ -5,7 +5,7 @@ class AddAttachmentImageToAnswers < ActiveRecord::Migration
       t.attachment :image_argumentar
       t.attachment :image_rehacer
       t.attachment :image_evaluar
-      t.attachment :image_final
+      t.attachment :image_integrar
 
     end
   end
@@ -15,6 +15,6 @@ class AddAttachmentImageToAnswers < ActiveRecord::Migration
      remove_attachment :answers, :image_argumentar
      remove_attachment :answers, :image_rehacer
      remove_attachment :answers, :image_evaluar
-     remove_attachment :answers, :image_final
+     remove_attachment :answers, :image_integrar
   end
 end

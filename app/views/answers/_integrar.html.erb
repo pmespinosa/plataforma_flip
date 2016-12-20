@@ -1,0 +1,19 @@
+<% if @my_answer.integrar != nil %>
+  <h3>Integración</h3>
+  <%= simple_format(@my_answer.integrar, {style:"font-size:15px; line-height:1.5", align:"justify"}) %>
+<%end%>
+<% if @my_answer.image_integrar?%>
+  <button data-toggle="modal" data-target=".bs-integrar-modal-lg">
+    <%= image_tag @my_answer.image_integrar.url(:medium), style: "height: 100px; width: 100px" %>
+  </button>
+
+  <div class="modal fade bs-integrar-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <p><%= image_tag @my_answer.image_integrar.url(:medium) %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+<%end%>

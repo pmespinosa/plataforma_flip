@@ -6,9 +6,8 @@
 		<% end %>
 		<% if @partner_answer != nil && @my_answer != nil %>
 			<br>
-			<h2>Ciclo 1</h2>
-			<div class="thumbnail">
 				<% if @homework.actual_phase != "responder" %>
+				<div class="thumbnail">
 					<% if @my_answer.responder != nil %>
 						<h3>Respuesta</h3>
 						<%=simple_format(@my_answer.responder, {style:"font-size:15px; line-height:1.5", align:"justify"})%>
@@ -17,67 +16,48 @@
 						<% end %>
 						<br>
 					<% end %>
-				<% end %>
-				<% if @homework.actual_phase != "argumentar" %>
-					<% if @partner_answer.argumentar != nil %>
-						<h3>Argumentación</h3>
-						<%=simple_format(@partner_answer.argumentar, {style:"font-size:15px; line-height:1.5", align:"justify"}) %>
-						<% if @partner_answer.image_argumentar? %>
-							<p><%= image_tag @partner_answer.image_argumentar.url(:medium) %></p>
-						<% end %>
-						<br>
-					<% end %>
-				<% end %>
-				<% if @homework.actual_phase != "rehacer" %>
-					<% if @my_answer.rehacer != nil %>
-						<h3>Rehacer</h3>
-						<%=simple_format(@my_answer.rehacer, {style:"font-size:15px; line-height:1.5", align:"justify"})%>
-						<% if @my_answer.image_rehacer? %>
-							<p><%= image_tag @my_answer.image_rehacer.url(:medium) %></p>
-						<% end %>
-						<br>
-					<% end %>
-				<% end %>
-			</div>
-			<% if ["responder_2", "argumentar_2", "rehacer_2"].include? @homework.actual_phase %>
-				<br>
-				<h2>Ciclo 2</h2>
-			<% end %>
-			<% if ["argumentar_2", "rehacer_2"].include? @homework.actual_phase %>
-				<div class="thumbnail">
-					<% if @homework.actual_phase != "responder_2" %>
-					<% if @my_answer.responder_2 != nil %>
-						<h3>Respuesta</h3>
-						<%=simple_format(@my_answer.responder_2, {style:"font-size:15px; line-height:1.5", align:"justify"})%>
-						<% if @my_answer.image_responder_2? %>
-							<p><%= image_tag @my_answer.image_responder_2.url(:medium) %></p>
-						<% end %>
-							<br>
-						<% end %>
-					<% end %>
-					<% if @homework.actual_phase != "argumentar_2" %>
-						<% if @partner_answer.argumentar_2 != nil %>
+					<% if @homework.actual_phase != "argumentar" %>
+						<% if @partner_answer.argumentar != nil %>
 							<h3>Argumentación</h3>
-							<%=simple_format(@partner_answer.argumentar_2, {style:"font-size:15px; line-height:1.5", align:"justify"}) %>
-							<% if @partner_answer.image_argumentar_2? %>
-								<p><%= image_tag @partner_answer.image_argumentar_2.url(:medium) %></p>
+							<%=simple_format(@partner_answer.argumentar, {style:"font-size:15px; line-height:1.5", align:"justify"}) %>
+							<% if @partner_answer.image_argumentar? %>
+								<p><%= image_tag @partner_answer.image_argumentar.url(:medium) %></p>
 							<% end %>
 							<br>
 						<% end %>
-					<% end %>
-					<% if @homework.actual_phase != "rehacer_2" %>
-						<% if @my_answer.rehacer_2 != nil %>
-							<h3>Rehacer</h3>
-							<%=simple_format(@my_answer.rehacer_2, {style:"font-size:15px; line-height:1.5", align:"justify"})%>
-							<% if @my_answer.image_rehacer_2? %>
-								<p><%= image_tag @my_answer.image_rehacer_2.url(:medium) %></p>
+						<% if @homework.actual_phase != "rehacer" %>
+							<% if @my_answer.rehacer != nil %>
+								<h3>Rehacer</h3>
+								<%=simple_format(@my_answer.rehacer, {style:"font-size:15px; line-height:1.5", align:"justify"})%>
+								<% if @my_answer.image_rehacer? %>
+									<p><%= image_tag @my_answer.image_rehacer.url(:medium) %></p>
+								<% end %>
+								<br>
 							<% end %>
-							<br>
+							<% if @homework.actual_phase != "evaluar" %>
+								<% if @partner_answer.evaluar != nil %>
+									<h3>Evaluar</h3>
+									<%=simple_format(@partner_answer.evaluar, {style:"font-size:15px; line-height:1.5", align:"justify"})%>
+									<% if @partner_answer.image_evaluar? %>
+										<p><%= image_tag @partner_answer.image_evaluar.url(:medium) %></p>
+									<% end %>
+									<br>
+								<% end %>
+								<% if @homework.actual_phase != "integrar" %>
+									<% if @my_answer.integrar != nil %>
+										<h3>Integrar</h3>
+										<%=simple_format(@my_answer.integrar, {style:"font-size:15px; line-height:1.5", align:"justify"})%>
+										<% if @my_answer.image_integrar? %>
+											<p><%= image_tag @my_answer.image_integrar.url(:medium) %></p>
+										<% end %>
+										<br>
+									<% end %>
+								<% end %>
+							<% end %>
 						<% end %>
 					<% end %>
-				</div>
-			<% end %>
-
+					</div>
+				<% end %>
 		<% end %>
 	<%end%>
 		<br>

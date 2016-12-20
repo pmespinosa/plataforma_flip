@@ -13,7 +13,7 @@ class AnswersController < ApplicationController
     if @homework.actual_phase == "argumentar" || @homework.actual_phase == "evaluar"
       @my_answer = @corregido.answers.find_by_homework_id(@homework.id)
       @partner_answer = current_user.answers.find_by_homework_id(@homework.id)
-    elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "final"
+    elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "integrar"
       @my_answer = current_user.answers.find_by_homework_id(@homework.id)
       @partner_answer = @corrector.answers.find_by_homework_id(@homework.id)
     else
@@ -30,7 +30,7 @@ class AnswersController < ApplicationController
         redirect_to edit_homework_answer_path(@homework, @answer)
       elsif @homework.actual_phase == "evaluar" && @answer.evaluar == nil
         redirect_to edit_homework_answer_path(@homework, @answer)
-      elsif @homework.actual_phase == "final" && @answer.final == nil
+      elsif @homework.actual_phase == "integrar" && @answer.integrar == nil
         redirect_to edit_homework_answer_path(@homework, @answer)
       end
     end
@@ -51,7 +51,7 @@ class AnswersController < ApplicationController
     if @homework.actual_phase == "argumentar" || @homework.actual_phase == "evaluar"
       @my_answer = @corregido.answers.find_by_homework_id(@homework.id)
       @partner_answer = current_user.answers.find_by_homework_id(@homework.id)
-    elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "final"
+    elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "integrar"
       @my_answer = current_user.answers.find_by_homework_id(@homework.id)
       @partner_answer = @corrector.answers.find_by_homework_id(@homework.id)
     else
@@ -155,8 +155,8 @@ class AnswersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def answer_params
       params.require(:answer).permit(:phase, :upload, :responder, :argumentar,
-       :rehacer, :evaluar, :final, :image_responder, :image_argumentar,
-        :image_rehacer, :image_evaluar, :image_final)
+       :rehacer, :evaluar, :integrar, :image_responder, :image_argumentar,
+        :image_rehacer, :image_evaluar, :image_integrar)
     end
 
 end
