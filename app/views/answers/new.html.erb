@@ -1,9 +1,10 @@
 <div style="text-align: left">
 	<% if @homework.upload %>
-		<h3 align="justify"><%= simple_format(@homework.content, {style:"font-size:20px; line-height:1.5", align:"justify"}) %></h3>
-		<% if @homework.image? %>
-			<p><%= image_tag @homework.image.url(:medium) %></p>
-		<% end %>
-		<%= render 'form' %>
+		<div class="thumbnail">
+			<%= render 'pregunta' %>
+		</div>
+		<div class="thumbnail">
+			<%= render 'form' %>
+		</div>
 	<%end%>
 </div>

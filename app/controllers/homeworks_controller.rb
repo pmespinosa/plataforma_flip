@@ -227,7 +227,6 @@ class HomeworksController < ApplicationController
   end
 
   def destroy
-    puts "pasa por aca"
     data = Register.new(button_id:11, user_id:current_user.id)
     data.save
     @homework.destroy

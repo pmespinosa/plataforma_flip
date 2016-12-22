@@ -2,10 +2,9 @@
 <% @homework = Homework.where(id:params["homework_id"])[0]%>
 <div style="text-align:left">
 	<br>
-	<%=simple_format(@homework.content, {style:"font-size:20px; line-height:1.5", align:"justify"})%>
-	<% if @homework.image? %>
-		<p><%= image_tag @homework.image.url(:medium) %></p>
-	<% end %>
+	<div class="thumbnail">
+		<%= render 'pregunta' %>
+	</div>
 	<div style="text-align: left">
 		<% if @my_answer != nil || @partner_answer != nil %>
 		<div class="thumbnail">
@@ -28,24 +27,25 @@
 			<%end%>
 		<%end%>
 		<br>
-	</div>
 
-  <br></br>
-	<%= form_tag controller:"homeworks", method:"get" do %>
-    <%= fields_for 'actualizar', @homework do |p| %>
-			<%= p.hidden_field  :homework, value:@homework.id, class:"form-control" %>
-			<%= p.hidden_field  :phase, value:@homework.actual_phase, class:"form-control" %>
-			<% if @homework.upload%>
-      	<%= submit_tag "Editar Respuesta", name: 'tag_in_index', class: "btn btn-primary", action:"show", style:"height:35px; width:130px"%>
-				<meta http-equiv="refresh" content="15" />
-			<%else%>
-				<meta http-equiv="refresh" content="15" />
+	  <br></br>
+		<%= form_tag controller:"homeworks", method:"get" do %>
+	    <%= fields_for 'actualizar', @homework do |p| %>
+				<%= p.hidden_field  :homework, value:@homework.id, class:"form-control" %>
+				<%= p.hidden_field  :phase, value:@homework.actual_phase, class:"form-control" %>
+				<% if @homework.upload%>
+	      	<%= submit_tag "Editar Respuesta", name: 'tag_in_index', class: "btn btn-primary", action:"show", style:"height:35px; width:130px"%>
+					<meta http-equiv="refresh" content="15" />
+				<%else%>
+					<meta http-equiv="refresh" content="15" />
+				<%end%>
 			<%end%>
-		<%end%>
-  <%end%>
+	  <%end%>
+		<br></br>
 
-	<%= link_to "Guardar Actividad", generate_pdf_path(homework_id:@homework.id, id:@my_answer.id), class:"btn btn-primary", style:'color:white'%>
+		<%= link_to "Guardar Actividad", generate_pdf_path(homework_id:@homework.id, id:@my_answer.id), class:"btn btn-primary", style:'color:white'%>
 
 
-  <br></br>
+	  <br></br>
+	</div>
 </div>
