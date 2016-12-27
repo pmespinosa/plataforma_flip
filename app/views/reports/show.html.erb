@@ -3,25 +3,49 @@
 
 <br>
 
+<!-- Modal -->
+<div class="modal fade" id="criterios" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Criterio para evaluar</h4>
+      </div>
+      <div class="modal-body">
+        1. ... <br>
+        2. ... <br>
+        3. ... <br>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Continuar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div class="panel panel-info">
-  <div class="panel-heading"><h4>Recomendación para clase</h4></div>
+  <div class="panel-heading"><h4>Recomendación para la clase
+    <button type="button" data-toggle="modal" data-target="#criterios">  Criterio utilizado</h4></div>
+
 
 <table class="table table-bordered">
-  <thead class="head">
+  <thead class="head" style="background-color: white">
     <th class="badtd"></th>
-    <th style="text-align: left;">Mal rendimiento</th>
+    <th style="text-align: left; color:#5E6066;">Prioridad alta</th>
     <th class="normaltd"></th>
-    <th style="text-align: left;">Rendimiento regular</th>
+    <th style="text-align: left; color:#5E6066;">Prioridad media</th>
     <th class="goodtd"></th>
-    <th style="text-align: left;">Buen rendimiento</th>
+    <th style="text-align: left; color:#5E6066;">Prioridad baja</th>
+    <th ></th>
+    <th style="text-align: left; color:#5E6066;">Logrado</th>
 </table>
-<br>
-
     <table class="table table-bordered">
 
+
       <thead class="head">
-          <th>Contenido / Habilidad de PC</th>
-          <th>Interpretación</th>
+          <th>Contenido / Habilidad de Pensamiento Crítico</th>
+          <th>Interpretar</th>
           <th>Análisis</th>
           <th>Evaluación</th>
           <th>Inferencia</th>
@@ -29,11 +53,41 @@
           <th>Autoregulación</th>
       </thead>
       <tbody>
+        <% contador = 0 %>
       <% @report.trees.each do |tree| %>
             <% i = 0 %>
+            <% contador +=1%>
             <tr>
-              <td class="content2"><b><%=tree.content.text %></b></td>
+              <td class="content2" ><b data-toggle="modal" data-target="#modal<%= contador %>"><%=tree.content.text %> </b></td>
+
+              <!-- Modal -->
+              <div class="modal fade" id="modal<%= contador %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel"><%=tree.content.text %> </h4>
+                    </div>
+                    <div class="modal-body">
+                      <h4> Pregunta Inicial </h4>
+                      <%=tree.initial_content_question.question %> <br><br>
+                      <%=tree.initial_ct_question.question %><br>
+                      <h4> Pregunta Recuperativa </h4>
+                      <%=tree.recuperative_content_question.question %> <br><br>
+                      <%=tree.recuperative_ct_question.question %><br>
+                      <h4> Pregunta de Profundización </h4>
+                      <%=tree.deeping_content_question.question %> <br><br>
+                      <%=tree.deeping_ct_question.question %><br>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Continuar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <% @groups_tree.each do |group| %>
+
                 <%# if group.include?(tree) && i == 0 %>
                 <%puts "ante se coooomparar objetosssssssssssssssssssssssssss" %>
                 <% puts group[0].inspect %>
@@ -118,6 +172,8 @@
 </table>
 </div>
 
+
+
 <br><br>
 
 <div class="panel panel-info">
@@ -127,7 +183,7 @@
 
     <thead class="head">
         <th>Contenido / Habilidad de PC</th>
-        <th class="content">Contenido</th>
+        <th >Contenido</th>
         <th>Interpretar</th>
         <th>Análisis</th>
         <th>Evaluación</th>
@@ -140,8 +196,8 @@
     <tbody>
       <% @report.trees.each do |tree| %>
 
-          <tr>
-              <td class="content"><%= tree.content.text %></td>
+          <tr style="background-color: white">
+              <td class="content" ><%= tree.content.text %></td>
               <% if tree.content_sc %>
                   <td><%=tree.content_sc.round(2) %></td>
               <%else%>
@@ -185,7 +241,7 @@
 
           <tr class="head">
               <td>Promedio</td>
-              <td class="content">
+              <td style="color:white">
                 <% if @report.content_sc %>
                       <%=@report.content_sc.round(2) %>
                 <%else%>
