@@ -1,20 +1,20 @@
 <div style="text-align: left">
 	<% if @homework.upload %>
 		<div class="thumbnail">
-			<%= render 'pregunta' %>
+			<%= render 'part0_pregunta' %>
 		</div>
 		<div class="thumbnail">
 		<% if @partner_answer != nil && @my_answer != nil %>
 			<% if @homework.actual_phase != "responder" %>
-				<%= render 'responder' %>
+				<%= render 'part1_responder' %>
 				<% if @homework.actual_phase != "argumentar" %>
-					<%= render 'argumentar' %>
+					<%= render 'part2_argumentar' %>
 					<% if @homework.actual_phase != "rehacer" %>
-						<%= render 'rehacer' %>
+						<%= render 'part3_rehacer' %>
 						<% if @homework.actual_phase != "evaluar" %>
-							<%= render 'evaluar' %>
+							<%= render 'part4_evaluar' %>
 							<% if @homework.actual_phase != "integrar" %>
-								<%= render 'integrar' %>
+								<%= render 'part5_integrar' %>
 							<% end %>
 						<% end %>
 					<% end %>

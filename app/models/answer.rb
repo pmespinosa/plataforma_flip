@@ -22,14 +22,25 @@ class Answer < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :homework
-  has_attached_file :image_responder, styles: {medium: "800x800>"}
-  has_attached_file :image_argumentar, styles: {medium: "800x800>"}
-  has_attached_file :image_rehacer, styles: {medium: "800x800>"}
-  has_attached_file :image_evaluar, styles: {medium: "800x800>"}
-  has_attached_file :image_integrar, styles: {medium: "800x800>"}
-  validates_attachment_content_type :image_responder, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
-  validates_attachment_content_type :image_argumentar, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
-  validates_attachment_content_type :image_rehacer, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
-  validates_attachment_content_type :image_evaluar, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
-  validates_attachment_content_type :image_integrar, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
+
+  has_attached_file :image_responder_1, styles: {medium: "800x800>"}
+  has_attached_file :image_responder_2, styles: {medium: "800x800>"}
+  has_attached_file :image_argumentar_1, styles: {medium: "800x800>"}
+  has_attached_file :image_argumentar_2, styles: {medium: "800x800>"}
+  has_attached_file :image_rehacer_1, styles: {medium: "800x800>"}
+  has_attached_file :image_rehacer_2, styles: {medium: "800x800>"}
+  has_attached_file :image_evaluar_1, styles: {medium: "800x800>"}
+  has_attached_file :image_evaluar_2, styles: {medium: "800x800>"}
+  has_attached_file :image_integrar_1, styles: {medium: "800x800>"}
+  has_attached_file :image_integrar_2, styles: {medium: "800x800>"}
+  validates_attachment_content_type :image_responder_1, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
+  validates_attachment_content_type :image_responder_2, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
+  validates_attachment_content_type :image_argumentar_1, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
+  validates_attachment_content_type :image_argumentar_2, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
+  validates_attachment_content_type :image_rehacer_1, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
+  validates_attachment_content_type :image_rehacer_2, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
+  validates_attachment_content_type :image_evaluar_1, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
+  validates_attachment_content_type :image_evaluar_2, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
+  validates_attachment_content_type :image_integrar_1, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
+  validates_attachment_content_type :image_integrar_2, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif", "application/pdf"]
 end

@@ -18,7 +18,7 @@
 //= require_tree .
 
 $(function() {
-  $('#pictureInput').on('change', function(event) {
+  $('#pictureInput_1').on('change', function(event) {
     var files = event.target.files;
     var image = files[0]
     var reader = new FileReader();
@@ -28,7 +28,25 @@ $(function() {
       img.style.width = '100px';
       console.log(file);
       img.src = file.target.result;
-      $('#target').html(img);
+      $('#target_1').html(img);
+    }
+    reader.readAsDataURL(image);
+    console.log(files);
+  });
+});
+
+$(function() {
+  $('#pictureInput_2').on('change', function(event) {
+    var files = event.target.files;
+    var image = files[0]
+    var reader = new FileReader();
+    reader.onload = function(file) {
+      var img = new Image();
+      img.style.height = '100px';
+      img.style.width = '100px';
+      console.log(file);
+      img.src = file.target.result;
+      $('#target_2').html(img);
     }
     reader.readAsDataURL(image);
     console.log(files);

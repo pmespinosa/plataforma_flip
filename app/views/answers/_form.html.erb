@@ -42,59 +42,26 @@
               <br>
             </div>
             <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-              <button type="button" class="btn btn-primary" onclick="document.getElementById('pictureInput').click();">
-                <%= image_tag('image_file.png', style: "height: 50px; width: 50px;") %>
-              </button>
               <% if @homework.actual_phase == "responder"%>
-                <%= f.file_field :image_responder, style:"display: none;", type:"file", id:"pictureInput"%>
-                <% if @answer.image_responder?%>
-                  <div id="target" style: "height: 100px; width: 100px;">
-                    <%= image_tag @answer.image_responder.url(:medium), style: "height: 100px; width: 100px" %>
-                  </div>
-                <% else %>
-                  <div id="target" style: "height: 100px; width: 100px;">
-                  </div>
-                <% end %>
+                <%= f.file_field :image_responder_1, style:"display: none;", type:"file", id:"pictureInput_1"%>
+                <%= f.file_field :image_responder_2, style:"display: none;", type:"file", id:"pictureInput_2"%>
+                <%= render 'form1_responder' %>
               <% elsif @homework.actual_phase == "argumentar"%>
-                <%= f.file_field :image_argumentar, style:"display: none;", type:"file", id:"pictureInput"%>
-                <% if @answer.image_argumentar?%>
-                  <div id="target" style: "height: 100px; width: 100px;">
-                    <%= image_tag @answer.image_argumentar.url(:medium), style: "height: 100px; width: 100px" %>
-                  </div>
-                <% else %>
-                  <div id="target" style: "height: 100px; width: 100px;">
-                  </div>
-                <% end %>
+                <%= f.file_field :image_argumentar_1, style:"display: none;", type:"file", id:"pictureInput_1"%>
+                <%= f.file_field :image_argumentar_2, style:"display: none;", type:"file", id:"pictureInput_2"%>
+                <%= render 'form2_argumentar' %>
               <% elsif @homework.actual_phase == "rehacer"%>
-                <%= f.file_field :image_rehacer, style:"display: none;", type:"file", id:"pictureInput"%>
-                <% if @answer.image_rehacer?%>
-                  <div id="target" style: "height: 100px; width: 100px;">
-                    <%= image_tag @answer.image_rehacer.url(:medium), style: "height: 100px; width: 100px" %>
-                  </div>
-                <% else %>
-                  <div id="target" style: "height: 100px; width: 100px;">
-                  </div>
-                <% end %>
+                <%= f.file_field :image_rehacer_1, style:"display: none;", type:"file", id:"pictureInput_1"%>
+                <%= f.file_field :image_rehacer_2, style:"display: none;", type:"file", id:"pictureInput_2"%>
+                <%= render 'form3_rehacer' %>
               <% elsif @homework.actual_phase == "evaluar"%>
-                <%= f.file_field :image_evaluar, style:"display: none;", type:"file", id:"pictureInput"%>
-                <% if @answer.image_evaluar?%>
-                  <div id="target" style: "height: 100px; width: 100px;">
-                    <%= image_tag @answer.image_evaluar.url(:medium), style: "height: 100px; width: 100px" %>
-                  </div>
-                <% else %>
-                  <div id="target" style: "height: 100px; width: 100px;">
-                  </div>
-                <% end %>
+                <%= f.file_field :image_evaluar_1, style:"display: none;", type:"file", id:"pictureInput_1"%>
+                <%= f.file_field :image_evaluar_2, style:"display: none;", type:"file", id:"pictureInput_2"%>
+                <%= render 'form4_evaluar'%>
               <% elsif @homework.actual_phase == "integrar"%>
-                <%= f.file_field :image_integrar, style:"display: none;", type:"file", id:"pictureInput"%>
-                <% if @answer.image_integrar?%>
-                  <div id="target" style: "height: 100px; width: 100px;">
-                    <%= image_tag @answer.image_integrar.url(:medium), style: "height: 100px; width: 100px" %>
-                  </div>
-                <% else %>
-                  <div id="target" style: "height: 100px; width: 100px;">
-                  </div>
-                <% end %>
+                <%= f.file_field :image_integrar_1, style:"display: none;", type:"file", id:"pictureInput_1"%>
+                <%= f.file_field :image_integrar_2, style:"display: none;", type:"file", id:"pictureInput_2"%>
+                <%= render 'form5_integrar'%>
               <% end %>
               <br>
             </div>
