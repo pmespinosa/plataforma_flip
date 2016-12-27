@@ -7,25 +7,25 @@
 		<%= button_to 'Volver',[@homework], :class=>"btn btn-primary", :style=>'color:white' %>
 		<br>
 		<div class="thumbnail">
-			<%= render 'pregunta' %>
+			<%= render 'part0_pregunta' %>
 		</div>
 	</div>
 	<br>
 	<% if @my_answer != nil || @partner_answer != nil %>
 		<div class="thumbnail">
-			<%= render 'responder' %>
+			<%= render 'part1_responder' %>
 				<br>
 				<% if @homework.actual_phase != "responder" %>
-					<%= render 'argumentar' %>
+					<%= render 'part2_argumentar' %>
 					<br>
 					<% if @homework.actual_phase != "argumentar" %>
-						<%= render 'rehacer' %>
+						<%= render 'part3_rehacer' %>
 						<br>
 						<% if @homework.actual_phase != "rehacer" %>
-							<%= render 'evaluar' %>
+							<%= render 'part4_evaluar' %>
 							<br>
 							<% if @homework.actual_phase != "evaluar" %>
-								<%= render 'integrar' %>
+								<%= render 'part5_integrar' %>
 								<br>
 							<%end%>
 						<%end%>
