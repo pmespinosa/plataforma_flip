@@ -105,6 +105,7 @@ class HomeworksController < ApplicationController
   end
 
   def show
+    answers()
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Realizar Actividad"]
     @users = User.all.where(role:0, asistencia:true)
     @homework.save
@@ -150,36 +151,30 @@ class HomeworksController < ApplicationController
     @etapa = ""
 
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Realizar Actividad", "Respuesta Alumno"]
-    @homework = Homework.where(id:params["homework"]["homework"].to_i)[0]
+    begin
+#-----ERROR------------------------- ERROR------------------ERROR-------------------
 
-    if @homework.actual_phase == "responder"
-      @etapa = "Responder"
-    elsif @homework.actual_phase == "argumentar"
-      @etapa = "Argumentar"
-    elsif @homework.actual_phase == "rehacer"
-      @etapa = "Rehacer"
-    elsif @homework.actual_phase == "evaluar"
-      @etapa = "Evaluar"
-    elsif @homework.actual_phase == "integrar"
-      @etapa = "Integrar"
+      @user = User.find_by_id(6)
+
+
+#-----ERROR------------------------- ERROR------------------ERROR-------------------
+      @corregido = User.find_by_id(@user.corregido)
+      @corrector = User.find_by_id(@user.corrector)
+      if @homework.actual_phase == "argumentar" || @homework.actual_phase == "evaluar"
+        @my_answer = @corregido.answers.find_by_homework_id(@homework.id)
+        @partner_answer = @user.answers.find_by_homework_id(@homework.id)
+      elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "integrar"
+        @my_answer = @user.answers.find_by_homework_id(@homework.id)
+        @partner_answer = @corrector.answers.find_by_homework_id(@homework.id)
+      else
+        @my_answer = @user.answers.find_by_homework_id(@homework.id)
+        @partner_answer = @corregido.answers.find_by_homework_id(@homework.id)
+      end
+      data = Register.new(button_id:33, user_id:current_user.id)
+      data.save
+    rescue
     end
 
-    @user = User.find_by_id(params["homework"]["user"])
-    @corregido = User.find_by_id(@user.corregido)
-    @corrector = User.find_by_id(@user.corrector)
-    if @homework.actual_phase == "argumentar" || @homework.actual_phase == "evaluar"
-      @my_answer = @corregido.answers.find_by_homework_id(@homework.id)
-      @partner_answer = @user.answers.find_by_homework_id(@homework.id)
-    elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "integrar"
-      @my_answer = @user.answers.find_by_homework_id(@homework.id)
-      @partner_answer = @corrector.answers.find_by_homework_id(@homework.id)
-    else
-      @my_answer = @user.answers.find_by_homework_id(@homework.id)
-      @partner_answer = @corregido.answers.find_by_homework_id(@homework.id)
-    end
-    data = Register.new(button_id:33, user_id:current_user.id)
-    data.save
-    render 'studentanswer'
   end
 
   def create

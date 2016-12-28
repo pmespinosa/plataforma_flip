@@ -1,0 +1,32 @@
+<div style="text-align: left">
+	<div style="text-align:left">
+		<h1><%= @homework.name %></h1>
+		<h2>Etapa: <%= @etapa %></h2>
+		<br>
+	</div>
+	<br>
+
+	<% if @my_answer != nil || @partner_answer != nil %>
+		<div class="thumbnail">
+			<%= render 'part1_responder' %>
+			<br>
+			<% if @homework.actual_phase != "responder" %>
+				<%= render 'part2_argumentar' %>
+				<br>
+				<% if @homework.actual_phase != "argumentar" %>
+					<%= render 'part3_rehacer' %>
+					<br>
+					<% if @homework.actual_phase != "rehacer" %>
+						<%= render 'part4_evaluar' %>
+						<br>
+						<% if @homework.actual_phase != "evaluar" %>
+							<%= render 'part5_integrar' %>
+							<br>
+						<%end%>
+					<%end%>
+				<%end%>
+			<%end%>
+		</div>
+	<%end%>
+	<br>
+</div>

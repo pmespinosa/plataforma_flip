@@ -29,7 +29,6 @@ Rails.application.routes.draw do
   get 'homeworks/:id/answers/:id/generate_pdf', to:"answers#generate_pdf"
   post 'homeworks/:id/answers/:id/generate_pdf', to:"answers#generate_pdf", as:"generate_pdf"
 
-  get 'homeworks/:id/studentanswer', to:"homeworks#answers"
   post 'courses/new' => 'courses#agregate'
   post 'courses/:id/edit' => 'courses#edit'
   patch 'courses/:id/edit'=> 'courses#edit'
@@ -62,6 +61,9 @@ Rails.application.routes.draw do
   end
 
   post  'homeworks/:id' => 'homeworks#change_phase'
+  #get 'homeworks/:id/studentanswer', to:"homeworks#answers"
+  #get 'homeworks/:id/studentanswer', to:"homeworks#index", as: "studentanswer"
+  get 'homeworks/:id/studentanswer', to:"homeworks#show", as: "studentanswer"
   resources :homeworks do
     resources :answers
   end
