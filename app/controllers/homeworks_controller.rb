@@ -150,7 +150,7 @@ class HomeworksController < ApplicationController
     @etapa = ""
 
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Realizar Actividad", "Respuesta Alumno"]
-    @homework = Homework.where(id:params["homework"]["homework"].to_i)[0]
+    @homework = Homework.where(id:params["homework_id"].to_i)[0]
 
     if @homework.actual_phase == "responder"
       @etapa = "Responder"
@@ -164,7 +164,7 @@ class HomeworksController < ApplicationController
       @etapa = "Integrar"
     end
 
-    @user = User.find_by_id(params["homework"]["user"])
+    @user = User.find_by_id(params["user_id"])
     @corregido = User.find_by_id(@user.corregido)
     @corrector = User.find_by_id(@user.corrector)
     if @homework.actual_phase == "argumentar" || @homework.actual_phase == "evaluar"

@@ -65,15 +65,9 @@
     <% @users.sort_by{|e| e[:last_name]}.each do |user| %>
       <% if user.role == "alumno"%>
       <tr>
-        <%= form_tag ':id/studentanswer', action:"answers", method:"get" do %>
-          <%= fields_for 'homework', @homework do |p| %>
-            <%= p.hidden_field  :homework, value:@homework.id, class:"form-control" %>
-            <%= p.hidden_field  :user, value:user.id, class:"form-control" %>
-            <td><%= user.last_name%></td>
-            <td><%= user.first_name%></td>
-            <td><%= submit_tag "Ver Respuesta", class: "btn btn-primary btn-xs", method:"get" %></td>
-          <% end %>
-        <% end %>
+        <td><%= user.last_name%></td>
+        <td><%= user.first_name%></td>
+        <td><%= link_to 'Ver Respuesta', studentanswer_path(homework_id:@homework.id, user_id:user.id), {:class => "btn btn-xs btn-primary"} %></td>
       </tr>
       <% end %>
     <% end %>
