@@ -12,9 +12,12 @@
         <h4 class="modal-title" id="myModalLabel">Criterio para evaluar</h4>
       </div>
       <div class="modal-body">
-        1. ... <br>
-        2. ... <br>
-        3. ... <br>
+
+        1. Contenido con menos nivel de cumplimiento, se trabaja con todas las habilidades de pensamiento crítico <br>
+        2. Contenido con cumplimiento medio, se trabaja con la mitad de las habilidades con menores resultados <br>
+        3. Contenidos con mayor cumplimiento, se trabaja con peores habilidades <br> <br>
+
+        **En resultados, una habilidad no evaluada se considera con puntaje 0
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Continuar</button>
@@ -191,7 +194,7 @@
         <th>Explicación</th>
         <th>Autoregulación</th>
         <th class="content">N</th>
-    </thea
+    </thead>
     <% contador = 0 %>
     <tbody>
       <% @report.trees.each do |tree| %>
@@ -240,7 +243,7 @@
       <% end %>
 
           <tr class="head">
-              <td>Promedio</td>
+              <td style="color:white">Promedio</td>
               <td style="color:white">
                 <% if @report.content_sc %>
                       <%=@report.content_sc.round(2) %>
@@ -248,37 +251,37 @@
                       <%= " " %>
                 <% end %>
               </td>
-              <td><% if @report.interpretation_sc %>
+              <td style="color:white"><% if @report.interpretation_sc %>
                       <%=@report.interpretation_sc.round(2) %>
                   <%else%>
                       <%= " " %>
                   <% end %>
               </td>
-              <td><% if @report.analysis_sc %>
+              <td style="color:white"><% if @report.analysis_sc %>
                       <%=@report.analysis_sc.round(2) %>
                   <%else%>
                       <%= " " %>
                   <% end %>
               </td>
-              <td><% if @report.evaluation_sc %>
+              <td style="color:white"><% if @report.evaluation_sc %>
                       <%=@report.evaluation_sc.round(2) %>
                   <%else%>
                       <%= " " %>
                   <% end %>
               </td>
-              <td><% if @report.inference_sc %>
+              <td style="color:white"><% if @report.inference_sc %>
                       <%=@report.inference_sc.round(2) %>
                   <%else%>
                       <%= " " %>
                   <% end %>
               </td>
-              <td><% if @report.explanation_sc %>
+              <td style="color:white"><% if @report.explanation_sc %>
                       <%=@report.explanation_sc.round(2) %>
                   <%else%>
                       <%= " " %>
                   <% end %>
               </td>
-              <td><% if @report.selfregulation_sc %>
+              <td style="color:white"><% if @report.selfregulation_sc %>
                       <%=@report.selfregulation_sc.round(2) %>
                   <%else%>
                       <%= " " %>
