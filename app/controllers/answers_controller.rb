@@ -18,7 +18,6 @@ class AnswersController < ApplicationController
       @partner_answer = @corrector.answers.find_by_homework_id(@homework.id)
     else
       @my_answer = current_user.answers.find_by_homework_id(@homework.id)
-      @partner_answer = @corregido.answers.find_by_homework_id(@homework.id)
     end
     @answer = current_user.answers.find_by_homework_id(@homework.id)
     if @homework.upload == true && @answer == nil
