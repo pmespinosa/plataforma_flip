@@ -90,6 +90,7 @@ class AnswersController < ApplicationController
           else
             if @answer.phase.downcase != @homework.actual_phase
               format.html { redirect_to homework_answers_path(@homework)}
+              format.json { render :show, status: :ok, location: @homework }
             end
           end
         else
