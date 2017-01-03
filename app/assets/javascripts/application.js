@@ -52,3 +52,10 @@ $(function() {
     console.log(files);
   });
 });
+
+
+var autosave = window.setInterval("autosaveForm()", 15000);
+
+function autosaveForm() {
+  $('form[data-remote]').submit();
+}

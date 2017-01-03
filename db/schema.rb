@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20161014045749) do
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "homework_id"
-    t.integer  "phase"
+    t.text     "phase"
     t.text     "responder"
     t.text     "argumentar"
     t.text     "rehacer"

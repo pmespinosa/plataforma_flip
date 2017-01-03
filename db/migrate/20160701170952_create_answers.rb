@@ -3,7 +3,7 @@ class CreateAnswers < ActiveRecord::Migration
     create_table :answers do |t|
       t.integer "user_id"
       t.integer "homework_id"
-      t.integer "phase"
+      t.text "phase"
       t.text "responder"
       t.text "argumentar"
       t.text "rehacer"
