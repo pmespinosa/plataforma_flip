@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root 'home#home'
+
 
   resources :registers
   resources :home
@@ -67,7 +69,5 @@ Rails.application.routes.draw do
   resources :homeworks do
     resources :answers
   end
-
-  root 'home#home'
 
 end
