@@ -91,6 +91,8 @@ class AnswersController < ApplicationController
             if @answer.phase.downcase != @homework.actual_phase
               format.html { redirect_to homework_answers_path(@homework)}
               format.json { render :show, status: :ok, location: @homework }
+            else
+              #format.js
             end
           end
         else
@@ -114,20 +116,42 @@ class AnswersController < ApplicationController
   def generate_pdf
     @corregido = User.find_by_id(current_user.corregido)
     @corrector = User.find_by_id(current_user.corrector)
-    if @homework.actual_phase == "argumentar" || @homework.actual_phase == "argumentar_2"
-      @my_answer = @corregido.answers.find_by_homework_id(@homework.id)
-      @partner_answer = current_user.answers.find_by_homework_id(@homework.id)
-    elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "rehacer_2"
-      @my_answer = current_user.answers.find_by_homework_id(@homework.id)
-      @partner_answer = @corrector.answers.find_by_homework_id(@homework.id)
-    else
-      @my_answer = current_user.answers.find_by_homework_id(@homework.id)
-      @partner_answer = @corregido.answers.find_by_homework_id(@homework.id)
+    begin
+      if @homework.actual_phase == "argumentar" || @homework.actual_phase == "evaluar"
+        @my_answer = @corregido.answers.find_by_homework_id(@homework.id)
+        @partner_answer = current_user.answers.find_by_homework_id(@homework.id)
+        answer = []
+        answer << "Responder:"
+        answer << @partner_answer.responder
+        answer << "\nArgumentar:"
+        answer << @my_answer.argumentar
+        answer << "\nRehacer:"
+        answer << @partner_answer.rehacer
+        answer << "\nEvaluar:"
+        answer << @my_answer.evaluar
+      elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "integrar" ||  @homework.actual_phase == "responder"
+        @my_answer = current_user.answers.find_by_homework_id(@homework.id)
+        @partner_answer = @corrector.answers.find_by_homework_id(@homework.id)
+        answer = []
+        answer << "Responder:"
+        answer << @my_answer.responder
+        answer << "\nArgumentar:"
+        answer << @partner_answer.argumentar
+        answer << "\nRehacer:"
+        answer << @my_answer.rehacer
+        answer << "\nEvaluar:"
+        answer << @partner_answer.evaluar
+        answer << "\nIntegrar:"
+        answer << @my_answer.integrar
+      end
+    rescue
     end
-    require "prawn"
-    Prawn::Document.generate(@homework.id.to_s + "_" + current_user.first_name + "_" + current_user.last_name + ".pdf") do
-      text "Hello World!"
-    end
+
+    Prawn::Document.generate (@homework.id.to_s + "_" + current_user.first_name + "_" + current_user.last_name + ".pdf") do |pdf|
+      answer.each do |element|
+        pdf.text element
+       end
+     end
   end
 
   private
