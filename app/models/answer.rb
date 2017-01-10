@@ -13,12 +13,6 @@
 #  phase       :integer
 
 class Answer < ActiveRecord::Base
-  enum phase: [:responder, :argumentar, :rehacer, :evaluar, :integrar]
-  after_initialize :set_default_actual_phase, :if => :new_record?
-
-  def set_default_actual_phase
-    self.phase ||= :responder
-  end
 
   belongs_to :user
   belongs_to :homework

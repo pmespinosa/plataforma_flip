@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20161014045749) do
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "homework_id"
-    t.integer  "phase"
+    t.text     "phase"
     t.text     "responder"
     t.text     "argumentar"
     t.text     "rehacer"
@@ -172,6 +172,7 @@ ActiveRecord::Schema.define(version: 20161014045749) do
     t.integer  "actual_phase"
     t.boolean  "upload"
     t.boolean  "current"
+    t.boolean  "partners"
     t.integer  "course_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false

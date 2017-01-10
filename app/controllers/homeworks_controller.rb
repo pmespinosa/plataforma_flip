@@ -56,6 +56,8 @@ class HomeworksController < ApplicationController
     if params["phase"] != nil
       if params[:next]
         if @homework.actual_phase == "responder"
+          asistentes
+          generate_partner
           @homework.actual_phase = "argumentar"
           data = Register.new(button_id:17, user_id:current_user.id)
         elsif @homework.actual_phase == "argumentar"
@@ -105,10 +107,17 @@ class HomeworksController < ApplicationController
   end
 
   def show
-    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Realizar Actividad"]
-    @users = User.all.where(role:0, asistencia:true)
+    if -(current_user.last_asistencia - DateTime.now).to_i > 1800 || @homework.id != current_user.last_homework
+      @homework.upload = true
+      current_user.last_homework = @homework.id
+      current_user.last_asistencia = DateTime.now
+      current_user.save
+    end
+    @homework.current = true
     @homework.save
-    @ciclo = ""
+    asistentes
+    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Realizar Actividad"]
+    @homework.save
     if current_user.role?
       if @homework.actual_phase == "responder"
         @etapa = "Responder"
@@ -130,6 +139,24 @@ class HomeworksController < ApplicationController
       end
     else
       redirect_to homework_answers_path(@homework)
+    end
+  end
+
+  def asistentes
+    @users = []
+    @students = Course.find(current_user.current_course_id).users.where(role:0)
+    @students.each do |s|
+      answer = Answer.where(homework_id: @homework.id, user_id: s.id)[0]
+      begin
+        if (@homework.actual_phase == "responder" && ((answer.responder != nil && answer.responder != "") || answer.image_responder_1? || answer.image_responder_2?)) ||
+            (@homework.actual_phase == "argumentar" && ((answer.argumentar != nil && answer.argumentar != "") || answer.image_argumentar_1? || answer.image_argumentar_2?)) ||
+            (@homework.actual_phase == "rehacer" && ((answer.rehacer != nil && answer.rehacer != "") || answer.image_rehacer_1? || answer.image_rehacer_2?)) ||
+            (@homework.actual_phase == "evaluar" && ((answer.evaluar != nil && answer.evaluar != "") || answer.image_evaluar_1? || answer.image_evaluar_2?)) ||
+            (@homework.actual_phase == "integrar" && ((answer.rehaceintegrarr != nil && answer.integrar != "") || answer.image_integrar_1? || answer.image_integrar_2?))
+            @users.append(s)
+        end
+      rescue
+      end
     end
   end
 
@@ -236,64 +263,35 @@ class HomeworksController < ApplicationController
     end
   end
 
-  def asistencia
-    data = Register.new(button_id:14, user_id:current_user.id)
-    data.save
-    @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Actividades Colaborativas", "Asistencia"]
-    @users = Course.find_by_id(current_user.current_course_id).users
-    @@libres = []
-    if -(current_user.last_asistencia - DateTime.now).to_i > 1800 || @homework.id != current_user.last_homework
-      if params["asistentes"] != nil
-        current_user.last_homework = @homework.id
-        current_user.last_asistencia = DateTime.now
-        current_user.save
-        params["asistentes"].each do |p|
-          asistente = User.find_by_id(p[0])
-          asistente.asistencia = p[1]['asistencia']
-          if asistente.asistencia
-            @@libres.append(asistente)
-          end
-          asistente.save
-        end
-        generate_partner
-      end
-      data = Register.new(button_id:15, user_id:current_user.id)
-      data.save
-    else
-      @homework.upload = true
-      @homework.current = true
-      @homework.save
-      redirect_to homework_path(@homework)
-    end
-  end
-
   def generate_partner
-    i = rand(@@libres.length)
-    cabeza = @@libres[i]
-    anterior = @@libres[i]
-    @@libres.delete_at(i)
-    while @@libres.length > 1
-      i = rand(@@libres.length)
-      actual = @@libres[i]
+    if !@homework.partners
+      i = rand(@users.length)
+      cabeza = @users[i]
+      anterior = @users[i]
+      @users.delete_at(i)
+      while @users.length > 1
+        i = rand(@users.length)
+        actual = @users[i]
+        actual.corrector = anterior.id
+        anterior.corregido = actual.id
+        anterior.save
+        anterior = actual
+        @users.delete_at(i)
+      end
+      actual = @users[0]
       actual.corrector = anterior.id
       anterior.corregido = actual.id
+      cabeza.corrector = actual.id
+      actual.corregido = cabeza.id
       anterior.save
-      anterior = actual
-      @@libres.delete_at(i)
+      actual.save
+      cabeza.save
+      @users.delete_at(0)
+      @homework.upload = true
+      @homework.current = true
+      @homework.partners = true
+      @homework.save
     end
-    actual = @@libres[0]
-    actual.corrector = anterior.id
-    anterior.corregido = actual.id
-    cabeza.corrector = actual.id
-    actual.corregido = cabeza.id
-    anterior.save
-    actual.save
-    cabeza.save
-    @@libres.delete_at(0)
-    @homework.upload = true
-    @homework.current = true
-    @homework.save
-    redirect_to homework_path(@homework)
   end
 
   private

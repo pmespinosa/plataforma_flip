@@ -1,3 +1,7 @@
+
+<meta http-equiv="refresh" content="15" />
+
+
 <h2>Debe esperar para la siguiente etapa.</h2>
 <% @homework = Homework.where(id:params["homework_id"])[0]%>
 <div style="text-align:left">
@@ -35,9 +39,6 @@
 				<%= p.hidden_field  :phase, value:@homework.actual_phase, class:"form-control" %>
 				<% if @homework.upload%>
 	      	<%= submit_tag "Editar Respuesta", name: 'tag_in_index', class: "btn btn-primary", action:"show", style:"height:35px; width:130px"%>
-					<meta http-equiv="refresh" content="15" />
-				<%else%>
-					<meta http-equiv="refresh" content="15" />
 				<%end%>
 			<%end%>
 	  <%end%>

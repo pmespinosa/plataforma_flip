@@ -52,3 +52,28 @@ $(function() {
     console.log(files);
   });
 });
+
+
+/*------------------------Función para susbribir el form--------------------------*/
+/*setInterval(function(){
+  $('form[data-remote]').submit();
+  var email = $('#answer').val();
+  alert(email);
+  var form = $('#autosave');
+  var method = form.attr('post').toLowerCase(); // "get" or "post"
+  var action = form.attr('homeworks/:id/answers/:id/edit');// url to submit to
+  $[method](action, form.serialize(), function(data){
+    // Do something with the server response data
+    // Or at least let the user know it saved
+  });
+},5000);*/
+
+/*--------------------------------------------------------------------------------*/
+
+
+
+/*var autosave = window.setInterval("autosaveForm()", 15000);
+
+function autosaveForm() {
+  $('form[data-remote]').submit();
+}*/

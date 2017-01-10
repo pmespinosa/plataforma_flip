@@ -5,6 +5,7 @@ class AnswersController < ApplicationController
   before_action :set_breadcrumbs
   before_filter :authenticate_user!
   before_action :set_color
+  #skip_before_filter :verify_authenticity_token, only:[:update, :destroy]
 
   def index
     @breadcrumbs = ["Mis Cursos", Course.find(current_user.current_course_id).name, "Realizar Actividad"]
@@ -18,7 +19,6 @@ class AnswersController < ApplicationController
       @partner_answer = @corrector.answers.find_by_homework_id(@homework.id)
     else
       @my_answer = current_user.answers.find_by_homework_id(@homework.id)
-      @partner_answer = @corregido.answers.find_by_homework_id(@homework.id)
     end
     @answer = current_user.answers.find_by_homework_id(@homework.id)
     if @homework.upload == true && @answer == nil
@@ -33,6 +33,8 @@ class AnswersController < ApplicationController
       elsif @homework.actual_phase == "integrar" && @answer.integrar == nil
         redirect_to edit_homework_answer_path(@homework, @answer)
       end
+    elsif @homework.current == false
+      redirect_to users_path
     end
   end
 
@@ -56,7 +58,6 @@ class AnswersController < ApplicationController
       @partner_answer = @corrector.answers.find_by_homework_id(@homework.id)
     else
       @my_answer = current_user.answers.find_by_homework_id(@homework.id)
-      @partner_answer = @corregido.answers.find_by_homework_id(@homework.id)
     end
   end
 
@@ -69,25 +70,38 @@ class AnswersController < ApplicationController
       @homework.answers << @answer
       @answer.homework = @homework
     end
-    redirect_to homework_answers_path(@homework)
+    if params["commit"] == "Enviar Respuesta"
+      redirect_to homework_answers_path(@homework)
+    else
+      redirect_to edit_homework_answer_path(@homework, @answer)
+    end
   end
 
   def update
-    data = Register.new(button_id:35, user_id:current_user.id)
-    data.save
     if @homework.upload
       respond_to do |format|
         @answer.update(answer_params)
         if @answer.save
-          format.html { redirect_to homework_answers_path}
-          format.json { render :show, status: :ok, location: @homework }
+          if params["commit"] == "Enviar Respuesta"
+            data = Register.new(button_id:35, user_id:current_user.id)
+            data.save
+            format.html { redirect_to homework_answers_path(@homework)}
+            format.json { render :show, status: :ok, location: @homework }
+          else
+            if @answer.phase.downcase != @homework.actual_phase
+              format.html { redirect_to homework_answers_path(@homework)}
+              format.json { render :show, status: :ok, location: @homework }
+            else
+              #format.js
+            end
+          end
         else
-          format.html { render :edit }
+          format.html { redirect_to edit_homework_answer_path(@homework, @answer) }
           format.json { render json: @homework.errors, status: :unprocessable_entity }
         end
       end
     else
-      redirect_to homework_answers_path
+      redirect_to homework_answers_path(@homework)
     end
   end
 
@@ -102,20 +116,42 @@ class AnswersController < ApplicationController
   def generate_pdf
     @corregido = User.find_by_id(current_user.corregido)
     @corrector = User.find_by_id(current_user.corrector)
-    if @homework.actual_phase == "argumentar" || @homework.actual_phase == "argumentar_2"
-      @my_answer = @corregido.answers.find_by_homework_id(@homework.id)
-      @partner_answer = current_user.answers.find_by_homework_id(@homework.id)
-    elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "rehacer_2"
-      @my_answer = current_user.answers.find_by_homework_id(@homework.id)
-      @partner_answer = @corrector.answers.find_by_homework_id(@homework.id)
-    else
-      @my_answer = current_user.answers.find_by_homework_id(@homework.id)
-      @partner_answer = @corregido.answers.find_by_homework_id(@homework.id)
+    begin
+      if @homework.actual_phase == "argumentar" || @homework.actual_phase == "evaluar"
+        @my_answer = @corregido.answers.find_by_homework_id(@homework.id)
+        @partner_answer = current_user.answers.find_by_homework_id(@homework.id)
+        answer = []
+        answer << "Responder:"
+        answer << @partner_answer.responder
+        answer << "\nArgumentar:"
+        answer << @my_answer.argumentar
+        answer << "\nRehacer:"
+        answer << @partner_answer.rehacer
+        answer << "\nEvaluar:"
+        answer << @my_answer.evaluar
+      elsif @homework.actual_phase == "rehacer" || @homework.actual_phase == "integrar" ||  @homework.actual_phase == "responder"
+        @my_answer = current_user.answers.find_by_homework_id(@homework.id)
+        @partner_answer = @corrector.answers.find_by_homework_id(@homework.id)
+        answer = []
+        answer << "Responder:"
+        answer << @my_answer.responder
+        answer << "\nArgumentar:"
+        answer << @partner_answer.argumentar
+        answer << "\nRehacer:"
+        answer << @my_answer.rehacer
+        answer << "\nEvaluar:"
+        answer << @partner_answer.evaluar
+        answer << "\nIntegrar:"
+        answer << @my_answer.integrar
+      end
+    rescue
     end
-    require "prawn"
-    Prawn::Document.generate(@homework.id.to_s + "_" + current_user.first_name + "_" + current_user.last_name + ".pdf") do
-      text "Hello World!"
-    end
+
+    Prawn::Document.generate (@homework.id.to_s + "_" + current_user.first_name + "_" + current_user.last_name + ".pdf") do |pdf|
+      answer.each do |element|
+        pdf.text element
+       end
+     end
   end
 
   private
