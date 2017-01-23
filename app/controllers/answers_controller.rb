@@ -79,6 +79,13 @@ class AnswersController < ApplicationController
 
   def update
     if @homework.upload
+      begin
+        user = User.find_by_id(@answer.user_id)
+        corrector = User.find_by_id(user.corrector)
+        @answer.corrector_id = corrector.id
+        @answer.save
+      rescue
+      end
       respond_to do |format|
         @answer.update(answer_params)
         if @answer.save
@@ -193,7 +200,7 @@ class AnswersController < ApplicationController
       params.require(:answer).permit(:phase, :upload, :responder, :argumentar,
        :rehacer, :evaluar, :integrar, :image_responder_1, :image_responder_2,
        :image_argumentar_1, :image_argumentar_2, :image_rehacer_1,  :image_rehacer_2,
-       :image_evaluar_1, :image_evaluar_2, :image_integrar_1, :image_integrar_2)
+       :image_evaluar_1, :image_evaluar_2, :image_integrar_1, :image_integrar_2, :corrector_id)
     end
 
 end

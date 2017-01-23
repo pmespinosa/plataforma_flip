@@ -2,6 +2,7 @@ class CreateAnswers < ActiveRecord::Migration
   def change
     create_table :answers do |t|
       t.integer "user_id"
+      t.integer "corrector_id", :default => 0
       t.integer "homework_id"
       t.text "phase"
       t.text "responder"

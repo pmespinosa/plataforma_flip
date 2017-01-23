@@ -65,6 +65,8 @@ Rails.application.routes.draw do
   #get 'homeworks/:id/studentanswer', to:"homeworks#answers"
   get 'homeworks/:id/studentanswer', to:"homeworks#answers", as: "studentanswer"
 
+  get 'homeworks/:id/full-answer', to:"homeworks#full_answers", as: "full_answers"
+
   post  'homeworks/:id' => 'homeworks#change_phase'
   resources :homeworks do
     resources :answers

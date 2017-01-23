@@ -1,5 +1,5 @@
 class HomeworksController < ApplicationController
-  before_action :set_homework, only: [:show, :edit, :update, :destroy, :change_phase, :asistencia]
+  before_action :set_homework, only: [:show, :edit, :update, :destroy, :change_phase, :asistencia, :full_answers]
   before_action :set_course
   before_action :set_unavailable
   skip_before_action :set_unavailable, only: [:show, :change_phase, :answers]
@@ -292,6 +292,11 @@ class HomeworksController < ApplicationController
       @homework.partners = true
       @homework.save
     end
+  end
+
+  def full_answers
+    @students = @course.users.where(role:0)
+    render 'full-answers'
   end
 
   private

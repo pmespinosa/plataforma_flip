@@ -1,0 +1,57 @@
+
+<div style="text-align: left">
+	<div style="text-align:left">
+		<h1><%= @homework.name %></h1>
+		<h2>Etapa: <%= @etapa %></h2>
+		<br>
+		<%= link_to 'Volver', homeworks_path, :class=>"btn btn-primary", :style=>'color:white' %>
+		<br></br>
+		<div class="thumbnail">
+			<%= render 'full_0' %>
+		</div>
+	</div>
+	<br>
+	<% @students.sort_by{|e| e[:last_name]}.each do |user| %>
+			<% begin %>
+			<% @my_answer = user.answers.find_by_homework_id(@homework.id) %>
+			<% @corrector = User.find_by_id(@my_answer.corrector_id) %>
+			<% @partner_answer = @corrector.answers.find_by_homework_id(@homework) %>
+			<% rescue %>
+			<% @my_answer = nil %>
+			<% @corrector = nil %>
+			<% @partner_answer = nil %>
+			<% end %>
+			<div class="thumbnail">
+				<% begin %>
+				<%= "Respuesta: " + user.first_name + " " + user.last_name%>
+				</br>
+				<%= "Argumentador: " + @corrector.first_name + " " + @corrector.last_name%>
+				</br>
+				<%= render 'full_1' %>
+				<% rescue %>
+				<% end %>
+				<br>
+				<% begin %>
+				<%= render 'full_2' %>
+				<% rescue %>
+				<% end %>
+				<br>
+				<% begin %>
+				<%= render 'full_3' %>
+				<% rescue %>
+				<% end %>
+				<br>
+				<% begin %>
+				<%= render 'full_4' %>
+				<% rescue %>
+				<% end %>
+				<br>
+				<% begin %>
+				<%= render 'full_5' %>
+				<% rescue %>
+				<% end %>
+				<br>
+			</div>
+	<%end%>
+	<br>
+</div>

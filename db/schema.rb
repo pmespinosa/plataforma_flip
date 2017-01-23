@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20161014045749) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
+    t.integer  "corrector_id",                    default: 0
     t.integer  "homework_id"
     t.text     "phase"
     t.text     "responder"
@@ -25,8 +26,8 @@ ActiveRecord::Schema.define(version: 20161014045749) do
     t.text     "rehacer"
     t.text     "evaluar"
     t.text     "integrar"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
     t.string   "image_responder_1_file_name"
     t.string   "image_responder_1_content_type"
     t.integer  "image_responder_1_file_size"
