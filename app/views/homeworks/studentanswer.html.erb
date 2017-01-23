@@ -2,81 +2,36 @@
 <div style="text-align: left">
 	<div style="text-align:left">
 		<h1><%= @homework.name %></h1>
-		<h2><%= @ciclo %> - <%= @etapa %></h2>
+		<h2>Etapa: <%= @etapa %></h2>
 		<br>
 		<%= button_to 'Volver',[@homework], :class=>"btn btn-primary", :style=>'color:white' %>
 		<br>
-		<%= simple_format(@homework.content, {style:"font-size:20px; line-height:1.5", align:"justify"})%>
-		<% if @homework.image? %>
-			<p><%= image_tag @homework.image.url(:medium) %></p>
-		<% end %>
+		<div class="thumbnail">
+			<%= render 'part0_pregunta' %>
+		</div>
 	</div>
 	<br>
 	<% if @my_answer != nil || @partner_answer != nil %>
-		<h2>Ciclo 1</h2>
-		<% if @my_answer.responder != nil %>
-			<div class="thumbnail">
-			<h3>Respuesta</h3>
-			<%= simple_format(@my_answer.responder, {style:"font-size:15px; line-height:1.5", align:"justify"})%>
-			<% if @my_answer.image_responder? %>
-				<p><%= image_tag @my_answer.image_responder.url(:medium) %></p>
-			<% end %>
-		<% end %>
-			<br>
-			<% if @homework.actual_phase != "responder" %>
-				<% if @partner_answer.argumentar != nil %>
-					<h3>Argumentación</h3>
-					<%= simple_format(@partner_answer.argumentar, {style:"font-size:15px; line-height:1.5", align:"justify"})%>
-					<% if @partner_answer.image_argumentar? %>
-						<p><%= image_tag @partner_answer.image_argumentar.url(:medium) %></p>
-					<% end %>
-				<% end %>
+		<div class="thumbnail">
+			<%= render 'part1_responder' %>
 				<br>
-				<% if @homework.actual_phase != "argumentar" %>
-					<% if @my_answer.rehacer != nil %>
-						<h3>Rehacer</h3>
-							<%= simple_format(@my_answer.rehacer, {style:"font-size:15px; line-height:1.5", align:"justify"})%>
-							<% if @my_answer.image_rehacer?%>
-								<p><%= image_tag @my_answer.image_rehacer.url(:medium) %></p>
-							<%end%>
-					<% end %>
-					</div>
+				<% if @homework.actual_phase != "responder" %>
+					<%= render 'part2_argumentar' %>
 					<br>
-					<% if @homework.actual_phase != "rehacer" %>
-						<h2>Ciclo 2</h2>
-						<% if @partner_answer.responder_2 != nil %>
-							<div class="thumbnail">
-							<h3>Respuesta</h3>
-							<%= simple_format(@my_answer.responder_2, {style:"font-size:15px; line-height:1.5", align:"justify"})%>
-						<% end %>
-						<% if @my_answer.image_responder_2? %>
-							<p><%= image_tag @my_answer.image_responder_2.url(:medium) %></p>
-						<% end %>
-
+					<% if @homework.actual_phase != "argumentar" %>
+						<%= render 'part3_rehacer' %>
 						<br>
-						<% if @homework.actual_phase != "responder_2" %>
-							<% if @my_answer.argumentar_2 != nil %>
-								<h3>Argumentar</h3>
-								<%= simple_format(@partner_answer.argumentar_2, {style:"font-size:15px; line-height:1.5", align:"justify"}) %>
-							<%end%>
-							<% if @partner_answer.image_argumentar_2?%>
-								<p><%= image_tag @partner_answer.image_argumentar_2.url(:medium) %></p>
-							<%end%>
+						<% if @homework.actual_phase != "rehacer" %>
+							<%= render 'part4_evaluar' %>
 							<br>
-							<% if @homework.actual_phase != "argumentar_2" %>
-								<% if @my_answer.rehacer_2 != nil %>
-									<h3>Rehacer</h3>
-									<%= simple_format(@my_answer.rehacer_2, {style:"font-size:15px; line-height:1.5", align:"justify"}) %>
-								<%end%>
-								<% if @my_answer.image_rehacer_2?%>
-									<p><%= image_tag @my_answer.image_rehacer_2.url(:medium) %></p>
-								<%end%>
-								</div>
+							<% if @homework.actual_phase != "evaluar" %>
+								<%= render 'part5_integrar' %>
+								<br>
 							<%end%>
 						<%end%>
 					<%end%>
-				<%end%>
-		<%end%>
+			<%end%>
+		</div>
 	<%end%>
 	<br>
 </div>

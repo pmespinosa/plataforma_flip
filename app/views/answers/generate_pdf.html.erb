@@ -1,0 +1,32 @@
+<% @homework = Homework.where(id:params["homework_id"])[0]%>
+<div style="text-align:left">
+	<br>
+	<div class="thumbnail">
+		<%= render 'part0_pregunta' %>
+	</div>
+	<div style="text-align: left">
+		<% if @my_answer != nil || @partner_answer != nil %>
+		<div class="thumbnail">
+			<%= render 'part1_responder' %>
+				<br>
+				<% if @homework.actual_phase != "responder" %>
+					<%= render 'part2_argumentar' %>
+					<br>
+					<% if @homework.actual_phase != "argumentar" %>
+						<%= render 'part3_rehacer' %>
+						<br>
+						<% if @homework.actual_phase != "rehacer" %>
+							<%= render 'part4_evaluar' %>
+							<br>
+							<% if @homework.actual_phase != "evaluar" %>
+								<%= render 'part5_integrar' %>
+							<%end%>
+						<%end%>
+					<%end%>
+			<%end%>
+		</div>
+		<%end%>
+		<br>
+		</div>
+	</div>
+</div>

@@ -8,6 +8,23 @@
 </head>
 <body>
 
+
+<% if @color == 'green' %>
+  <div class= 'green_class'>
+<% elsif @color == 'yellow' %>
+  <div class= 'yellow_class'>
+<% elsif @color == 'magenta' %>
+  <div class= 'magenta_class'>
+<% elsif @color == 'sky' %>
+  <div class= 'sky_class'>
+<% elsif @color == 'brown' %>
+  <div class= 'brown_class'>
+<% elsif @color == 'red' %>
+  <div class= 'red_class'>
+<% else %>
+  <div class= 'blue_class'>
+<% end %>
+
 <%= render '/layouts/navbar' %>
 <% if user_signed_in? %>
   <%= render '/layouts/breadcrumbs' %>
@@ -16,6 +33,7 @@
   <main role="main">
     <%= yield %>
   </main>
+</div>
 </div>
 
 </body>

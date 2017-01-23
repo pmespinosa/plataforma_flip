@@ -1,11 +1,13 @@
 class Homework < ActiveRecord::Base
 
-  enum actual_phase: [:responder, :argumentar, :rehacer, :responder_2, :argumentar_2, :rehacer_2]
-  after_initialize :set_default_actual_phase, :if => :new_record?
+  enum actual_phase: [:responder, :argumentar, :rehacer, :evaluar, :integrar]
+  after_initialize :set_default, :if => :new_record?
 
-  def set_default_actual_phase
+  def set_default
     self.actual_phase ||= :responder
     self.upload ||= false
+    self.current ||= false
+    self.partners ||= false
   end
 
   has_and_belongs_to_many :users

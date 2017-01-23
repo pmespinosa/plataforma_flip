@@ -11,47 +11,63 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161014045913) do
+ActiveRecord::Schema.define(version: 20161014045749) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "answers", force: :cascade do |t|
     t.integer  "user_id"
+    t.integer  "corrector_id",                    default: 0
     t.integer  "homework_id"
-    t.integer  "phase"
+    t.text     "phase"
     t.text     "responder"
     t.text     "argumentar"
     t.text     "rehacer"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.string   "image_responder_file_name"
-    t.string   "image_responder_content_type"
-    t.integer  "image_responder_file_size"
-    t.datetime "image_responder_updated_at"
-    t.string   "image_argumentar_file_name"
-    t.string   "image_argumentar_content_type"
-    t.integer  "image_argumentar_file_size"
-    t.datetime "image_argumentar_updated_at"
-    t.string   "image_rehacer_file_name"
-    t.string   "image_rehacer_content_type"
-    t.integer  "image_rehacer_file_size"
-    t.datetime "image_rehacer_updated_at"
+    t.text     "evaluar"
+    t.text     "integrar"
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.string   "image_responder_1_file_name"
+    t.string   "image_responder_1_content_type"
+    t.integer  "image_responder_1_file_size"
+    t.datetime "image_responder_1_updated_at"
     t.string   "image_responder_2_file_name"
     t.string   "image_responder_2_content_type"
     t.integer  "image_responder_2_file_size"
     t.datetime "image_responder_2_updated_at"
+    t.string   "image_argumentar_1_file_name"
+    t.string   "image_argumentar_1_content_type"
+    t.integer  "image_argumentar_1_file_size"
+    t.datetime "image_argumentar_1_updated_at"
     t.string   "image_argumentar_2_file_name"
     t.string   "image_argumentar_2_content_type"
     t.integer  "image_argumentar_2_file_size"
     t.datetime "image_argumentar_2_updated_at"
+    t.string   "image_rehacer_1_file_name"
+    t.string   "image_rehacer_1_content_type"
+    t.integer  "image_rehacer_1_file_size"
+    t.datetime "image_rehacer_1_updated_at"
     t.string   "image_rehacer_2_file_name"
     t.string   "image_rehacer_2_content_type"
     t.integer  "image_rehacer_2_file_size"
     t.datetime "image_rehacer_2_updated_at"
-    t.text     "responder_2"
-    t.text     "argumentar_2"
-    t.text     "rehacer_2"
+    t.string   "image_evaluar_1_file_name"
+    t.string   "image_evaluar_1_content_type"
+    t.integer  "image_evaluar_1_file_size"
+    t.datetime "image_evaluar_1_updated_at"
+    t.string   "image_evaluar_2_file_name"
+    t.string   "image_evaluar_2_content_type"
+    t.integer  "image_evaluar_2_file_size"
+    t.datetime "image_evaluar_2_updated_at"
+    t.string   "image_integrar_1_file_name"
+    t.string   "image_integrar_1_content_type"
+    t.integer  "image_integrar_1_file_size"
+    t.datetime "image_integrar_1_updated_at"
+    t.string   "image_integrar_2_file_name"
+    t.string   "image_integrar_2_content_type"
+    t.integer  "image_integrar_2_file_size"
+    t.datetime "image_integrar_2_updated_at"
   end
 
   add_index "answers", ["user_id", "homework_id"], name: "index_answers_on_user_id_and_homework_id", using: :btree
@@ -121,16 +137,6 @@ ActiveRecord::Schema.define(version: 20161014045913) do
 
   add_index "ct_habilities", ["ct_question_id"], name: "index_ct_habilities_on_ct_question_id", using: :btree
 
-  create_table "ct_hability_questions", force: :cascade do |t|
-    t.integer  "ct_hability_id"
-    t.integer  "ct_question_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
-  add_index "ct_hability_questions", ["ct_hability_id"], name: "index_ct_hability_questions_on_ct_hability_id", using: :btree
-  add_index "ct_hability_questions", ["ct_question_id"], name: "index_ct_hability_questions_on_ct_question_id", using: :btree
-
   create_table "ct_questions", force: :cascade do |t|
     t.text     "question"
     t.integer  "tree_id"
@@ -167,6 +173,7 @@ ActiveRecord::Schema.define(version: 20161014045913) do
     t.integer  "actual_phase"
     t.boolean  "upload"
     t.boolean  "current"
+    t.boolean  "partners"
     t.integer  "course_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
@@ -174,11 +181,6 @@ ActiveRecord::Schema.define(version: 20161014045913) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
-  end
-
-  create_table "homeworks_questions", id: false, force: :cascade do |t|
-    t.integer "homework_id"
-    t.integer "question_id"
   end
 
   create_table "homeworks_users", id: false, force: :cascade do |t|
@@ -195,40 +197,12 @@ ActiveRecord::Schema.define(version: 20161014045913) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "reports", force: :cascade do |t|
-    t.integer  "course_id"
-    t.float    "interpretation_sc"
-    t.float    "analysis_sc"
-    t.float    "evaluation_sc"
-    t.float    "inference_sc"
-    t.float    "explanation_sc"
-    t.float    "selfregulation_sc"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.float    "content_sc"
-    t.string   "name"
-  end
-
-  add_index "reports", ["course_id"], name: "index_reports_on_course_id", using: :btree
-
-  create_table "reports_trees", id: false, force: :cascade do |t|
-    t.integer "report_id", null: false
-    t.integer "tree_id",   null: false
-  end
-
   create_table "trees", force: :cascade do |t|
     t.string   "video"
     t.integer  "iterations"
     t.integer  "course_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.float    "content_sc"
-    t.float    "interpretation_sc"
-    t.float    "analysis_sc"
-    t.float    "evaluation_sc"
-    t.float    "inference_sc"
-    t.float    "explanation_sc"
-    t.float    "selfregulation_sc"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "trees", ["course_id"], name: "index_trees_on_course_id", using: :btree
@@ -245,13 +219,6 @@ ActiveRecord::Schema.define(version: 20161014045913) do
     t.float    "selfregulation_sc"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
-    t.integer  "content_n"
-    t.integer  "interpretation_n"
-    t.integer  "analysis_n"
-    t.integer  "evaluation_n"
-    t.integer  "inference_n"
-    t.integer  "explanation_n"
-    t.integer  "selfregulation_n"
     t.float    "init_content"
     t.float    "init_ct"
     t.float    "recuperative_content1"
@@ -320,12 +287,9 @@ ActiveRecord::Schema.define(version: 20161014045913) do
   add_foreign_key "contents", "trees"
   add_foreign_key "ct_choices", "ct_questions"
   add_foreign_key "ct_habilities", "ct_questions"
-  add_foreign_key "ct_hability_questions", "ct_habilities"
-  add_foreign_key "ct_hability_questions", "ct_questions"
   add_foreign_key "ct_questions", "trees"
   add_foreign_key "ct_subhabilities", "ct_habilities"
   add_foreign_key "feedbacks", "trees"
-  add_foreign_key "reports", "courses"
   add_foreign_key "trees", "courses"
   add_foreign_key "user_tree_performances", "trees"
   add_foreign_key "user_tree_performances", "users"

@@ -20,6 +20,7 @@ gem 'rails_12factor', group: :production
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
+gem "jquery-fileupload-rails"
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
@@ -32,11 +33,14 @@ gem 'cancancan'
 # Annotate
 gem 'annotate'
 # Hirb
-gem 'hirb', "~> 0.7.3"
 # Bootstrap
 gem 'bootstrap-sass', '~> 3.3.6'
 # Use Paperclip
 gem "paperclip", "~> 5.0.0"
+
+gem 'prawn'
+
+gem 'wkhtmltopdf-binary'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

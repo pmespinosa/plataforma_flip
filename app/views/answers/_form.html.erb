@@ -1,6 +1,6 @@
 
 <div style="text-align: left">
-    <%= form_for([@homework, @answer], html: { multipart: true }) do |f| %>
+    <%= form_for([@homework, @answer], html: { multipart: true, remote: true, id:"autosave" },  :authenticity_token => true) do |f| %>
       <% if @answer.errors.any? %>
         <div id="error_explanation">
           <h2><%= pluralize(@answer.errors.count, "error") %> prohibited this answer from being saved:</h2>
@@ -14,48 +14,55 @@
 
       <form class="form-horizontal">
           <% @actual_phase = ""%>
-          <% if ["responder", "responder_2"].include? @homework.actual_phase%>
+          <% if ["responder"].include? @homework.actual_phase%>
             <% @actual_phase = "Responder" %>
-          <% elsif ["argumentar", "argumentar_2"].include? @homework.actual_phase%>
+          <% elsif ["argumentar"].include? @homework.actual_phase%>
             <% @actual_phase = "Argumentar" %>
-          <% elsif ["rehacer", "rehacer_2"].include? @homework.actual_phase%>
+          <% elsif ["rehacer"].include? @homework.actual_phase%>
             <% @actual_phase = "Rehacer" %>
+          <% elsif ["evaluar"].include? @homework.actual_phase%>
+            <% @actual_phase = "Evaluar" %>
+          <% elsif ["integrar"].include? @homework.actual_phase%>
+            <% @actual_phase = "Integrar" %>
           <% end %>
+          <%= f.hidden_field :phase, value: @actual_phase %>
+          <h3 for="question" class="col-sm-9 control-label"><%= @actual_phase %></h3>
           <div class="form-group">
-            <label for="question" class="col-sm-9 control-label" style="font-size:25px"><%= @actual_phase %></label>
-            <div class="col-xs-6">
+            <div class="col-sm-10 col-md-10 col-lg-10">
               <% if @homework.actual_phase == "responder"%>
-                <%= f.text_area :responder, cols: 40, rows: 15, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
+                <%= f.text_area :responder, cols: 40, rows: 15, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta', style:"font-size:15px; line-height:1.5" %>
               <% elsif @homework.actual_phase == "argumentar"%>
-                <%= f.text_area :argumentar, cols: 40, rows: 15, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
+                <%= f.text_area :argumentar, cols: 40, rows: 15, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta', style:"font-size:15px; line-height:1.5" %>
               <% elsif @homework.actual_phase == "rehacer"%>
-                <%= f.text_area :rehacer, cols: 40, rows: 15, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
-              <% elsif @homework.actual_phase == "responder_2"%>
-                <%= f.text_area :responder_2, cols: 40, rows: 15, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
-              <% elsif @homework.actual_phase == "argumentar_2"%>
-                <%= f.text_area :argumentar_2, cols: 40, rows: 15, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
-              <% elsif @homework.actual_phase == "rehacer_2"%>
-                <%= f.text_area :rehacer_2, cols: 40, rows: 15, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta' %>
+                <%= f.text_area :rehacer, cols: 40, rows: 15, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta', style:"font-size:15px; line-height:1.5" %>
+              <% elsif @homework.actual_phase == "evaluar"%>
+                <%= f.text_area :evaluar, cols: 40, rows: 15, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta', style:"font-size:15px; line-height:1.5" %>
+              <% elsif @homework.actual_phase == "integrar"%>
+                <%= f.text_area :integrar, cols: 40, rows: 15, id:"answer", class:"form-control", placeholder: 'Ingrese respuesta', style:"font-size:15px; line-height:1.5" %>
               <% end %>
               <br>
             </div>
-          </div>
-
-          <div class="form-group">
-            <label for="question" class="col-sm-9 control-label" style="font-size:25px">Imagen</label>
-            <div class="col-xs-6">
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
               <% if @homework.actual_phase == "responder"%>
-                <%= f.file_field :image_responder, id:"i_answer"%>
+                <%= f.file_field :image_responder_1, style:"display: none;", type:"file", id:"pictureInput_1"%>
+                <%= f.file_field :image_responder_2, style:"display: none;", type:"file", id:"pictureInput_2"%>
+                <%= render 'form1_responder' %>
               <% elsif @homework.actual_phase == "argumentar"%>
-                <%= f.file_field :image_argumentar, id:"i_answer"%>
+                <%= f.file_field :image_argumentar_1, style:"display: none;", type:"file", id:"pictureInput_1"%>
+                <%= f.file_field :image_argumentar_2, style:"display: none;", type:"file", id:"pictureInput_2"%>
+                <%= render 'form2_argumentar' %>
               <% elsif @homework.actual_phase == "rehacer"%>
-                <%= f.file_field :image_rehacer, id:"i_answer"%>
-              <% elsif @homework.actual_phase == "responder_2"%>
-                <%= f.file_field :image_responder_2, id:"i_answer"%>
-              <% elsif @homework.actual_phase == "argumentar_2"%>
-                <%= f.file_field :image_argumentar_2, id:"i_answer"%>
-              <% elsif @homework.actual_phase == "rehacer_2"%>
-                <%= f.file_field :image_rehacer_2, id:"i_answer"%>
+                <%= f.file_field :image_rehacer_1, style:"display: none;", type:"file", id:"pictureInput_1"%>
+                <%= f.file_field :image_rehacer_2, style:"display: none;", type:"file", id:"pictureInput_2"%>
+                <%= render 'form3_rehacer' %>
+              <% elsif @homework.actual_phase == "evaluar"%>
+                <%= f.file_field :image_evaluar_1, style:"display: none;", type:"file", id:"pictureInput_1"%>
+                <%= f.file_field :image_evaluar_2, style:"display: none;", type:"file", id:"pictureInput_2"%>
+                <%= render 'form4_evaluar'%>
+              <% elsif @homework.actual_phase == "integrar"%>
+                <%= f.file_field :image_integrar_1, style:"display: none;", type:"file", id:"pictureInput_1"%>
+                <%= f.file_field :image_integrar_2, style:"display: none;", type:"file", id:"pictureInput_2"%>
+                <%= render 'form5_integrar'%>
               <% end %>
               <br>
             </div>
@@ -68,12 +75,8 @@
           </div>
           <br></br>
 
-          <div class="form-group" id= "sub">
-            <div class="col-sm-offset-2 col-sm-8">
-              <div class="actions">
-                <%= f.submit :'Enviar Respuesta', :class=>"btn btn-primary", :style=>'color:white' %>
-              </div>
-            </div>
+          <div class="actions">
+            <%= f.submit :'Enviar Respuesta', :class=>"btn btn-primary", :style=>'color:white' %>
           </div>
       </form>
     <% end %>

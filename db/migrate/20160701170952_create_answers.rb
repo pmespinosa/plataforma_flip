@@ -2,14 +2,14 @@ class CreateAnswers < ActiveRecord::Migration
   def change
     create_table :answers do |t|
       t.integer "user_id"
+      t.integer "corrector_id", :default => 0
       t.integer "homework_id"
-      t.integer "phase"
+      t.text "phase"
       t.text "responder"
       t.text "argumentar"
       t.text "rehacer"
-      t.text "responder_2"
-      t.text "argumentar_2"
-      t.text "rehacer_2"
+      t.text "evaluar"
+      t.text "integrar"
       t.timestamps null: false
     end
     add_index :answers, ["user_id", "homework_id"]

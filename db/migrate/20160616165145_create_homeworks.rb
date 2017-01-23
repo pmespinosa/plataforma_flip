@@ -6,6 +6,7 @@ class CreateHomeworks < ActiveRecord::Migration
       t.integer :actual_phase
       t.boolean :upload
       t.boolean :current
+      t.boolean :partners
       t.integer :course_id
       t.timestamps null: false
     end
