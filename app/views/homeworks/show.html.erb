@@ -1,4 +1,3 @@
-<meta http-equiv="refresh" content="15" />
 
 <h1><%= @homework.name %></h1>
 <h2>Etapa: <%= @etapa %> </h2>
@@ -50,26 +49,4 @@
 <%end%>
 
 
-<br></br>
-<br></br>
-<br></br>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Apellido</th>
-      <th>Nombre</th>
-      <th>Respuesta</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @users.sort_by{|e| e[:last_name]}.each do |user| %>
-      <% if user.role == "alumno"%>
-      <tr>
-        <td><%= user.last_name%></td>
-        <td><%= user.first_name%></td>
-        <td><%= link_to 'Ver Respuesta', studentanswer_path(homework_id:@homework.id, user_id:user.id), {:class => "btn btn-xs btn-primary"} %></td>
-      </tr>
-      <% end %>
-    <% end %>
-  </tbody>
-</table>
+<%= render 'list' %>

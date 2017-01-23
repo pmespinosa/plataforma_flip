@@ -54,6 +54,8 @@ $(function() {
 });
 
 
+
+
 /*------------------------Función para susbribir el form--------------------------*/
 /*setInterval(function(){
   $('form[data-remote]').submit();
