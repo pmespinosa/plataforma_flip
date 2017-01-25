@@ -8,6 +8,16 @@ class ReportsController < ApplicationController
   before_action :set_configuraciones_visible, only: [:show, :edit]
   before_action :set_breadcrumbs
 
+  helper_method :getInitialContentSc
+  helper_method :getInitialCtSc
+  helper_method :getRecuperative1ContentSc
+  helper_method :getRecuperative2Content1Sc
+  helper_method :getRecuperative1CtSc
+  helper_method :getRecuperative2CtSc
+  helper_method :getDeeping1ContentSc
+  helper_method :getDeeping2Content1Sc
+  helper_method :getDeeping1CtSc 
+  helper_method :getDeeping2CtSc 
   # GET /reports
   # GET /reports.json
   def index
@@ -28,7 +38,7 @@ class ReportsController < ApplicationController
     @report.selfregulation_sc = nil
     @report.save
 
-     @total_trees_content = 0
+    @total_trees_content = 0
     @total_trees_interpretation = 0
     @total_trees_analysis = 0
     @total_trees_evaluation = 0
@@ -36,7 +46,8 @@ class ReportsController < ApplicationController
     @total_trees_explanation = 0
     @total_trees_selfregulation = 0
     @n_total = []
-    
+
+
     @report.trees.each do |tree|
       puts "enviando arbooollllllllllllllllllllllllll"
       puts tree.inspect
@@ -255,8 +266,11 @@ class ReportsController < ApplicationController
       total_users_selfregulation = 0
       n = 0
 
+     
       tree.user_tree_performances.each do |performance|
         n +=1
+
+   
         if !performance.content_sc.nil?
           total_users_content = total_users_content + 1
           if tree.content_sc.nil?
@@ -308,6 +322,7 @@ class ReportsController < ApplicationController
         end
       end
 
+
       if !tree.content_sc.nil?
         tree.content_sc = tree.content_sc/total_users_content
       end
@@ -337,6 +352,233 @@ class ReportsController < ApplicationController
 
   end
 
+
+  def getInitialContentSc tree
+
+    init_content = nil    
+    init_content_n = 0
+    
+
+    tree.user_tree_performances.each do |performance|
+      
+      if !performance.init_content.nil?
+        init_content_n = init_content_n + 1
+        if init_content.nil?
+          init_content = 0
+        end
+        init_content += performance.init_content
+      end
+    end
+
+    if !init_content.nil?
+    init_content = init_content/init_content_n
+    end
+
+    return init_content.round(2)
+
+  end
+
+  def getInitialCtSc tree
+
+
+    init_ct = nil
+    init_ct_n = 0
+
+    tree.user_tree_performances.each do |performance|
+      if !performance.init_ct.nil?
+        init_ct_n = init_ct_n + 1
+        if init_ct.nil?
+          init_ct = 0
+        end
+        init_ct += performance.init_ct
+      end      
+    end
+
+    if !init_ct.nil?
+        init_ct = init_ct/init_ct_n
+    end
+
+    return init_ct.round(2)
+
+  end
+
+  def getRecuperative1ContentSc tree
+
+    recuperative_content1 = nil
+    recuperative_content1_n = 0
+
+    tree.user_tree_performances.each do |performance|
+      if !performance.recuperative_content1.nil?
+          recuperative_content1_n = recuperative_content1_n + 1
+          if recuperative_content1.nil?
+            recuperative_content1 = 0
+          end
+          recuperative_content1 += performance.recuperative_content1
+      end      
+    end
+    if !recuperative_content1.nil?
+        recuperative_content1 = recuperative_content1/recuperative_content1_n
+    end
+
+    return recuperative_content1.round(2)
+  end
+
+  def getRecuperative2Content1Sc tree
+
+    recuperative_content2 = nil
+    recuperative_content2_n = 0
+
+    tree.user_tree_performances.each do |performance|
+
+      if !performance.recuperative_content2.nil?
+        recuperative_content2_n = recuperative_content2_n + 1
+        if recuperative_content2.nil?
+          recuperative_content2 = 0
+        end
+        recuperative_content2 += performance.recuperative_content2
+      end
+
+    end
+    if !recupertive_content2.nil?
+      recupertive_content2 = recupertive_content2/recupertive_content2_n
+    end
+    
+    return recuperative_content2.round(2)
+  end
+
+  def getRecuperative1CtSc tree
+
+    recuperative_ct1 = nil
+    recuperative_ct1_n = 0
+
+    tree.user_tree_performances.each do |performance|
+
+      if !performance.recuperative_ct1.nil?
+        recuperative_ct1_n = recuperative_ct1_n + 1
+        if recuperative_ct1.nil?
+          recuperative_ct1 = 0
+        end
+        recuperative_ct1 += performance.recuperative_ct1
+      end
+    end
+    if !recuperative_ct1.nil?
+      recuperative_ct1 = recuperative_ct1/recuperative_ct1_n
+    end
+
+    return recuperative_ct1.round(2)
+  end
+
+  def getRecuperative2CtSc tree
+    
+    recuperative_ct2 = nil
+    recuperative_ct2_n = 0
+
+    tree.user_tree_performances.each do |performance|
+      if !performance.recuperative_ct2.nil?
+        recuperative_ct2_n = recuperative_ct2_n + 1
+        if recuperative_ct2.nil?
+          recuperative_ct2 = 0
+        end
+        recuperative_ct2 += performance.recuperative_ct2
+      end
+      
+    end
+    if !recupertive_ct2.nil?
+      recupertive_ct2 = recupertive_ct2/recupertive_ct2_n
+    end
+    return recupertive_ct2.round(2)
+  end
+
+  def getDeeping1ContentSc tree
+
+    deeping_content1 = nil
+    deeping_content1_n = 0
+
+    tree.user_tree_performances.each do |performance|
+      
+      if !performance.deeping_content1.nil?
+        deeping_content1_n = deeping_content1_n + 1
+        if deeping_content1.nil?
+          deeping_content1 = 0
+        end
+        deeping_content1 += performance.deeping_content1
+      end
+
+    end
+    if !deeping_content1.nil?
+      deeping_content1 = deeping_content1/deeping_content1_n
+    end
+    return deeping_content1.round(2)
+
+  end
+
+  def getDeeping2Content1Sc tree
+
+    deeping_content2 = nil
+    deeping_content2_n = 0
+
+    tree.user_tree_performances.each do |performance|    
+      if !performance.deeping_content2.nil?
+        deeping_content2_n = deeping_content2_n + 1
+        if deeping_content2.nil?
+          deeping_content2 = 0
+        end
+        deeping_content2 += performance.deeping_content2
+      end
+      
+    end
+    if !deeping_content2.nil?
+      deeping_content2 = deeping_content2/deeping_content2_n
+    end
+
+    return deeping_content2.round(2)
+
+  end
+
+  def getDeeping1CtSc tree
+
+    deeping_ct1 = nil
+    deeping_ct1_n = 0
+
+    tree.user_tree_performances.each do |performance|
+       if !performance.deeping_ct1.nil?
+        deeping_ct1_n = deeping_ct1_n + 1
+        if deeping_ct1.nil?
+          deeping_ct1 = 0
+        end
+        deeping_ct1 += performance.deeping_ct1
+      end
+      
+    end
+
+    if !deeping_ct1.nil?
+      deeping_ct1 = deeping_ct1/deeping_ct1_n
+    end
+
+    return deeping_ct1.round(2)
+  end
+
+  def getDeeping2CtSc tree
+
+    deeping_ct2 = nil
+    deeping_ct2_n = 0
+
+    tree.user_tree_performances.each do |performance|
+      if !performance.deeping_ct2.nil?
+        deeping_ct2_n = deeping_ct2_n + 1
+        if deeping_ct2.nil?
+          deeping_ct2 = 0
+        end
+        deeping_ct2 += performance.deeping_ct2
+      end
+      
+    end
+    if !deeping_ct2.nil?
+      deeping_ct2 = deeping_ct2/deeping_ct2_n
+    end
+
+    return deeping_ct2.round(2)
+  end
 
 
 

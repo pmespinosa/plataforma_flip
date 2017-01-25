@@ -200,7 +200,140 @@
       <% @report.trees.each do |tree| %>
 
           <tr style="background-color: white">
-              <td class="content" ><%= tree.content.text %></td>
+              <td class="content2" ><b data-toggle="modal" data-target="#modal2<%= contador+1 %>"><%=tree.content.text %> </b></td>
+
+             
+                
+              <!-- Modal -->
+
+
+              <div class="modal fade" id="modal2<%= contador+1 %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel"><%=tree.content.text %> </h4>
+                    </div>
+                    <div class="modal-body">
+
+
+                      <div class="panel panel-success">
+                        <div class="panel-heading"><h4> Pregunta Inicial </h4></div>
+                        <div class="panel-body">
+                          <b><%=tree.initial_content_question.question %></b><br><br>
+                          <ul>
+                            <% tree.initial_content_question.content_choices.each do |choice| %>
+                                <% if choice.right %>
+                                  <li><font color="green"><%= choice.text %></font></li>
+                                <% else %>
+                                  <li><%= choice.text %></li>
+                                <% end %>
+                            <% end %>
+                          </ul> 
+                          <br>
+                          <b><%=tree.initial_ct_question.question %></b><br> <br>
+                          <ul>
+                            <% tree.initial_ct_question.ct_choices.each do |choice| %>
+                                  <% if choice.right %>
+                                    <li><font color="green"><%= choice.text %> </font></li>
+                                  <% else %>
+                                    <li><%= choice.text %></li>
+                                  <% end %>
+                            <% end %> 
+                          </ul>
+                        </div>
+                        <div class="panel-footer"> Habilidades: 
+                          <% tree.initial_ct_question.ct_habilities.each do |hability| %>
+                            <% if hability.active %>
+                              <%= hability.name %>, 
+                            <% end %>                            
+                          <% end %>
+                        <br>
+                        Puntaje Contenido: <%= getInitialContentSc tree%>
+                        <br> 
+                        Puntaje Pensamiento Crítico: <%= getInitialCtSc tree %>
+                        </div>
+                      </div>
+
+                      <div class="panel panel-warning">
+                        <div class="panel-heading"><h4> Pregunta Recuperativa </h4></div>
+                        <div class="panel-body">
+                          <b><%=tree.recuperative_content_question.question %></b><br><br>
+                          <ul>
+                            <% tree.recuperative_content_question.content_choices.each do |choice| %>
+                                <% if choice.right %>
+                                  <li><font color="green"><%= choice.text %></font></li>
+                                <% else %>
+                                  <li><%= choice.text %></li>
+                                <% end %>
+                            <% end %>
+                          </ul> 
+                          <br>
+                          <b><%=tree.recuperative_ct_question.question %></b><br> <br>
+                          <ul>
+                            <% tree.recuperative_ct_question.ct_choices.each do |choice| %>
+                                  <% if choice.right %>
+                                    <li><font color="green"><%= choice.text %> </font></li>
+                                  <% else %>
+                                    <li><%= choice.text %></li>
+                                  <% end %>
+                            <% end %> 
+                          </ul>
+                        </div>
+                        <div class="panel-footer"> Habilidades: 
+                          <% tree.recuperative_ct_question.ct_habilities.each do |hability| %>
+                            <% if hability.active %>
+                              <%= hability.name %>, 
+                            <% end %>                            
+                          <% end %>
+                        <br>
+                        Puntaje Contenido: <%= getRecuperative1ContentSc tree %>
+                        <br> 
+                        Puntaje Pensamiento Crítico: <%= getRecuperative1CtSc tree %>
+                        </div>
+                      </div>
+
+                      <div class="panel panel-info">
+                        <div class="panel-heading"><h4> Pregunta de Profundización </h4></div>
+                        <div class="panel-body">
+                          <b><%=tree.deeping_content_question.question %></b><br><br>
+                          <ul>
+                            <% tree.deeping_content_question.content_choices.each do |choice| %>
+                                <% if choice.right %>
+                                  <li><font color="green"><%= choice.text %></font></li>
+                                <% else %>
+                                  <li><%= choice.text %></li>
+                                <% end %>
+                            <% end %>
+                          </ul> 
+                          <br>
+                          <b><%=tree.deeping_ct_question.question %></b><br> <br>
+                          <ul>
+                            <% tree.deeping_ct_question.ct_choices.each do |choice| %>
+                                  <% if choice.right %>
+                                    <li><font color="green"><%= choice.text %> </font></li>
+                                  <% else %>
+                                    <li><%= choice.text %></li>
+                                  <% end %>
+                            <% end %> 
+                          </ul>
+                        </div>
+                        <div class="panel-footer"> Habilidades: 
+                          <% tree.deeping_ct_question.ct_habilities.each do |hability| %>
+                            <% if hability.active %>
+                              <%= hability.name %>, 
+                            <% end %>                            
+                          <% end %>
+                        <br>
+                        Puntaje Contenido: <%= getDeeping1ContentSc tree %>
+                        <br> 
+                        Puntaje Pensamiento Crítico: <%= getDeeping1CtSc tree %>
+                        </div>
+                      </div>
+
+
+                </div>
+              </div>
               <% if tree.content_sc %>
                   <td><%=tree.content_sc.round(2) %></td>
               <%else%>
@@ -238,6 +371,10 @@
               <% end %>
               <td class="content">  <%= @n_total[contador] %></td>
               <% contador += 1 %>
+
+
+
+
           </tr>
 
       <% end %>
@@ -292,4 +429,5 @@
     </tbody>
 
 </table>
+
 </div>
