@@ -146,20 +146,19 @@
                           <% end %>
                         <% else %>
                           <% if  choice_fields.object.right == false && content_choices[choice_fields.object.id.to_s] == "false" %>
-                            <div class="input-group has-success">
+                            <div class="input-group">
+                              <span class="input-group-addon" id="check">
+                                <%= check_box "", "", {disabled: true, checked: false} %>
+                              </span>
+                              <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>                              
+                            </div>
+                          <% elsif  choice_fields.object.right == true && content_choices[choice_fields.object.id.to_s] == "false" %>
+                            <div class="input-group has-warning">
                               <span class="input-group-addon" id="check">
                                 <%= check_box "", "", {disabled: true, checked: false} %>
                               </span>
                               <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
                               <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-                            </div>
-                          <% elsif  choice_fields.object.right == true && content_choices[choice_fields.object.id.to_s] == "false" %>
-                            <div class="input-group has-error">
-                              <span class="input-group-addon" id="check">
-                                <%= check_box "", "", {disabled: true, checked: false} %>
-                              </span>
-                              <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
-                              <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                             </div>
                           <% end %>
                         <% end %> 
@@ -211,20 +210,19 @@
                         <% end %>
                       <% else %>
                         <% if  choice_fields.object.right == false && ct_choices[choice_fields.object.id.to_s] == "false" %>
-                          <div class="input-group has-success">
+                          <div class="input-group">
                             <span class="input-group-addon" id="check">
                               <%= check_box "", "", {disabled: true, checked: false} %>
                             </span>
                             <%= choice_fields.text_area :text, :readonly => true, size: "65x3",:class => "form-control" %>
-                            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                           </div>
                         <% elsif  choice_fields.object.right == true && ct_choices[choice_fields.object.id.to_s] == "false" %>
-                          <div class="input-group has-error">
+                          <div class="input-group has-warning">
                             <span class="input-group-addon" id="check">
                               <%= check_box "", "", {disabled: true, checked: false} %>
                             </span>
                             <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
-                            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                           </div>
                         <% end %>
                       <% end %>
@@ -305,20 +303,19 @@
                         <% end %>
                       <% else %>
                         <% if  choice_fields.object.right == false && content_choices[choice_fields.object.id.to_s] == "false" %>
-                          <div class="input-group has-success">
+                          <div class="input-group">
+                            <span class="input-group-addon" id="check">
+                              <%= check_box "", "", {disabled: true, checked: false} %>
+                            </span>
+                            <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>                            
+                          </div>
+                        <% elsif  choice_fields.object.right == true && content_choices[choice_fields.object.id.to_s] == "false" %>
+                          <div class="input-group has-warning">
                             <span class="input-group-addon" id="check">
                               <%= check_box "", "", {disabled: true, checked: false} %>
                             </span>
                             <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
                             <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-                          </div>
-                        <% elsif  choice_fields.object.right == true && content_choices[choice_fields.object.id.to_s] == "false" %>
-                          <div class="input-group has-error">
-                            <span class="input-group-addon" id="check">
-                              <%= check_box "", "", {disabled: true, checked: false} %>
-                            </span>
-                            <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
-                            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                           </div>
                         <% end %>
                       <% end %>
@@ -370,20 +367,19 @@
                         <% end %>
                       <% else %>
                         <% if  choice_fields.object.right == false && ct_choices[choice_fields.object.id.to_s] == "false" %>
-                          <div class="input-group has-success">
+                          <div class="input-group">
                             <span class="input-group-addon" id="check">
                               <%= check_box "", "", {disabled: true, checked: false} %>
                             </span>
-                            <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
-                            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                            <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>                          
                           </div>
                         <% elsif  choice_fields.object.right == true && ct_choices[choice_fields.object.id.to_s] == "false" %>
-                          <div class="input-group has-error">
+                          <div class="input-group has-warning">
                             <span class="input-group-addon" id="check">
                               <%= check_box "", "", {disabled: true, checked: false} %>
                             </span>
                             <%= choice_fields.text_area :text, :readonly => true, size: "65x3",:class => "form-control" %>
-                            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
                           </div>
                         <% end %>
                       <% end %>
@@ -425,20 +421,19 @@
                         <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                       </div>
                       <% elsif  choice_fields.object.right == false && content_choices[choice_fields.object.id.to_s] == "false" %>
-                      <div class="input-group has-success">
+                      <div class="input-group">
+                        <span class="input-group-addon" id="check">
+                          <%= check_box "", "", {disabled: true, checked: false} %>
+                        </span>
+                        <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
+                      </div>
+                    <% elsif  choice_fields.object.right == true && content_choices[choice_fields.object.id.to_s] == "false" %>
+                      <div class="input-group has-warning">
                         <span class="input-group-addon" id="check">
                           <%= check_box "", "", {disabled: true, checked: false} %>
                         </span>
                         <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
                         <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-                      </div>
-                    <% elsif  choice_fields.object.right == true && content_choices[choice_fields.object.id.to_s] == "false" %>
-                      <div class="input-group has-error">
-                        <span class="input-group-addon" id="check">
-                          <%= check_box "", "", {disabled: true, checked: false} %>
-                        </span>
-                        <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
-                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                       </div>
                     <% end %>
                   <% end %>
@@ -476,20 +471,19 @@
                         <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                       </div>
                     <% elsif  choice_fields.object.right == false && ct_choices[choice_fields.object.id.to_s] == "false" %>
-                      <div class="input-group has-success">
+                      <div class="input-group">
+                        <span class="input-group-addon" id="check">
+                          <%= check_box "", "", {disabled: true, checked: false} %>
+                        </span>
+                        <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
+                      </div>
+                    <% elsif  choice_fields.object.right == true && ct_choices[choice_fields.object.id.to_s] == "false" %>
+                      <div class="input-group has-warning">
                         <span class="input-group-addon" id="check">
                           <%= check_box "", "", {disabled: true, checked: false} %>
                         </span>
                         <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
                         <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-                      </div>
-                    <% elsif  choice_fields.object.right == true && ct_choices[choice_fields.object.id.to_s] == "false" %>
-                      <div class="input-group has-error">
-                        <span class="input-group-addon" id="check">
-                          <%= check_box "", "", {disabled: true, checked: false} %>
-                        </span>
-                        <%= choice_fields.text_area :text, :readonly => true, size: "65x3", :class => "form-control" %>
-                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
                       </div>
                     <% end %>
                   <% end %>

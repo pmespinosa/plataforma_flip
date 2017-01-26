@@ -1267,7 +1267,9 @@ class TreesController < ApplicationController
           puts "le doy tiempo al deeping fb2 que es: " + seconds_in.to_s + "------------------------------ feedbackseen  "
           @performance.deeping_fb2_time = seconds_in
           @performance.finish_tree_time = Time.now
+          if !@performance.start_tree_time.nil?
           @performance.total_time = Time.now - @performance.start_tree_time
+          end
           learner_user = User.find(@performance.user_id)
           if(learner_user.role != "alumno")
             @performance.destroy
