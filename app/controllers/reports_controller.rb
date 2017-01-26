@@ -11,13 +11,11 @@ class ReportsController < ApplicationController
   helper_method :getInitialContentSc
   helper_method :getInitialCtSc
   helper_method :getRecuperative1ContentSc
-  helper_method :getRecuperative2Content1Sc
   helper_method :getRecuperative1CtSc
-  helper_method :getRecuperative2CtSc
   helper_method :getDeeping1ContentSc
-  helper_method :getDeeping2Content1Sc
-  helper_method :getDeeping1CtSc 
-  helper_method :getDeeping2CtSc 
+  helper_method :getDeeping1CtSc
+  helper_method :getN
+
   # GET /reports
   # GET /reports.json
   def index
@@ -548,10 +546,20 @@ class ReportsController < ApplicationController
     end
 
 
-
   end
 
-  
+  def getN tree
+
+    n = 0
+    tree.user_tree_performances.each do |performance|
+
+      if !performance.init_content.nil?
+        n = n + 1
+      end
+
+    end
+    return n
+  end
     
 
 

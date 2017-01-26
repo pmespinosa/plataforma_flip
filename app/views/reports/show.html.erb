@@ -57,37 +57,14 @@
       </thead>
       <tbody>
         <% contador = 0 %>
-      <% @report.trees.each do |tree| %>
+      <% @report.trees.order("created_at").each do |tree| %>
             <% i = 0 %>
             <% contador +=1%>
             <tr>
-              <td class="content2" ><b data-toggle="modal" data-target="#modal<%= contador %>"><%=tree.content.text %> </b></td>
+              <td class="content2" ><button class="link" data-toggle="modal" data-target="#modal2<%= contador %>"><b><u><%=tree.content.text %></u></b></td>
 
-              <!-- Modal -->
-              <div class="modal fade" id="modal<%= contador %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title" id="myModalLabel"><%=tree.content.text %> </h4>
-                    </div>
-                    <div class="modal-body">
-                      <h4> Pregunta Inicial </h4>
-                      <%=tree.initial_content_question.question %> <br><br>
-                      <%=tree.initial_ct_question.question %><br>
-                      <h4> Pregunta Recuperativa </h4>
-                      <%=tree.recuperative_content_question.question %> <br><br>
-                      <%=tree.recuperative_ct_question.question %><br>
-                      <h4> Pregunta de Profundización </h4>
-                      <%=tree.deeping_content_question.question %> <br><br>
-                      <%=tree.deeping_ct_question.question %><br>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Continuar</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+             
+              
 
               <% @groups_tree.each do |group| %>
 
@@ -197,14 +174,10 @@
     </thead>
     <% contador = 0 %>
     <tbody>
-      <% @report.trees.each do |tree| %>
+      <% @report.trees.order("created_at").each do |tree| %>
 
           <tr style="background-color: white">
-              <td class="content2" ><b data-toggle="modal" data-target="#modal2<%= contador+1 %>"><%=tree.content.text %> </b></td>
-
-             
-                
-              <!-- Modal -->
+              <td class="content2" ><button class="link" data-toggle="modal" data-target="#modal2<%= contador+1 %>"><b><u><%=tree.content.text %></u></b></td>
 
 
               <div class="modal fade" id="modal2<%= contador+1 %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -242,16 +215,16 @@
                             <% end %> 
                           </ul>
                         </div>
-                        <div class="panel-footer"> Habilidades: 
+                        <div class="panel-footer"> <b>Habilidades:</b> 
                           <% tree.initial_ct_question.ct_habilities.each do |hability| %>
                             <% if hability.active %>
                               <%= hability.name %>, 
                             <% end %>                            
                           <% end %>
                         <br>
-                        Puntaje Contenido: <%= getInitialContentSc tree%>
+                        <b>Puntaje Contenido:</b> <%= getInitialContentSc tree%>
                         <br> 
-                        Puntaje Pensamiento Crítico: <%= getInitialCtSc tree %>
+                        <b>Puntaje Pensamiento Crítico:</b> <%= getInitialCtSc tree %>
                         </div>
                       </div>
 
@@ -280,16 +253,16 @@
                             <% end %> 
                           </ul>
                         </div>
-                        <div class="panel-footer"> Habilidades: 
+                        <div class="panel-footer"> <b>Habilidades: </b>
                           <% tree.recuperative_ct_question.ct_habilities.each do |hability| %>
                             <% if hability.active %>
                               <%= hability.name %>, 
                             <% end %>                            
                           <% end %>
                         <br>
-                        Puntaje Contenido: <%= getRecuperative1ContentSc tree %>
+                        <b>Puntaje Contenido:</b> <%= getRecuperative1ContentSc tree %>
                         <br> 
-                        Puntaje Pensamiento Crítico: <%= getRecuperative1CtSc tree %>
+                        <b>Puntaje Pensamiento Crítico:</b> <%= getRecuperative1CtSc tree %>
                         </div>
                       </div>
 
@@ -318,16 +291,16 @@
                             <% end %> 
                           </ul>
                         </div>
-                        <div class="panel-footer"> Habilidades: 
+                        <div class="panel-footer"> <b>Habilidades:</b> 
                           <% tree.deeping_ct_question.ct_habilities.each do |hability| %>
                             <% if hability.active %>
                               <%= hability.name %>, 
                             <% end %>                            
                           <% end %>
                         <br>
-                        Puntaje Contenido: <%= getDeeping1ContentSc tree %>
+                        <b>Puntaje Contenido:</b> <%= getDeeping1ContentSc tree %>
                         <br> 
-                        Puntaje Pensamiento Crítico: <%= getDeeping1CtSc tree %>
+                        <b>Puntaje Pensamiento Crítico:</b> <%= getDeeping1CtSc tree %>
                         </div>
                       </div>
 
@@ -369,7 +342,7 @@
               <%else%>
                   <td> </td>
               <% end %>
-              <td class="content">  <%= @n_total[contador] %></td>
+              <td class="content">  <%= getN tree %></td>
               <% contador += 1 %>
 
 
