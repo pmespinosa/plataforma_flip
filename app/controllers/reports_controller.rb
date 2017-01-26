@@ -406,6 +406,8 @@ class ReportsController < ApplicationController
 
     recuperative_content1 = nil
     recuperative_content1_n = 0
+    recuperative_content2 = nil
+    recuperative_content2_n = 0
 
     tree.user_tree_performances.each do |performance|
       if !performance.recuperative_content1.nil?
@@ -414,42 +416,34 @@ class ReportsController < ApplicationController
             recuperative_content1 = 0
           end
           recuperative_content1 += performance.recuperative_content1
-      end      
-    end
-    if !recuperative_content1.nil?
-        recuperative_content1 = recuperative_content1/recuperative_content1_n
-    end
-
-    return recuperative_content1.round(2)
-  end
-
-  def getRecuperative2Content1Sc tree
-
-    recuperative_content2 = nil
-    recuperative_content2_n = 0
-
-    tree.user_tree_performances.each do |performance|
-
+      end
       if !performance.recuperative_content2.nil?
         recuperative_content2_n = recuperative_content2_n + 1
         if recuperative_content2.nil?
           recuperative_content2 = 0
         end
         recuperative_content2 += performance.recuperative_content2
-      end
+      end      
+    end
+    if !recuperative_content1.nil? && !recuperative_content2.nil?
+      return ((recuperative_content1+recuperative_content2)/(recuperative_content1_n + recuperative_content2_n)).round(2)
+    elsif !recuperative_content1.nil? && recuperative_content2.nil?
+      return (recuperative_content1/recuperative_content1_n).round(2)
+    else
+      return nil
+    end
+      
 
-    end
-    if !recupertive_content2.nil?
-      recupertive_content2 = recupertive_content2/recupertive_content2_n
-    end
-    
-    return recuperative_content2.round(2)
   end
+
+  
 
   def getRecuperative1CtSc tree
 
     recuperative_ct1 = nil
     recuperative_ct1_n = 0
+    recuperative_ct2 = nil
+    recuperative_ct2_n = 0
 
     tree.user_tree_performances.each do |performance|
 
@@ -460,20 +454,6 @@ class ReportsController < ApplicationController
         end
         recuperative_ct1 += performance.recuperative_ct1
       end
-    end
-    if !recuperative_ct1.nil?
-      recuperative_ct1 = recuperative_ct1/recuperative_ct1_n
-    end
-
-    return recuperative_ct1.round(2)
-  end
-
-  def getRecuperative2CtSc tree
-    
-    recuperative_ct2 = nil
-    recuperative_ct2_n = 0
-
-    tree.user_tree_performances.each do |performance|
       if !performance.recuperative_ct2.nil?
         recuperative_ct2_n = recuperative_ct2_n + 1
         if recuperative_ct2.nil?
@@ -481,18 +461,24 @@ class ReportsController < ApplicationController
         end
         recuperative_ct2 += performance.recuperative_ct2
       end
+    end
+    if !recuperative_ct1.nil? && !recuperative_ct2.nil?
+      return ((recuperative_ct1+recuperative_ct2)/(recuperative_ct1_n+recuperative_ct2_n)).round(2)
+    elsif !recuperative_ct1.nil? && recuperative_ct2.nil?
+      return (recuperative_ct1/recuperative_ct1_n).round(2)
+    else
+      return nil
+    end
       
-    end
-    if !recupertive_ct2.nil?
-      recupertive_ct2 = recupertive_ct2/recupertive_ct2_n
-    end
-    return recupertive_ct2.round(2)
   end
 
+  
   def getDeeping1ContentSc tree
 
     deeping_content1 = nil
     deeping_content1_n = 0
+    deeping_content2 = nil
+    deeping_content2_n = 0
 
     tree.user_tree_performances.each do |performance|
       
@@ -504,20 +490,6 @@ class ReportsController < ApplicationController
         deeping_content1 += performance.deeping_content1
       end
 
-    end
-    if !deeping_content1.nil?
-      deeping_content1 = deeping_content1/deeping_content1_n
-    end
-    return deeping_content1.round(2)
-
-  end
-
-  def getDeeping2Content1Sc tree
-
-    deeping_content2 = nil
-    deeping_content2_n = 0
-
-    tree.user_tree_performances.each do |performance|    
       if !performance.deeping_content2.nil?
         deeping_content2_n = deeping_content2_n + 1
         if deeping_content2.nil?
@@ -525,45 +497,36 @@ class ReportsController < ApplicationController
         end
         deeping_content2 += performance.deeping_content2
       end
+
+    end
+    
+    if !deeping_content1.nil? && !deeping_content2.nil?
+      return ((deeping_content1 + deeping_content2)/(deeping_content1_n + deeping_content2_n)).round(2)
+    elsif !deeping_content1.nil? && deeping_content2.nil?
+      return (deeping_content1/deeping_content1_n).round(2)
+    else
+      return nil
+
+    end
       
-    end
-    if !deeping_content2.nil?
-      deeping_content2 = deeping_content2/deeping_content2_n
-    end
-
-    return deeping_content2.round(2)
-
   end
 
   def getDeeping1CtSc tree
 
     deeping_ct1 = nil
     deeping_ct1_n = 0
+    deeping_ct2 = nil
+    deeping_ct2_n = 0
 
     tree.user_tree_performances.each do |performance|
-       if !performance.deeping_ct1.nil?
+      if !performance.deeping_ct1.nil?
         deeping_ct1_n = deeping_ct1_n + 1
         if deeping_ct1.nil?
           deeping_ct1 = 0
         end
         deeping_ct1 += performance.deeping_ct1
       end
-      
-    end
 
-    if !deeping_ct1.nil?
-      deeping_ct1 = deeping_ct1/deeping_ct1_n
-    end
-
-    return deeping_ct1.round(2)
-  end
-
-  def getDeeping2CtSc tree
-
-    deeping_ct2 = nil
-    deeping_ct2_n = 0
-
-    tree.user_tree_performances.each do |performance|
       if !performance.deeping_ct2.nil?
         deeping_ct2_n = deeping_ct2_n + 1
         if deeping_ct2.nil?
@@ -573,12 +536,25 @@ class ReportsController < ApplicationController
       end
       
     end
-    if !deeping_ct2.nil?
-      deeping_ct2 = deeping_ct2/deeping_ct2_n
+
+    
+
+    if !deeping_ct1.nil? && !deeping_ct2.nil?
+      return ((deeping_ct1 + deeping_ct2)/(deeping_ct1_n + deeping_ct2_n)).round(2)
+    elsif !deeping_ct1.nil? && deeping_ct2.nil?
+      return (deeping_ct1/deeping_ct1_n).round(2)      
+    else
+      return nil
     end
 
-    return deeping_ct2.round(2)
+
+
   end
+
+  
+    
+
+
 
 
 
