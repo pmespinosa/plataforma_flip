@@ -166,6 +166,7 @@
                   <% end %>
             <% end %>
              <br>
+             
           </td>
 
           <td style="width:50%">
@@ -231,7 +232,21 @@
                 <br>
              <% end %>
              <br>
+             
           </td>
+        </tr>
+        <tr>
+          
+          <table class="table table-bordered">
+            <b>Corrección</b>
+            <thead class="head" style="background-color: white">
+              <th class="goodtd"></th>
+              <th style="text-align: left; color:#5E6066;">Respuesta correcta</th>
+              <th class="normaltd"></th>
+              <th style="text-align: left; color:#5E6066;">Respuesta Incorrecta. La alternativa era correcta pero no la marcaste</th>
+              <th class="badtd"></th>
+              <th style="text-align: left; color:#5E6066;">Respuesta incorrecta</th>                
+          </table>
         </tr>
          <!-- fin pregunta en feedback -->
       <% elsif state.to_s == "answered" && feedback_quality.to_s == "complex" %> 
@@ -323,6 +338,7 @@
                   <% end %>
               <% end %>
                <br>
+               
             </td>
 
             <td style="width:50%">
@@ -388,7 +404,21 @@
                   <br>
                <% end %>
                <br>
+               
             </td>
+          </tr>
+          <tr>
+          
+          <table class="table table-bordered">
+          <b>Corrección</b>
+            <thead class="head" style="background-color: white">
+              <th class="goodtd"></th>
+              <th style="text-align: left; color:#5E6066;">Respuesta correcta</th>
+              <th class="normaltd"></th>
+              <th style="text-align: left; color:#5E6066;">Respuesta Incorrecta. La alternativa era correcta pero no la marcaste</th>
+              <th class="badtd"></th>
+              <th style="text-align: left; color:#5E6066;">Respuesta incorrecta</th>                
+          </table>
           </tr>
 
       <% elsif state.to_s == "answered" && feedback_quality.to_s == "none" %>  
@@ -440,6 +470,7 @@
                 <% end %>
             <% end %>
              <br>
+             
           </td>
 
           <td style="width:50%">
@@ -495,6 +526,19 @@
           <%= hidden_field_tag "state", "answered" %>
           <%= hidden_field_tag "n", n %>
         </tr>
+        <tr>
+        
+        <table class="table table-bordered">
+        <b>Corrección</b>
+          <thead class="head" style="background-color: white">
+            <th class="goodtd"></th>
+            <th style="text-align: left; color:#5E6066;">Respuesta correcta</th>
+            <th class="normaltd"></th>
+            <th style="text-align: left; color:#5E6066;">Respuesta Incorrecta. La alternativa era correcta pero no la marcaste</th>
+            <th class="badtd"></th>
+            <th style="text-align: left; color:#5E6066;">Respuesta incorrecta</th>                
+        </table>
+        </tr>
 
       <% elsif state.to_s == "end"  %>          
           <tr>
@@ -507,6 +551,8 @@
       <% end %>
 
   </table>
+
+
 
   <%= hidden_field_tag "type", type %>
   <%= hidden_field_tag "course_id", @course.id %>
