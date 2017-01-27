@@ -1412,6 +1412,24 @@ class TreesController < ApplicationController
         format.html { redirect_to @course, notice: 'Tree was successfully created.' }
         format.json { render :show, status: :created, location: @tree }
       else
+        puts "ENTREEEEEEEEEEE AL ERRRRRRRRRRRRRRROOOOOOOOOOO"
+        @tree.build_content if @tree.content.blank?
+        @tree.build_initial_content_question if @tree.initial_content_question.blank?
+        @tree.build_initial_ct_question if @tree.initial_ct_question.blank?
+        @tree.build_recuperative_content_question if @tree.recuperative_content_question.blank?
+        @tree.build_recuperative_ct_question if @tree.recuperative_ct_question.blank?
+        @tree.build_deeping_content_question if @tree.deeping_content_question.blank?
+        @tree.build_deeping_ct_question if @tree.deeping_ct_question.blank?
+
+        @tree.build_initial_simple_feedback if @tree.initial_simple_feedback.blank?  
+        @tree.build_initial_complex_feedback if @tree.initial_complex_feedback.blank?
+        @tree.build_recuperative_simple_feedback if @tree.recuperative_simple_feedback.blank?
+        @tree.build_recuperative_complex_feedback if @tree.recuperative_complex_feedback.blank?
+        @tree.build_deeping_simple_feedback if @tree.deeping_simple_feedback.blank?
+        @tree.build_deeping_complex_feedback if @tree.deeping_complex_feedback.blank?
+        
+
+        
         format.html { render :new }
         format.json { render json: @tree.errors, status: :unprocessable_entity }
       end

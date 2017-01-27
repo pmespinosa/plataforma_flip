@@ -1,3 +1,4 @@
+<p id="notice"><%= notice %></p>
 
 
 <br>
@@ -62,8 +63,8 @@
             <tr>
               <td class="content2" ><button class="link" data-toggle="modal" data-target="#modal2<%= contador %>"><b><u><%=tree.content.text %></u></b></td>
 
-
-
+             
+              
 
               <% @groups_tree.each do |group| %>
 
@@ -201,7 +202,7 @@
                                   <li><%= choice.text %></li>
                                 <% end %>
                             <% end %>
-                          </ul>
+                          </ul> 
                           <br>
                           <b><%=tree.initial_ct_question.question %></b><br> <br>
                           <ul>
@@ -211,18 +212,18 @@
                                   <% else %>
                                     <li><%= choice.text %></li>
                                   <% end %>
-                            <% end %>
+                            <% end %> 
                           </ul>
                         </div>
-                        <div class="panel-footer"> <b>Habilidades:</b>
+                        <div class="panel-footer"> <b>Habilidades:</b> 
                           <% tree.initial_ct_question.ct_habilities.each do |hability| %>
                             <% if hability.active %>
-                              <%= hability.name %>,
-                            <% end %>
+                              <%= hability.name %>, 
+                            <% end %>                            
                           <% end %>
                         <br>
                         <b>Puntaje Contenido:</b> <%= getInitialContentSc tree%>
-                        <br>
+                        <br> 
                         <b>Puntaje Pensamiento Crítico:</b> <%= getInitialCtSc tree %>
                         </div>
                       </div>
@@ -239,7 +240,7 @@
                                   <li><%= choice.text %></li>
                                 <% end %>
                             <% end %>
-                          </ul>
+                          </ul> 
                           <br>
                           <b><%=tree.recuperative_ct_question.question %></b><br> <br>
                           <ul>
@@ -249,18 +250,18 @@
                                   <% else %>
                                     <li><%= choice.text %></li>
                                   <% end %>
-                            <% end %>
+                            <% end %> 
                           </ul>
                         </div>
                         <div class="panel-footer"> <b>Habilidades: </b>
                           <% tree.recuperative_ct_question.ct_habilities.each do |hability| %>
                             <% if hability.active %>
-                              <%= hability.name %>,
-                            <% end %>
+                              <%= hability.name %>, 
+                            <% end %>                            
                           <% end %>
                         <br>
                         <b>Puntaje Contenido:</b> <%= getRecuperative1ContentSc tree %>
-                        <br>
+                        <br> 
                         <b>Puntaje Pensamiento Crítico:</b> <%= getRecuperative1CtSc tree %>
                         </div>
                       </div>
@@ -277,7 +278,7 @@
                                   <li><%= choice.text %></li>
                                 <% end %>
                             <% end %>
-                          </ul>
+                          </ul> 
                           <br>
                           <b><%=tree.deeping_ct_question.question %></b><br> <br>
                           <ul>
@@ -287,18 +288,18 @@
                                   <% else %>
                                     <li><%= choice.text %></li>
                                   <% end %>
-                            <% end %>
+                            <% end %> 
                           </ul>
                         </div>
-                        <div class="panel-footer"> <b>Habilidades:</b>
+                        <div class="panel-footer"> <b>Habilidades:</b> 
                           <% tree.deeping_ct_question.ct_habilities.each do |hability| %>
                             <% if hability.active %>
-                              <%= hability.name %>,
-                            <% end %>
+                              <%= hability.name %>, 
+                            <% end %>                            
                           <% end %>
                         <br>
                         <b>Puntaje Contenido:</b> <%= getDeeping1ContentSc tree %>
-                        <br>
+                        <br> 
                         <b>Puntaje Pensamiento Crítico:</b> <%= getDeeping1CtSc tree %>
                         </div>
                       </div>
