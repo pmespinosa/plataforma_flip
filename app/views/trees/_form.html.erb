@@ -1,14 +1,14 @@
 <%= simple_form_for([@course,@tree]) do |f| %>
   <% if @tree.errors.any? %>
-    <div class="alert alert-danger">
-      <strong>Cuidado! No se ha podido crear el árbol, revisa la información faltante.</strong> 
+    <div id="error_explanation">
+      <h2><%= pluralize(@tree.errors.count, "error") %> prohibited this tree from being saved:</h2>
+
       <ul>
       <% @tree.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
     </div>
-      
   <% end %>
 
 
@@ -17,11 +17,15 @@
     <%= f.fields_for :content do |content_fields| %>
       <div class="input-group">
         <%= content_fields.label :content, 'Contenido', :class => "input-group-addon" %>
-        <%= content_fields.text_field :text, :required=> true, :class=>"form-control", :placeholder=>"Contenido del Video"%>
+        <%= content_fields.text_field :text, :class=>"form-control", :placeholder=>"Contenido del Video" %>
       </div>
     <% end %>
     <br>
 
+    <div class="input-group">
+      <%= f.label :video, 'Video', :class => "input-group-addon"%>
+      <%= f.text_field :video, :class=>"form-control", :placeholder=>"URL de Video asociado" %>
+    </div>
 
 <br>
 <%= image_tag("diagrama.png",  :style => "position: absolute") %>
@@ -69,7 +73,7 @@
                 <%= f.simple_fields_for :initial_complex_feedback do |builder| %>
                  <label for="basic-url">Feedback inicial para Contenido </label>
                  <div class='nested-fields'>
-                 <%= builder.text_area :text, size: "60x5",:class=>"form-control", :required=> true %>
+                 <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
                  </div>
                 <% end %>
               </td>
@@ -77,7 +81,7 @@
                 <%= f.simple_fields_for :initial_simple_feedback do |builder| %>
                  <label for="basic-url"> Feedback inicial para Argumento</label>
                  <div class='nested-fields'>
-                 <%= builder.text_area :text, size: "60x5",:class=>"form-control", :required=> true %>
+                 <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
                  </div>
                 <% end %>
               </td>
@@ -119,7 +123,7 @@
                 <%= f.simple_fields_for :recuperative_complex_feedback do |builder| %>
                  <label for="basic-url">Feedback Pregunta Recuperativa para Contenido</label>
                  <div class='nested-fields'>
-                 <%= builder.text_area :text, size: "60x5",:class=>"form-control", :required=> true %>
+                 <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
                  </div>
                 <% end %>
               </td>
@@ -127,9 +131,9 @@
                 <%= f.simple_fields_for :recuperative_simple_feedback do |builder| %>
                  <label for="basic-url">Feedback Pregunta Recuperativa para Argumento</label>
                  <div class='nested-fields'>
-                 <%= builder.text_area :text, size: "60x5",:class=>"form-control", :required=> true %>
+                 <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
                  </div>
-                <% end %>
+                <% end %>                
               </td>
               <br>
             </tr>
@@ -168,16 +172,16 @@
                 <%= f.simple_fields_for :deeping_complex_feedback do |builder| %>
                  <label for="basic-url">Feedback Pregunta de profundización para Contenido</label>
                  <div class='nested-fields'>
-                 <%= builder.text_area :text, size: "60x5",:class=>"form-control", :required=> true %>
+                 <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
                  </div>
                 <% end %>
               </td>
               <td style="padding:40px 15px 40px 0px;">
                 <%= f.simple_fields_for :deeping_simple_feedback do |builder| %>
                  <label for="basic-url">Feedback Pregunta de profundización para Argumento</label>       <div class='nested-fields'>
-                 <%= builder.text_area :text, size: "60x5",:class=>"form-control", :required=> true %>
+                 <%= builder.text_area :text, size: "60x5",:class=>"form-control" %>
                  </div>
-                <% end %>
+                <% end %>                
               </td>
               <br>
             </tr>
@@ -206,16 +210,16 @@
                   <h4 class="modal-title"><%= hab.name %></h4>
                 </div>
                 <div class="modal-body">
-                  <p><b>Descripción:asdasdsadas </b> <%= simple_format(hab.description) %></p>
-                </div>
+                  <p><b>Descripción: </b> <%= simple_format(hab.description) %></p>
+                </div>                
                 <% hab.ct_subhabilities.each do |sub| %>
                   <div class="modal-body">
                       <p><b>Subhabilidad: </b> <%= sub.name %></p>
                       <p><b>Descripción: </b> <%= simple_format(sub.description) %></p>
-
-                 </div>
+                                                          
+                 </div>             
               <% end %>
-
+              
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>
@@ -224,7 +228,7 @@
             </div>
           </div>
     <% end %>
-<% end %>
+<% end %>      
 
 
 <% end %>

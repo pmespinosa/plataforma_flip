@@ -45,7 +45,7 @@ gem 'wkhtmltopdf-binary'
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Unicorn as the app server
-# gem 'unicorn' 
+# gem 'unicorn'
 
 gem "cocoon"
 
@@ -59,7 +59,6 @@ gem 'simple_form'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-  gem "rails-erd" 
 end
 
 group :development do
