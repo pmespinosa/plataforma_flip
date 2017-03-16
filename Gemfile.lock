@@ -57,6 +57,7 @@ GEM
     builder (3.2.2)
     byebug (9.0.5)
     cancancan (1.15.0)
+<<<<<<< HEAD
     capistrano (3.7.1)
       airbrussh (>= 1.0.0)
       capistrano-harrow
@@ -74,6 +75,8 @@ GEM
       capistrano (~> 3.1)
       sshkit (~> 1.3)
     choice (0.2.0)
+=======
+>>>>>>> mejoras_piloto
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.8)
@@ -162,11 +165,6 @@ GEM
       activesupport (>= 4.2.0.beta, < 5.0)
       nokogiri (~> 1.6.0)
       rails-deprecated_sanitizer (>= 1.0.1)
-    rails-erd (1.5.0)
-      activerecord (>= 3.2)
-      activesupport (>= 3.2)
-      choice (~> 0.2.0)
-      ruby-graphviz (~> 1.2)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
     rails_12factor (0.0.3)
@@ -184,7 +182,6 @@ GEM
       json (~> 1.4)
     responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
-    ruby-graphviz (1.2.2)
     sass (3.4.22)
     sass-rails (5.0.6)
       railties (>= 4.0.0, < 6)
@@ -253,7 +250,6 @@ DEPENDENCIES
   pg
   prawn
   rails (= 4.2.6)
-  rails-erd
   rails_12factor
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
