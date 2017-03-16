@@ -152,7 +152,7 @@ class HomeworksController < ApplicationController
             (@homework.actual_phase == "argumentar" && ((answer.argumentar != nil && answer.argumentar != "") || answer.image_argumentar_1? || answer.image_argumentar_2?)) ||
             (@homework.actual_phase == "rehacer" && ((answer.rehacer != nil && answer.rehacer != "") || answer.image_rehacer_1? || answer.image_rehacer_2?)) ||
             (@homework.actual_phase == "evaluar" && ((answer.evaluar != nil && answer.evaluar != "") || answer.image_evaluar_1? || answer.image_evaluar_2?)) ||
-            (@homework.actual_phase == "integrar" && ((answer.rehaceintegrarr != nil && answer.integrar != "") || answer.image_integrar_1? || answer.image_integrar_2?))
+            (@homework.actual_phase == "integrar" && ((answer.integrar != nil && answer.integrar != "") || answer.image_integrar_1? || answer.image_integrar_2?))
             @users.append(s)
         end
       rescue
