@@ -107,7 +107,7 @@ class HomeworksController < ApplicationController
   end
 
   def show
-    if -(current_user.last_asistencia - DateTime.now).to_i > 1800 || @homework.id != current_user.last_homework
+    if current_user.role?
       @homework.upload = true
       current_user.last_homework = @homework.id
       current_user.last_asistencia = DateTime.now
