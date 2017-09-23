@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
-ruby "2.3.1"
+ruby "2.4.2"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.6'
+gem 'rails', '4.2.8'
 # Use PostgreSQL as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets
@@ -65,10 +65,8 @@ end
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-<<<<<<< HEAD
   gem "rails-erd"
-=======
->>>>>>> mejoras_piloto
+
 end
 
 group :development do
